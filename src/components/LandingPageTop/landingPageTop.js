@@ -10,7 +10,11 @@ export const LandingTopRoot = styled.section`
 
 export const Container = styled.div`
     width: 50%;
-    /* margin: 10px auto auto auto; */
+    overflow-x: hidden;
+
+    @media(max-width: 900px) {
+        width: 90%;
+    }
 
     & > h1 {
         color: #0EB56F;
@@ -18,6 +22,14 @@ export const Container = styled.div`
         font-size: 60px;
         margin-top: 20px;
         margin-bottom: 20px;
+
+        @media(max-width: 475px) {
+            font-size: 50px;
+        }
+
+        @media(max-width: 400px) {
+            font-size: 35px
+        }
     }
 
     & > h2 {
@@ -26,6 +38,15 @@ export const Container = styled.div`
         font-size: 35px;
         width: 400px;
         margin: 0 auto 30px auto;
+
+        @media(max-width: 475px) {
+            width: 350px;
+            font-size: 30px;
+        }
+
+        @media(max-width: 400px) {
+            font-size: 25px
+        }
     }
 
     & p {
@@ -43,6 +64,10 @@ export const Container = styled.div`
 
     & .gridContainer > div:first-child > p {
         color: #043923;
+
+        @media(max-width: 900px) {
+            width: 250px;
+        }
     }
 
     & .gridContainer > div:last-child > p {
