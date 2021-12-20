@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '../../../components/UI/Button/button'
 import * as Styles from './landingPageTop'
 
@@ -24,8 +25,12 @@ function LandingPageTop() {
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    <Button>get started</Button>
-                    <Button outlined>login</Button>
+                    <Link to='/signup'>
+                        <Button>get started</Button>
+                    </Link>
+                    <Link to='/login'>
+                        <Button outlined>login</Button>
+                    </Link>
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>

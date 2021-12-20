@@ -3,9 +3,12 @@ import React from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import Input from '../../components/UI/Input/Input'
 import { Button } from '../../components/UI/Button/button'
+import { useLocation } from 'react-router'
+import * as Styles from './auth'
 
 
 function Auth() {
+    const { pathname } = useLocation()
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -14,12 +17,12 @@ function Auth() {
 
     return (
         <AuthWrapper>
-            <form onSubmit={handleSubmit} style={{ marginTop: '30px' }}>
+            <Styles.Form onSubmit={handleSubmit}>
                 <Grid container>
                     <Grid item xs={1} md={2} />
                     <Grid item container xs={10} md={6} rowSpacing={2} columnSpacing={1}>
                         <Grid item container xs={12}>
-                            <h2>SIGN UP</h2>
+                            <Styles.Title>{ pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
                         </Grid>
                         <Input
                             name="password"
@@ -37,7 +40,7 @@ function Auth() {
                     </Grid>
                     <Grid item xs={1} md={4} />
                 </Grid>
-            </form>
+            </Styles.Form>
         </AuthWrapper>
     )
 }
