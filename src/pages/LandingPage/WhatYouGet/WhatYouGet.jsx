@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import HomeCard from '../HomeCard/HomeCard'
+import HomeCard from '../../../components/HomeCard/HomeCard'
 import * as Styles from './whatYouGet' 
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
