@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import { Button } from '../../../components/UI/button'
+import { Button } from '../../../components/UI/Button/button'
 import * as Styles from './landingPageTop'
 
 function LandingPageTop() {
