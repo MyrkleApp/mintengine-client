@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import Input from '../../components/UI/Input/Input'
 import { Button } from '../../components/UI/Button/button'
@@ -31,6 +31,12 @@ const passwordReducer = (state, action) => {
                 confirmPasswordError: !action.confirmPasswordIsValid,
                 confirmPasswordIsValid: action.confirmPasswordIsValid
             }
+        case 'LOGIN_PASSWORD_INPUT':
+            return {
+                ...state,
+                passwordValue: action.passwordValue, 
+                passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
+            }
         default: 
             return state
     }
@@ -41,6 +47,7 @@ function Auth() {
     const { pathname } = useLocation()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const [password, dispatchPassword] = useReducer(passwordReducer, { 
         passwordValue: '', 
         passwordHelperText: '', 
@@ -62,13 +69,19 @@ function Auth() {
     } = password
 
     const handlePasswordChange = e => {
-        dispatchPassword({ type: 'PASSWORD_INPUT', passwordValue: e.target.value })
+        if (pathname === '/signup') {
+            dispatchPassword({ type: 'PASSWORD_INPUT', passwordValue: e.target.value })
+        } else {
+            dispatchPassword({ type: 'LOGIN_PASSWORD_INPUT', passwordValue: e.target.value })
+        }
     }
 
-    const handlePasswordBlur = e => {
+    const handlePasswordBlur = () => {
+        if (pathname !== '/signup') return
+
         dispatchPassword({ 
             type: 'PASSWORD_BLUR',
-            passwordHelperText: pathname === '/signup' ? 'Your password must be up to 8 characters and must include a number' : 'Password is incorrect'
+            passwordHelperText: 'Your password must be up to 8 characters and must include a number'
         })
     }
 
@@ -81,6 +94,22 @@ function Auth() {
         
         alert('submitted !!!')
     }
+
+    useEffect(() => {
+        if (pathname === '/signup') {
+            if (passwordIsValid && confirmPasswordIsValid) {
+                setButtonIsEnabled(true)
+            } else {
+                setButtonIsEnabled(false)
+            }
+        } else if (pathname === '/login') {
+            if (passwordIsValid) {
+                setButtonIsEnabled(true)
+            } else {
+                setButtonIsEnabled(false)
+            }
+        }
+    }, [passwordIsValid, confirmPasswordIsValid])
 
     return (
         <AuthWrapper>
@@ -121,7 +150,7 @@ function Auth() {
                             <Button 
                                 fullWidth 
                                 type="submit"
-                                disabled
+                                disabled={ !buttonIsEnabled }
                             >
                                 { pathname === '/signup' ? 'Create my wallet' : 'Access my wallet' }
                             </Button>
