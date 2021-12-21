@@ -15,9 +15,18 @@ export const Root = styled.header`
     font-weight: bold;
   }
 
+  & .left a {
+    color: white;
+    text-decoration: none;
+  }
+
   & .right a {
     color: white;
     text-decoration: none;
+  }
+
+  & .right.hideRight {
+    display: none;
   }
 `
 

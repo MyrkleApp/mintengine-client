@@ -12,9 +12,11 @@ function Header() {
             <Styles.Root>
                 <div className="container">
                     <div className="left">
-                        Mint Engine
+                        <Link to="/">
+                            Mint Engine
+                        </Link>
                     </div>
-                    <div className="right">
+                    <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>
                         <Link to={ pathname === '/signup' ? '/login' : '/signup' }>
                             { pathname === '/signup' ? 'LOGIN' : 'SIGNUP' }
                         </Link>

@@ -9,7 +9,7 @@ import * as Styles from './auth'
 
 const passwordReducer = (state, action) => {
     switch (action.type) {
-        case 'PASSWORD_INPUT':
+        case 'SIGNUP_PASSWORD_INPUT':
             return { 
                 ...state,
                 passwordValue: action.passwordValue, 
@@ -17,7 +17,7 @@ const passwordReducer = (state, action) => {
                 passwordError: false,
                 passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
             }
-        case 'PASSWORD_BLUR' :
+        case 'SIGNUP_PASSWORD_BLUR' :
             return { 
                 ...state, 
                 passwordHelperText: state.passwordIsValid ? '' : action.passwordHelperText, 
@@ -70,7 +70,7 @@ function Auth() {
 
     const handlePasswordChange = e => {
         if (pathname === '/signup') {
-            dispatchPassword({ type: 'PASSWORD_INPUT', passwordValue: e.target.value })
+            dispatchPassword({ type: 'SIGNUP_PASSWORD_INPUT', passwordValue: e.target.value })
         } else {
             dispatchPassword({ type: 'LOGIN_PASSWORD_INPUT', passwordValue: e.target.value })
         }
@@ -80,13 +80,17 @@ function Auth() {
         if (pathname !== '/signup') return
 
         dispatchPassword({ 
-            type: 'PASSWORD_BLUR',
+            type: 'SIGNUP_PASSWORD_BLUR',
             passwordHelperText: 'Your password must be up to 8 characters and must include a number'
         })
     }
 
     const handleConfirmPasswordChange = e => {
-        dispatchPassword({ type: 'CONFIRM_PASSWORD_INPUT', confirmPasswordValue: e.target.value, confirmPasswordIsValid: e.target.value === passwordValue })
+        dispatchPassword({ 
+            type: 'CONFIRM_PASSWORD_INPUT', 
+            confirmPasswordValue: e.target.value, 
+            confirmPasswordIsValid: e.target.value === passwordValue 
+        })
     }
 
     const handleSubmit = e => {
@@ -123,13 +127,13 @@ function Auth() {
                         <Input
                             name="password"
                             label="Password"
-                            type={showPassword ? 'text' : 'password'}
-                            value={passwordValue}
-                            handleChange={handlePasswordChange}
-                            handleBlur={handlePasswordBlur}
-                            helperText={passwordHelperText}
-                            error={passwordError}
-                            visible={showPassword}
+                            type={ showPassword ? 'text' : 'password' }
+                            value={ passwordValue }
+                            handleChange={ handlePasswordChange }
+                            handleBlur={ handlePasswordBlur }
+                            helperText={ passwordHelperText }
+                            error={ passwordError }
+                            visible={ showPassword }
                             toggleShowPassword={() => setShowPassword(prevState => !prevState)}
                         />
                         {
@@ -143,7 +147,7 @@ function Auth() {
                                 helperText={ confirmPasswordHelperText }
                                 error={ confirmPasswordError }
                                 visible={ showConfirmPassword }
-                                toggleShowPassword={() => setShowConfirmPassword(prevState => !prevState)}
+                                toggleShowPassword={ () => setShowConfirmPassword(prevState => !prevState) }
                             />
                         }
                         <Grid item xs={12}>
