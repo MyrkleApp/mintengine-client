@@ -11,13 +11,6 @@ export const Root = styled.div `
         padding-bottom: 7px;
     }
 
-    & > span {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        color: red;
-        font-size: 12px;
-    }
-
     & .icon {
         color: #0EB56F;
         position: absolute;
@@ -33,12 +26,19 @@ export const CustomInput = styled.input`
     padding-left: 15px;
     padding-right: 40px;
     /* margin: 10px 0px 20px 0px; */
-    border: 1px solid ${props => !props.error ? '#043923' : 'red'};
+    border: 1px solid #043923;
     border-radius: 12px;
-    /* background-color: red; */
+    background-color: transparent;
 
     &:focus {
         outline: none;
         border: 1px solid #0EB56F;
     }
+`
+
+export const HelperText = styled.span`
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: ${props => !props.error ? '#043923' : 'red'};
+    font-size: 12px;
 `

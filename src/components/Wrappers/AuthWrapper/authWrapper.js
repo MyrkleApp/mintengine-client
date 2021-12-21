@@ -16,6 +16,10 @@ export const Root = styled.div`
     & .left {
         background-color: #097246;
         width: 25%;
+
+        @media(max-width: 800px) {
+            display: none;
+        }
     }
 
     & .left > p {
@@ -28,6 +32,10 @@ export const Root = styled.div`
     & .right {
         background-color: #F5FEFA;
         width: 75%;
+
+        @media(max-width: 800px) {
+            width: 100%;
+        }
     }
 `
 

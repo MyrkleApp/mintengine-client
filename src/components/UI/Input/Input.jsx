@@ -4,7 +4,7 @@ import * as Styles from'./input'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-function Input({ half, label, name, type, placeholder, error, value, handleChange, toggleShowPassword, visible }) {
+function Input({ half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible }) {
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
@@ -16,16 +16,16 @@ function Input({ half, label, name, type, placeholder, error, value, handleChang
                     placeholder={placeholder}
                     value={value}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     // required
-                    error={error}
                 />
-                {/* <span>Error message</span> */}
-                {/* {
-                label.toLowerCase().includes('password') &&
-                <img src={`/images/${visible ? 'watch-filled.png' : 'watch.png'}`} alt="" onClick={toggleShowPassword} />
-            } */}
+                <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
 
-                <VisibilityOutlinedIcon className="icon" />
+                {
+                    !visible 
+                    ?   <VisibilityOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
+                    :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} />
+                }
             </Styles.Root>
         </Grid>
     )

@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import React from 'react'
+import React, { useReducer, useState } from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import Input from '../../components/UI/Input/Input'
 import { Button } from '../../components/UI/Button/button'
@@ -7,12 +7,79 @@ import { useLocation } from 'react-router'
 import * as Styles from './auth'
 
 
+const passwordReducer = (state, action) => {
+    switch (action.type) {
+        case 'PASSWORD_INPUT':
+            return { 
+                ...state,
+                passwordValue: action.passwordValue, 
+                passwordHelperText: 'Minimum of 8 characters in length, include a number.',
+                passwordError: false,
+                passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
+            }
+        case 'PASSWORD_BLUR' :
+            return { 
+                ...state, 
+                passwordHelperText: state.passwordIsValid ? '' : action.passwordHelperText, 
+                passwordError: !state.passwordIsValid,
+            }
+        case 'CONFIRM_PASSWORD_INPUT':
+            return {
+                ...state, 
+                confirmPasswordValue: action.confirmPasswordValue, 
+                confirmPasswordHelperText: (action.confirmPasswordValue.trim().length > 0 && action.confirmPasswordIsValid === false) ? 'Password does not match' : '',
+                confirmPasswordError: !action.confirmPasswordIsValid,
+                confirmPasswordIsValid: action.confirmPasswordIsValid
+            }
+        default: 
+            return state
+    }
+}
+
+
 function Auth() {
     const { pathname } = useLocation()
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [password, dispatchPassword] = useReducer(passwordReducer, { 
+        passwordValue: '', 
+        passwordHelperText: '', 
+        passwordError: false, 
+        passwordIsValid: false, 
+        confirmPasswordValue: '', 
+        confirmPasswordError: false, 
+        confirmPasswordIsValid: false
+    })
+    const { 
+        passwordValue, 
+        passwordHelperText, 
+        passwordError, 
+        passwordIsValid, 
+        confirmPasswordValue, 
+        confirmPasswordHelperText,
+        confirmPasswordError,
+        confirmPasswordIsValid 
+    } = password
+
+    const handlePasswordChange = e => {
+        dispatchPassword({ type: 'PASSWORD_INPUT', passwordValue: e.target.value })
+    }
+
+    const handlePasswordBlur = e => {
+        dispatchPassword({ 
+            type: 'PASSWORD_BLUR',
+            passwordHelperText: pathname === '/signup' ? 'Your password must be up to 8 characters and must include a number' : 'Password is incorrect'
+        })
+    }
+
+    const handleConfirmPasswordChange = e => {
+        dispatchPassword({ type: 'CONFIRM_PASSWORD_INPUT', confirmPasswordValue: e.target.value, confirmPasswordIsValid: e.target.value === passwordValue })
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
-        //
+        
+        alert('submitted !!!')
     }
 
     return (
@@ -21,21 +88,43 @@ function Auth() {
                 <Grid container>
                     <Grid item xs={1} md={2} />
                     <Grid item container xs={10} md={6} rowSpacing={2} columnSpacing={1}>
-                        <Grid item container xs={12}>
-                            <Styles.Title>{ pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
+                        <Grid item xs={12}>
+                            <Styles.Title>{ pathname === '/signup' ? 'sign up' : 'login' }</Styles.Title>
                         </Grid>
                         <Input
                             name="password"
                             label="Password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={passwordValue}
+                            handleChange={handlePasswordChange}
+                            handleBlur={handlePasswordBlur}
+                            helperText={passwordHelperText}
+                            error={passwordError}
+                            visible={showPassword}
+                            toggleShowPassword={() => setShowPassword(prevState => !prevState)}
                         />
-                        <Input
-                            name="confirmPassword"
-                            label="Confirm Password"
-                            type="password"
-                        />
+                        {
+                            pathname === '/signup' &&
+                            <Input
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type={ showConfirmPassword ? 'text' : 'password' }
+                                value={ confirmPasswordValue }
+                                handleChange={ handleConfirmPasswordChange }
+                                helperText={ confirmPasswordHelperText }
+                                error={ confirmPasswordError }
+                                visible={ showConfirmPassword }
+                                toggleShowPassword={() => setShowConfirmPassword(prevState => !prevState)}
+                            />
+                        }
                         <Grid item xs={12}>
-                            <Button fullWidth type="submit">CREATE MY ACCOUNT</Button>
+                            <Button 
+                                fullWidth 
+                                type="submit"
+                                disabled
+                            >
+                                { pathname === '/signup' ? 'Create my wallet' : 'Access my wallet' }
+                            </Button>
                         </Grid>
                     </Grid>
                     <Grid item xs={1} md={4} />

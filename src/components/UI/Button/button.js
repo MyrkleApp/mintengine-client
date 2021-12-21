@@ -9,5 +9,6 @@ export const Button = styled.button`
     font-weight: bold;
     border-radius: 12px;
     border: ${props => props.outlined ? '1px solid #0EB56F' : 'none'};
-    cursor: pointer;
+    cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+    opacity: ${props => props.disabled ? '0.5' : '1.0'};
 `
