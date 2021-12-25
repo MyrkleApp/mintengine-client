@@ -5,7 +5,7 @@ import Auth from './pages/Auth/Auth';
 import LandingPage from './pages/LandingPage/LandingPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ScrollToTop from './Hooks/ScrollToTop';
-
+import WalletSetup from './pages/WalletSetup/WalletSetup';
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
                     <Switch location={location}>
                       <Route exact path="/" component={LandingPage} />
                       <Route exact path={['/signup', '/login']} component={Auth} />
+                      <Route exact path="/wallet-setup" component={WalletSetup} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>
