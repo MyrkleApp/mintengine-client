@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import Input from '../../components/UI/Input/Input'
 import { Button } from '../../components/UI/Button/button'
@@ -68,31 +68,39 @@ function Auth() {
         confirmPasswordIsValid 
     } = password
 
-    const handlePasswordChange = e => {
+    const handlePasswordChange = useCallback((e) => {
         if (pathname === '/signup') {
             dispatchPassword({ type: 'SIGNUP_PASSWORD_INPUT', passwordValue: e.target.value })
         } else {
             dispatchPassword({ type: 'LOGIN_PASSWORD_INPUT', passwordValue: e.target.value })
         }
-    }
+    }, [pathname, passwordValue]) 
 
-    const handlePasswordBlur = () => {
+    const handlePasswordBlur = useCallback(() => {
         if (pathname !== '/signup') return
 
         dispatchPassword({ 
             type: 'SIGNUP_PASSWORD_BLUR',
             passwordHelperText: 'Your password must be up to 8 characters and must include a number'
         })
-    }
+    }, [])
 
-    const handleConfirmPasswordChange = e => {
+    const handleConfirmPasswordChange = useCallback((e) => {
         dispatchPassword({ 
             type: 'CONFIRM_PASSWORD_INPUT', 
             confirmPasswordValue: e.target.value, 
             confirmPasswordIsValid: e.target.value === passwordValue 
         })
-    }
+    }, [confirmPasswordValue, confirmPasswordIsValid])
 
+    const toggleShowPassword = useCallback(() => {
+        setShowPassword(prevState => !prevState)
+    }, [])
+        
+    const toggleShowConfirmPassword = useCallback(() => {
+        setShowConfirmPassword(prevState => !prevState)
+    }, [])
+    
     const handleSubmit = e => {
         e.preventDefault();
         
@@ -100,18 +108,23 @@ function Auth() {
     }
 
     useEffect(() => {
-        if (pathname === '/signup') {
-            if (passwordIsValid && confirmPasswordIsValid) {
-                setButtonIsEnabled(true)
-            } else {
-                setButtonIsEnabled(false)
-            }
-        } else if (pathname === '/login') {
-            if (passwordIsValid) {
-                setButtonIsEnabled(true)
-            } else {
-                setButtonIsEnabled(false)
-            }
+        switch (pathname) {
+            case '/signup' :
+                if (passwordIsValid && confirmPasswordIsValid) {
+                    setButtonIsEnabled(true)
+                } else {
+                    setButtonIsEnabled(false)
+                }
+                break
+            case '/login' :
+                if (passwordIsValid) {
+                    setButtonIsEnabled(true)
+                } else {
+                    setButtonIsEnabled(false)
+                }
+                break
+            default: 
+                break
         }
     }, [passwordIsValid, confirmPasswordIsValid])
 
@@ -134,22 +147,20 @@ function Auth() {
                             helperText={ passwordHelperText }
                             error={ passwordError }
                             visible={ showPassword }
-                            toggleShowPassword={() => setShowPassword(prevState => !prevState)}
+                            toggleShowPassword={ toggleShowPassword }
                         />
-                        {
-                            pathname === '/signup' &&
-                            <Input
-                                name="confirmPassword"
-                                label="Confirm Password"
-                                type={ showConfirmPassword ? 'text' : 'password' }
-                                value={ confirmPasswordValue }
-                                handleChange={ handleConfirmPasswordChange }
-                                helperText={ confirmPasswordHelperText }
-                                error={ confirmPasswordError }
-                                visible={ showConfirmPassword }
-                                toggleShowPassword={ () => setShowConfirmPassword(prevState => !prevState) }
-                            />
-                        }
+                        { pathname === '/signup' &&
+                        <Input
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            type={ showConfirmPassword ? 'text' : 'password' }
+                            value={ confirmPasswordValue }
+                            handleChange={ handleConfirmPasswordChange }
+                            helperText={ confirmPasswordHelperText }
+                            error={ confirmPasswordError }
+                            visible={ showConfirmPassword }
+                            toggleShowPassword={ toggleShowConfirmPassword }
+                        /> }
                         <Grid item xs={12}>
                             <Button 
                                 fullWidth 

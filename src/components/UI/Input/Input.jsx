@@ -31,4 +31,4 @@ function Input({ half, label, name, type, placeholder, helperText, error, value,
     )
 }
 
-export default Input
+export default React.memo(Input)
