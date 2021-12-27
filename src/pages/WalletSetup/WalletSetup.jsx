@@ -7,39 +7,66 @@ import AddIcon from '@mui/icons-material/Add';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
 
 
 function WalletSetup() {
+    const location = useLocation()
+    const { pathname } = location
+    const urlQueryParams = new URLSearchParams(location.search)
+    const selectedWallet = urlQueryParams.get('wallet')
 
     return (
         <AuthWrapper>
-            <Grid container>
-                <Grid item xs={1} md={2} />
-                <Grid item xs={10} md={7} rowSpacing={2} columnSpacing={1}>
-                    <Styles.Title>WALLET SETUP</Styles.Title>
-                    <Styles.Description>
-                        Setup a wallet on one blockchain and you can set up the other in the profile section.
-                    </Styles.Description>
-                    <Link to="#" style={{ textDecoration: 'none' }}>
-                        <WalletCard 
-                            walletSetup 
+            <WalletWrapper
+                title="WALLET SETUP"
+                description="Setup a wallet on one blockchain and you can set up the other in the profile section."
+                link={ pathname === '/create-wallet' ? '/wallet-setup' : '' }
+            >
+            {
+                pathname === '/wallet-setup' &&
+                <>
+                    <Link to="/create-wallet?wallet=algo" style={{ textDecoration: 'none' }}>
+                        <WalletCard
+                            walletSetup
                             title="algorand wallet"
                             text="Algorand's native cryptocurrency is called Algo."
                             image={algorandLogo}
                         />
                     </Link>
-                    <Link to="#" style={{ textDecoration: 'none' }}>
-                        <WalletCard 
-                            walletSetup 
+                    <Link to="/create-wallet?wallet=xrp" style={{ textDecoration: 'none' }}>
+                        <WalletCard
+                            walletSetup
                             title="ripple wallet"
                             text="Ripple's native cryptocurrency is called XRP."
                             image={rippleLogo}
                         />
                     </Link>
-                </Grid>
-                    <Grid item xs={1} md={3} />
-                </Grid>
+                </>
+            }
+            { 
+                pathname === '/create-wallet' &&
+                <>
+                    <WalletCard
+                        title="create new wallet"
+                        text="This will create a new Algorand wallet and generate a 25 word passphrase you must backup."
+                        buttonText="create wallet"
+                        link="#"
+                    >
+                        <AddIcon fontSize="large" style={{ color: '#097246' }} />
+                    </WalletCard>
+                    <WalletCard
+                        title="import existing wallet"
+                        text="Restore your existing Algorand wallet using your passphrase."
+                        buttonText="import wallet"
+                        link="#"
+                    >
+                        <SystemUpdateAltIcon fontSize="large" style={{ color: '#097246' }} />
+                    </WalletCard>
+                </>
+            }
+            </WalletWrapper>
         </AuthWrapper>
     )
 }

@@ -4,13 +4,15 @@ export const Root = styled.div`
     display: flex;
     justify-content: center;
     /* background-color: red; */
-    height: calc(100vh - 100px);
+    /* min-height: calc(100vh - 100px); */
+    /* min-height: 600px; */
+    height: auto;
 
     & .container {
         width: 85%;
-        height: 90%;
+        min-height: calc(100vh - 150px);
         display: flex;
-        /* background-color: yellow */
+        background-color: yellow
     }
 
     & .left {
@@ -32,6 +34,8 @@ export const Root = styled.div`
     & .right {
         background-color: #F5FEFA;
         width: 75%;
+        /* height: 90%;
+        min-height: 90%; */
 
         @media(max-width: 800px) {
             width: 100%;

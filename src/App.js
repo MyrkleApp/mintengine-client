@@ -28,7 +28,7 @@ function App() {
                     <Switch location={location}>
                       <Route exact path="/" component={LandingPage} />
                       <Route exact path={['/signup', '/login']} component={Auth} />
-                      <Route exact path="/wallet-setup" component={WalletSetup} />
+                      <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>
