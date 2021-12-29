@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router'
 import { Button, CopyButton } from '../../components/UI/Button/button'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
 import * as Styles from './createNewWallet'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 
 
 function CreateNewWallet() {
     const { wallet } = useParams()
+    const [passPhrase, setPassPhrase] = useState([ "one", "two", "five..." ])
+
 
     return (
         <AuthWrapper>
@@ -22,22 +24,33 @@ function CreateNewWallet() {
                 link={ wallet === 'algo' ? '/create-wallet?wallet=algo' : '/create-wallet?wallet=xrp' }
             >
                 <Styles.Container>
-                    <Styles.WordsBox>
-                    {
-                        Array(25).fill().map((item, i) => (
-                            <Styles.Word key={i}>
-                                { i + 1 }. wallet
-                            </Styles.Word>
-                        ))
+                    { 
+                        wallet === 'algo' 
+                        ?   <Styles.WordsBox>
+                            {
+                                Array(25).fill().map((item, i) => (
+                                    <Styles.Word key={i}>
+                                        { i + 1 }. wallet
+                                    </Styles.Word>
+                                ))
+                            }
+                            </Styles.WordsBox>
+                        :   <Styles.XrpWordsBox>
+                                c6c108b3e923ea40067d129715065d96733528fc4ae5317814f795999f22b88f866a3343237b206daf6537ab593cba0b42a8f51721a6df3c5771cdc9312afc46
+                            </Styles.XrpWordsBox>
                     }
-                    </Styles.WordsBox>
                     
                     <Styles.ButtonsContainer>
-                        <CopyButton outlined>
-                            copy <ContentCopyIcon fontSize="small" sx={{ ml: '7px' }} />
-                        </CopyButton>
-                        <Button fullWidth>I’VE BACKED UP MY PASSPHRASE</Button>
+                        <CopyButtonWithTooltip passPhrase={passPhrase} />       
+                        <Button fullWidth>
+                        {
+                            wallet === 'algo'
+                            ? 'I’VE BACKED UP MY PASSPHRASE'
+                            : 'I’VE BACKED UP MY SEED'
+                        }
+                        </Button>
                     </Styles.ButtonsContainer>
+
                     
                     
                 </Styles.Container>

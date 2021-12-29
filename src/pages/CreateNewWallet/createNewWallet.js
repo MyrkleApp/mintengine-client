@@ -30,6 +30,12 @@ export const Word = styled.div`
     }
 `
 
+export const XrpWordsBox = styled.div`
+    overflow-wrap: break-word;
+    margin-bottom: 90px;
+    color: #043923;
+`
+
 export const ButtonsContainer = styled.div`
     margin-top: 30px;
     position: relative;

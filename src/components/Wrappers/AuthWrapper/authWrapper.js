@@ -29,6 +29,7 @@ export const Root = styled.div`
         width: 90%;
         margin: 30px auto auto auto;
         line-height: 25px;
+        font-weight: bold;
     }
 
     & .right {

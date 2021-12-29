@@ -6,16 +6,29 @@ export const Title = styled.h1`
     margin: 30px auto 10px auto;
     position: relative;
 
+    @media (max-width: 800px) {
+        margin: 70px auto 10px auto;
+    }
+
     & > a {
         color: #043923;
         text-decoration: none;
     }
 
     & .goBackArrow {
-        margin: 7px auto auto -50px;
-        padding-right: 20px;
+        top: 7px;
+        left: -50px;
         position: absolute;
         cursor: pointer;
+
+        @media (max-width: 900px) {
+            left: -30px;
+        }
+
+        @media (max-width: 800px) {
+            top: -40px;
+            left: 0px;
+        }
     }
 `
 
