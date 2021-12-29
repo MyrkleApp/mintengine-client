@@ -52,7 +52,7 @@ function WalletSetup() {
                         title="create new wallet"
                         text="This will create a new Algorand wallet and generate a 25 word passphrase you must backup."
                         buttonText="create wallet"
-                        link="#"
+                        link={`/create-wallet/${selectedWallet}`}
                     >
                         <AddIcon fontSize="large" style={{ color: '#097246' }} />
                     </WalletCard>

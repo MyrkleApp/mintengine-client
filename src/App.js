@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ScrollToTop from './Hooks/ScrollToTop';
 import WalletSetup from './pages/WalletSetup/WalletSetup';
+import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                       <Route exact path="/" component={LandingPage} />
                       <Route exact path={['/signup', '/login']} component={Auth} />
                       <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
+                      <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>
