@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router'
-import { Button, CopyButton } from '../../components/UI/Button/button'
+import { Button } from '../../components/UI/Button/button'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
-import * as Styles from './createNewWallet'
+import * as Styles from '../../components/UI/WalletShared/walletShared'
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 
 
@@ -30,7 +30,7 @@ function CreateNewWallet() {
                             {
                                 Array(25).fill().map((item, i) => (
                                     <Styles.Word key={i}>
-                                        { i + 1 }. wallet
+                                        { `${i + 1}. wallet` }
                                     </Styles.Word>
                                 ))
                             }
@@ -41,7 +41,7 @@ function CreateNewWallet() {
                     }
                     
                     <Styles.ButtonsContainer>
-                        <CopyButtonWithTooltip passPhrase={passPhrase} />       
+                        <CopyButtonWithTooltip passPhrase={passPhrase} text="copy" />       
                         <Button fullWidth>
                         {
                             wallet === 'algo'

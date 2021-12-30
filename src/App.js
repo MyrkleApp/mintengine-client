@@ -7,6 +7,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ScrollToTop from './Hooks/ScrollToTop';
 import WalletSetup from './pages/WalletSetup/WalletSetup';
 import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
+import VerifyWallet from './pages/VerifyWallet/VerifyWallet';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                       <Route exact path={['/signup', '/login']} component={Auth} />
                       <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
+                      <Route exact path="/verify-wallet/:wallet" component={VerifyWallet} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

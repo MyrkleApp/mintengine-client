@@ -5,6 +5,7 @@ export const Title = styled.h1`
     text-transform: uppercase;
     margin: 30px auto 10px auto;
     position: relative;
+    font-size: 28px;
 
     @media (max-width: 800px) {
         margin: 70px auto 10px auto;
