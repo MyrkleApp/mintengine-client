@@ -8,6 +8,7 @@ import ScrollToTop from './Hooks/ScrollToTop';
 import WalletSetup from './pages/WalletSetup/WalletSetup';
 import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
 import VerifyWallet from './pages/VerifyWallet/VerifyWallet';
+import ImportWallet from './pages/ImportWallet/ImportWallet';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                       <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
                       <Route exact path="/verify-wallet/:wallet" component={VerifyWallet} />
+                      <Route exact path="/import-wallet/:wallet" component={ImportWallet} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

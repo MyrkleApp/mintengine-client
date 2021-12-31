@@ -14,7 +14,7 @@ export const WordsBox = styled.div`
     display: flex;
     flex-flow: column wrap;
     width: 100%;
-    height: 250px;
+    height: ${props => props.import ? '300px' : '250px'};
 
     @media(max-width: 600px) {
         height: 380px;

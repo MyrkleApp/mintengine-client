@@ -60,7 +60,7 @@ function WalletSetup() {
                         title="import existing wallet"
                         text="Restore your existing Algorand wallet using your passphrase."
                         buttonText="import wallet"
-                        link="#"
+                        link={`/import-wallet/${selectedWallet}`}
                     >
                         <SystemUpdateAltIcon fontSize="large" style={{ color: '#097246' }} />
                     </WalletCard>
