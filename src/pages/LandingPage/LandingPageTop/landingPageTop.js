@@ -75,8 +75,14 @@ export const Container = styled.div`
         color: #7C7C7C;
     }
 
+    & .buttonsContainer {
+        margin-bottom: 50px;
+    }
+
     & .buttonsContainer > a:first-child {
         margin-right: 20px;
     }
+
+    
     
 `
