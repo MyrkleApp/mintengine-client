@@ -9,6 +9,8 @@ import WalletSetup from './pages/WalletSetup/WalletSetup';
 import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
 import VerifyWallet from './pages/VerifyWallet/VerifyWallet';
 import ImportWallet from './pages/ImportWallet/ImportWallet';
+import Backdrop from './components/UI/Backdrop/Backdrop'
+import Dashboard from './pages/Dashboard/Dashboard';
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
+        <Backdrop />
         <ScrollToTop />
         <Route
           render={({ location }) => {
@@ -35,6 +38,7 @@ function App() {
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
                       <Route exact path="/verify-wallet/:wallet" component={VerifyWallet} />
                       <Route exact path="/import-wallet/:wallet" component={ImportWallet} />
+                      <Route exact path="/dashboard" component={Dashboard} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

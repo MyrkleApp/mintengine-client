@@ -3,9 +3,12 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import Input from '../../components/UI/Input/Input'
 import { Button } from '../../components/UI/Button/button'
-import { useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import * as Styles from './auth'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
+import { useDispatch } from 'react-redux'
+import { loginUser, registerUser } from '../../app/authSlice'
+import { toggleBackdrop } from '../../app/backdropSlice'
 
 
 const passwordReducer = (state, action) => {
@@ -38,6 +41,12 @@ const passwordReducer = (state, action) => {
                 passwordValue: action.passwordValue,
                 passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
             }
+        case 'LOGIN_ERROR':
+            return {
+                ...state,
+                passwordHelperText: action.passwordHelperText,
+                passwordError: true
+            }
         default:
             return state
     }
@@ -46,9 +55,12 @@ const passwordReducer = (state, action) => {
 
 function Auth() {
     const { pathname } = useLocation()
+    const history = useHistory()
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
+    const [fingerPrint, setFingerPrint] = useState('')
     const [password, dispatchPassword] = useReducer(passwordReducer, {
         passwordValue: '',
         passwordHelperText: '',
@@ -105,7 +117,42 @@ function Auth() {
     const handleSubmit = e => {
         e.preventDefault();
 
-        alert('submitted !!!')
+        dispatch(toggleBackdrop())
+
+        if (pathname === '/signup') {
+            dispatch(registerUser({
+                password1: passwordValue,
+                password2: confirmPasswordValue,
+                deviceID: fingerPrint
+            }))
+            .unwrap()
+            .then(res => {
+                dispatch(toggleBackdrop())
+                console.log('then block');
+            })
+            .catch(err => {
+                dispatch(toggleBackdrop())
+                console.log('catch block')
+            })
+        } else if (pathname === '/login') {
+            dispatch(loginUser({
+                password: passwordValue,
+                deviceID: fingerPrint
+            }))
+            .unwrap()
+            .then(() => {
+                dispatch(toggleBackdrop())
+                history.push('/dashboard')
+            })
+            .catch(err => {
+                dispatch(toggleBackdrop())
+                dispatchPassword({
+                    type: 'LOGIN_ERROR',
+                    passwordHelperText: err.error[0]
+                })
+                console.log(err)
+            })
+        }
     }
 
     useEffect(() => {
@@ -147,7 +194,7 @@ function Auth() {
         // Get the visitor identifier when you need it.
         fpPromise
             .then(fp => fp.get())
-            .then(result => console.log(result.visitorId));
+            .then(result => setFingerPrint(result.visitorId));
     }, [])
 
     return (

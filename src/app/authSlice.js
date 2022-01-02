@@ -1,14 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { HTTP_STATUS } from '../constants/httpStatus'
 import axios from './axios'
 
 const namespace = 'auth'
 
-export const registerUser = createAsyncThunk(`${namespace}/registerUser`, async (user) => {
+export const registerUser = createAsyncThunk(`${namespace}/registerUser`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('/accounts/register/', user)
+    const { data } = await axios.post('/accounts/register/', objData)
     return data;
   } catch (err) {
-    console.log(err)
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const loginUser = createAsyncThunk(`${namespace}/loginUser`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/accounts/login/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
   }
 })
 
@@ -16,7 +26,9 @@ export const registerUser = createAsyncThunk(`${namespace}/registerUser`, async 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: { status: null, userDetails: null }
+    register: { status: null, error: null },
+    login: { status: null, error: null },
+    token: null,
   },
   reducers: {
     // setSelectedWallet(state, action) {
@@ -24,15 +36,35 @@ const authSlice = createSlice({
     // },
   },
   extraReducers: {
+    /**
+     * register
+     */
     [registerUser.pending](state) {
-      state.user.status = 'pending'
+      state.register.status = HTTP_STATUS.PENDING
     },
     [registerUser.fulfilled](state, { payload }) {
-      state.user.status = 'fulfilled'
-      state.user.userDetails = payload
+      state.register.status = HTTP_STATUS.FULFILLED
+      state.token = payload.key
+      localStorage.setItem('mint-engine', JSON.stringify(payload.key))
     },
-    [registerUser.rejected](state, { error }) {
-      state.user.userDetails = 'rejected'
+    [registerUser.rejected](state, { payload }) {
+      state.register.status = HTTP_STATUS.REJECTED
+      state.register.error = payload
+    },
+    /**
+     * login
+     */
+    [loginUser.pending](state) {
+      state.login.status = HTTP_STATUS.PENDING
+    },
+    [loginUser.fulfilled](state, { payload }) {
+      state.login.status = HTTP_STATUS.FULFILLED
+      state.token = payload.key
+      localStorage.setItem('mint-engine', JSON.stringify(payload.key))
+    },
+    [loginUser.rejected](state, { payload }) {
+      state.login.status = HTTP_STATUS.REJECTED
+      state.login.error = payload
     },
   }
 })
