@@ -3,7 +3,7 @@ import * as Styles from './walletCard'
 import { Button } from '../UI/Button/button'
 import { Link } from 'react-router-dom'
 
-function WalletCard({ children, walletSetup, buttonText, title, text, image, link }) {
+function WalletCard({ children, walletSetup, buttonText, title, text, image, link, handleClick }) {
 
     return (
         <Styles.Root>
@@ -20,9 +20,9 @@ function WalletCard({ children, walletSetup, buttonText, title, text, image, lin
                     <Styles.Text>{ text }</Styles.Text>
                     {
                         !walletSetup &&
-                        <Link to={link} style={{ textDecoration: 'none' }}>
-                            <Button wide>{ buttonText }</Button>
-                        </Link>
+                        // <Link to={link} style={{ textDecoration: 'none' }}>
+                            <Button wide onClick={handleClick}>{ buttonText }</Button>
+                        // {/* </Link> */}
                     }
                 </div>
             </Styles.Container>

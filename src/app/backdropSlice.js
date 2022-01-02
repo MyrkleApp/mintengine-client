@@ -6,12 +6,15 @@ const backdropSlice = createSlice({
     open: false,
   },
   reducers: {
-    toggleBackdrop(state) {
-        state.open = !state.open;
+    showBackdrop(state) {
+        state.open = true
+    },
+    hideBackdrop(state) {
+        state.open = false
     }
   },
 })
 
-export const { toggleBackdrop } = backdropSlice.actions
+export const { showBackdrop, hideBackdrop } = backdropSlice.actions
 
 export default backdropSlice.reducer

@@ -8,49 +8,8 @@ import * as Styles from './auth'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useDispatch } from 'react-redux'
 import { loginUser, registerUser } from '../../app/authSlice'
-import { toggleBackdrop } from '../../app/backdropSlice'
-
-
-const passwordReducer = (state, action) => {
-    switch (action.type) {
-        case 'SIGNUP_PASSWORD_INPUT':
-            return {
-                ...state,
-                passwordValue: action.passwordValue,
-                passwordHelperText: 'Minimum of 8 characters in length, include a number.',
-                passwordError: false,
-                passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
-            }
-        case 'SIGNUP_PASSWORD_BLUR':
-            return {
-                ...state,
-                passwordHelperText: state.passwordIsValid ? '' : action.passwordHelperText,
-                passwordError: !state.passwordIsValid,
-            }
-        case 'CONFIRM_PASSWORD_INPUT':
-            return {
-                ...state,
-                confirmPasswordValue: action.confirmPasswordValue,
-                confirmPasswordHelperText: (action.confirmPasswordValue.trim().length > 0 && action.confirmPasswordIsValid === false) ? 'Password does not match' : '',
-                confirmPasswordError: !action.confirmPasswordIsValid,
-                confirmPasswordIsValid: action.confirmPasswordIsValid
-            }
-        case 'LOGIN_PASSWORD_INPUT':
-            return {
-                ...state,
-                passwordValue: action.passwordValue,
-                passwordIsValid: (action.passwordValue.trim().length >= 8) && (/\d/.test(action.passwordValue))
-            }
-        case 'LOGIN_ERROR':
-            return {
-                ...state,
-                passwordHelperText: action.passwordHelperText,
-                passwordError: true
-            }
-        default:
-            return state
-    }
-}
+import { showBackdrop, hideBackdrop } from '../../app/backdropSlice'
+import { passwordReducer } from './reducers'
 
 
 function Auth() {
@@ -117,7 +76,7 @@ function Auth() {
     const handleSubmit = e => {
         e.preventDefault();
 
-        dispatch(toggleBackdrop())
+        dispatch(showBackdrop())
 
         if (pathname === '/signup') {
             dispatch(registerUser({
@@ -127,11 +86,12 @@ function Auth() {
             }))
             .unwrap()
             .then(res => {
-                dispatch(toggleBackdrop())
+                dispatch(hideBackdrop())
+                history.push('/wallet-setup')
                 console.log('then block');
             })
             .catch(err => {
-                dispatch(toggleBackdrop())
+                dispatch(hideBackdrop())
                 console.log('catch block')
             })
         } else if (pathname === '/login') {
@@ -141,11 +101,11 @@ function Auth() {
             }))
             .unwrap()
             .then(() => {
-                dispatch(toggleBackdrop())
+                dispatch(hideBackdrop())
                 history.push('/dashboard')
             })
             .catch(err => {
-                dispatch(toggleBackdrop())
+                dispatch(hideBackdrop())
                 dispatchPassword({
                     type: 'LOGIN_ERROR',
                     passwordHelperText: err.error[0]

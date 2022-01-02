@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import React from 'react'
+import { useHistory, useParams } from 'react-router'
 import { Button } from '../../components/UI/Button/button'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
+import { useSelector } from 'react-redux'
 
 
 function CreateNewWallet() {
     const { wallet } = useParams()
-    const [passPhrase, setPassPhrase] = useState([ "one", "two", "five..." ])
+    const history = useHistory()
+    const passPhrase = useSelector(state => state.algorand.phrase).split(" ")
 
+    const handleClick = () => {
+        if (wallet === 'algo') {
+            history.push('/verify-wallet/algo')
+        }
+    }
 
     return (
         <AuthWrapper>
@@ -28,9 +35,9 @@ function CreateNewWallet() {
                         wallet === 'algo' 
                         ?   <Styles.WordsBox>
                             {
-                                Array(25).fill().map((item, i) => (
+                                passPhrase?.map((item, i) => (
                                     <Styles.Word key={i}>
-                                        { `${i + 1}. wallet` }
+                                        { `${i + 1}. ${item}` }
                                     </Styles.Word>
                                 ))
                             }
@@ -42,7 +49,7 @@ function CreateNewWallet() {
                     
                     <Styles.ButtonsContainer>
                         <CopyButtonWithTooltip passPhrase={passPhrase} text="copy" />       
-                        <Button fullWidth>
+                        <Button fullWidth onClick={handleClick}>
                         {
                             wallet === 'algo'
                             ? 'I’VE BACKED UP MY PASSPHRASE'
