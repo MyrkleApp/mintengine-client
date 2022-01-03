@@ -25,16 +25,13 @@ export const confirmAlgorandPassphrase = createAsyncThunk(`${namespace}/confirmA
 const algorandSlice = createSlice({
   name: 'algorand',
   initialState: {
-    createStatus: null,
+    createWallet: { status: null, error: null },
     id: null,
     address: null,
-    phrase: null,
-    algoStatus: null,
+    phrase: "",
+    walletStatus: null,
     user: null,
-    error: null,
-    confirmStatus: null,
-    confirmData: null,
-    confirmError: null,
+    confirmWallet: { status: null, success: null, error: "" },
   },
 //   reducers: {
     
@@ -44,34 +41,34 @@ const algorandSlice = createSlice({
      * create algo wallet
      */
     [createAlgorandWallet.pending](state) {
-      state.createStatus = HTTP_STATUS.PENDING
+      state.createWallet.status = HTTP_STATUS.PENDING
     },
     [createAlgorandWallet.fulfilled](state, { payload }) {
-      state.createStatus = HTTP_STATUS.FULFILLED
+      state.createWallet.status = HTTP_STATUS.FULFILLED
       state.id = payload.id
       state.address = payload.address
       state.phrase = payload.phrase
-      state.algoStatus = payload.status
+      state.walletStatus = payload.status
       state.user = payload.user
-      state.error = null
+      state.createWallet.error = null
     },
     [createAlgorandWallet.rejected](state, { payload }) {
-      state.createStatus =  HTTP_STATUS.REJECTED
-      state.error = payload
+      state.createWallet.status =  HTTP_STATUS.REJECTED
+      state.createWallet.error = payload
     },
     /**
      * confirm algo passphrase
      */
     [confirmAlgorandPassphrase.pending](state) {
-      state.confirmStatus = HTTP_STATUS.PENDING
+      state.confirmWallet.status = HTTP_STATUS.PENDING
     },
     [confirmAlgorandPassphrase.fulfilled](state, { payload }) {
-      state.confirmStatus = HTTP_STATUS.FULFILLED
-      state.confirmData = payload
+      state.confirmWallet.status = HTTP_STATUS.FULFILLED
+      state.confirmWallet.success = payload
     },
     [confirmAlgorandPassphrase.rejected](state, { payload }) {
-      state.confirmStatus =  HTTP_STATUS.REJECTED
-      state.confirmError = payload
+      state.confirmWallet.status =  HTTP_STATUS.REJECTED
+      state.confirmWallet.error = payload.error
     }
   }
 })
