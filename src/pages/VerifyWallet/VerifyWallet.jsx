@@ -5,15 +5,23 @@ import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { confirmAlgorandPassphrase } from '../../app/algorandSlice'
+import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
+import Modal from '../../components/UI/Modal/Modal'
+import { ModalContent } from './verifyWallet'
 
 function VerifyWallet() {
+    const dispatch = useDispatch()
     const { wallet } = useParams()
     const [xrpSeed, setXrpSeed] = useState("")
-    const passPhrase = useSelector(state => state.algorand.phrase).split(" ")
+    const passphrase = useSelector(state => state.algorand.phrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
+    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const { num3, num5, num12, num15, num24 } = missingWords
+    const [checkbox, setCheckbox] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+
 
     const handlePasteSeed = () => {
         navigator.clipboard.readText().then(text => setXrpSeed(text))
@@ -27,7 +35,56 @@ function VerifyWallet() {
         })
     }
 
-    // [2, 4, 11, 14, 23].includes(i) 
+    const handleOpenModal = () => {
+        setOpenModal(true)
+    }
+
+    const handleCloseModal = () => {
+        setOpenModal(false)
+    }
+
+    const showDisclaimerModal = () => {
+        handleOpenModal()
+    }
+
+    const handleVerifyPassphrase = () => {
+        handleCloseModal()
+
+        const completedPassphrase = passphrase
+        completedPassphrase[2] = num3
+        completedPassphrase[4] = num5
+        completedPassphrase[11] = num12
+        completedPassphrase[14] = num15
+        completedPassphrase[23] = num24
+
+        dispatch(showBackdrop())
+        dispatch(confirmAlgorandPassphrase({ entered_passphrase: completedPassphrase.join(" ") }))
+        .unwrap()
+        .then(res => {
+            dispatch(hideBackdrop())
+            console.log(res)
+        })
+        .catch(err => {
+            dispatch(hideBackdrop())
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        if (
+            num3.trim().length > 0 &&
+            num5.trim().length > 0 &&
+            num12.trim().length > 0 &&
+            num15.trim().length > 0 &&
+            num24.trim().length > 0 
+        ) {
+            setButtonIsEnabled(true)
+        } else {
+            setButtonIsEnabled(false)
+        }
+    }, [missingWords])
+
+    
 
     return (
         <AuthWrapper>
@@ -44,7 +101,7 @@ function VerifyWallet() {
                     { 
                         wallet === 'algo' 
                         ?   <Styles.WordsBox>
-                                { passPhrase?.slice(0, 2)?.map((item, i) => (
+                                { passphrase?.slice(0, 2)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 1}. ${item}` }
                                     </Styles.Word>
@@ -56,7 +113,7 @@ function VerifyWallet() {
                                     </Styles.WordInput>
                                 </Styles.Word>
                                 <Styles.Word>                                        
-                                    { `${4}. ${passPhrase[3]}` }
+                                    { `${4}. ${passphrase[3]}` }
                                 </Styles.Word>
                                 <Styles.Word>
                                     <Styles.WordInput>
@@ -64,7 +121,7 @@ function VerifyWallet() {
                                         <input name="num5" value={num5} onChange={handleAlgoChange} />
                                     </Styles.WordInput>
                                 </Styles.Word>
-                                { passPhrase?.slice(5, 11)?.map((item, i) => (
+                                { passphrase?.slice(5, 11)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 6}. ${item}` }
                                     </Styles.Word>
@@ -75,7 +132,7 @@ function VerifyWallet() {
                                         <input name="num12" value={num12} onChange={handleAlgoChange} />
                                     </Styles.WordInput>
                                 </Styles.Word>
-                                { passPhrase?.slice(12, 14)?.map((item, i) => (
+                                { passphrase?.slice(12, 14)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 13}. ${item}` }
                                     </Styles.Word>
@@ -86,7 +143,7 @@ function VerifyWallet() {
                                         <input name="num15" value={num15} onChange={handleAlgoChange} />
                                     </Styles.WordInput>
                                 </Styles.Word>
-                                { passPhrase?.slice(15, 23)?.map((item, i) => (
+                                { passphrase?.slice(15, 23)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 16}. ${item}` }
                                     </Styles.Word>
@@ -98,7 +155,7 @@ function VerifyWallet() {
                                     </Styles.WordInput>
                                 </Styles.Word>
                                 <Styles.Word>                                        
-                                    { `25. ${passPhrase[24]}` }
+                                    { `25. ${passphrase[24]}` }
                                 </Styles.Word>
                             </Styles.WordsBox>
                         :   <Styles.XrpWordsBox>
@@ -113,12 +170,30 @@ function VerifyWallet() {
                                 paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
                             </CopyButton> 
                         }      
-                        <Button fullWidth disabled>verify my backup</Button>
+                        <Button 
+                            fullWidth 
+                            disabled={!buttonIsEnabled} 
+                            onClick={showDisclaimerModal}
+                        >   
+                            verify my backup
+                        </Button>
                     </Styles.ButtonsContainer>
 
-                    
-                    
                 </Styles.Container>
+
+                <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
+                    <ModalContent>
+                        <h2>DISCLAIMER</h2>
+                        <p>Due to security concerns, Mint Engine does not keep any record of our users' passphrase/seed. Thus, we will not be able to recover your passphrase/seed for you. </p>
+                        <p>So, if you did not back up the seed properly or if you lost the seed, we will not be able to recover wallet data for you.</p>
+                        <div>
+                            <input type="checkbox" value={checkbox} onChange={e => setCheckbox(prevState => !prevState)} />
+                            <p>I understand that Mint Engine is not responsible for the wallet backup process.</p>
+                        </div>
+                        <Button fullWidth disabled={!checkbox} onClick={handleVerifyPassphrase}>continue</Button>
+                        <h3 onClick={handleCloseModal}>CANCEL</h3>
+                    </ModalContent>
+                </Modal>
             </WalletWrapper>
         </AuthWrapper>
     )
