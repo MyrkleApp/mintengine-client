@@ -23,7 +23,7 @@ function WalletSetup() {
 
     const handleCreateWallet = () => {
         dispatch(showBackdrop())
-        dispatch(createAlgorandWallet({ status: 'created' }))
+        dispatch(createAlgorandWallet({ status: 'create' }))
         .then(res => {
             console.log(res)
             dispatch(hideBackdrop())

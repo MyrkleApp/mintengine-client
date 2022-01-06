@@ -6,7 +6,7 @@ import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import { useDispatch, useSelector } from 'react-redux'
-import { confirmAlgorandPassphrase } from '../../app/algorandSlice'
+import { confirmAlgorandPassphrase, incorrectPassphraseError } from '../../app/algorandSlice'
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import { ModalContent } from './verifyWallet'
@@ -17,7 +17,8 @@ function VerifyWallet() {
     const history = useHistory()
     const { wallet } = useParams()
     const [xrpSeed, setXrpSeed] = useState("")
-    const passphrase = useSelector(state => state.algorand.phrase).split(" ")
+    const walletId = useSelector(state => state.algorand.id)
+    const passphrase = useSelector(state => state.algorand.passphrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const { num3, num5, num12, num15, num24 } = missingWords
@@ -62,8 +63,18 @@ function VerifyWallet() {
         completedPassphrase[14] = num15
         completedPassphrase[23] = num24
 
+        if (completedPassphrase.join(" ") !== JSON.parse(localStorage.getItem('algophrase'))) {
+            dispatch(incorrectPassphraseError({
+                status: 'create',
+                error: 'The entered passphrase does not match'
+            }))
+            setModalContentStatus('error')
+            handleOpenModal()
+            return
+        }
+
         dispatch(showBackdrop())
-        dispatch(confirmAlgorandPassphrase({ entered_passphrase: completedPassphrase.join(" ") }))
+        dispatch(confirmAlgorandPassphrase({ id: walletId, status: 'confirmed' }))
         .unwrap()
         .then(res => {
             dispatch(hideBackdrop())
@@ -79,6 +90,7 @@ function VerifyWallet() {
             handleOpenModal()
             console.log(err)
         })
+
     }
 
     useEffect(() => {

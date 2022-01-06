@@ -26,8 +26,8 @@ export const loginUser = createAsyncThunk(`${namespace}/loginUser`, async (objDa
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    register: { status: null, error: null },
-    login: { status: null, error: null },
+    register: { status: null, error: "" },
+    login: { status: null, error: "" },
     token: null,
   },
   reducers: {
@@ -49,7 +49,7 @@ const authSlice = createSlice({
     },
     [registerUser.rejected](state, { payload }) {
       state.register.status = HTTP_STATUS.REJECTED
-      state.register.error = payload
+      state.register.error = payload.error[0]
     },
     /**
      * login
@@ -65,6 +65,7 @@ const authSlice = createSlice({
     [loginUser.rejected](state, { payload }) {
       state.login.status = HTTP_STATUS.REJECTED
       state.login.error = payload
+
     },
   }
 })

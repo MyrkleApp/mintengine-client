@@ -92,6 +92,10 @@ function Auth() {
             })
             .catch(err => {
                 dispatch(hideBackdrop())
+                dispatchPassword({
+                    type: 'LOGIN_ERROR',
+                    passwordHelperText: err.error[0]
+                })
                 console.log('catch block')
             })
         } else if (pathname === '/login') {

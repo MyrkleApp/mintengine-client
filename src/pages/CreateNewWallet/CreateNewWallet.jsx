@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 function CreateNewWallet() {
     const { wallet } = useParams()
     const history = useHistory()
-    const passPhrase = useSelector(state => state.algorand.phrase).split(" ")
+    const passPhrase = useSelector(state => state.algorand.passphrase).split(" ")
 
     const handleClick = () => {
         if (wallet === 'algo') {

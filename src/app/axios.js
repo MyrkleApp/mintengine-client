@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseUrl = "http://mint-back-test.herokuapp.com"
+export const baseUrl = "https://mint-back-test.herokuapp.com"
 
 const API = axios.create({ baseURL: baseUrl })
 
