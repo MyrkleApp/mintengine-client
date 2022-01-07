@@ -6,8 +6,12 @@ const API = axios.create({ baseURL: baseUrl })
 
 API.interceptors.request.use(req => {
 
-    if (localStorage.getItem('mint-engine')) {
-        req.headers.Authorization = `Token ${JSON.parse(localStorage.getItem('mint-engine'))}`
+    if (req.url !== ('/accounts/register/' || '/accounts/login/')) {
+
+        if (localStorage.getItem('mint-engine')) {
+            req.headers.Authorization = `Token ${JSON.parse(localStorage.getItem('mint-engine'))}`
+        }
+    
     }
 
     return req

@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { confirmAlgorandPassphrase, incorrectPassphraseError } from '../../app/algorandSlice'
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import Modal from '../../components/UI/Modal/Modal'
-import { ModalContent } from './verifyWallet'
-import successImg from '../../assets/icons/success.png'
+import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
+import useDisclaimer from '../../Hooks/Disclaimer'
+
 
 function VerifyWallet() {
     const dispatch = useDispatch()
@@ -22,10 +23,8 @@ function VerifyWallet() {
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const { num3, num5, num12, num15, num24 } = missingWords
-    const [checkbox, setCheckbox] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [modalContentStatus, setModalContentStatus] = useState('default')
-    const confirmWalletError = useSelector(state => state.algorand.confirmWallet.error)
+    const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
 
 
     const handlePasteSeed = () => {
@@ -46,7 +45,7 @@ function VerifyWallet() {
 
     const handleCloseModal = () => {
         setOpenModal(false)
-        setModalContentStatus('default')
+        handleModalStatus('default')
     }
 
     const showDisclaimerModal = () => {
@@ -68,7 +67,7 @@ function VerifyWallet() {
                 status: 'create',
                 error: 'The entered passphrase does not match'
             }))
-            setModalContentStatus('error')
+            handleModalStatus('error')
             handleOpenModal()
             return
         }
@@ -79,14 +78,14 @@ function VerifyWallet() {
         .then(res => {
             dispatch(hideBackdrop())
             //open modal with success message
-            setModalContentStatus('success')
+            handleModalStatus('success')
             handleOpenModal()
             console.log(res)
         })
         .catch(err => {
             dispatch(hideBackdrop())
             //open modal with error message
-            setModalContentStatus('error')
+            handleModalStatus('error')
             handleOpenModal()
             console.log(err)
         })
@@ -133,54 +132,44 @@ function VerifyWallet() {
                                         { `${i + 1}. ${item}` }
                                     </Styles.Word>
                                 ))}
-                                <Styles.Word>
-                                    <Styles.WordInput>
-                                        <span>3.</span>
-                                        <input name="num3" value={num3} onChange={handleAlgoChange} />
-                                    </Styles.WordInput>
-                                </Styles.Word>
+                                <Styles.WordInput>
+                                    <span>3.</span>
+                                    <input name="num3" value={num3} onChange={handleAlgoChange} />
+                                </Styles.WordInput>
                                 <Styles.Word>                                        
                                     { `${4}. ${passphrase[3]}` }
                                 </Styles.Word>
-                                <Styles.Word>
-                                    <Styles.WordInput>
-                                        <span>5.</span>
-                                        <input name="num5" value={num5} onChange={handleAlgoChange} />
-                                    </Styles.WordInput>
-                                </Styles.Word>
+                                <Styles.WordInput>
+                                    <span>5.</span>
+                                    <input name="num5" value={num5} onChange={handleAlgoChange} />
+                                </Styles.WordInput>
                                 { passphrase?.slice(5, 11)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 6}. ${item}` }
                                     </Styles.Word>
                                 ))}
-                                <Styles.Word>
-                                    <Styles.WordInput>
-                                        <span>12.</span>
-                                        <input name="num12" value={num12} onChange={handleAlgoChange} />
-                                    </Styles.WordInput>
-                                </Styles.Word>
+                                <Styles.WordInput>
+                                    <span>12.</span>
+                                    <input name="num12" value={num12} onChange={handleAlgoChange} />
+                                </Styles.WordInput>
                                 { passphrase?.slice(12, 14)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 13}. ${item}` }
                                     </Styles.Word>
                                 ))}
-                                <Styles.Word>
-                                    <Styles.WordInput>
-                                        <span>15.</span>
-                                        <input name="num15" value={num15} onChange={handleAlgoChange} />
-                                    </Styles.WordInput>
-                                </Styles.Word>
+                                <Styles.WordInput>
+                                    <span>15.</span>
+                                    <input name="num15" value={num15} onChange={handleAlgoChange} />
+                                </Styles.WordInput>
                                 { passphrase?.slice(15, 23)?.map((item, i) => (
                                     <Styles.Word key={i}>                                        
                                         { `${i + 16}. ${item}` }
                                     </Styles.Word>
                                 ))}
-                                <Styles.Word>
-                                    <Styles.WordInput>
-                                        <span>24.</span>
-                                        <input name="num24" value={num24} onChange={handleAlgoChange} />
-                                    </Styles.WordInput>
-                                </Styles.Word>
+                                <Styles.WordInput>
+                                    <span>24.</span>
+                                    <input name="num24" value={num24} onChange={handleAlgoChange} />
+                                </Styles.WordInput>
                                 <Styles.Word>                                        
                                     { `25. ${passphrase[24]}` }
                                 </Styles.Word>
@@ -209,48 +198,28 @@ function VerifyWallet() {
                 </Styles.Container>
 
                 <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
-                    <ModalContent>
+                    <Styles.ModalContent>
                     {
                         modalContentStatus === 'default' &&
-                        <>
-                            <h2 className="disclaimerTitle">DISCLAIMER</h2>
-                            <p>Due to security concerns, Mint Engine does not keep any record of our users' passphrase/seed. Thus, we will not be able to recover your passphrase/seed for you. </p>
-                            <p>So, if you did not back up the seed properly or if you lost the seed, we will not be able to recover wallet data for you.</p>
-                            <div className="disclaimer">
-                                <input type="checkbox" value={checkbox} onChange={e => setCheckbox(prevState => !prevState)} checked={checkbox} />
-                                <p>I understand that Mint Engine is not responsible for the wallet backup process.</p>
-                            </div>
-                            <Button fullWidth disabled={!checkbox} onClick={handleVerifyPassphrase}>continue</Button>
-                            <h3 onClick={handleCloseModal}>CANCEL</h3>
-                        </>
+                        <DisclaimerDefault
+                            checkbox={checkbox}
+                            toggleCheckbox={toggleCheckbox}
+                            handleContinue={handleVerifyPassphrase}
+                            handleCloseModal={handleCloseModal}
+                        />
                     }
-
                     {
                         modalContentStatus === 'success' &&
-                        <>
-                            <div className="success">
-                                <img src={successImg} alt="" />
-                            </div>
-                            <h2 className="success">SUCCESS!</h2>
-                            <p className="success">You have successfully created your wallet.</p>
-                            <Button 
-                                fullWidth 
-                                style={{ marginBottom: '30px' }}
-                                onClick={navigateToDashboard}
-                            >
-                                access my wallet
-                            </Button>
-                        </>
+                        <DisclaimerSuccess 
+                            create
+                            handleClick={navigateToDashboard} 
+                        />
                     }
-
                     {
                         modalContentStatus === 'error' &&
-                        <>
-                            <h2 className="error">ERROR!</h2>
-                            <p className="error">{confirmWalletError}</p>
-                        </>
+                        <DisclaimerError />
                     }
-                    </ModalContent>
+                    </Styles.ModalContent>
                 </Modal>
             </WalletWrapper>
         </AuthWrapper>

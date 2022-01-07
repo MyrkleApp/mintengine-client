@@ -27,12 +27,16 @@ function WalletSetup() {
         .then(res => {
             console.log(res)
             dispatch(hideBackdrop())
-            history.push('/create-wallet/algo')
+            history.push(`/create-wallet/${selectedWallet}`)
         })
         .catch(err => {
             console.log(err)
             dispatch(hideBackdrop())
         })
+    }
+
+    const handleImportWallet = () => {
+        history.push(`/import-wallet/${selectedWallet}`)
     }
 
     return (
@@ -80,6 +84,7 @@ function WalletSetup() {
                         text="Restore your existing Algorand wallet using your passphrase."
                         buttonText="import wallet"
                         link={`/import-wallet/${selectedWallet}`}
+                        handleClick={handleImportWallet}
                     >
                         <SystemUpdateAltIcon fontSize="large" style={{ color: '#097246' }} />
                     </WalletCard>

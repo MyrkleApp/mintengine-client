@@ -1,18 +1,85 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { useHistory, useParams } from 'react-router'
 import { Button, CopyButton } from '../../components/UI/Button/button'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
+import { useDispatch } from 'react-redux'
+import { createAlgorandWallet } from '../../app/algorandSlice'
+import Modal from '../../components/UI/Modal/Modal'
+import useDisclaimer from '../../Hooks/Disclaimer'
+import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
+import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
+
 
 
 function ImportWallet() {
+    const dispatch = useDispatch()
+    const history = useHistory()
     const { wallet } = useParams()
     const [xrpSeed, setXrpSeed] = useState("")
+    const [missingWords, setMissingWords] = useState(Array(25).fill(''))
+    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
+    const [openModal, setOpenModal] = useState(false)
+    const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
 
     const handlePasteSeed = () => {
         navigator.clipboard.readText().then(text => setXrpSeed(text))
+    }
+
+    const handleChange = (e, i) => {
+        const values = [...missingWords]
+        values[i] = e.target.value
+        setMissingWords(values)
+    }
+
+    useEffect(() => {
+        if (missingWords.every(word => word.trim().length > 0)) {
+            setButtonIsEnabled(true)
+        } else {
+            setButtonIsEnabled(false)
+        }
+    }, [missingWords])
+
+    const handleOpenModal = () => {
+        setOpenModal(true)
+    }
+
+    const handleCloseModal = () => {
+        setOpenModal(false)
+        handleModalStatus('default')
+    }
+
+    const showDisclaimerModal = () => {
+        handleOpenModal()
+    }
+
+    const handleImportWallet = () => {
+        // alert('Import wallet proceed!')
+        handleCloseModal()
+        dispatch(showBackdrop())
+        const phrase = missingWords.join(" ")
+
+        dispatch(createAlgorandWallet({ status: 'import', phrase: phrase }))
+        .unwrap()
+        .then(res => {
+            dispatch(hideBackdrop())
+            handleModalStatus('success')
+            handleOpenModal()
+            console.log(res)
+        })
+        .catch(err => {
+            dispatch(hideBackdrop())
+            handleModalStatus('error')
+            handleOpenModal()
+            console.log(err)
+        })
+    }
+
+    const navigateToDashboard = () => {
+        handleCloseModal()
+        history.push('/dashboard')
     }
 
     return (
@@ -31,13 +98,11 @@ function ImportWallet() {
                         wallet === 'algo' 
                         ?   <Styles.WordsBox import>
                             {
-                                Array(25).fill().map((item, i) => (
-                                    <Styles.Word key={i}>                                        
-                                        <Styles.WordInput>
-                                            <span>{i + 1}.</span>
-                                            <input />
-                                        </Styles.WordInput>
-                                    </Styles.Word>
+                                missingWords.map((_, i) => (
+                                    <Styles.WordInput>
+                                        <span>{i+1}.</span>
+                                        <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
+                                    </Styles.WordInput>
                                 ))
                             }
                             </Styles.WordsBox>
@@ -53,10 +118,32 @@ function ImportWallet() {
                                 paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
                             </CopyButton> 
                         }      
-                        <Button fullWidth disabled>verify my backup</Button>
+                        <Button fullWidth disabled={!buttonIsEnabled} onClick={showDisclaimerModal}>verify my backup</Button>
                     </Styles.ButtonsContainer>
 
                 </Styles.Container>
+
+                <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
+                    <Styles.ModalContent>
+                    {
+                        modalContentStatus === 'default' &&
+                        <DisclaimerDefault
+                            checkbox={checkbox}
+                            toggleCheckbox={toggleCheckbox}
+                            handleContinue={handleImportWallet}
+                            handleCloseModal={handleCloseModal}
+                        />
+                    }
+                    {
+                        modalContentStatus === 'success' &&
+                        <DisclaimerSuccess handleClick={navigateToDashboard} />
+                    }
+                    {
+                        modalContentStatus === 'error' &&
+                        <DisclaimerError />
+                    }
+                    </Styles.ModalContent>
+                </Modal>
             </WalletWrapper>
         </AuthWrapper>
     )
