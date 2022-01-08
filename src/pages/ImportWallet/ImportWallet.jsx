@@ -56,7 +56,6 @@ function ImportWallet() {
     }
 
     const handleImportWallet = () => {
-        // alert('Import wallet proceed!')
         handleCloseModal()
         dispatch(showBackdrop())
         const phrase = missingWords.join(" ")
