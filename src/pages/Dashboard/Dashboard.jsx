@@ -1,10 +1,11 @@
 import React from 'react'
+import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 
 function Dashboard() {
     return (
-        <div>
-            Dashboard page
-        </div>
+        <DashboardWrapper>
+            
+        </DashboardWrapper>
     )
 }
 
