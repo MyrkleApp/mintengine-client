@@ -9,7 +9,7 @@ function WalletWrapper({ children, title, description, link }) {
     return (
         <Grid container>
             <Grid item xs={1} md={2} />
-            <Grid item xs={10} md={7}>
+            <Grid item xs={10} md={8}>
                 <Styles.Title>
                     {
                         link &&
@@ -24,7 +24,7 @@ function WalletWrapper({ children, title, description, link }) {
                 </Styles.Description>
                 { children }
             </Grid>
-            <Grid item xs={1} md={3} />
+            <Grid item xs={1} md={2} />
         </Grid>
     )
 }

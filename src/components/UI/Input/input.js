@@ -6,7 +6,8 @@ export const Root = styled.div `
     position: relative;
 
     & > label {
-        font-size: 15px;
+        font-size: 18px;
+        font-weight: 500;
         color: #043923;
         padding-bottom: 7px;
     }
@@ -15,24 +16,26 @@ export const Root = styled.div `
         color: #0EB56F;
         position: absolute;
         cursor: pointer;
-        right: 10px;
-        top: 38px;
+        right: 20px;
+        top: 50px;
+        transform: scale(1.5);
     }
 
 `
 
 export const CustomInput = styled.input`
-    height: 45px;
+    height: 65px;
     padding-left: 15px;
-    padding-right: 40px;
+    padding-right: 58px;
     /* margin: 10px 0px 20px 0px; */
-    border: 1px solid #043923;
+    border: 2px solid #043923;
     border-radius: 12px;
     background-color: transparent;
+    font-size: 18px;
 
     &:focus {
         outline: none;
-        border: 1px solid #0EB56F;
+        border: 2px solid #0EB56F;
     }
 `
 
@@ -40,5 +43,5 @@ export const HelperText = styled.span`
     margin-top: 5px;
     margin-bottom: 5px;
     color: ${props => !props.error ? '#043923' : 'red'};
-    font-size: 12px;
+    font-size: 15px;
 `

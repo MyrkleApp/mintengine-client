@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Root = styled.div`
     width: 100%;
     background-color: white;
-    padding: 15px 0;
+    padding: 20px 0;
     box-shadow: 0px 8px 8px rgba(14, 181, 111, 0.06);
     border-radius: 12px;
     margin-bottom: 20px;
@@ -43,12 +43,13 @@ export const Icon = styled.div`
 export const Title = styled.h2`
     color: #043923;
     margin-top: 0;
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: 600;
     text-transform: uppercase;
 `
 
 export const Text = styled.p`
     color: #3E554B;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 17px;
 `

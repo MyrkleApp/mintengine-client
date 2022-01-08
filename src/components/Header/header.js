@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Root = styled.header`
-  height: 70px;
+  height: 85px;
   background-color: #0EB56F;
   display: flex;
   justify-content: center;
@@ -17,11 +17,13 @@ export const Root = styled.header`
 
   & .left a {
     color: white;
+    font-size: 24px;
     text-decoration: none;
   }
 
   & .right a {
     color: white;
+    font-size: 20px;
     text-decoration: none;
   }
 

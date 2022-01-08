@@ -18,12 +18,12 @@ function Header() {
                     </div>
                     <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>
                         <Link to={ pathname === '/signup' ? '/login' : '/signup' }>
-                            { pathname === '/signup' ? 'LOGIN' : 'SIGNUP' }
+                            { pathname === '/signup' ? 'LOGIN' : 'SIGN UP' }
                         </Link>
                     </div>
                 </div>
             </Styles.Root>
-            <Styles.WhiteStripe />
+            {/* <Styles.WhiteStripe /> */}
         </Fragment>
     )
 }

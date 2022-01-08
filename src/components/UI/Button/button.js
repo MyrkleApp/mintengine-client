@@ -5,7 +5,8 @@ export const Button = styled.button`
     color: ${props => props.outlined ? '#0EB56F' : '#FFFFFF'};
     text-transform: uppercase;
     width: ${props => props.fullWidth ? '100%' : props.wide ? 'calc(100% - 30px)' : 'auto'};
-    padding: 15px 35px;
+    padding: 25px 45px;
+    font-size: 18px;
     font-weight: bold;
     border-radius: 12px;
     border: ${props => props.outlined ? '1px solid #0EB56F' : 'none'};

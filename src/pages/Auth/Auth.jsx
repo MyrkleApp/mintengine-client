@@ -166,7 +166,7 @@ function Auth() {
             <Styles.Form onSubmit={handleSubmit}>
                 <Grid container>
                     <Grid item xs={1} md={2} />
-                    <Grid item container xs={10} md={6} rowSpacing={2} columnSpacing={1}>
+                    <Grid item container xs={10} md={7} rowSpacing={2} columnSpacing={1}>
                         <Grid item xs={12}>
                             <Styles.Title>{pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
                         </Grid>
@@ -204,7 +204,7 @@ function Auth() {
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid item xs={1} md={4} />
+                    <Grid item xs={1} md={3} />
                 </Grid>
             </Styles.Form>
         </AuthWrapper>

@@ -14,17 +14,17 @@ export const WordsBox = styled.div`
     display: flex;
     flex-flow: column wrap;
     width: 100%;
-    height: ${props => props.import ? '300px' : '250px'};
+    height: ${props => props.import ? '350px' : '320px'};
 
     @media(max-width: 600px) {
-        height: 380px;
+        height: 530px;
     }
 `
 
 export const Word = styled.div`
     color: #043923;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 17px;
+    margin-bottom: 13px;
     width: 33%;
     
     @media(max-width: 600px) {
@@ -38,8 +38,8 @@ export const WordInput = styled.div`
     align-items: baseline;
 
     color: #043923;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 17px;
+    margin-bottom: 13px;
     width: 33%;
 
     @media(max-width: 600px) {
@@ -49,6 +49,7 @@ export const WordInput = styled.div`
     & > input {
         width: calc(100% - 35px);
         border: none;
+        font-size: 17px;
         border-bottom: 1px dashed #043923;
         color: #043923;
         padding-left: 5px;

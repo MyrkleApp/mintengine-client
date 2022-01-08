@@ -3,9 +3,10 @@ import styled from 'styled-components'
 export const Title = styled.h1`
     color: #043923;
     text-transform: uppercase;
-    margin: 30px auto 10px auto;
+    margin: 50px auto 10px auto;
     position: relative;
-    font-size: 28px;
+    font-size: 32px;
+    font-weight: 600;
 
     @media (max-width: 800px) {
         margin: 70px auto 10px auto;
@@ -35,6 +36,7 @@ export const Title = styled.h1`
 
 export const Description = styled.p`
     color: #3E554B;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 22px;
+    margin: 13px auto 40px auto;
 `
