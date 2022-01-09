@@ -15,11 +15,28 @@ export const Root = styled.div `
     & .icon {
         color: #0EB56F;
         position: absolute;
-        cursor: pointer;
+        cursor: ${props => props.center ? 'auto' : 'pointer'};
         right: 20px;
         top: 50px;
-        transform: scale(1.5);
+        /* transform: scale(1.5); */
     }
+
+    &   input[type=date]::-webkit-inner-spin-button, 
+        input[type=date]::-webkit-calendar-picker-indicator,
+        input[type=date]::-webkit-cancel-icon {
+            display: none;
+            -webkit-appearance: none;
+    }
+
+    &   input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    &   input[type=number] {
+            -moz-appearance: textfield;
+        }
 
 `
 
@@ -29,9 +46,10 @@ export const CustomInput = styled.input`
     padding-right: 58px;
     /* margin: 10px 0px 20px 0px; */
     border: 2px solid #043923;
-    border-radius: 12px;
+    border-radius: 16px;
     background-color: transparent;
     font-size: 18px;
+    text-align: ${props => props.center ? 'center' : 'left'};
 
     &:focus {
         outline: none;

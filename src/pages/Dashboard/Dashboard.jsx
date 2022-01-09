@@ -1,9 +1,13 @@
 import { Grid } from '@mui/material'
 import React from 'react'
+import FormControl from '../../components/FormControl/FormControl'
 import Tab from '../../components/Tab/Tab'
 import WalletAddress from '../../components/WalletAddress/WalletAddress'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 import * as Styles from './dashboard'
+import scannerIcon from '../../assets/icons/scanner.svg'
+import calenderIcon from '../../assets/icons/calendar.svg'
+import TripleInput from '../../components/TripleInput/TripleInput'
 
 function Dashboard() {
 
@@ -18,7 +22,24 @@ function Dashboard() {
                         <Styles.SendAsset>
                             <div className="container">
                                 <Tab />
-                                hi  
+                                <FormControl 
+                                    label="Recipient Address"
+                                    icon={scannerIcon}
+                                    type="text"
+                                    center
+                                />
+                                <FormControl 
+                                    label="Date"
+                                    icon={calenderIcon}
+                                    type="date"
+                                    center
+                                />
+                                <FormControl 
+                                    label="Time"
+                                    icon
+                                    section
+                                />
+                                <TripleInput />
                             </div>
                         </Styles.SendAsset>
                     </Grid>

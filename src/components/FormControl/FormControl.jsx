@@ -1,14 +1,14 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import * as Styles from'./input'
+import * as Styles from'./formControl'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-function Input({ half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible }) {
+function Input({ half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible, icon, center }) {
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
-            <Styles.Root>
+            <Styles.Root center={center}>
                 <label>{label}</label>
                 <Styles.CustomInput
                     name={name}
@@ -17,14 +17,17 @@ function Input({ half, label, name, type, placeholder, helperText, error, value,
                     value={value}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    // required
+                    center={center}
+                    required
                 />
                 <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
 
                 {
-                    !visible 
-                    ?   <VisibilityOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
-                    :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} />
+                    !icon ?
+                    ( !visible 
+                        ?   <VisibilityOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
+                        :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} /> ) 
+                    : <img src={icon || ""} alt="" className="icon" />
                 }
             </Styles.Root>
         </Grid>

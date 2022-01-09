@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
-import Input from '../../components/UI/Input/Input'
+import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
 import { useHistory, useLocation } from 'react-router'
 import * as Styles from './auth'
@@ -170,7 +170,7 @@ function Auth() {
                         <Grid item xs={12}>
                             <Styles.Title>{pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
                         </Grid>
-                        <Input
+                        <FormControl
                             name="password"
                             label="Password"
                             type={showPassword ? 'text' : 'password'}
@@ -183,7 +183,7 @@ function Auth() {
                             toggleShowPassword={toggleShowPassword}
                         />
                         {pathname === '/signup' &&
-                            <Input
+                            <FormControl
                                 name="confirmPassword"
                                 label="Confirm Password"
                                 type={showConfirmPassword ? 'text' : 'password'}

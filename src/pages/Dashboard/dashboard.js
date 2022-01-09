@@ -7,10 +7,10 @@ export const Container = styled.div`
 
 export const SendAsset = styled.div`
     width: 100%;
-    height: 400px;
+    height: 600px;
     background-color: white;
     border-radius: 25px;
-    & .container {
+    & > .container {
         width: calc(100% - 50px);
         height: calc(100% - 50px);
         padding-top: 40px;
