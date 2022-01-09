@@ -1,10 +1,85 @@
 import styled from 'styled-components'
 
-export const Root = styled.div`
-    background-color: white;
+export const Parent = styled.div`
+    position: relative;
+    overflow: hidden;
+    margin-top: 100px;
     border-radius: 20px;
+
+    @media(max-width: 1100px) {
+        height: ${props => props.show ? '400px' : 'auto'};
+    }
+
+    @media(max-width: 600px) {
+        height: ${props => props.show ? '600px' : 'auto'};
+    }
+`
+
+export const WalletPassphrase = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 2;
+    position: absolute;
+    top: ${props => props.show ? 0 : '-600px'};
+    transition: 400ms linear all;
+
+    & .gridContainer {
+        height: 100%;
+        padding: 20px;
+    
+        & .wordsBox {
+            display: flex;
+            flex-flow: column wrap;
+            height: 100%;
+
+            & > div {
+                width: 20%;
+
+                @media(max-width: 1100px) {
+                    width: 33%;
+                }
+
+                @media(max-width: 600px) {
+                    width: 50%;
+                }
+            }
+        }
+
+        & .passphraseRight {
+            position: relative;
+
+            & > button:first-child {
+                position: absolute;
+                top: 0;
+                right: 20px;
+                @media(max-width: 900px) {
+                  top: -200px;
+                    
+                }
+            }
+
+            & > button:last-child {
+                position: absolute;
+                bottom: 50px;
+                right: 0;
+                @media(max-width: 900px) {
+                  bottom: 0;
+                }
+            }
+        }
+    }
+
+    @media(max-width: 900px) {
+        top: ${props => props.show ? 0 : '-600px'};
+    }
+`
+
+export const WalletAddress = styled.div`
+    background-color: white;
     padding: 25px 25px 55px 25px;
     box-shadow: 0px 8px 8px rgba(14, 181, 111, 0.06);
+    z-index: 1;
     
     & .container {
         width: calc(100% - 30px);
@@ -62,6 +137,12 @@ export const Root = styled.div`
     & .right {
         padding: 20px 0 0 20px;
         position: relative;
+
+        & > button {
+            position: absolute;
+            bottom: -30px;
+            right: 0;
+        }
     }
 
     & .amount, .dollarAmount, .coinName {

@@ -22,3 +22,11 @@ export const CopyButton = styled(Button)`
     display: flex;
     align-items: center;
 `
+
+export const WalletAddressButton = styled(Button)`
+    padding: 10px;
+    background-color: #E7FDF3;
+    text-transform: none;
+    color: #0EB56F;
+    border-radius: 18px;
+`

@@ -23,7 +23,7 @@ export const WordsBox = styled.div`
 
 export const Word = styled.div`
     color: #043923;
-    font-size: 17px;
+    font-size: 16px;
     margin-bottom: 13px;
     width: 33%;
     
