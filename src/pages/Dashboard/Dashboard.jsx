@@ -8,6 +8,7 @@ import * as Styles from './dashboard'
 import scannerIcon from '../../assets/icons/scanner.svg'
 import calenderIcon from '../../assets/icons/calendar.svg'
 import TripleInput from '../../components/TripleInput/TripleInput'
+import SelectInput from '../../components/SelectInput/SelectInput'
 
 function Dashboard() {
 
@@ -22,6 +23,7 @@ function Dashboard() {
                         <Styles.SendAsset>
                             <div className="container">
                                 <Tab />
+                                {/* <SelectInput /> */}
                                 <FormControl 
                                     label="Recipient Address"
                                     icon={scannerIcon}
@@ -33,11 +35,6 @@ function Dashboard() {
                                     icon={calenderIcon}
                                     type="date"
                                     center
-                                />
-                                <FormControl 
-                                    label="Time"
-                                    icon
-                                    section
                                 />
                                 <TripleInput />
                             </div>
