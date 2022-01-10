@@ -9,6 +9,7 @@ import scannerIcon from '../../assets/icons/scanner.svg'
 import calenderIcon from '../../assets/icons/calendar.svg'
 import TripleInput from '../../components/TripleInput/TripleInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
+import WalletAsset from '../../components/WalletAsset/WalletAsset'
 
 function Dashboard() {
 
@@ -18,34 +19,49 @@ function Dashboard() {
                 <WalletAddress />
                 <Grid container spacing={3}>
                     
-                    <Grid item xs={12} md={8}>
-                        <h2 className="title">SEND ASSET</h2>
-                        <Styles.SendAsset>
+                    <Grid item xs={12} lg={8}>
+                        <Styles.Title>SEND ASSET</Styles.Title>
+                        <Styles.Box>
                             <div className="container">
                                 <Tab />
-                                {/* <SelectInput /> */}
-                                <FormControl 
-                                    label="Recipient Address"
-                                    icon={scannerIcon}
-                                    type="text"
-                                    center
-                                />
-                                {/* <FormControl 
-                                    label="Date"
-                                    icon={calenderIcon}
-                                    type="date"
-                                    center
-                                /> */}
-                                <TripleInput />
+                                <Grid container rowSpacing={2}>
+                                    {/* <SelectInput /> */}
+                                    <FormControl 
+                                        label="Recipient Address"
+                                        icon={scannerIcon}
+                                        type="text"
+                                        center
+                                    />
+                                    <FormControl 
+                                        label="Date"
+                                        icon={calenderIcon}
+                                        type="date"
+                                        center
+                                    />
+                                    <TripleInput />
+                                </Grid>
                             </div>
-                        </Styles.SendAsset>
+                        </Styles.Box>
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
-                        <h2 className="title">WALLET ASSETS</h2>
-                        <Styles.SendAsset>
-
-                        </Styles.SendAsset>
+                    <Grid item xs={12} lg={4}>
+                        <Styles.Title>WALLET ASSETS</Styles.Title>
+                        <Styles.Box style={{ marginBottom: '50px' }}>
+                            <div className="container">
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Styles.SubTitle>Asset</Styles.SubTitle>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Styles.SubTitle>Asset ID</Styles.SubTitle>
+                                    </Grid>
+                                    <Grid item container xs={12} rowSpacing={4}>
+                                        <WalletAsset />
+                                        <WalletAsset clawback />
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Styles.Box>
                     </Grid>
                 </Grid>
             </Styles.Container>

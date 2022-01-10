@@ -5,15 +5,30 @@ export const Container = styled.div`
     margin: 0 auto;
 `
 
-export const SendAsset = styled.div`
+export const Title = styled.h2`
+    color: #043923;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 35px auto 20px 0; 
+`
+
+export const Box = styled.div`
     width: 100%;
-    height: 600px;
+    height: auto;
     background-color: white;
     border-radius: 25px;
+    padding-bottom: 50px;
     & > .container {
         width: calc(100% - 50px);
         height: calc(100% - 50px);
         padding-top: 40px;
         margin: auto;
     }
+`
+
+export const SubTitle = styled.h3`
+    color: #3E554B;
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0 auto 30px 0;
 `
