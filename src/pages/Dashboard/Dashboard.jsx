@@ -30,12 +30,12 @@ function Dashboard() {
                                     type="text"
                                     center
                                 />
-                                <FormControl 
+                                {/* <FormControl 
                                     label="Date"
                                     icon={calenderIcon}
                                     type="date"
                                     center
-                                />
+                                /> */}
                                 <TripleInput />
                             </div>
                         </Styles.SendAsset>
