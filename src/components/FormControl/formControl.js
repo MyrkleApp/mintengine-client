@@ -28,6 +28,12 @@ export const Root = styled.div `
             -webkit-appearance: none;
     }
 
+    &   input[type=date] {
+        width: calc(100% - 2px);
+        padding: 0;
+        text-align: center;
+    }
+
     &   input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
