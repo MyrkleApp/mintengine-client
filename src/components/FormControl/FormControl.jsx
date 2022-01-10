@@ -18,7 +18,7 @@ function Input({ half, label, name, type, placeholder, helperText, error, value,
                     onChange={handleChange}
                     onBlur={handleBlur}
                     center={center}
-                    required
+                    required={type === 'date' ? true : false}
                 />
                 <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
 
