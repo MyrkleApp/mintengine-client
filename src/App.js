@@ -10,7 +10,8 @@ import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
 import VerifyWallet from './pages/VerifyWallet/VerifyWallet';
 import ImportWallet from './pages/ImportWallet/ImportWallet';
 import Backdrop from './components/UI/Backdrop/Backdrop'
-import Dashboard from './pages/Dashboard/Dashboard';
+import Wallet from './pages/Wallet/Wallet';
+import Transactions from './pages/Transactions/Transactions';
 
 
 function App() {
@@ -38,7 +39,8 @@ function App() {
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
                       <Route exact path="/verify-wallet/:wallet" component={VerifyWallet} />
                       <Route exact path="/import-wallet/:wallet" component={ImportWallet} />
-                      <Route exact path="/dashboard" component={Dashboard} />
+                      <Route exact path="/wallet" component={Wallet} />
+                      <Route exact path="/transactions" component={Transactions} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

@@ -23,6 +23,9 @@ export const Box = styled.div`
         height: calc(100% - 50px);
         padding-top: 40px;
         margin: auto;
+        & > .tabsContainer {
+            margin-bottom: 50px;
+        }
     }
 `
 

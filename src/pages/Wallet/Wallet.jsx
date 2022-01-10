@@ -4,12 +4,14 @@ import FormControl from '../../components/FormControl/FormControl'
 import Tab from '../../components/Tab/Tab'
 import WalletAddress from '../../components/WalletAddress/WalletAddress'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
-import * as Styles from './dashboard'
+import * as Styles from './wallet'
 import scannerIcon from '../../assets/icons/scanner.svg'
 import calenderIcon from '../../assets/icons/calendar.svg'
 import TripleInput from '../../components/TripleInput/TripleInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import WalletAsset from '../../components/WalletAsset/WalletAsset'
+import MyTabs from '../../components/MyTabs/MyTabs'
+
 
 function Dashboard() {
 
@@ -23,7 +25,9 @@ function Dashboard() {
                         <Styles.Title>SEND ASSET</Styles.Title>
                         <Styles.Box>
                             <div className="container">
-                                <Tab />
+                                <div className="tabsContainer">
+                                    <MyTabs tabs={['Normal TXN', 'Multiple TXN', 'Scheduled TXN']} />
+                                </div>
                                 <Grid container rowSpacing={2}>
                                     {/* <SelectInput /> */}
                                     <FormControl 

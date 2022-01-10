@@ -106,7 +106,7 @@ function Auth() {
             .unwrap()
             .then(() => {
                 dispatch(hideBackdrop())
-                history.push('/dashboard')
+                history.push('/wallet')
             })
             .catch(err => {
                 dispatch(hideBackdrop())

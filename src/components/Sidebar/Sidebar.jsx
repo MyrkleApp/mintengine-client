@@ -6,21 +6,26 @@ import WebAssetOutlinedIcon from '@mui/icons-material/WebAssetOutlined';
 import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar() {
+    const { pathname } = useLocation()
+
+    const activeLink = (link) => {
+        return pathname === link
+    }
 
     return (
         <Styles.Root>
             <div className="container">
-                <Link to="#" style={{ textDecoration: 'none' }}>
-                    <Styles.NavItem>
+                <Link to="/wallet" style={{ textDecoration: 'none' }}>
+                    <Styles.NavItem active={activeLink('/wallet')}>
                         <AccountBalanceWalletOutlinedIcon />
                         <span>WALLET</span>
                     </Styles.NavItem>
                 </Link>
-                <Link to="#" style={{ textDecoration: 'none' }}>
-                    <Styles.NavItem>
+                <Link to="/transactions" style={{ textDecoration: 'none' }}>
+                    <Styles.NavItem active={activeLink('/transactions')}>
                         <HistoryOutlinedIcon />
                         <span>TRANSACTIONS</span>
                     </Styles.NavItem>

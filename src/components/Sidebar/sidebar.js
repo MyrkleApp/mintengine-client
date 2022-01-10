@@ -12,7 +12,7 @@ export const Root = styled.div`
 export const NavItem = styled.div`
     display: flex;
     align-items: center;
-    color: gray;
+    color: ${props => props.active ? '#0EB56F' : 'gray'};
     margin: 0px 0 50px 20%;
 
     & > span {
