@@ -17,58 +17,56 @@ function Dashboard() {
 
     return (
         <DashboardWrapper>
-            <Styles.Container>
-                <WalletAddress />
-                <Grid container spacing={3}>
-                    
-                    <Grid item xs={12} lg={8}>
-                        <Styles.Title>SEND ASSET</Styles.Title>
-                        <Styles.Box>
-                            <div className="container">
-                                <div className="tabsContainer">
-                                    <MyTabs tabs={['Normal TXN', 'Multiple TXN', 'Scheduled TXN']} />
-                                </div>
-                                <Grid container rowSpacing={2}>
-                                    {/* <SelectInput /> */}
-                                    <FormControl 
-                                        label="Recipient Address"
-                                        icon={scannerIcon}
-                                        type="text"
-                                        center
-                                    />
-                                    <FormControl 
-                                        label="Date"
-                                        icon={calenderIcon}
-                                        type="date"
-                                        center
-                                    />
-                                    <TripleInput />
-                                </Grid>
+            <WalletAddress />
+            <Grid container spacing={3}>
+                
+                <Grid item xs={12} lg={8}>
+                    <Styles.Title>SEND ASSET</Styles.Title>
+                    <Styles.Box>
+                        <div className="container">
+                            <div className="tabsContainer">
+                                <MyTabs tabs={['Normal TXN', 'Multiple TXN', 'Scheduled TXN']} />
                             </div>
-                        </Styles.Box>
-                    </Grid>
-
-                    <Grid item xs={12} lg={4}>
-                        <Styles.Title>WALLET ASSETS</Styles.Title>
-                        <Styles.Box style={{ marginBottom: '50px' }}>
-                            <div className="container">
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <Styles.SubTitle>Asset</Styles.SubTitle>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Styles.SubTitle>Asset ID</Styles.SubTitle>
-                                    </Grid>
-                                    <Grid item container xs={12} rowSpacing={4}>
-                                        <WalletAsset />
-                                        <WalletAsset clawback />
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Styles.Box>
-                    </Grid>
+                            <Grid container rowSpacing={2}>
+                                {/* <SelectInput /> */}
+                                <FormControl 
+                                    label="Recipient Address"
+                                    icon={scannerIcon}
+                                    type="text"
+                                    center
+                                />
+                                <FormControl 
+                                    label="Date"
+                                    icon={calenderIcon}
+                                    type="date"
+                                    center
+                                />
+                                <TripleInput />
+                            </Grid>
+                        </div>
+                    </Styles.Box>
                 </Grid>
-            </Styles.Container>
+
+                <Grid item xs={12} lg={4}>
+                    <Styles.Title>WALLET ASSETS</Styles.Title>
+                    <Styles.Box style={{ marginBottom: '50px' }}>
+                        <div className="container">
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <Styles.SubTitle>Asset</Styles.SubTitle>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Styles.SubTitle>Asset ID</Styles.SubTitle>
+                                </Grid>
+                                <Grid item container xs={12} rowSpacing={4}>
+                                    <WalletAsset />
+                                    <WalletAsset clawback />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </Styles.Box>
+                </Grid>
+            </Grid>
         </DashboardWrapper>
     )
 }

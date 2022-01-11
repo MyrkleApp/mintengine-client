@@ -11,7 +11,9 @@ function DashboardWrapper({ children }) {
             </Styles.Left>
 
             <Styles.Right>
-                { children }
+                <Styles.RightContainer>
+                    { children }
+                </Styles.RightContainer>
             </Styles.Right>
         </Styles.Root>
     )

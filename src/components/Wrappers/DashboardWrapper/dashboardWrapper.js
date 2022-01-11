@@ -22,3 +22,8 @@ export const Right = styled.div`
         width: 100%;
     }
 `
+
+export const RightContainer = styled.div`
+    width: calc(100% - 50px);
+    margin: 0 auto;
+`

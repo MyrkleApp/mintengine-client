@@ -28,6 +28,6 @@ export const NavItem = styled.div`
 
 export const Line = styled.hr`
     margin: 70px auto 50px auto;
-    color: #F5FEFA;
-    opacity: 0.5;
+    color: #E7FDF3;
+    opacity: 0.6;
 `
