@@ -30,8 +30,8 @@ function Sidebar() {
                         <span>TRANSACTIONS</span>
                     </Styles.NavItem>
                 </Link>
-                <Link to="#" style={{ textDecoration: 'none' }}>
-                    <Styles.NavItem>
+                <Link to="/asset-manager" style={{ textDecoration: 'none' }}>
+                    <Styles.NavItem active={activeLink('/asset-manager')}>
                         <WebAssetOutlinedIcon />
                         <span>ASSET MANAGER</span>
                     </Styles.NavItem>
