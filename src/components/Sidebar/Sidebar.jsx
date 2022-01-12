@@ -42,8 +42,8 @@ function Sidebar() {
                         <span>EXCHANGE</span>
                     </Styles.NavItem>
                 </Link>
-                <Link to="#" style={{ textDecoration: 'none' }}>
-                    <Styles.NavItem>
+                <Link to="/settings" style={{ textDecoration: 'none' }}>
+                    <Styles.NavItem active={activeLink('/settings')}>
                         <SettingsOutlinedIcon />
                         <span>SETTINGS</span>
                     </Styles.NavItem>

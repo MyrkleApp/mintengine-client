@@ -13,6 +13,7 @@ import Backdrop from './components/UI/Backdrop/Backdrop'
 import Wallet from './pages/Wallet/Wallet';
 import Transactions from './pages/Transactions/Transactions';
 import AssetManager from './pages/AssetManager/AssetManager';
+import Settings from './pages/Settings/Settings';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                       <Route exact path="/wallet" component={Wallet} />
                       <Route exact path="/transactions" component={Transactions} />
                       <Route exact path="/asset-manager" component={AssetManager} />
+                      <Route exact path="/settings" component={Settings} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

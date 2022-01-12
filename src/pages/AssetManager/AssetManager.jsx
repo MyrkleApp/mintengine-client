@@ -11,6 +11,7 @@ import unfreezeIcon from  '../../assets/assetIcons/unfreeze.png'
 import clawbackIcon from  '../../assets/assetIcons/clawback.png'
 import modifyIcon from  '../../assets/assetIcons/modify.png'
 import destroyIcon from  '../../assets/assetIcons/destroy.png'
+import Table from '../../components/Table/Table'
 
 
 function AssetManager() {
@@ -21,7 +22,7 @@ function AssetManager() {
                 <h2>MANAGE ASSETS</h2>
                 <Grid container rowSpacing={3}>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#e7fdf3">
                             <div className="container">
                                 <img src={newAssetIcon} alt="" />
                             </div>
@@ -29,7 +30,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#e5f2ff">
                             <div className="container">
                                 <img src={optInIcon} alt="" />
                             </div>
@@ -37,7 +38,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#ffe5e6">
                             <div className="container">
                                 <img src={optOutIcon} alt="" />
                             </div>
@@ -45,7 +46,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#f3f2f3">
                             <div className="container">
                                 <img src={freezeIcon} alt="" />
                             </div>
@@ -53,7 +54,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#e5e9ff">
                             <div className="container">
                                 <img src={unfreezeIcon} alt="" />
                             </div>
@@ -61,7 +62,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#f3e9fb">
                             <div className="container">
                                 <img src={clawbackIcon} alt="" />
                             </div>
@@ -69,7 +70,7 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#e9ecfc">
                             <div className="container">
                                 <img src={modifyIcon} alt="" />
                             </div>
@@ -77,16 +78,19 @@ function AssetManager() {
                         </AssetItem>
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <AssetItem>
+                        <AssetItem color="#ffe5e6">
                             <div className="container">
                                 <img src={destroyIcon} alt="" />
                             </div>
                             <span>Destroy</span>
                         </AssetItem>
                     </Grid>
-                    
                 </Grid>
             </Styles.ManageAssets>
+            <Styles.Title>CREATED ASSETS</Styles.Title>
+            <Styles.TableBox>
+                <Table />
+            </Styles.TableBox>
         </DashboardWrapper>
     )
 }

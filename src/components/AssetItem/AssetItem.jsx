@@ -5,7 +5,7 @@ export const AssetItem = styled.div`
     flex-direction: column;
     align-items: center;
     & > .container {
-        background-color: #e7fdf3;
+        background-color: ${props => props.color ? props.color : '#e7fdf3'};
         display: flex;
         justify-content: center;
         align-items: center;

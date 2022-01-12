@@ -16,3 +16,17 @@ export const ManageAssets = styled(Box)`
         margin-bottom: 40px;
     }
 `
+
+export const Title = styled.h2`
+    color: #043923;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 40px;
+`
+
+export const TableBox = styled(Box)`
+    /* border-radius: 0 0 20px 20px; */
+    margin-bottom: 40px;
+    min-height: 600px;
+    overflow-x: auto;
+`

@@ -14,6 +14,11 @@ export const NavItem = styled.div`
     align-items: center;
     color: ${props => props.active ? '#0EB56F' : 'gray'};
     margin: 0px 0 50px 20%;
+    padding-right: 20px;
+
+    @media(max-width: 1000px) {
+        margin: 0px 0 50px 20px;  
+    }
 
     & > span {
         font-size: 20px;
