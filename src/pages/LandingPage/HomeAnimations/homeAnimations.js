@@ -4,6 +4,8 @@ export const Root = styled.div`
     min-height: 150px;
     padding-top: 200px;
     padding-bottom: 200px;
+    overflow: hidden;
+    
     & .leftGrid {
         @media(max-width: 900px) {
             margin-bottom: 250px;

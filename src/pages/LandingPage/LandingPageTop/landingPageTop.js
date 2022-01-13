@@ -6,6 +6,7 @@ export const LandingTopRoot = styled.section`
     justify-content: center;
     text-align: center;
     background-color: #F1FEF8;
+    overflow: hidden;
 `
 
 export const Container = styled.div`
