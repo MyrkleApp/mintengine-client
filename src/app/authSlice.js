@@ -31,9 +31,10 @@ const authSlice = createSlice({
     token: null,
   },
   reducers: {
-    // setSelectedWallet(state, action) {
-    //     state.selectedWallet = action.payload
-    // },
+    logout(state) {
+      state.token = null;
+      localStorage.removeItem('mint-engine')
+    },
   },
   extraReducers: {
     /**
@@ -70,6 +71,6 @@ const authSlice = createSlice({
   }
 })
 
-export const { setSelectedWallet } = authSlice.actions
+export const { logout } = authSlice.actions
 
 export default authSlice.reducer

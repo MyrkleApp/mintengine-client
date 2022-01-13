@@ -17,7 +17,7 @@ export const NavItem = styled.div`
     padding-right: 20px;
 
     @media(max-width: 1000px) {
-        margin: 0px 0 50px 20px;  
+        margin: 0px 0 50px ${props => props.mobile ? '50px' : '20px'};  
     }
 
     & > span {

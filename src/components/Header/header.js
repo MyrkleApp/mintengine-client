@@ -30,6 +30,9 @@ export const Root = styled.header`
     color: white;
     font-size: 20px;
     text-decoration: none;
+    @media (max-width: 800px) {
+      display: none;
+    }
   }
 
   & .right.hideRight {

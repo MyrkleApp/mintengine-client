@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/icons/logo.svg'
+import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import * as Styles from './header'
 
 
@@ -22,6 +23,7 @@ function Header() {
                         <Link to={ pathname === '/signup' ? '/login' : '/signup' }>
                             { pathname === '/signup' ? 'LOGIN' : 'SIGN UP' }
                         </Link>
+                        <MobileSidebar />   
                     </div>
                 </div>
             </Styles.Root>
