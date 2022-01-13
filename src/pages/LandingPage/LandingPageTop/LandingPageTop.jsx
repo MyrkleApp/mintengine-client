@@ -14,11 +14,19 @@ function LandingPageTop() {
                     <Grid item xs={12} md={6}>
                         <p>A gateway that connects multiple blockchains build around the idea of cbdcs.</p>
                     </Grid>
-                    <Grid item xs={6}>
-                        <p>Arrow div</p>
+                    <Grid item xs={12} md={6} className="arrowBoundary" style={{ overflow: 'hidden'}}>
+                        <Styles.Arrow>
+                            <div className="point" />
+                            <div className="block" />
+                        </Styles.Arrow>
                     </Grid>
-                    <Grid item xs={6}>
-                        <p>Arrow div 2</p>
+                    <Grid item xs={12} md={6} className="arrowBoundary" style={{ overflow: 'hidden', paddingBottom: '20px'}}>
+                        <Styles.LeftArrowContainer>
+                            <Styles.LeftArrow>
+                                <div className="point" />
+                                <div className="block" />
+                            </Styles.LeftArrow>
+                        </Styles.LeftArrowContainer>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <p>Allowing seamless interaction and interoperabiltiy not just for large enterprises but for anyone with access to the internet.</p>
