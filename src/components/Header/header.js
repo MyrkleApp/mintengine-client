@@ -19,6 +19,11 @@ export const Root = styled.header`
     color: white;
     font-size: 24px;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    & > img {
+      margin-right: 10px;
+    }
   }
 
   & .right a {

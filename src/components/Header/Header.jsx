@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
+import logo from '../../assets/icons/logo.svg'
 import * as Styles from './header'
 
 
@@ -13,7 +14,8 @@ function Header() {
                 <div className="container">
                     <div className="left">
                         <Link to="/">
-                            Mint Engine
+                            <img src={logo} alt="" />
+                            <span>Mint Engine</span>
                         </Link>
                     </div>
                     <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>

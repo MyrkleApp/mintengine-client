@@ -79,6 +79,12 @@ export const Container = styled.div`
         margin-bottom: 50px;
     }
 
+    & .buttonsContainer > a > button {
+        @media(max-width: 600px) {
+            padding: 15px 25px;
+        }
+    }
+
     & .buttonsContainer > a:first-child {
         margin-right: 20px;
     }
@@ -95,32 +101,10 @@ const moveBlock = keyframes`
     0% { left: -10px; }
     50% { left: 200px; }
     100% { left: -10px; }
-
-    /* 0%   { top: 10px; left: -10px;}
-    5%  { top: -5px; left: 5px;}
-    10%  { top: -13px; left: 25px;}
-    15%  { top: -13px; left: 45px;}
-    20%  { top: -17px; left: 65px;}
-    25%  { top: -17px; left: 85px;}
-    30%  { top: -13px; left: 105px;}
-    35%  { top: -7px; left: 125px;}
-    40%  { top: 10px; left: 150px;}
-    45%  { top: 10px; left: -10px;}
-    50% { top: 10px; left: -10px;}
-    55%  { top: 10px; left: -10px;}
-    60%  { top: 10px; left: 150px;}
-    65%  { top: -7px; left: 125px;}
-    70%  { top: -13px; left: 105px;}
-    75%  { top: -17px; left: 85px;}
-    80%  { top: -17px; left: 65px;}
-    85%  { top: -13px; left: 45px;}
-    90%  { top: -13px; left: 25px;}
-    95%  { top: -5px; left: 5px;}
-    100%   { top: 10px; left: -10px;} */
 `
 
 export const Arrow = styled.div`
-    border-top: 3px solid red;
+    border-top: 3px solid #F95454;
     width: 170px;
     height: 70px;
     border-radius: 50%;
@@ -135,8 +119,8 @@ export const Arrow = styled.div`
         transform: rotate(90deg);
         width: 10px;
         height: 10px;
-        border-top: 2px solid red;
-        border-right: 4px solid red;
+        border-top: 2px solid #F95454;
+        border-right: 4px solid #F95454;
     }
 
     & .block {
