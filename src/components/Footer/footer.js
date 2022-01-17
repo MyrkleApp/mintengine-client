@@ -52,4 +52,5 @@ export const SocialLink = styled.div`
     justify-content: space-around;
     align-items: center;
     padding: 10px;
+    height: 25px;
 `

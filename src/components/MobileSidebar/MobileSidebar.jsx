@@ -7,7 +7,6 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-// import FadeIn from 'react-fade-in';
 import * as Styles from './mobileSidebar'
 import Sidebar from '../Sidebar/Sidebar'
 // import logo from '../../assets/icons/logo.svg'
@@ -40,12 +39,8 @@ export default function TemporaryDrawer({ pathname }) {
             MINT ENGINE
         </div> */}
         {/* <Divider style={{ marginTop: '100px' }} /> */}
-        <div className="mobile__linksContainer">
-
-            <Sidebar mobile />
-            {/* <List>
-                
-            </List> */}
+        <div>
+          <Sidebar mobile />
         </div>
     </Box>
   );

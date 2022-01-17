@@ -80,7 +80,13 @@ export const Container = styled.div`
         margin-bottom: 50px;
     }
 
-    & .buttonsContainer > a > button {
+    /* & .buttonsContainer > a > button {
+        @media(max-width: 600px) {
+            padding: 15px 25px;
+        }
+    } */
+
+    & .buttonsContainer > button {
         @media(max-width: 600px) {
             padding: 15px 25px;
         }

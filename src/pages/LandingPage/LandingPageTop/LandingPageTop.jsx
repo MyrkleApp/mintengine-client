@@ -12,7 +12,7 @@ function LandingPageTop() {
                 <h2>Seamless Connection & Interaction with Multiple Blockchains</h2>
                 <Grid container className="gridContainer" alignItems="center">
                     <Grid item xs={12} md={6}>
-                        <p>A gateway that connects multiple blockchains build around the idea of cbdcs.</p>
+                        <p>A gateway that connects next generation distributed ledgers.</p>
                     </Grid>
                     <Grid item xs={12} md={6} className="arrowBoundary" style={{ overflow: 'hidden'}}>
                         <Styles.Arrow>
@@ -29,16 +29,16 @@ function LandingPageTop() {
                         </Styles.LeftArrowContainer>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <p>Allowing seamless interaction and interoperabiltiy not just for large enterprises but for anyone with access to the internet.</p>
+                        <p>Enabling interoperability between next generations distributed ledgers with the aid of user friendly and streamlined interface.</p>
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    <Link to='/signup'>
-                        <Button>get started</Button>
-                    </Link>
-                    <Link to='/login'>
+                    {/* <Link to='/signup'> */}
+                        <Button style={{marginRight: '20px'}}>get started</Button>
+                    {/* </Link> */}
+                    {/* <Link to='/login'> */}
                         <Button outlined>login</Button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>
