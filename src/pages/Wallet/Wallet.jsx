@@ -11,12 +11,14 @@ import TripleInput from '../../components/TripleInput/TripleInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import WalletAsset from '../../components/WalletAsset/WalletAsset'
 import MyTabs from '../../components/MyTabs/MyTabs'
+import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 
 
 function Dashboard() {
 
     return (
         <DashboardWrapper>
+            <ChooseNetwork />
             <WalletAddress />
             <Grid container spacing={3}>
                 
