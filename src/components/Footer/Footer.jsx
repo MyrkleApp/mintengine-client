@@ -2,10 +2,9 @@ import React from 'react'
 import * as Styles from './footer'
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import mediumIcon from '../../assets/icons/medium.png'
-import { Link } from 'react-router-dom';
+import footerLogo from '../../assets/icons/footerLogo.png'
 
 function Footer() {
 
@@ -14,7 +13,8 @@ function Footer() {
             <div className="container">
                 <div className="topContent">
                     <div className="left">
-                        <h3>Mint Engine</h3>
+                        <img src={footerLogo} alt="" />
+                        <span>Mint Engine</span>
                     </div>
                     <div className="right">
                         <a href="https://twitter.com/MintEngine?s=09" target="_blank" style={{ textDecoration: 'none' }}>

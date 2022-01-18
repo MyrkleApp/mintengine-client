@@ -25,6 +25,13 @@ export const Root = styled.div`
     & .left {
         color: white;
         margin-right: 100px;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        & > span {
+            font-weight: bold;
+            margin-left: 20px;
+        }
     }
 
     & .right {
@@ -32,7 +39,7 @@ export const Root = styled.div`
         flex-wrap: wrap;
         justify-content: center;
 
-        @media(max-width: 1000px) {
+        @media(max-width: 1100px) {
             margin: 0 auto;
         }
     }
