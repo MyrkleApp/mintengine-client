@@ -28,7 +28,7 @@ function Dashboard() {
                                 <MyTabs tabs={['Normal TXN', 'Multiple TXN', 'Scheduled TXN']} />
                             </div>
                             <Grid container rowSpacing={2}>
-                                {/* <SelectInput /> */}
+                                <SelectInput />
                                 <FormControl 
                                     label="Recipient Address"
                                     icon={scannerIcon}
