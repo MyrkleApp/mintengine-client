@@ -5,6 +5,8 @@ import qrCode from '../../assets/icons/qrCode.svg'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { CopyButton, WalletAddressButton } from '../UI/Button/button';
 import { Word } from '../UI/WalletShared/walletShared';
+import CopyButtonWithTooltip from '../UI/MyTooltip/MyTooltip'
+import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase';
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
@@ -23,13 +25,17 @@ function WalletAddress() {
                 <Grid container className="gridContainer">
                     <Grid item xs={12} md={9} className="wordsBox">
                     {
-                        Array(25).fill('worddd').map((item, i) => (
+                        MY_ALGORAND_PASSPHRASE.map((item, i) => (
                             <Word key={i}>{ `${i + 1}. ${item}` }</Word>
                         ))
                     }
                     </Grid>
                     <Grid item xs={12} md={3} className="passphraseRight">
-                        <CopyButton outlined>Copy</CopyButton>
+                        <CopyButtonWithTooltip 
+                            passPhrase={MY_ALGORAND_PASSPHRASE} 
+                            text="copy" 
+                        />
+                        {/* <CopyButton outlined>Copy</CopyButton> */}
                         <WalletAddressButton onClick={hidePassphrase}>Hide Passphrase</WalletAddressButton>
                     </Grid>
                 </Grid>

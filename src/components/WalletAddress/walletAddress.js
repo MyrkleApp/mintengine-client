@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Parent = styled.div`
     position: relative;
     overflow: hidden;
-    margin-top: 100px;
+    margin-top: 150px;
     border-radius: 20px;
 
     @media(max-width: 1100px) {

@@ -56,11 +56,11 @@ function VerifyWallet() {
         handleCloseModal()
 
         const completedPassphrase = passphrase
-        completedPassphrase[2] = num3
-        completedPassphrase[4] = num5
-        completedPassphrase[11] = num12
-        completedPassphrase[14] = num15
-        completedPassphrase[23] = num24
+        completedPassphrase[2] = num3.trim()
+        completedPassphrase[4] = num5.trim()
+        completedPassphrase[11] = num12.trim()
+        completedPassphrase[14] = num15.trim()
+        completedPassphrase[23] = num24.trim()
 
         if (completedPassphrase.join(" ") !== JSON.parse(localStorage.getItem('algophrase'))) {
             dispatch(incorrectPassphraseError({
