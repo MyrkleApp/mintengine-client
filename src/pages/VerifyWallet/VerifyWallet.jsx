@@ -197,7 +197,7 @@ function VerifyWallet() {
 
                 </Styles.Container>
 
-                <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
+                <Modal open={openModal} handleClose={handleCloseModal}>
                     <Styles.ModalContent>
                     {
                         modalContentStatus === 'default' &&
