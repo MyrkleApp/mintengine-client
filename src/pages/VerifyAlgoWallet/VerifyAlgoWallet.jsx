@@ -18,8 +18,6 @@ import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 function VerifyWallet() {
     const dispatch = useDispatch()
     const history = useHistory()
-    const { wallet } = useParams()
-    const [xrpSeed, setXrpSeed] = useState("")
     const walletId = useSelector(state => state.algorand.id)
     const passphrase = useSelector(state => state.algorand.passphrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
@@ -28,10 +26,6 @@ function VerifyWallet() {
     const [openModal, setOpenModal] = useState(false)
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
 
-
-    const handlePasteSeed = () => {
-        navigator.clipboard.readText().then(text => setXrpSeed(text))
-    }
 
     const handleAlgoChange = e => {
         setMissingWords(prevState => {
@@ -118,76 +112,60 @@ function VerifyWallet() {
         <AuthWrapper>
             <WalletWrapper
                 title="VERIFY PASSPHRASE BACKUP"
-                description={                                                               
-                    wallet === 'algo' 
-                    ? 'Please fill in the missing words based on their numbers. This is to verify you did a backup.'
-                    : 'Please paste the seed you copied. This is to verify you did a backup.'
-                }
-                link={ `/create-wallet/${wallet}` }
+                description="Please fill in the missing words based on their numbers. This is to verify you did a backup."      
+                link="/create-wallet/algo"
             >
                 <Styles.Container>
-                    { 
-                        wallet === 'algo' 
-                        ?   <Styles.WordsBox>
-                                { passphrase?.slice(0, 2)?.map((item, i) => (
-                                    <Styles.Word key={i}>                                        
-                                        { `${i + 1}. ${item}` }
-                                    </Styles.Word>
-                                ))}
-                                <Styles.WordInput>
-                                    <span>3.</span>
-                                    <input name="num3" value={num3} onChange={handleAlgoChange} />
-                                </Styles.WordInput>
-                                <Styles.Word>                                        
-                                    { `${4}. ${passphrase[3]}` }
-                                </Styles.Word>
-                                <Styles.WordInput>
-                                    <span>5.</span>
-                                    <input name="num5" value={num5} onChange={handleAlgoChange} />
-                                </Styles.WordInput>
-                                { passphrase?.slice(5, 11)?.map((item, i) => (
-                                    <Styles.Word key={i}>                                        
-                                        { `${i + 6}. ${item}` }
-                                    </Styles.Word>
-                                ))}
-                                <Styles.WordInput>
-                                    <span>12.</span>
-                                    <input name="num12" value={num12} onChange={handleAlgoChange} />
-                                </Styles.WordInput>
-                                { passphrase?.slice(12, 14)?.map((item, i) => (
-                                    <Styles.Word key={i}>                                        
-                                        { `${i + 13}. ${item}` }
-                                    </Styles.Word>
-                                ))}
-                                <Styles.WordInput>
-                                    <span>15.</span>
-                                    <input name="num15" value={num15} onChange={handleAlgoChange} />
-                                </Styles.WordInput>
-                                { passphrase?.slice(15, 23)?.map((item, i) => (
-                                    <Styles.Word key={i}>                                        
-                                        { `${i + 16}. ${item}` }
-                                    </Styles.Word>
-                                ))}
-                                <Styles.WordInput>
-                                    <span>24.</span>
-                                    <input name="num24" value={num24} onChange={handleAlgoChange} />
-                                </Styles.WordInput>
-                                <Styles.Word>                                        
-                                    { `25. ${passphrase[24]}` }
-                                </Styles.Word>
-                            </Styles.WordsBox>
-                        :   <Styles.XrpWordsBox>
-                                <textarea value={xrpSeed} onChange={e => setXrpSeed(e.target.value)} />
-                            </Styles.XrpWordsBox>
-                    }
+                    <Styles.WordsBox>
+                        { passphrase?.slice(0, 2)?.map((item, i) => (
+                            <Styles.Word key={i}>                                        
+                                { `${i + 1}. ${item}` }
+                            </Styles.Word>
+                        ))}
+                        <Styles.WordInput>
+                            <span>3.</span>
+                            <input name="num3" value={num3} onChange={handleAlgoChange} />
+                        </Styles.WordInput>
+                        <Styles.Word>                                        
+                            { `${4}. ${passphrase[3]}` }
+                        </Styles.Word>
+                        <Styles.WordInput>
+                            <span>5.</span>
+                            <input name="num5" value={num5} onChange={handleAlgoChange} />
+                        </Styles.WordInput>
+                        { passphrase?.slice(5, 11)?.map((item, i) => (
+                            <Styles.Word key={i}>                                        
+                                { `${i + 6}. ${item}` }
+                            </Styles.Word>
+                        ))}
+                        <Styles.WordInput>
+                            <span>12.</span>
+                            <input name="num12" value={num12} onChange={handleAlgoChange} />
+                        </Styles.WordInput>
+                        { passphrase?.slice(12, 14)?.map((item, i) => (
+                            <Styles.Word key={i}>                                        
+                                { `${i + 13}. ${item}` }
+                            </Styles.Word>
+                        ))}
+                        <Styles.WordInput>
+                            <span>15.</span>
+                            <input name="num15" value={num15} onChange={handleAlgoChange} />
+                        </Styles.WordInput>
+                        { passphrase?.slice(15, 23)?.map((item, i) => (
+                            <Styles.Word key={i}>                                        
+                                { `${i + 16}. ${item}` }
+                            </Styles.Word>
+                        ))}
+                        <Styles.WordInput>
+                            <span>24.</span>
+                            <input name="num24" value={num24} onChange={handleAlgoChange} />
+                        </Styles.WordInput>
+                        <Styles.Word>                                        
+                            { `25. ${passphrase[24]}` }
+                        </Styles.Word>
+                    </Styles.WordsBox>
                     
-                    <Styles.ButtonsContainer>
-                        {
-                            wallet === 'xrp' &&
-                            <CopyButton outlined onClick={handlePasteSeed}>
-                                paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
-                            </CopyButton> 
-                        }      
+                    <Styles.ButtonsContainer>      
                         <Button 
                             fullWidth 
                             disabled={!buttonIsEnabled} 

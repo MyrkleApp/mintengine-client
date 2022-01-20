@@ -7,13 +7,15 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ScrollToTop from './Hooks/ScrollToTop';
 import WalletSetup from './pages/WalletSetup/WalletSetup';
 import CreateNewWallet from './pages/CreateNewWallet/CreateNewWallet';
-import VerifyWallet from './pages/VerifyWallet/VerifyWallet';
+import VerifyAlgoWallet from './pages/VerifyAlgoWallet/VerifyAlgoWallet';
+import VerifyRippleWallet from './pages/VerifyRippleWallet/VerifyRippleWallet';
 import ImportWallet from './pages/ImportWallet/ImportWallet';
 import Backdrop from './components/UI/Backdrop/Backdrop'
 import Wallet from './pages/Wallet/Wallet';
 import Transactions from './pages/Transactions/Transactions';
 import AssetManager from './pages/AssetManager/AssetManager';
 import Settings from './pages/Settings/Settings';
+import NotFound from './pages/NotFound/NotFound';
 
 
 function App() {
@@ -36,15 +38,17 @@ function App() {
                   >
                     <Switch location={location}>
                       <Route exact path="/" component={LandingPage} />
-                      <Route exact path={['/signup', '/login']} component={Auth} />
+                      {/* <Route exact path={['/signup', '/login']} component={Auth} />
                       <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
-                      <Route exact path="/verify-wallet/:wallet" component={VerifyWallet} />
+                      <Route exact path="/verify-wallet/algo" component={VerifyAlgoWallet} />
+                      <Route exact path="/verify-wallet/xrp" component={VerifyRippleWallet} />
                       <Route exact path="/import-wallet/:wallet" component={ImportWallet} />
                       <Route exact path="/wallet" component={Wallet} />
                       <Route exact path="/transactions" component={Transactions} />
                       <Route exact path="/asset-manager" component={AssetManager} />
-                      <Route exact path="/settings" component={Settings} />
+                      <Route exact path="/settings" component={Settings} /> */}
+                      <Route component={NotFound} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>

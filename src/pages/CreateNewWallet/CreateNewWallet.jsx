@@ -16,6 +16,8 @@ function CreateNewWallet() {
     const handleClick = () => {
         if (wallet === 'algo') {
             history.push('/verify-wallet/algo')
+        } else if (wallet === 'xrp') {
+            history.push('/verify-wallet/xrp')
         }
     }
 

@@ -23,18 +23,22 @@ function WalletSetup() {
     const selectedWallet = urlQueryParams.get('wallet')
 
     const handleCreateWallet = () => {
-        dispatch(showBackdrop())
-        dispatch(createAlgorandWallet({ status: CREATE }))
-        .unwrap()
-        .then(res => {
-            console.log(res)
-            dispatch(hideBackdrop())
-            history.push(`/create-wallet/${selectedWallet}`)
-        })
-        .catch(err => {
-            console.log(err)
-            dispatch(hideBackdrop())
-        })
+        if (selectedWallet === 'algo') {
+            dispatch(showBackdrop())
+            dispatch(createAlgorandWallet({ status: CREATE }))
+            .unwrap()
+            .then(res => {
+                console.log(res)
+                dispatch(hideBackdrop())
+                history.push(`/create-wallet/${selectedWallet}`)
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(hideBackdrop())
+            })
+        } else if (selectedWallet === 'xrp') {
+            alert('create ripple wallet')
+        }
     }
 
     const handleImportWallet = () => {

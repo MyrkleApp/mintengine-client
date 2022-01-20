@@ -92,7 +92,7 @@ function ImportWallet() {
                     ? 'Please fill in your Algorand wallet 25 words passphrase to restore your wallet.'
                     : 'Please paste your XRP wallet seed to restore your wallet.'
                 }
-                link={ `/wallet-setup?wallet=${wallet}` }
+                link={ `/create-wallet?wallet=${wallet}` }
             >
                 <Styles.Container>
                     { 
