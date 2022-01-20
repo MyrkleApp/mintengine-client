@@ -11,6 +11,7 @@ import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import { useDispatch } from 'react-redux'
 import { createAlgorandWallet } from '../../app/algorandSlice'
+import { CREATE } from '../../constants/walletStatus';
 
 
 function WalletSetup() {
@@ -23,7 +24,7 @@ function WalletSetup() {
 
     const handleCreateWallet = () => {
         dispatch(showBackdrop())
-        dispatch(createAlgorandWallet({ status: 'create' }))
+        dispatch(createAlgorandWallet({ status: CREATE }))
         .unwrap()
         .then(res => {
             console.log(res)

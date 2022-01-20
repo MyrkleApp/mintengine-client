@@ -11,6 +11,8 @@ import Modal from '../../components/UI/Modal/Modal'
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
+import { IMPORT } from '../../constants/walletStatus'
+import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 
 
 
@@ -48,7 +50,7 @@ function ImportWallet() {
 
     const handleCloseModal = () => {
         setOpenModal(false)
-        handleModalStatus('default')
+        handleModalStatus(DEFAULT)
     }
 
     const showDisclaimerModal = () => {
@@ -60,17 +62,17 @@ function ImportWallet() {
         dispatch(showBackdrop())
         const phrase = missingWords.join(" ")
 
-        dispatch(createAlgorandWallet({ status: 'import', phrase: phrase }))
+        dispatch(createAlgorandWallet({ status: IMPORT, phrase: phrase }))
         .unwrap()
         .then(res => {
             dispatch(hideBackdrop())
-            handleModalStatus('success')
+            handleModalStatus(SUCCESS)
             handleOpenModal()
             console.log(res)
         })
         .catch(err => {
             dispatch(hideBackdrop())
-            handleModalStatus('error')
+            handleModalStatus(ERROR)
             handleOpenModal()
             console.log(err)
         })
@@ -125,7 +127,7 @@ function ImportWallet() {
                 <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
                     <Styles.ModalContent>
                     {
-                        modalContentStatus === 'default' &&
+                        modalContentStatus === DEFAULT &&
                         <DisclaimerDefault
                             checkbox={checkbox}
                             toggleCheckbox={toggleCheckbox}
@@ -134,11 +136,11 @@ function ImportWallet() {
                         />
                     }
                     {
-                        modalContentStatus === 'success' &&
+                        modalContentStatus === SUCCESS &&
                         <DisclaimerSuccess handleClick={navigateToDashboard} />
                     }
                     {
-                        modalContentStatus === 'error' &&
+                        modalContentStatus === ERROR &&
                         <DisclaimerError />
                     }
                     </Styles.ModalContent>

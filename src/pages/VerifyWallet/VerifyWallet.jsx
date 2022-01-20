@@ -11,6 +11,8 @@ import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
 import useDisclaimer from '../../Hooks/Disclaimer'
+import { CONFIRMED, CREATE } from '../../constants/walletStatus'
+import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 
 
 function VerifyWallet() {
@@ -45,7 +47,7 @@ function VerifyWallet() {
 
     const handleCloseModal = () => {
         setOpenModal(false)
-        handleModalStatus('default')
+        handleModalStatus(DEFAULT)
     }
 
     const showDisclaimerModal = () => {
@@ -64,28 +66,28 @@ function VerifyWallet() {
 
         if (completedPassphrase.join(" ") !== JSON.parse(localStorage.getItem('algophrase'))) {
             dispatch(incorrectPassphraseError({
-                status: 'create',
+                status: CREATE,
                 error: 'The entered passphrase does not match'
             }))
-            handleModalStatus('error')
+            handleModalStatus(ERROR)
             handleOpenModal()
             return
         }
 
         dispatch(showBackdrop())
-        dispatch(confirmAlgorandPassphrase({ id: walletId, status: 'confirmed' }))
+        dispatch(confirmAlgorandPassphrase({ id: walletId, status: CONFIRMED }))
         .unwrap()
         .then(res => {
             dispatch(hideBackdrop())
             //open modal with success message
-            handleModalStatus('success')
+            handleModalStatus(SUCCESS)
             handleOpenModal()
             console.log(res)
         })
         .catch(err => {
             dispatch(hideBackdrop())
             //open modal with error message
-            handleModalStatus('error')
+            handleModalStatus(ERROR)
             handleOpenModal()
             console.log(err)
         })
@@ -200,7 +202,7 @@ function VerifyWallet() {
                 <Modal open={openModal} handleClose={handleCloseModal}>
                     <Styles.ModalContent>
                     {
-                        modalContentStatus === 'default' &&
+                        modalContentStatus === DEFAULT &&
                         <DisclaimerDefault
                             checkbox={checkbox}
                             toggleCheckbox={toggleCheckbox}
@@ -209,14 +211,14 @@ function VerifyWallet() {
                         />
                     }
                     {
-                        modalContentStatus === 'success' &&
+                        modalContentStatus === SUCCESS &&
                         <DisclaimerSuccess 
                             create
                             handleClick={navigateToDashboard} 
                         />
                     }
                     {
-                        modalContentStatus === 'error' &&
+                        modalContentStatus === ERROR &&
                         <DisclaimerError />
                     }
                     </Styles.ModalContent>
