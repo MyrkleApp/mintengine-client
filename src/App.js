@@ -38,7 +38,7 @@ function App() {
                   >
                     <Switch location={location}>
                       <Route exact path="/" component={LandingPage} />
-                      {/* <Route exact path={['/signup', '/login']} component={Auth} />
+                      <Route exact path={['/signup', '/login']} component={Auth} />
                       <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
                       <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
                       <Route exact path="/verify-wallet/algo" component={VerifyAlgoWallet} />
@@ -47,7 +47,7 @@ function App() {
                       <Route exact path="/wallet" component={Wallet} />
                       <Route exact path="/transactions" component={Transactions} />
                       <Route exact path="/asset-manager" component={AssetManager} />
-                      <Route exact path="/settings" component={Settings} /> */}
+                      <Route exact path="/settings" component={Settings} />
                       <Route component={NotFound} />
                     </Switch>
                   </CSSTransition>

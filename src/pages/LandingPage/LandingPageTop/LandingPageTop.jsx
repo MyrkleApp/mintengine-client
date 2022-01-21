@@ -5,6 +5,7 @@ import { Button } from '../../../components/UI/Button/button'
 import * as Styles from './landingPageTop'
 
 function LandingPageTop() {
+    
     return (
         <Styles.LandingTopRoot>
             <Styles.Container>
@@ -33,12 +34,12 @@ function LandingPageTop() {
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    {/* <Link to='/signup'> */}
-                        <Button style={{marginRight: '20px'}}>get started</Button>
-                    {/* </Link> */}
-                    {/* <Link to='/login'> */}
+                    <Link to='/signup'>
+                        <Button>get started</Button>
+                    </Link>
+                    <Link to='/login'>
                         <Button outlined>login</Button>
-                    {/* </Link> */}
+                    </Link>
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>

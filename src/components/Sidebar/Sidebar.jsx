@@ -78,12 +78,12 @@ function Sidebar({ mobile }) {
                     ? mainContent 
                     :
                     <>
-                        <Link to="#" style={{ textDecoration: 'none' }}>
+                        <Link to="/signup" style={{ textDecoration: 'none' }}>
                             <Styles.NavItem mobile={mobile} active={activeLink('/signup')}>
                                 <span>SIGN UP</span>
                             </Styles.NavItem>
                         </Link>
-                        <Link to="#" style={{ textDecoration: 'none' }}>
+                        <Link to="/login" style={{ textDecoration: 'none' }}>
                             <Styles.NavItem mobile={mobile} active={activeLink('/login')}>
                                 <span>LOGIN</span>
                             </Styles.NavItem>
