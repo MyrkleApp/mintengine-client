@@ -7,14 +7,15 @@ import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../app/authSlice'
+// import { useDispatch, useSelector } from 'react-redux';
+// import { logout } from '../../app/authSlice'
 
 function Sidebar({ mobile }) {
     const { pathname } = useLocation()
     const history = useHistory()
-    const dispatch = useDispatch()
-    const userToken = useSelector(state => state.auth.token)
+    // const dispatch = useDispatch()
+    // const userToken = useSelector(state => state.auth.token)
+    const userToken = ""
 
     const activeLink = (link) => {
         return pathname === link
@@ -22,7 +23,7 @@ function Sidebar({ mobile }) {
 
     const handleLogout = () => {
         history.push('/')
-        dispatch(logout())
+        // dispatch(logout())
     }
 
     const mainContent = <>

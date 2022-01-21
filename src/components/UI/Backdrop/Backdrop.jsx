@@ -2,10 +2,10 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 export default function SimpleBackdrop() {
-    const open = useSelector(state => state.backdrop.open)
+    const open = false
 //   const [open, setOpen] = React.useState(false);
 //   const handleClose = () => {
 //     setOpen(false);
