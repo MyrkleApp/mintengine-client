@@ -7,9 +7,14 @@ import { CopyButton, WalletAddressButton } from '../UI/Button/button';
 import { Word } from '../UI/WalletShared/walletShared';
 import CopyButtonWithTooltip from '../UI/MyTooltip/MyTooltip'
 import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase';
+import { useSelector } from 'react-redux';
+import { ALGORAND, RIPPLE } from '../../constants/network';
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
+    const network = useSelector(state => state.network.network)
+    const rippleSeed = 'c6c108b3e923ea40067d129715065d96733528fc4ae5317814f795999f22b88f866a3343237b206daf6537ab593cba0b42a8f51721a6df3c5771cdc9312afc46'
+    const textToCopy = network === ALGORAND ? MY_ALGORAND_PASSPHRASE : rippleSeed
 
     const showPassphrase = () => {
         setOpen(true)
@@ -25,18 +30,29 @@ function WalletAddress() {
                 <Grid container className="gridContainer">
                     <Grid item xs={12} md={9} className="wordsBox">
                     {
-                        MY_ALGORAND_PASSPHRASE.map((item, i) => (
-                            <Word key={i}>{ `${i + 1}. ${item}` }</Word>
-                        ))
+                        network === ALGORAND && (
+                            MY_ALGORAND_PASSPHRASE.map((item, i) => (
+                                <Word key={i}>{ `${i + 1}. ${item}` }</Word>
+                            ))
+                        )
+                    }
+                    {
+                        network === RIPPLE && (
+                            <Styles.RippleSeed>
+                                { rippleSeed }
+                            </Styles.RippleSeed>
+                        )
                     }
                     </Grid>
                     <Grid item xs={12} md={3} className="passphraseRight">
                         <CopyButtonWithTooltip 
-                            passPhrase={MY_ALGORAND_PASSPHRASE} 
+                            textToCopy={textToCopy} 
                             text="copy" 
                         />
                         {/* <CopyButton outlined>Copy</CopyButton> */}
-                        <WalletAddressButton onClick={hidePassphrase}>Hide Passphrase</WalletAddressButton>
+                        <WalletAddressButton onClick={hidePassphrase}>
+                            { network === ALGORAND ? 'Hide Passphrase' : 'Hide Seed' }
+                        </WalletAddressButton>
                     </Grid>
                 </Grid>
             </Styles.WalletPassphrase>
@@ -59,7 +75,9 @@ function WalletAddress() {
                             <span className="amount">0.00 </span>
                             <span className="coinName">ALGO</span><br />
                             <div className="dollarAmount">~ $0</div>
-                            <WalletAddressButton onClick={showPassphrase}>Show Passphrase</WalletAddressButton>
+                            <WalletAddressButton onClick={showPassphrase}>
+                                { network === ALGORAND ? 'Show Passphrase' : 'Show Seed' }
+                            </WalletAddressButton>
                         </Grid>
                     </Grid>
                 </div>

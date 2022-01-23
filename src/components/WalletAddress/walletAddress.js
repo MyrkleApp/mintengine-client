@@ -159,3 +159,9 @@ export const WalletAddress = styled.div`
         margin: 30px auto;
     }
 `
+
+export const RippleSeed = styled.span`
+    overflow-wrap: break-word;
+    width: 100%;
+    line-height: 25px;
+`

@@ -50,7 +50,7 @@ function CreateNewWallet() {
                     }
                     
                     <Styles.ButtonsContainer>
-                        <CopyButtonWithTooltip passPhrase={passPhrase} text="copy" />       
+                        <CopyButtonWithTooltip textToCopy={passPhrase} text="copy" />       
                         <Button fullWidth onClick={handleClick}>
                         {
                             wallet === 'algo'

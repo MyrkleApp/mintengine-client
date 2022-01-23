@@ -5,7 +5,7 @@ import { CopyButton } from '../Button/button';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 
-export default function TriggersTooltips({ passPhrase }) {
+export default function TriggersTooltips({ textToCopy }) {
   const [open, setOpen] = useState(false);
 
   const handleTooltipClose = () => {
@@ -18,7 +18,7 @@ export default function TriggersTooltips({ passPhrase }) {
 
   const handleCopyToClipboard = () => {
     handleTooltipOpen();
-    navigator.clipboard.writeText(passPhrase);
+    navigator.clipboard.writeText(textToCopy);
   }
 
   useEffect(() => {
