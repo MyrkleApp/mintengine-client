@@ -13,6 +13,7 @@ import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../com
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import { IMPORT } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
+import { ALGO } from '../../constants/network'
 
 
 
@@ -83,7 +84,7 @@ function ImportWallet() {
             <WalletWrapper
                 title="IMPORT YOUR PASSPHRASE"
                 description="Please fill in your Algorand wallet 25 words passphrase to restore your wallet."
-                link="/create-wallet?wallet=algo"
+                link={`/create-wallet?wallet=${ALGO}`}
             >
                 <Styles.Container>
                     <Styles.WordsBox import>

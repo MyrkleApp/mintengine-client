@@ -13,6 +13,8 @@ import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../com
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { CONFIRMED, CREATE } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
+import { ALGO } from '../../constants/network'
+import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase'
 
 
 function VerifyWallet() {
@@ -58,7 +60,7 @@ function VerifyWallet() {
         completedPassphrase[14] = num15.trim()
         completedPassphrase[23] = num24.trim()
 
-        if (completedPassphrase.join(" ") !== JSON.parse(localStorage.getItem('algophrase'))) {
+        if (completedPassphrase !== MY_ALGORAND_PASSPHRASE || MY_ALGORAND_PASSPHRASE.length < 25) {
             dispatch(incorrectPassphraseError({
                 status: CREATE,
                 error: 'The entered passphrase does not match'
@@ -113,7 +115,7 @@ function VerifyWallet() {
             <WalletWrapper
                 title="VERIFY PASSPHRASE BACKUP"
                 description="Please fill in the missing words based on their numbers. This is to verify you did a backup."      
-                link="/create-wallet/algo"
+                link={ `/create-wallet/${ALGO}` }
             >
                 <Styles.Container>
                     <Styles.WordsBox>

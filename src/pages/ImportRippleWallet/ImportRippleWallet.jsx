@@ -13,6 +13,7 @@ import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../com
 import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import { IMPORT } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
+import { XRP } from '../../constants/network'
 
 
 
@@ -80,7 +81,7 @@ function ImportRippleWallet() {
             <WalletWrapper
                 title="IMPORT YOUR SEED"
                 description="Please paste your XRP wallet seed to restore your wallet."
-                link={ "/create-wallet?wallet=xrp" }
+                link={ `/create-wallet?wallet=${XRP}` }
             >
                 <Styles.Container>
                     <Styles.XrpWordsBox>

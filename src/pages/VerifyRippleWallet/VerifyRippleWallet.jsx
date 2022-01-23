@@ -13,6 +13,7 @@ import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../com
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { CONFIRMED, CREATE } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
+import { XRP } from '../../constants/network'
 
 
 function VerifyRippleWallet() {
@@ -21,9 +22,7 @@ function VerifyRippleWallet() {
     const [xrpSeed, setXrpSeed] = useState("")
     const walletId = useSelector(state => state.algorand.id)
     const passphrase = useSelector(state => state.algorand.passphrase).split(" ")
-    // const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
-    // const { num3, num5, num12, num15, num24 } = missingWords
     const [openModal, setOpenModal] = useState(false)
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
 
@@ -51,7 +50,7 @@ function VerifyRippleWallet() {
         const completedPassphrase = passphrase
 
         /**
-         * !ripplepharse does not exist yet, rewrite handleVerifyPassphrase function for ripple wallet
+         * !ripplephrase does not exist yet, rewrite handleVerifyPassphrase function for ripple wallet
          */
         if (completedPassphrase !== JSON.parse(localStorage.getItem('ripplephrase'))) {
             dispatch(incorrectPassphraseError({
@@ -102,7 +101,7 @@ function VerifyRippleWallet() {
             <WalletWrapper
                 title="VERIFY PASSPHRASE BACKUP"
                 description="Please paste the seed you copied. This is to verify you did a backup."
-                link="/create-wallet/xrp"
+                link={`/create-wallet/${XRP}`}
             >
                 <Styles.Container>
                     <Styles.XrpWordsBox>

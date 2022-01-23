@@ -12,6 +12,7 @@ import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
 import { useDispatch } from 'react-redux'
 import { createAlgorandWallet } from '../../app/algorandSlice'
 import { CREATE } from '../../constants/walletStatus';
+import { ALGO, XRP } from '../../constants/network';
 
 
 function WalletSetup() {
@@ -23,7 +24,7 @@ function WalletSetup() {
     const selectedWallet = urlQueryParams.get('wallet')
 
     const handleCreateWallet = () => {
-        if (selectedWallet === 'algo') {
+        if (selectedWallet === ALGO) {
             dispatch(showBackdrop())
             dispatch(createAlgorandWallet({ status: CREATE }))
             .unwrap()
@@ -36,7 +37,7 @@ function WalletSetup() {
                 console.log(err)
                 dispatch(hideBackdrop())
             })
-        } else if (selectedWallet === 'xrp') {
+        } else if (selectedWallet === XRP) {
             alert('create ripple wallet')
         }
     }
@@ -55,7 +56,7 @@ function WalletSetup() {
             {
                 pathname === '/wallet-setup' &&
                 <>
-                    <Link to="/create-wallet?wallet=algo" style={{ textDecoration: 'none' }}>
+                    <Link to={`/create-wallet?wallet=${ALGO}`} style={{ textDecoration: 'none' }}>
                         <WalletCard
                             walletSetup
                             title="algorand wallet"
@@ -63,7 +64,7 @@ function WalletSetup() {
                             image={algorandLogo}
                         />
                     </Link>
-                    <Link to="/create-wallet?wallet=xrp" style={{ textDecoration: 'none' }}>
+                    <Link to={`/create-wallet?wallet=${XRP}`} style={{ textDecoration: 'none' }}>
                         <WalletCard
                             walletSetup
                             title="ripple wallet"
