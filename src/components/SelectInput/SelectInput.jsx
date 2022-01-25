@@ -3,6 +3,7 @@ import { Grid } from '@mui/material'
 import * as Styles from './selectInput'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ClickAwayListener from 'react-click-away-listener';
 
 function SelectInput({ half, exchange, label }) {
     const [open, setOpen] = useState(false)
@@ -11,83 +12,89 @@ function SelectInput({ half, exchange, label }) {
         setOpen(prevState => !prevState)
     }
 
+    const handleClickAway = () => {
+        setOpen(false)
+    }
+
     return (
         <Grid item xs={half ? 6 : 12}>
-            <Styles.Root exchange={exchange}>
-                <label>{label}</label>
-                <div className="container">
-                    <div className="select" onClick={toggleSelect}> 
-                        <div className="left">
-                            <img src={algorandLogo} alt="" />
-                            <span>ALGO</span>
+            <ClickAwayListener onClickAway={handleClickAway}>
+                <Styles.Root exchange={exchange}>
+                    <label>{label}</label>
+                    <div className="container">
+                        <div className="select" onClick={toggleSelect}> 
+                            <div className="left">
+                                <img src={algorandLogo} alt="" />
+                                <span>ALGO</span>
+                            </div>
+                            <KeyboardArrowDownIcon />
                         </div>
-                        <KeyboardArrowDownIcon />
                     </div>
-                </div>
-                <Styles.DropdownContainer show={open}>
-                    <Styles.DropdownItem>
-                        <div className="left">
-                            <div className="leftTop">
-                                <img src={algorandLogo} alt="" />
-                                <span>ALGORAND</span>
+                    <Styles.DropdownContainer show={open}>
+                        <Styles.DropdownItem>
+                            <div className="left">
+                                <div className="leftTop">
+                                    <img src={algorandLogo} alt="" />
+                                    <span>ALGORAND</span>
+                                </div>
+                                <div className="leftBottom">
+                                    <span>ALGO</span>
+                                </div>
                             </div>
-                            <div className="leftBottom">
-                                <span>ALGO</span>
+                            <div className="right">
+                                <div className="rightTop">
+                                    <span>0.00</span>
+                                </div>
+                                <div className="rightBottom">
+                                    <span>Asset ID:</span> 
+                                    <span>384303832</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="right">
-                            <div className="rightTop">
-                                <span>0.00</span>
+                        </Styles.DropdownItem>
+                        <Styles.DropdownItem>
+                            <div className="left">
+                                <div className="leftTop">
+                                    <img src={algorandLogo} alt="" />
+                                    <span>ALGORAND</span>
+                                </div>
+                                <div className="leftBottom">
+                                    <span>ALGO</span>
+                                </div>
                             </div>
-                            <div className="rightBottom">
-                                <span>Asset ID:</span> 
-                                <span>384303832</span>
+                            <div className="right">
+                                <div className="rightTop">
+                                    <span>0.00</span>
+                                </div>
+                                <div className="rightBottom">
+                                    <span>Asset ID:</span> 
+                                    <span>384303832</span>
+                                </div>
                             </div>
-                        </div>
-                    </Styles.DropdownItem>
-                    <Styles.DropdownItem>
-                        <div className="left">
-                            <div className="leftTop">
-                                <img src={algorandLogo} alt="" />
-                                <span>ALGORAND</span>
+                        </Styles.DropdownItem>
+                        <Styles.DropdownItem>
+                            <div className="left">
+                                <div className="leftTop">
+                                    <img src={algorandLogo} alt="" />
+                                    <span>ALGORAND</span>
+                                </div>
+                                <div className="leftBottom">
+                                    <span>ALGO</span>
+                                </div>
                             </div>
-                            <div className="leftBottom">
-                                <span>ALGO</span>
+                            <div className="right">
+                                <div className="rightTop">
+                                    <span>0.00</span>
+                                </div>
+                                <div className="rightBottom">
+                                    <span>Asset ID:</span> 
+                                    <span>384303832</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className="right">
-                            <div className="rightTop">
-                                <span>0.00</span>
-                            </div>
-                            <div className="rightBottom">
-                                <span>Asset ID:</span> 
-                                <span>384303832</span>
-                            </div>
-                        </div>
-                    </Styles.DropdownItem>
-                    <Styles.DropdownItem>
-                        <div className="left">
-                            <div className="leftTop">
-                                <img src={algorandLogo} alt="" />
-                                <span>ALGORAND</span>
-                            </div>
-                            <div className="leftBottom">
-                                <span>ALGO</span>
-                            </div>
-                        </div>
-                        <div className="right">
-                            <div className="rightTop">
-                                <span>0.00</span>
-                            </div>
-                            <div className="rightBottom">
-                                <span>Asset ID:</span> 
-                                <span>384303832</span>
-                            </div>
-                        </div>
-                    </Styles.DropdownItem>
-                
-                </Styles.DropdownContainer>
-            </Styles.Root>
+                        </Styles.DropdownItem>
+                    
+                    </Styles.DropdownContainer>
+                </Styles.Root>
+            </ClickAwayListener>
         </Grid>
     )
 }
