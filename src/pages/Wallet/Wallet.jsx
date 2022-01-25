@@ -9,12 +9,15 @@ import scannerIcon from '../../assets/icons/scanner.svg'
 import calenderIcon from '../../assets/icons/calendar.svg'
 import TripleInput from '../../components/TripleInput/TripleInput'
 import SelectInput from '../../components/SelectInput/SelectInput'
-import WalletAsset from '../../components/WalletAsset/WalletAsset'
+import WalletAssetItem from '../../components/WalletAssetItem/WalletAssetItem'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
+import { useSelector } from 'react-redux'
+import { ALGORAND } from '../../constants/network'
 
 
 function Dashboard() {
+    const network = useSelector(state => state.network.network)
 
     return (
         <DashboardWrapper>
@@ -58,11 +61,11 @@ function Dashboard() {
                                     <Styles.SubTitle>Asset</Styles.SubTitle>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Styles.SubTitle>Asset ID</Styles.SubTitle>
+                                    <Styles.SubTitle>{network === ALGORAND ? 'Asset ID' : 'Issuer Add'}</Styles.SubTitle>
                                 </Grid>
                                 <Grid item container xs={12} rowSpacing={4}>
-                                    <WalletAsset />
-                                    <WalletAsset clawback />
+                                    <WalletAssetItem />
+                                    <WalletAssetItem clawback />
                                 </Grid>
                             </Grid>
                         </div>
