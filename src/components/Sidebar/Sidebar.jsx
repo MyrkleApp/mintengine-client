@@ -44,7 +44,7 @@ function Sidebar({ mobile }) {
                 <span>ASSET MANAGER</span>
             </Styles.NavItem>
         </Link>
-        <Link to="#" style={{ textDecoration: 'none' }}>
+        <Link to="/exchange" style={{ textDecoration: 'none' }}>
             <Styles.NavItem mobile={mobile}>
                 <CompareArrowsOutlinedIcon />
                 <span>EXCHANGE</span>

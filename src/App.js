@@ -17,6 +17,7 @@ import AssetManager from './pages/AssetManager/AssetManager';
 import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
 import ImportRippleWallet from './pages/ImportRippleWallet/ImportRippleWallet';
+import Exchange from './pages/Exchange/Exchange';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                       <Route exact path="/wallet" component={Wallet} />
                       <Route exact path="/transactions" component={Transactions} />
                       <Route exact path="/asset-manager" component={AssetManager} />
+                      <Route exact path="/exchange" component={Exchange} />
                       <Route exact path="/settings" component={Settings} />
                       <Route component={NotFound} />
                     </Switch>

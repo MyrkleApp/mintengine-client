@@ -14,7 +14,7 @@ export const Root = styled.div`
     & > .container {
         margin-top: 7px;
         height: 65px;
-        border: 2px solid #043923;
+        border: 2px solid ${props => !props.exchange ? '#043923' : 'transparent'};
         border-radius: 16px;
         font-size: 18px;
         width: 100%;
@@ -33,7 +33,7 @@ export const Root = styled.div`
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #E7FDF3;
+            background-color: ${props => !props.exchange ? '#E7FDF3' : 'white'};
             cursor: pointer;
 
             & > .left {

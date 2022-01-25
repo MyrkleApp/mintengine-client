@@ -4,7 +4,7 @@ import * as Styles from './selectInput'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-function SelectInput({ half }) {
+function SelectInput({ half, exchange, label }) {
     const [open, setOpen] = useState(false)
 
     const toggleSelect = () => {
@@ -13,8 +13,8 @@ function SelectInput({ half }) {
 
     return (
         <Grid item xs={half ? 6 : 12}>
-            <Styles.Root>
-                <label>Amount</label>
+            <Styles.Root exchange={exchange}>
+                <label>{label}</label>
                 <div className="container">
                     <div className="select" onClick={toggleSelect}> 
                         <div className="left">
