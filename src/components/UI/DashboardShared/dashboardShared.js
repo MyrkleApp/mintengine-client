@@ -22,6 +22,7 @@ export const BoxContainer = styled(Box)`
     height: auto;
     border-radius: 25px;
     padding-bottom: 50px;
+    margin-bottom: 30px;
     & > .container {
         width: calc(100% - 50px);
         height: calc(100% - 50px);
