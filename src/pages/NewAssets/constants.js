@@ -1,0 +1,7 @@
+export const CREATE_ASSET = "Create Asset"
+export const UNIQUE_NFT = "Unique NFT"
+export const COMMON_NFT = "Common NFT"
+export const CUSTOM_NFT = "Custom NFT"
+export const WEB3_TICKET = "Web3 Ticket"
+export const FRACTIONAL_NFT = "Fractional NFT"
+export const SECURITY = "Security"

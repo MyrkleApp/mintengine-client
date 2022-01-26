@@ -2,12 +2,13 @@ import React from 'react'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
 import MyTabs from '../../components/MyTabs/MyTabs'
-import Table from '../../components/Table/Table'
 import useTabs from '../../Hooks/Tabs'
+import { COMMON_NFT, CREATE_ASSET, CUSTOM_NFT, FRACTIONAL_NFT, SECURITY, UNIQUE_NFT, WEB3_TICKET } from './constants'
+import CreateAsset from './tabs/CreateAsset'
 
-const tabs = ["All Transactions", "Algo TXNs", "Asa TXNs", "Scheduled TXNs"]
+const tabs = [CREATE_ASSET, UNIQUE_NFT, COMMON_NFT, CUSTOM_NFT, WEB3_TICKET, FRACTIONAL_NFT, SECURITY]
 
-function Transactions() {
+function NewAssets() {
     const { tabValue, handleTabChange } = useTabs(tabs[0])
 
     return (
@@ -20,11 +21,11 @@ function Transactions() {
                     handleTabChange={handleTabChange}
                 />
             </SharedStyles.Transactions>
-            <SharedStyles.TableBox>
-                <Table />
-            </SharedStyles.TableBox>
+
+            { tabValue === CREATE_ASSET && <CreateAsset /> }
+            
         </DashboardWrapper>
     )
 }
 
-export default Transactions
+export default NewAssets
