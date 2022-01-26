@@ -14,19 +14,19 @@ const theme = createTheme({
 });
   
 
-export default function ScrollableTabsButtonAuto({ tabs }) {
-  const [value, setValue] = React.useState(0);
+export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChange }) {
+  // const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <ThemeProvider theme={theme}>
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
         <Tabs
-            value={value}
-            onChange={handleChange}
+            value={tabValue}
+            onChange={handleTabChange}
             variant="scrollable"
             scrollButtons
             aria-label="scrollable auto tabs example"
@@ -39,14 +39,15 @@ export default function ScrollableTabsButtonAuto({ tabs }) {
             {
                 tabs.map((item, i) => (
                     <Tab 
-                        key={i}
-                        label={item} 
-                        style={{ 
-                            color: value !== i && '#879C93',
-                            fontWeight: 600,
-                            fontSize: '17px',
-                            textTransform: 'none'
-                        }}
+                      key={i}
+                      value={item}
+                      label={item} 
+                      style={{ 
+                        color: tabValue !== item && '#879C93',
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        textTransform: 'none'
+                      }}
                     />
                 ))
             }

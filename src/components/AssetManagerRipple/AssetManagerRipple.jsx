@@ -36,7 +36,7 @@ function AssetManagerRipple() {
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
-                <AssetItem color="#f3f2f3">
+                <AssetItem color="#e5e9ff">
                     <div className="container">
                         <img src={createChequeIcon} alt="" />
                     </div>
@@ -44,7 +44,7 @@ function AssetManagerRipple() {
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
-                <AssetItem color="#e5e9ff">
+                <AssetItem color="#f3e9fb">
                     <div className="container">
                         <img src={createNftIcon} alt="" />
                     </div>

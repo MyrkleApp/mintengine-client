@@ -14,10 +14,13 @@ import MyTabs from '../../components/MyTabs/MyTabs'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import { useSelector } from 'react-redux'
 import { ALGORAND } from '../../constants/network'
+import useTabs from '../../Hooks/Tabs'
 
+const tabs = ['Normal TXN', 'Multiple TXN', 'Scheduled TXN']
 
 function Dashboard() {
     const network = useSelector(state => state.network.network)
+    const { tabValue, handleTabChange } = useTabs(tabs[0])
 
     return (
         <DashboardWrapper>
@@ -30,7 +33,11 @@ function Dashboard() {
                     <Styles.Box>
                         <div className="container">
                             <div className="tabsContainer">
-                                <MyTabs tabs={['Normal TXN', 'Multiple TXN', 'Scheduled TXN']} />
+                                <MyTabs 
+                                    tabs={tabs} 
+                                    tabValue={tabValue}
+                                    handleTabChange={handleTabChange}
+                                />
                             </div>
                             <Grid container rowSpacing={2}>
                                 <SelectInput label="Amount" />
