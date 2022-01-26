@@ -12,14 +12,14 @@ function Transactions() {
 
     return (
         <DashboardWrapper>
-            <SharedStyles.Transactions>
+            <SharedStyles.HeaderBox>
                 <h2>YOUR TRANSACTIONS</h2>
                 <MyTabs 
                     tabs={tabs} 
                     tabValue={tabValue}
                     handleTabChange={handleTabChange}
                 />
-            </SharedStyles.Transactions>
+            </SharedStyles.HeaderBox>
             <SharedStyles.TableBox>
                 <Table />
             </SharedStyles.TableBox>

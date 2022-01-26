@@ -5,7 +5,7 @@ const Box = styled.div`
     background-color: white;
 `
 
-export const Transactions = styled(Box)`
+export const HeaderBox = styled(Box)`
     padding: 15px 20px 0px 25px;
     margin: 30px auto 20px auto;
     border-radius: 20px 20px 0 0;

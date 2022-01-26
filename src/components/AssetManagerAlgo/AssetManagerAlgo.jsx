@@ -10,17 +10,20 @@ import clawbackIcon from  '../../assets/assetIcons/clawback.png'
 import modifyIcon from  '../../assets/assetIcons/modify.png'
 import destroyIcon from  '../../assets/assetIcons/destroy.png'
 import { Grid } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 function AssetManagerAlgo() {
     return (
         <Fragment>
             <Grid item xs={6} md={4} lg={2}>
-                <AssetItem color="#e7fdf3">
-                    <div className="container">
-                        <img src={newAssetIcon} alt="" />
-                    </div>
-                    <span>New Asset</span>
-                </AssetItem>
+                <Link to="/new-assets" style={{ textDecoration: 'none' }}>
+                    <AssetItem color="#e7fdf3">
+                        <div className="container">
+                            <img src={newAssetIcon} alt="" />
+                        </div>
+                        <span>New Asset</span>
+                    </AssetItem>
+                </Link>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
                 <AssetItem color="#e5f2ff">

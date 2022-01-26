@@ -19,14 +19,14 @@ function NewAssets() {
 
     return (
         <DashboardWrapper>
-            <SharedStyles.Transactions>
-                <h2>YOUR TRANSACTIONS</h2>
+            <SharedStyles.HeaderBox>
+                <h2>NEW ASSETS</h2>
                 <MyTabs 
                     tabs={tabs} 
                     tabValue={tabValue}
                     handleTabChange={handleTabChange}
                 />
-            </SharedStyles.Transactions>
+            </SharedStyles.HeaderBox>
 
             { tabValue === CREATE_ASSET && <CreateAsset /> }
             { tabValue === UNIQUE_NFT && <UniqueNft /> }

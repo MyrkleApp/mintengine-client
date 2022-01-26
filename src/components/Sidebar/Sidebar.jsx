@@ -16,8 +16,10 @@ function Sidebar({ mobile }) {
     const dispatch = useDispatch()
     const userToken = useSelector(state => state.auth.token)
 
-    const activeLink = (link) => {
-        return pathname === link
+    const activeLink = (link1, link2) => {
+        if (link1 === pathname || link2 === pathname) {
+            return true
+        }
     }
 
     const handleLogout = () => {
@@ -39,7 +41,7 @@ function Sidebar({ mobile }) {
             </Styles.NavItem>
         </Link>
         <Link to="/asset-manager" style={{ textDecoration: 'none' }}>
-            <Styles.NavItem mobile={mobile} active={activeLink('/asset-manager')}>
+            <Styles.NavItem mobile={mobile} active={activeLink('/asset-manager', '/new-assets')}>
                 <WebAssetOutlinedIcon />
                 <span>ASSET MANAGER</span>
             </Styles.NavItem>
