@@ -14,6 +14,7 @@ export const Box = styled.div`
     background-color: white;
     border-radius: 25px;
     padding-bottom: 50px;
+    margin-bottom: 50px;
     & > .container {
         width: calc(100% - 50px);
         height: calc(100% - 50px);

@@ -1,22 +1,21 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import FormControl from '../../components/FormControl/FormControl'
-import Tab from '../../components/Tab/Tab'
 import WalletAddress from '../../components/WalletAddress/WalletAddress'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 import * as Styles from './wallet'
-import scannerIcon from '../../assets/icons/scanner.svg'
-import calenderIcon from '../../assets/icons/calendar.svg'
-import TripleInput from '../../components/TripleInput/TripleInput'
-import SelectInput from '../../components/SelectInput/SelectInput'
 import WalletAssetItem from '../../components/WalletAssetItem/WalletAssetItem'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import { useSelector } from 'react-redux'
-import { ALGORAND } from '../../constants/network'
+import { ALGORAND, RIPPLE } from '../../constants/network'
 import useTabs from '../../Hooks/Tabs'
+import { MULTIPLE_TXN, NORMAL_TXN, SCHEDULED_TXN } from './constants'
+import NormalTxn from './tabs/NormalTxn'
+import ScheduledTxn from './tabs/ScheduledTxn'
+import MultipleTxn from './tabs/MultipleTxn'
+import Ripple from './ripple/Ripple'
 
-const tabs = ['Normal TXN', 'Multiple TXN', 'Scheduled TXN']
+const tabs = [NORMAL_TXN, MULTIPLE_TXN, SCHEDULED_TXN]
 
 function Dashboard() {
     const network = useSelector(state => state.network.network)
@@ -27,33 +26,35 @@ function Dashboard() {
             <ChooseNetwork />
             <WalletAddress />
             <Grid container spacing={3}>
-                
+
                 <Grid item xs={12} lg={8}>
                     <Styles.Title>SEND ASSET</Styles.Title>
                     <Styles.Box>
                         <div className="container">
-                            <div className="tabsContainer">
-                                <MyTabs 
-                                    tabs={tabs} 
-                                    tabValue={tabValue}
-                                    handleTabChange={handleTabChange}
-                                />
-                            </div>
+                            {
+                                network === ALGORAND && (
+                                    <div className="tabsContainer">
+                                        <MyTabs
+                                            tabs={tabs}
+                                            tabValue={tabValue}
+                                            handleTabChange={handleTabChange}
+                                        />
+                                    </div>
+                                )
+                            }
                             <Grid container rowSpacing={2}>
-                                <SelectInput label="Amount" />
-                                <FormControl 
-                                    label="Recipient Address"
-                                    icon={scannerIcon}
-                                    type="text"
-                                    center
-                                />
-                                <FormControl 
-                                    label="Date"
-                                    icon={calenderIcon}
-                                    type="date"
-                                    center
-                                />
-                                <TripleInput />
+                                {
+                                    network === ALGORAND && (
+                                        <>
+                                            { tabValue === NORMAL_TXN && <NormalTxn /> }
+                                            { tabValue === MULTIPLE_TXN && <MultipleTxn /> }
+                                            { tabValue === SCHEDULED_TXN && <ScheduledTxn /> }
+                                        </>
+                                    )
+                                }
+                                { 
+                                    network === RIPPLE && <Ripple />
+                                }
                             </Grid>
                         </div>
                     </Styles.Box>
