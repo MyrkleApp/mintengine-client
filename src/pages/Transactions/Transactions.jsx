@@ -4,6 +4,7 @@ import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShar
 import MyTabs from '../../components/MyTabs/MyTabs'
 import Table from '../../components/Table/Table'
 import useTabs from '../../Hooks/Tabs'
+import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 
 const tabs = ["All Transactions", "Algo TXNs", "Asa TXNs", "Scheduled TXNs"]
 
@@ -12,6 +13,7 @@ function Transactions() {
 
     return (
         <DashboardWrapper>
+            <ChooseNetwork />
             <SharedStyles.HeaderBox>
                 <h2>YOUR TRANSACTIONS</h2>
                 <MyTabs 

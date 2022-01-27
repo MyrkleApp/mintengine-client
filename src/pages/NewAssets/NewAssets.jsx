@@ -11,6 +11,10 @@ import CustomNft from './tabs/CustomNft'
 import Security from './tabs/Security'
 import FractionalNft from './tabs/FractionalNft'
 import Web3Ticket from './tabs/Web3Ticket'
+import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom'
+
 
 const tabs = [CREATE_ASSET, UNIQUE_NFT, COMMON_NFT, CUSTOM_NFT, WEB3_TICKET, FRACTIONAL_NFT, SECURITY]
 
@@ -19,7 +23,12 @@ function NewAssets() {
 
     return (
         <DashboardWrapper>
+            
+            <ChooseNetwork />
             <SharedStyles.HeaderBox>
+                <Link to="/asset-manager" style={{ textDecoration: 'none' }}>
+                    <ArrowBackIcon className="arrowIcon" />
+                </Link>
                 <h2>NEW ASSETS</h2>
                 <MyTabs 
                     tabs={tabs} 

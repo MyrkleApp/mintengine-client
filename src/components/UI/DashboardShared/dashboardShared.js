@@ -7,8 +7,17 @@ const Box = styled.div`
 
 export const HeaderBox = styled(Box)`
     padding: 15px 20px 0px 25px;
-    margin: 30px auto 20px auto;
+    margin: 150px auto 20px auto;
     border-radius: 20px 20px 0 0;
+    position: relative;
+    & .arrowIcon {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        font-size: 30px;
+        cursor: pointer;
+        color: #043923;
+    }
     & > h2 {
         color: #043923;
         font-size: 20px;

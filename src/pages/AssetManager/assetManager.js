@@ -7,7 +7,7 @@ const Box = styled.div`
 
 export const ManageAssets = styled(Box)`
     padding: 20px 20px 35px 20px;
-    margin: 30px auto 20px auto;
+    margin: 150px auto 20px auto;
     border-radius: 20px;
     & > h2 {
         color: #043923;

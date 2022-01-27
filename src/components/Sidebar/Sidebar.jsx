@@ -47,7 +47,7 @@ function Sidebar({ mobile }) {
             </Styles.NavItem>
         </Link>
         <Link to="/exchange" style={{ textDecoration: 'none' }}>
-            <Styles.NavItem mobile={mobile}>
+            <Styles.NavItem mobile={mobile} active={activeLink('/exchange')}>
                 <CompareArrowsOutlinedIcon />
                 <span>EXCHANGE</span>
             </Styles.NavItem>

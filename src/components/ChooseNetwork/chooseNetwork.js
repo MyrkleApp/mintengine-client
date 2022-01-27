@@ -4,7 +4,7 @@ export const Root = styled.div`
     padding: 18px;
     background-color: #097246;
     color: white;
-    position: fixed;
+    position: absolute;
     top: 110px;
     right: 50px;
     z-index: 100;
