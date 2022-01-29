@@ -54,6 +54,15 @@ export const Description = styled.p`
 
 `
 
+export const UploadImageBox = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    & > img {
+        margin-right: 20px;
+    }
+`
+
 export const TableBox = styled(Box)`
     border-radius: 0 0 20px 20px;
     margin-bottom: 40px;

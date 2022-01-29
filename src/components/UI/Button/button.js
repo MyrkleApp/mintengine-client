@@ -30,3 +30,8 @@ export const WalletAddressButton = styled(Button)`
     color: #0EB56F;
     border-radius: 18px;
 `
+
+export const UploadImageButton = styled(WalletAddressButton)`
+    background-color: #0EB56F;
+    color: white;
+`

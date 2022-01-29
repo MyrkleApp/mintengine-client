@@ -63,6 +63,22 @@ export const CustomInput = styled.input`
     }
 `
 
+export const TextArea = styled.textarea`
+    height: 130px;
+    padding-left: 15px;
+    padding-right: 58px;
+    border: 2px solid #043923;
+    border-radius: 16px;
+    background-color: transparent;
+    font-size: 18px;
+    text-align: ${props => props.center ? 'center' : 'left'};
+
+    &:focus {
+        outline: none;
+        border: 2px solid #0EB56F;
+    }
+`
+
 export const HelperText = styled.span`
     margin-top: 5px;
     margin-bottom: 5px;

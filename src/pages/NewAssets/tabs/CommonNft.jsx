@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import FormControl from '../../../components/FormControl/FormControl'
-import { Button } from '../../../components/UI/Button/button'
+import { Button, UploadImageButton } from '../../../components/UI/Button/button'
 import * as SharedStyles from '../../../components/UI/DashboardShared/dashboardShared'
+import imageFrame from '../../../assets/icons/imageFrame.png'
 
 function CommonNft() {
 
@@ -23,6 +24,10 @@ function CommonNft() {
                             icon
                             label="NFT Name"
                         />
+                        <SharedStyles.UploadImageBox>
+                            <img src={imageFrame} alt="" />
+                            <UploadImageButton>Upload Image</UploadImageButton>
+                        </SharedStyles.UploadImageBox>
                         <FormControl 
                             icon
                             label="Unit"
@@ -34,6 +39,11 @@ function CommonNft() {
                         <FormControl 
                             icon
                             label="NFT URL"
+                        />
+                        <FormControl 
+                            icon
+                            textArea
+                            label="Note"
                         />
                         <Button fullWidth disabled style={{ marginTop: '20px' }}>
                             create asset
