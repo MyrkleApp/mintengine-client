@@ -23,7 +23,7 @@ export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChan
 
   return (
     <ThemeProvider theme={theme}>
-        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        <Box sx={{ width: '100%', }}>
         <Tabs
             value={tabValue}
             onChange={handleTabChange}

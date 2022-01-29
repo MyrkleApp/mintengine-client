@@ -30,3 +30,30 @@ export const TableBox = styled(Box)`
     min-height: 600px;
     overflow-x: auto;
 `
+
+export const CloseModalBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: #F5FEFA;
+    color: #043923;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+`
+
+export const ModalTitle = styled.h2`
+    color: #043923;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+`
+
+export const ButtonContainer = styled.div`
+    margin: 30px auto 30px auto;
+    width: calc(100% - 100px);
+`

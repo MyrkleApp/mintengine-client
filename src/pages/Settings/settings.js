@@ -35,6 +35,8 @@ export const Root = styled.div`
         width: calc(60% - 50px);
         z-index: 2;
         background-color: #f5fefa;
+        min-height: 300px;
+        
         
 
         @media(max-width: 600px) {
@@ -44,7 +46,7 @@ export const Root = styled.div`
             transition: 300ms linear all;
         }
 
-        & > div > div, div > button {
+        & > .changeDetails > div, .changeDetails > button {
             margin-bottom: 20px;
         }
 

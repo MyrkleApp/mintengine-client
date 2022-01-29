@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Fragment } from 'react'
 import { AssetItem } from '../AssetItem/AssetItem'
 import newAssetIcon from '../../assets/assetIcons/newAsset.png'
@@ -11,10 +11,34 @@ import modifyIcon from  '../../assets/assetIcons/modify.png'
 import destroyIcon from  '../../assets/assetIcons/destroy.png'
 import { Grid } from '@mui/material'
 import { Link } from 'react-router-dom'
+import useModal from '../../Hooks/Modal'
+import Modal from '../UI/Modal/Modal'
+import FormControl from '../FormControl/FormControl'
+import CloseIcon from '@mui/icons-material/Close';
+import { ButtonContainer, CloseModalBox, ModalTitle } from '../../pages/AssetManager/assetManager'
+import { Button } from '../UI/Button/button'
+import { OPT_IN } from './constants'
+import OptIn from './manageAssets/OptIn'
 
 function AssetManagerAlgo() {
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
+    const [manageAsset, setManageAsset] = useState('')
+
+    const handleOptInModal = () => {
+        setManageAsset(OPT_IN)
+        handleModalOpen();
+    }
+
     return (
+
         <Fragment>
+            <Modal open={modalState} handleClose={handleModalClose}>
+                <CloseModalBox onClick={handleModalClose}>
+                    <CloseIcon fontSize="large" />
+                </CloseModalBox>
+                { manageAsset === OPT_IN && <OptIn /> }
+                
+            </Modal>
             <Grid item xs={6} md={4} lg={2}>
                 <Link to="/new-assets" style={{ textDecoration: 'none' }}>
                     <AssetItem color="#e7fdf3">

@@ -3,7 +3,7 @@ import Modal from '@mui/material/Modal';
 import { ModalBox } from './modal';
 
 
-export default function BasicModal({ children, open, handleOpen, handleClose}) {
+export default function BasicModal({ children, open, handleClose}) {
 
   return (
     <Modal
