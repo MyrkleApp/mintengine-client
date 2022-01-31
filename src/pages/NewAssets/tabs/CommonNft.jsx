@@ -15,7 +15,7 @@ function CommonNft() {
                     <Grid item xs={12} md={5}>
                         <SharedStyles.Title>Common Nft</SharedStyles.Title>
                         <SharedStyles.Description>
-                            NFTs are are built into the protocol and activated using a special type of transaction. You do not need to write smart contract code, which may be the case on some other blockchains.
+                            Create and manage digital representations of multiple real-world or digital collectibles tied by the same unique ID on the Algorand blockchain, which can be later sold or distributed as parts of a collection.
                         </SharedStyles.Description>
                     </Grid>
 

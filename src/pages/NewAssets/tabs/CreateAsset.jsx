@@ -13,16 +13,16 @@ function CreateAsset() {
                 
                 <Grid container columnSpacing={3}>
                     <Grid item xs={12} md={5}>
-                        <SharedStyles.Title>Create Asset</SharedStyles.Title>
+                        <SharedStyles.Title>Create Token</SharedStyles.Title>
                         <SharedStyles.Description>
-                            With sufficient ALGO balance, you can create new assets. A single Algorand account is permitted to create up to 1000 assets.
+                            Create and manage fungible tokens on the Algorand blockchain with Mint engine.
                         </SharedStyles.Description>
                     </Grid>
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
                             icon
-                            label="Asset Name"
+                            label="Token Name"
                         />
                         <SharedStyles.UploadImageBox>
                             <img src={imageFrame} alt="" />

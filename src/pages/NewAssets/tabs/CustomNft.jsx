@@ -13,16 +13,16 @@ function CustomNft() {
                 
                 <Grid container columnSpacing={3}>
                     <Grid item xs={12} md={5}>
-                        <SharedStyles.Title>Custom Nft</SharedStyles.Title>
+                        <SharedStyles.Title>Custom Token</SharedStyles.Title>
                         <SharedStyles.Description>
-                            When creating custom assets, you must specify how many units of this asset will be created, clawback, freeze, reserve, manager addresses functions as well as metadata fields.
+                            Mint Engine gives you the option to fully interact with the ASA creation layer and explores all the features provided by the smart contract.
                         </SharedStyles.Description>
                     </Grid>
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
                             icon
-                            label="Asset Name"
+                            label="Token Name"
                         />
                         <SharedStyles.UploadImageBox>
                             <img src={imageFrame} alt="" />

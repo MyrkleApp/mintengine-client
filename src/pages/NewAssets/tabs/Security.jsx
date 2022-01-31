@@ -15,7 +15,7 @@ function Security() {
                     <Grid item xs={12} md={5}>
                         <SharedStyles.Title>Security</SharedStyles.Title>
                         <SharedStyles.Description>
-                            Creating security tokens is the same as creating NFTs or FTs, with the extra configuration settings specified.
+                            Create and manage algorithmically backed digital representations of tradable financial instruments on the Algorand blockchain with Mint Engine. This is a proof of concept derived from the custom Fungible token template.
                         </SharedStyles.Description>
                     </Grid>
 

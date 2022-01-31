@@ -15,7 +15,7 @@ function UniqueNft() {
                     <Grid item xs={12} md={5}>
                         <SharedStyles.Title>Unique Nft</SharedStyles.Title>
                         <SharedStyles.Description>
-                            NFTs are are built into the protocol and activated using a special type of transaction. You do not need to write smart contract code, which may be the case on some other blockchains.
+                            Create and manage unique non-fungible tokens that represent real-world or Digital assets and collectibles on the Algorand blockchain with Mint Engine.
                         </SharedStyles.Description>
                     </Grid>
 

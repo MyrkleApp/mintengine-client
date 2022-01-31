@@ -12,6 +12,9 @@ export const Root = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+        & > p > a {
+            color: white;
+        }
     }
 
     & .topContent {

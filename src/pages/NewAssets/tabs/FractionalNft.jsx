@@ -15,7 +15,7 @@ function FractionalNft() {
                     <Grid item xs={12} md={5}>
                         <SharedStyles.Title>Fractional Nft</SharedStyles.Title>
                         <SharedStyles.Description>
-                            Algorand supports the creation of fractional NFTs and is the only decentralized network that is mathematically proven to be forkless.
+                            Create digital representations of fractions of real-world assets or digital collectibles on the Algorand blockchain with Mint Engine.
                         </SharedStyles.Description>
                     </Grid>
 

@@ -15,7 +15,7 @@ function Web3Ticket() {
                     <Grid item xs={12} md={5}>
                         <SharedStyles.Title>Web3 Ticket</SharedStyles.Title>
                         <SharedStyles.Description>
-                            After you create an asset, it will have an ID that is unique on the blockchain. You can use that to confirm whether or not the ticket is valid.
+                            Create counterfeit-proof digital representation of real-world tickets on the Algorand blockchain with Mint Engine.
                         </SharedStyles.Description>
                     </Grid>
 
