@@ -3,12 +3,12 @@ import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetMa
 import FormControl from '../../FormControl/FormControl'
 import { Button } from '../../UI/Button/button'
 
-function OptIn() {
+function Destroy() {
 
     return (
         <Fragment>
-            <ModalTitle>OPT-IN</ModalTitle>
-            <p>Opt-in with a given asset ID to receive an Algorand asset to your account.</p>
+            <ModalTitle>DESTROY</ModalTitle>
+            <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
             <FormControl 
                 icon 
                 label="Asset ID"
@@ -19,10 +19,10 @@ function OptIn() {
                 textArea
             />
             <ButtonContainer>
-                <Button fullWidth disabled>opt-in</Button>
+                <Button fullWidth disabled>destroy</Button>
             </ButtonContainer>
         </Fragment>
     )
 }
 
-export default OptIn
+export default Destroy

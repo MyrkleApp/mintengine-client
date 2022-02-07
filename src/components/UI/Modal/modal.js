@@ -19,3 +19,10 @@ export const ModalBox = styled.div`
         width: 250px;
     }
 `
+
+export const ModalContent = styled.div`
+    width: 100%;
+    overflow-y: scroll;
+    max-height: calc(100vh - 100px);
+    padding-right: 20px;
+`

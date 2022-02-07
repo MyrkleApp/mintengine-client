@@ -19,17 +19,8 @@ function AssetManager() {
             <Styles.ManageAssets>
                 <h2>MANAGE ASSETS</h2>
                 <Grid container rowSpacing={3}>
-                    {
-                        network === ALGORAND && (
-                            <AssetManagerAlgo />
-                        )
-                    }
-
-                    {
-                        network === RIPPLE && (
-                            <AssetManagerRipple />
-                        )
-                    }
+                    { network === ALGORAND && <AssetManagerAlgo /> }
+                    { network === RIPPLE && <AssetManagerRipple /> }
                 </Grid>
             </Styles.ManageAssets>
             <Styles.Title>CREATED ASSETS</Styles.Title>

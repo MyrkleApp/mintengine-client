@@ -3,15 +3,19 @@ import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetMa
 import FormControl from '../../FormControl/FormControl'
 import { Button } from '../../UI/Button/button'
 
-function OptIn() {
+function Unfreeze() {
 
     return (
         <Fragment>
-            <ModalTitle>OPT-IN</ModalTitle>
-            <p>Opt-in with a given asset ID to receive an Algorand asset to your account.</p>
+            <ModalTitle>CLAWBACK</ModalTitle>
+            <p>The clawback address represents an account that is allowed to transfer assets from and to any asset holder.</p>
             <FormControl 
                 icon 
                 label="Asset ID"
+            />
+            <FormControl 
+                icon 
+                label="Target Address"
             />
             <FormControl 
                 icon 
@@ -19,10 +23,10 @@ function OptIn() {
                 textArea
             />
             <ButtonContainer>
-                <Button fullWidth disabled>opt-in</Button>
+                <Button fullWidth disabled>clawback</Button>
             </ButtonContainer>
         </Fragment>
     )
 }
 
-export default OptIn
+export default Unfreeze

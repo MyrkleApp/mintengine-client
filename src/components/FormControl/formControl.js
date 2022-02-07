@@ -72,6 +72,7 @@ export const TextArea = styled.textarea`
     background-color: transparent;
     font-size: 18px;
     text-align: ${props => props.center ? 'center' : 'left'};
+    resize: none;
 
     &:focus {
         outline: none;

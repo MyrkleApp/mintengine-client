@@ -3,13 +3,13 @@ import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetMa
 import FormControl from '../../FormControl/FormControl'
 import { Button } from '../../UI/Button/button'
 
-function OptIn() {
+function OptOut() {
 
     return (
         <Fragment>
-            <ModalTitle>OPT-IN</ModalTitle>
-            <p>Opt-in with a given asset ID to receive an Algorand asset to your account.</p>
-            <FormControl 
+            <ModalTitle>OPT-OUT</ModalTitle>
+            <p>Opt-Out with a given Asset ID to remove an Algorand asset holding from your account.</p>
+            {/* <FormControl 
                 icon 
                 label="Asset ID"
             />
@@ -17,12 +17,12 @@ function OptIn() {
                 icon 
                 label="Note"
                 textArea
-            />
+            /> */}
             <ButtonContainer>
-                <Button fullWidth disabled>opt-in</Button>
+                <Button fullWidth disabled>opt-out</Button>
             </ButtonContainer>
         </Fragment>
     )
 }
 
-export default OptIn
+export default OptOut

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Modal from '@mui/material/Modal';
-import { ModalBox } from './modal';
+import { ModalBox, ModalContent } from './modal';
 
 
 export default function BasicModal({ children, open, handleClose}) {
@@ -13,7 +13,9 @@ export default function BasicModal({ children, open, handleClose}) {
         aria-describedby="modal-modal-description"
     >
         <ModalBox>
+          <ModalContent>
             { children }
+          </ModalContent>
         </ModalBox>
     </Modal>
   );

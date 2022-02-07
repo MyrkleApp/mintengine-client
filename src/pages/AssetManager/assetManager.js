@@ -44,6 +44,7 @@ export const CloseModalBox = styled.div`
     position: absolute;
     right: 15px;
     top: 15px;
+    z-index: 1;
 `
 
 export const ModalTitle = styled.h2`

@@ -4,7 +4,8 @@ import * as Styles from'./formControl'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-function Input({ half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible, icon, center, textArea }) {
+function Input(props) {
+    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible, icon, center, textArea } = props;
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
