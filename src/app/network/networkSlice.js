@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ALGORAND, RIPPLE } from '../constants/network'
+import { ALGORAND, RIPPLE } from '../../constants/network'
 
 const networkSlice = createSlice({
   name: 'network',

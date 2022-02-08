@@ -5,7 +5,7 @@ import rippleLogo from '../../assets/icons/rippleLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { ALGORAND, RIPPLE } from '../../constants/network';
-import { toggleNetwork } from '../../app/networkSlice';
+import { toggleNetwork } from '../../app/network/networkSlice';
 import ClickAwayListener from 'react-click-away-listener';
 
 

@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { HTTP_STATUS } from '../constants/httpStatus'
-import axios from './axios'
+import axios from '../axios'
+import { 
+  loginUserFulfilled, 
+  loginUserPending, 
+  loginUserRejected, 
+  registerUserFulfilled, 
+  registerUserPending, 
+  registerUserRejected 
+} from './actions'
 
 const namespace = 'auth'
 
@@ -37,37 +44,13 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    /**
-     * register
-     */
-    [registerUser.pending](state) {
-      state.register.status = HTTP_STATUS.PENDING
-    },
-    [registerUser.fulfilled](state, { payload }) {
-      state.register.status = HTTP_STATUS.FULFILLED
-      state.token = payload.key
-      localStorage.setItem('mint-engine', JSON.stringify(payload.key))
-    },
-    [registerUser.rejected](state, { payload }) {
-      state.register.status = HTTP_STATUS.REJECTED
-      state.register.error = payload.error[0]
-    },
-    /**
-     * login
-     */
-    [loginUser.pending](state) {
-      state.login.status = HTTP_STATUS.PENDING
-    },
-    [loginUser.fulfilled](state, { payload }) {
-      state.login.status = HTTP_STATUS.FULFILLED
-      state.token = payload.key
-      localStorage.setItem('mint-engine', JSON.stringify(payload.key))
-    },
-    [loginUser.rejected](state, { payload }) {
-      state.login.status = HTTP_STATUS.REJECTED
-      state.login.error = payload
-
-    },
+    [registerUser.pending]: registerUserPending,
+    [registerUser.fulfilled]: registerUserFulfilled,
+    [registerUser.rejected]: registerUserRejected,
+    
+    [loginUser.pending]: loginUserPending,
+    [loginUser.fulfilled]: loginUserFulfilled,
+    [loginUser.rejected]: loginUserRejected,
   }
 })
 

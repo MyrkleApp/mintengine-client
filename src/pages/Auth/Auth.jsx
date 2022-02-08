@@ -7,8 +7,8 @@ import { useHistory, useLocation } from 'react-router'
 import * as Styles from './auth'
 import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { useDispatch } from 'react-redux'
-import { loginUser, registerUser } from '../../app/authSlice'
-import { showBackdrop, hideBackdrop } from '../../app/backdropSlice'
+import { loginUser, registerUser } from '../../app/auth/authSlice'
+import { showBackdrop, hideBackdrop } from '../../app/backdrop/backdropSlice'
 import { passwordReducer } from './reducers'
 
 

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './authSlice'
-import backdropReducer from './backdropSlice'
-import algorandReducer from './algorandSlice'
-import networkReducer from './networkSlice'
+import authReducer from './auth/authSlice'
+import backdropReducer from './backdrop/backdropSlice'
+import algorandReducer from './algorand/algorandSlice'
+import networkReducer from './network/networkSlice'
 
 export default configureStore({
   reducer: {

@@ -8,9 +8,9 @@ import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
-import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
+import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
 import { useDispatch } from 'react-redux'
-import { createAlgorandWallet } from '../../app/algorandSlice'
+import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
 import { CREATE } from '../../constants/walletStatus';
 import { ALGO, XRP } from '../../constants/network';
 

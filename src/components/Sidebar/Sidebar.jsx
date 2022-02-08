@@ -8,7 +8,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../app/authSlice'
+import { logout } from '../../app/auth/authSlice'
 
 function Sidebar({ mobile }) {
     const { pathname } = useLocation()

@@ -6,11 +6,11 @@ import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import { useDispatch } from 'react-redux'
-import { createAlgorandWallet } from '../../app/algorandSlice'
+import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
-import { hideBackdrop, showBackdrop } from '../../app/backdropSlice'
+import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
 import { IMPORT } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 import { ALGO } from '../../constants/network'

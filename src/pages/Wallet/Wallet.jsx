@@ -1,12 +1,12 @@
+import React, { useEffect } from 'react'
 import { Grid } from '@mui/material'
-import React from 'react'
 import WalletAddress from '../../components/WalletAddress/WalletAddress'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 import * as Styles from './wallet'
 import WalletAssetItem from '../../components/WalletAssetItem/WalletAssetItem'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ALGORAND, RIPPLE } from '../../constants/network'
 import useTabs from '../../Hooks/Tabs'
 import { MULTIPLE_TXN, NORMAL_TXN, SCHEDULED_TXN } from './constants'
@@ -14,12 +14,18 @@ import NormalTxn from './tabs/NormalTxn'
 import ScheduledTxn from './tabs/ScheduledTxn'
 import MultipleTxn from './tabs/MultipleTxn'
 import Ripple from './ripple/Ripple'
+import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
 
 const tabs = [NORMAL_TXN, MULTIPLE_TXN, SCHEDULED_TXN]
 
 function Dashboard() {
+    const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
+
+    useEffect(() => {
+        dispatch(getActiveAlgorandWallet())
+    }, [])
 
     return (
         <DashboardWrapper>
