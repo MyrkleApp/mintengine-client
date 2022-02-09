@@ -48,14 +48,17 @@ function Settings() {
                         detailsToShow === CHANGE_DETAILS && (
                             <Grid container className="changeDetails">
                                 <FormControl
+                                    icon
                                     label="Current Password"
                                     type="password"
                                 />
                                 <FormControl
+                                    icon
                                     label="New Password"
                                     type="password"
                                 />
                                 <FormControl
+                                    icon
                                     label="Confirm New Password"
                                     type="password"
                                 />

@@ -10,11 +10,9 @@ function OptIn() {
             <ModalTitle>OPT-IN</ModalTitle>
             <p>Opt-in with a given asset ID to receive an Algorand asset to your account.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />

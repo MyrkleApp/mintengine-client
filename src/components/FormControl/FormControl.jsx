@@ -37,11 +37,16 @@ function Input(props) {
                 <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
 
                 {
-                    !icon ?
-                    ( !visible 
+                    typeof(icon) === 'boolean' && (
+                        !visible 
                         ?   <VisibilityOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
-                        :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} /> ) 
-                    : <img src={icon || ""} alt="" className="icon" />
+                        :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
+                    ) 
+                }
+                {
+                    typeof(icon) === "string" && (
+                        <img src={icon} alt="" className="icon" />
+                    )
                 }
             </Styles.Root>
         </Grid>

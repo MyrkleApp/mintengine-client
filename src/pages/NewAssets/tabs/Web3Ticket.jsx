@@ -21,7 +21,6 @@ function Web3Ticket() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
-                            icon
                             label="Name"
                         />
                         <SharedStyles.UploadImageBox>
@@ -29,15 +28,12 @@ function Web3Ticket() {
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
-                            icon
                             label="Asset URL"
                         />
                         <FormControl 
-                            icon
                             label="Total Suppy"
                         />
                         <FormControl 
-                            icon
                             textArea
                             label="Note"
                         />

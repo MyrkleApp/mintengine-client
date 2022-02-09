@@ -21,7 +21,6 @@ function UniqueNft() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
-                            icon
                             label="NFT Name"
                         />
                         <SharedStyles.UploadImageBox>
@@ -29,19 +28,15 @@ function UniqueNft() {
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
-                            icon
                             label="Unit"
                         />
                         <FormControl 
-                            icon
                             label="Total Suppy"
                         />
                         <FormControl 
-                            icon
                             label="NFT URL"
                         />
                         <FormControl 
-                            icon
                             textArea
                             label="Note"
                         />

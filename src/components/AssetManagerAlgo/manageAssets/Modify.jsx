@@ -10,27 +10,21 @@ function Unfreeze() {
             <ModalTitle>MODIFY</ModalTitle>
             <p>After an asset has been created only the manager, reserve, freeze and clawback accounts can be changed.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Manager's Address"
             />
             <FormControl 
-                icon 
                 label="Reserve Address"
             />
             <FormControl 
-                icon 
                 label="Freeze Address"
             />
             <FormControl 
-                icon 
                 label="Clawback Address"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />

@@ -10,15 +10,12 @@ function Unfreeze() {
             <ModalTitle>CLAWBACK</ModalTitle>
             <p>The clawback address represents an account that is allowed to transfer assets from and to any asset holder.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Target Address"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />

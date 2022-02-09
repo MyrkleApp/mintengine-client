@@ -171,6 +171,7 @@ function Auth() {
                             <Styles.Title>{pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
                         </Grid>
                         <FormControl
+                            icon
                             name="password"
                             label="Password"
                             type={showPassword ? 'text' : 'password'}
@@ -184,6 +185,7 @@ function Auth() {
                         />
                         {pathname === '/signup' &&
                             <FormControl
+                                icon
                                 name="confirmPassword"
                                 label="Confirm Password"
                                 type={showConfirmPassword ? 'text' : 'password'}

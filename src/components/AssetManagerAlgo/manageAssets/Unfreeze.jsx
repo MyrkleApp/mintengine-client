@@ -10,15 +10,12 @@ function Unfreeze() {
             <ModalTitle>UNFREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify an unfreeze address.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Target Address"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />

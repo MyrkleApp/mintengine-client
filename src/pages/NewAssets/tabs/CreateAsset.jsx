@@ -21,7 +21,6 @@ function CreateAsset() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
-                            icon
                             label="Token Name"
                         />
                         <SharedStyles.UploadImageBox>
@@ -29,23 +28,18 @@ function CreateAsset() {
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
-                            icon
                             label="Unit"
                         />
                         <FormControl 
-                            icon
                             label="Total Suppy"
                         />
                         <FormControl 
-                            icon
                             label="Decimal"
                         />
                         <FormControl 
-                            icon
                             label="Asset URL"
                         />
                         <FormControl 
-                            icon
                             textArea
                             label="Note"
                         />

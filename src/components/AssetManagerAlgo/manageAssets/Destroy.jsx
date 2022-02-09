@@ -10,11 +10,9 @@ function Destroy() {
             <ModalTitle>DESTROY</ModalTitle>
             <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />

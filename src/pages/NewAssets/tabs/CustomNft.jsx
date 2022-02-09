@@ -21,7 +21,6 @@ function CustomNft() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
-                            icon
                             label="Token Name"
                         />
                         <SharedStyles.UploadImageBox>
@@ -29,39 +28,30 @@ function CustomNft() {
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
-                            icon
                             label="Unit"
                         />
                         <FormControl 
-                            icon
                             label="Total Suppy"
                         />
                         <FormControl 
-                            icon
                             label="Decimal"
                         />
                         <FormControl 
-                            icon
                             label="Asset URL"
                         />
                         <FormControl 
-                            icon
                             label="Metadata Hash"
                         />
                         <FormControl 
-                            icon
                             label="Manager Address"
                         />
                         <FormControl 
-                            icon
                             label="Freeze Address"
                         />
                         <FormControl 
-                            icon
                             label="Clawback Address"
                         />
                         <FormControl 
-                            icon
                             textArea
                             label="Note"
                         />

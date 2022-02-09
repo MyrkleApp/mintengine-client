@@ -21,7 +21,6 @@ function FractionalNft() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
-                            icon
                             label="NFT Name"
                         />
                         <SharedStyles.UploadImageBox>
@@ -29,23 +28,18 @@ function FractionalNft() {
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
-                            icon
                             label="Unit"
                         />
                         <FormControl 
-                            icon
                             label="Total Suppy"
                         />
                         <FormControl 
-                            icon
                             label="Decimal"
                         />
                         <FormControl 
-                            icon
                             label="NFT URL"
                         />
                         <FormControl 
-                            icon
                             textArea
                             label="Note"
                         />

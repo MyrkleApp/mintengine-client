@@ -10,15 +10,12 @@ function Freeze() {
             <ModalTitle>FREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify a freeze address.</p>
             <FormControl 
-                icon 
                 label="Asset ID"
             />
             <FormControl 
-                icon 
                 label="Target Address"
             />
             <FormControl 
-                icon 
                 label="Note"
                 textArea
             />
