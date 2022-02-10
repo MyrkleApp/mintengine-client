@@ -19,7 +19,7 @@ import { CLAWBACK, DESTROY, FREEZE, MODIFY, OPT_IN, OPT_OUT, UNFREEZE } from './
 import OptIn from './manageAssets/OptIn'
 import OptOut from './manageAssets/OptOut'
 import Freeze from './manageAssets/Freeze'
-import Unfreeze from './manageAssets/Modify'
+import Unfreeze from './manageAssets/Unfreeze'
 import Clawback from './manageAssets/Clawback'
 import Modify from './manageAssets/Modify'
 import Destroy from './manageAssets/Destroy'
