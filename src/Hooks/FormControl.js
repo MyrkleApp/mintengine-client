@@ -7,9 +7,19 @@ function useFormControl() {
         setValue(e.target.value)
     }
 
+    const [visible, setVisible] = useState(false)
+
+    const toggleVisibile = () => {
+        setVisible(prevState => !prevState)
+    }
+
+    const typeForPasswordInput = visible ? 'text' : 'password'
+
     return {
         value,
-        handleChange
+        handleChange,
+        toggleVisibile,
+        typeForPasswordInput
     }
 }
 

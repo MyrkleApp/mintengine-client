@@ -49,7 +49,7 @@ export const Root = styled.div `
 export const CustomInput = styled.input`
     height: 65px;
     padding-left: 15px;
-    padding-right: 58px;
+    padding-right: ${props => props.icon ? '58px' : '15px'};
     /* margin: 10px 0px 20px 0px; */
     border: 2px solid #043923;
     border-radius: 16px;
@@ -66,7 +66,7 @@ export const CustomInput = styled.input`
 export const TextArea = styled.textarea`
     height: 130px;
     padding-left: 15px;
-    padding-right: 58px;
+    padding-right: ${props => props.icon ? '58px' : '15px'};
     border: 2px solid #043923;
     border-radius: 16px;
     background-color: transparent;

@@ -5,7 +5,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 function Input(props) {
-    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, visible, icon, center, textArea } = props;
+    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea } = props;
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
@@ -14,6 +14,7 @@ function Input(props) {
                 {
                     !textArea ? 
                     <Styles.CustomInput
+                        icon={icon}
                         name={name}
                         type={type}
                         placeholder={placeholder}
@@ -24,6 +25,7 @@ function Input(props) {
                         required={type === 'date' ? true : false}
                     /> :
                     <Styles.TextArea
+                        icon={icon}
                         name={name}
                         type={type}
                         placeholder={placeholder}
@@ -31,14 +33,13 @@ function Input(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         center={center}
-                        required={type === 'date' ? true : false}
                     /> 
                 }
                 <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
 
                 {
                     typeof(icon) === 'boolean' && (
-                        !visible 
+                        type === 'password' 
                         ?   <VisibilityOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
                         :   <VisibilityOffOutlinedIcon className="icon" onClick={toggleShowPassword} /> 
                     ) 

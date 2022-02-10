@@ -180,7 +180,6 @@ function Auth() {
                             handleBlur={handlePasswordBlur}
                             helperText={passwordHelperText}
                             error={passwordError}
-                            visible={showPassword}
                             toggleShowPassword={toggleShowPassword}
                         />
                         {pathname === '/signup' &&
@@ -193,7 +192,6 @@ function Auth() {
                                 handleChange={handleConfirmPasswordChange}
                                 helperText={confirmPasswordHelperText}
                                 error={confirmPasswordError}
-                                visible={showConfirmPassword}
                                 toggleShowPassword={toggleShowConfirmPassword}
                             />}
                         <Grid item xs={12}>
@@ -202,7 +200,7 @@ function Auth() {
                                 type="submit"
                                 disabled={!buttonIsEnabled}
                             >
-                                {pathname === '/signup' ? 'Create my wallet' : 'Access my wallet'}
+                                { pathname === '/signup' ? 'Create my wallet' : 'Access my wallet' }
                             </Button>
                         </Grid>
                     </Grid>

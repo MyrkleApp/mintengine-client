@@ -10,6 +10,7 @@ import { ALGORAND_ADDRESS, CHANGE_DETAILS, MY_WALLET_ADDRESS, RIPPLE_ADDRESS } f
 import useTabs from '../../Hooks/Tabs'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import AlgorandAddressItem from '../../components/AlgorandAddressItem/AlgorandAddressItem'
+import useFormControl from '../../Hooks/FormControl'
 
 const tabs = [ALGORAND_ADDRESS, RIPPLE_ADDRESS]
 
@@ -18,6 +19,26 @@ function Settings() {
     const [detailsToShow, setDetailsToShow] = useState(CHANGE_DETAILS)
     const [openDetailsForMobile, setOpenDetailsForMobile] = useState(false)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
+    const {
+        value: currentPasswordValue,
+        handleChange: handleCurrentPasswordChange,
+        toggleVisibile: toggleCurrentPasswordVisibile,
+        typeForPasswordInput: typeForCurrentPasswordInput
+    } = useFormControl()
+
+    const {
+        value: newPasswordValue,
+        handleChange: handleNewPasswordChange,
+        toggleVisibile: toggleNewPasswordVisibile,
+        typeForPasswordInput: typeForNewPasswordInput
+    } = useFormControl()
+
+    const {
+        value: confirmPasswordValue,
+        handleChange: handleConfirmPasswordChange,
+        toggleVisibile: toggleConfirmPasswordVisibile,
+        typeForPasswordInput: typeForConfirmPasswordInput
+    } = useFormControl()
 
     const handleChangeDetails = () => {
         setDetailsToShow(CHANGE_DETAILS)
@@ -50,17 +71,26 @@ function Settings() {
                                 <FormControl
                                     icon
                                     label="Current Password"
-                                    type="password"
+                                    value={currentPasswordValue}
+                                    handleChange={handleCurrentPasswordChange}
+                                    type={typeForCurrentPasswordInput}
+                                    toggleShowPassword={toggleCurrentPasswordVisibile}
                                 />
                                 <FormControl
                                     icon
                                     label="New Password"
-                                    type="password"
+                                    value={newPasswordValue}
+                                    handleChange={handleNewPasswordChange}
+                                    type={typeForNewPasswordInput}
+                                    toggleShowPassword={toggleNewPasswordVisibile}
                                 />
                                 <FormControl
                                     icon
                                     label="Confirm New Password"
-                                    type="password"
+                                    value={confirmPasswordValue}
+                                    handleChange={handleConfirmPasswordChange}
+                                    type={typeForConfirmPasswordInput}
+                                    toggleShowPassword={toggleConfirmPasswordVisibile}
                                 />
                                 <Button fullWidth disabled>save my changes</Button>
                             </Grid>
