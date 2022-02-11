@@ -3,8 +3,8 @@ import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/Dashboa
 import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import useTabs from '../../Hooks/Tabs'
-import { COMMON_NFT, CREATE_ASSET, CUSTOM_NFT, FRACTIONAL_NFT, SECURITY, UNIQUE_NFT, WEB3_TICKET } from './constants'
-import CreateAsset from './tabs/CreateAsset'
+import { COMMON_NFT, CREATE_TOKEN, CUSTOM_NFT, FRACTIONAL_NFT, SECURITY, UNIQUE_NFT, WEB3_TICKET } from './constants'
+import CreateToken from './tabs/CreateToken'
 import UniqueNft from './tabs/UniqueNft'
 import CommonNft from './tabs/CommonNft'
 import CustomNft from './tabs/CustomNft'
@@ -16,7 +16,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom'
 
 
-const tabs = [CREATE_ASSET, UNIQUE_NFT, COMMON_NFT, CUSTOM_NFT, WEB3_TICKET, FRACTIONAL_NFT, SECURITY]
+const tabs = [CREATE_TOKEN, UNIQUE_NFT, COMMON_NFT, CUSTOM_NFT, WEB3_TICKET, FRACTIONAL_NFT, SECURITY]
 
 function NewAssets() {
     const { tabValue, handleTabChange } = useTabs(tabs[0])
@@ -37,7 +37,7 @@ function NewAssets() {
                 />
             </SharedStyles.HeaderBox>
 
-            { tabValue === CREATE_ASSET && <CreateAsset /> }
+            { tabValue === CREATE_TOKEN && <CreateToken /> }
             { tabValue === UNIQUE_NFT && <UniqueNft /> }
             { tabValue === COMMON_NFT && <CommonNft /> }
             { tabValue === CUSTOM_NFT && <CustomNft /> }

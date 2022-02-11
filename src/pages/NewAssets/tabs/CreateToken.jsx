@@ -4,8 +4,16 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button, UploadImageButton } from '../../../components/UI/Button/button'
 import * as SharedStyles from '../../../components/UI/DashboardShared/dashboardShared'
 import imageFrame from '../../../assets/icons/imageFrame.png'
+import useFormControl from '../../../Hooks/FormControl'
 
-function CreateAsset() {
+function CreateToken() {
+    const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: decimalValue, handleChange: handleDecimalChange } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+
 
     return (
         <SharedStyles.BoxContainer>
@@ -21,27 +29,44 @@ function CreateAsset() {
 
                     <Grid item xs={12} md={7}>
                         <FormControl 
+                            type="text"
                             label="Token Name"
+                            value={tokenNameValue}
+                            handleChange={handleTokenNameChange}
                         />
                         <SharedStyles.UploadImageBox>
                             <img src={imageFrame} alt="" />
                             <UploadImageButton>Upload Image</UploadImageButton>
                         </SharedStyles.UploadImageBox>
                         <FormControl 
+                            type="text"
                             label="Unit"
+                            value={unitValue}
+                            handleChange={handleUnitChange}
                         />
                         <FormControl 
-                            label="Total Suppy"
+                            type="text"
+                            label="Total Supply"
+                            value={totalSupplyValue}
+                            handleChange={handleTotalSupplyChange}
                         />
                         <FormControl 
+                            type="text"
                             label="Decimal"
+                            value={decimalValue}
+                            handleChange={handleDecimalChange}
                         />
                         <FormControl 
+                            type="text"
                             label="Asset URL"
+                            value={assetUrlValue}
+                            handleChange={handleAssetUrlChange}
                         />
                         <FormControl 
                             textArea
                             label="Note"
+                            value={noteValue}
+                            handleChange={handleNoteChange}
                         />
                         <Button fullWidth disabled style={{ marginTop: '20px' }}>
                             create asset
@@ -53,4 +78,4 @@ function CreateAsset() {
     )
 }
 
-export default CreateAsset
+export default CreateToken

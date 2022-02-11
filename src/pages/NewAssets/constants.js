@@ -1,4 +1,4 @@
-export const CREATE_ASSET = "Create Token"
+export const CREATE_TOKEN = "Create Token"
 export const UNIQUE_NFT = "Unique NFT"
 export const COMMON_NFT = "Common NFT"
 export const CUSTOM_NFT = "Custom Token"
