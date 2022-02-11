@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Grid } from '@mui/material'
-import WalletAddress from '../../components/WalletAddress/WalletAddress'
+import WalletAddress from '../../containers/WalletAddress/WalletAddress'
 import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
 import * as Styles from './wallet'
 import WalletAssetItem from '../../components/WalletAssetItem/WalletAssetItem'

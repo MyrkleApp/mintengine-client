@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import { DropdownItem } from '../../SelectInput/selectInput'
-import { Button } from '../../UI/Button/button'
+import { DropdownItem } from '../../../components/SelectInput/selectInput'
+import { Button } from '../../../components/UI/Button/button'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 

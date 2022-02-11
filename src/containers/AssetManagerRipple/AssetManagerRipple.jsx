@@ -1,6 +1,6 @@
 import React from 'react'
 import { Fragment } from 'react'
-import { AssetItem } from '../AssetItem/AssetItem'
+import { AssetItem } from '../../components/AssetItem/AssetItem'
 import newAssetIcon from '../../assets/assetIcons/newAsset.png'
 import optInIcon from  '../../assets/assetIcons/optIn.png'
 import optOutIcon from  '../../assets/assetIcons/optOut.png'

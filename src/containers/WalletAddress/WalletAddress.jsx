@@ -3,9 +3,9 @@ import { Grid } from '@mui/material'
 import * as Styles from './walletAddress'
 import qrCode from '../../assets/icons/qrCode.svg'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import { CopyButton, WalletAddressButton } from '../UI/Button/button';
-import { Word } from '../UI/WalletShared/walletShared';
-import CopyButtonWithTooltip from '../UI/MyTooltip/MyTooltip'
+import { CopyButton, WalletAddressButton } from '../../components/UI/Button/button';
+import { Word } from '../../components/UI/WalletShared/walletShared';
+import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase';
 import { useSelector } from 'react-redux';
 import { ALGORAND, RIPPLE } from '../../constants/network';

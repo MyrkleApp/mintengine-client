@@ -1,26 +1,29 @@
 import React, { Fragment } from 'react'
 import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import FormControl from '../../FormControl/FormControl'
-import { Button } from '../../UI/Button/button'
+import FormControl from '../../../components/FormControl/FormControl'
+import { Button } from '../../../components/UI/Button/button'
 
-function OptIn() {
+function Unfreeze() {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-
-    const handleSubmit = () => {
-        alert(`${assetIdValue}, ${noteValue}`)
-    }
 
     return (
         <Fragment>
-            <ModalTitle>OPT-IN</ModalTitle>
-            <p>Opt-in with a given asset ID to receive an Algorand asset to your account.</p>
+            <ModalTitle>UNFREEZE</ModalTitle>
+            <p>Upon creation of an asset, you can specify an unfreeze address.</p>
             <FormControl 
                 type="text"
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
+            />
+            <FormControl 
+                type="text"
+                label="Target Address"
+                value={targetAddressValue}
+                handleChange={handleTargetAddressChange}
             />
             <FormControl 
                 label="Note"
@@ -29,10 +32,10 @@ function OptIn() {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth onClick={handleSubmit}>opt-in</Button>
+                <Button fullWidth disabled>unfreeze</Button>
             </ButtonContainer>
         </Fragment>
     )
 }
 
-export default OptIn
+export default Unfreeze

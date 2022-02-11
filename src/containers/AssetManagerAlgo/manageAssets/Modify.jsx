@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import FormControl from '../../FormControl/FormControl'
-import { Button } from '../../UI/Button/button'
+import FormControl from '../../../components/FormControl/FormControl'
+import { Button } from '../../../components/UI/Button/button'
 
 function Unfreeze() {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()

@@ -1,29 +1,22 @@
 import React, { Fragment } from 'react'
 import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import FormControl from '../../FormControl/FormControl'
-import { Button } from '../../UI/Button/button'
+import FormControl from '../../../components/FormControl/FormControl'
+import { Button } from '../../../components/UI/Button/button'
 
-function Freeze() {
+function Destroy() {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
-    const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
 
     return (
         <Fragment>
-            <ModalTitle>FREEZE</ModalTitle>
-            <p>Upon creation of an asset, you can specify a freeze address.</p>
+            <ModalTitle>DESTROY</ModalTitle>
+            <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
             <FormControl 
                 type="text"
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-            />
-            <FormControl 
-                type="text"
-                label="Target Address"
-                value={targetAddressValue}
-                handleChange={handleTargetAddressChange}
             />
             <FormControl 
                 label="Note"
@@ -32,10 +25,10 @@ function Freeze() {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled>freeze</Button>
+                <Button fullWidth disabled>destroy</Button>
             </ButtonContainer>
         </Fragment>
     )
 }
 
-export default Freeze
+export default Destroy

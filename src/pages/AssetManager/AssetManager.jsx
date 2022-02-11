@@ -4,9 +4,9 @@ import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/Dashboa
 import * as Styles from './assetManager'
 import Table from '../../components/Table/Table'
 import { useSelector } from 'react-redux'
-import AssetManagerAlgo from '../../components/AssetManagerAlgo/AssetManagerAlgo'
+import AssetManagerAlgo from '../../containers/AssetManagerAlgo/AssetManagerAlgo'
 import { ALGORAND, RIPPLE } from '../../constants/network'
-import AssetManagerRipple from '../../components/AssetManagerRipple/AssetManagerRipple'
+import AssetManagerRipple from '../../containers/AssetManagerRipple/AssetManagerRipple'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 
 
