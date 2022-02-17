@@ -8,13 +8,18 @@ import { Word } from '../../components/UI/WalletShared/walletShared';
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase';
 import { useSelector } from 'react-redux';
-import { ALGORAND, RIPPLE } from '../../constants/network';
+import { ALGORAND, networkDataToReturn, RIPPLE } from '../../constants/network';
+import { ThreeDots } from 'react-loader-spinner';
+import { HTTP_STATUS } from '../../constants/httpStatus';
+
+
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
     const network = useSelector(state => state.network.network)
     const rippleSeed = 'c6c108b3e923ea40067d129715065d96733528fc4ae5317814f795999f22b88f866a3343237b206daf6537ab593cba0b42a8f51721a6df3c5771cdc9312afc46'
     const textToCopy = network === ALGORAND ? MY_ALGORAND_PASSPHRASE : rippleSeed
+    const { status, data } = useSelector(networkDataToReturn[network.toLowerCase()]);
 
     const showPassphrase = () => {
         setOpen(true)
@@ -61,7 +66,17 @@ function WalletAddress() {
                     <span className="welcome">Welcome, Username</span>
                     <Grid container>
                         <Grid item xs={12} md={5} className="left">
-                            OFUVYAGG6WTU2ZUS2TQE4CM3HH3QJDISX3I5SLOZHE2Q6QP3IOC3BXPY4A
+                            { data?.address || '' }
+                            { 
+                                status === HTTP_STATUS.PENDING && (
+                                    <ThreeDots
+                                        height="30"
+                                        width="100"
+                                        color='gray'
+                                        ariaLabel='loading'
+                                    />
+                                )
+                            }
                             <ContentCopyOutlinedIcon className="copyIcon" />
                         </Grid>
 

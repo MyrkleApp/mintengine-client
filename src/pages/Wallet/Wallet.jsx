@@ -7,7 +7,7 @@ import WalletAssetItem from '../../components/WalletAssetItem/WalletAssetItem'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import { useDispatch, useSelector } from 'react-redux'
-import { ALGORAND, RIPPLE } from '../../constants/network'
+import { ALGORAND, networkDataToReturn, RIPPLE } from '../../constants/network'
 import useTabs from '../../Hooks/Tabs'
 import { MULTIPLE_TXN, NORMAL_TXN, SCHEDULED_TXN } from './constants'
 import NormalTxn from './tabs/NormalTxn'
@@ -22,10 +22,13 @@ function Dashboard() {
     const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
+    const { data: walletData } = useSelector(networkDataToReturn[network.toLowerCase()])
 
     useEffect(() => {
-        dispatch(getActiveAlgorandWallet())
-    }, [])
+        if (!walletData) {
+            dispatch(getActiveAlgorandWallet())
+        }
+    }, [network, dispatch])
 
     return (
         <DashboardWrapper>

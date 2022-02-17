@@ -17,7 +17,11 @@ function OptIn({ handleModalClose }) {
         handleModalClose()
         dispatch(showBackdrop())
 
+        /**
+         * ! MY_ALGORAND_PASSPHRASE SHOULD BE CHANGED TO USE REDUX STATE
+         */
         const optInData = { asset_id: assetIdValue, note: noteValue, phrase: MY_ALGORAND_PASSPHRASE_STRING }
+        console.log(MY_ALGORAND_PASSPHRASE_STRING)
 
         dispatch(algorandOptIn(optInData))
         .unwrap()
