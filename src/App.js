@@ -19,7 +19,7 @@ import NotFound from './pages/NotFound/NotFound';
 import ImportRippleWallet from './pages/ImportRippleWallet/ImportRippleWallet';
 import Exchange from './pages/Exchange/Exchange';
 import NewAssets from './pages/NewAssets/NewAssets';
-
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
 

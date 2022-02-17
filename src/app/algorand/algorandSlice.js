@@ -220,7 +220,7 @@ const algorandSlice = createSlice({
     passphrase: "",
     user: null,
     confirmWallet: { status: null, success: null, error: "" },
-    activeWallet: { value: null, status: null },
+    activeWallet: { status: null, data: null, error: null },
     clawback: { status: null, data: null, error: null },
     commonNft: { status: null, data: null, error: null },
     token: { status: null, data: null, error: null },

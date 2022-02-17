@@ -59,7 +59,7 @@ function Settings() {
             <Styles.Root open={openDetailsForMobile}>
                 <div className="left">
                     <button className="navItems" onClick={handleChangeDetails}>Change Details</button><br />
-                    <button className="navItems" onClick={handleMyWalletAddress}>My Wallet Address</button><br />
+                    <button className="navItems" onClick={handleMyWalletAddress}>My Wallet</button><br />
                     <button className="navItems" onClick={handleAddNewWallet}>Add New Wallet</button>
                 </div>
 

@@ -10,7 +10,7 @@ function Destroy() {
 
     return (
         <Fragment>
-            <ModalTitle>DESTROY</ModalTitle>
+            <ModalTitle>DELETE TOKEN</ModalTitle>
             <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
             <FormControl 
                 type="text"

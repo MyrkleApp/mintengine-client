@@ -65,13 +65,12 @@ function AssetManagerAlgo() {
     }
 
     return (
-
         <Fragment>
             <Modal open={modalState} handleClose={handleModalClose}>
                 <CloseModalBox onClick={handleModalClose}>
                     <CloseIcon fontSize="large" />
                 </CloseModalBox>
-                { manageAsset === OPT_IN && <OptIn /> }
+                { manageAsset === OPT_IN && <OptIn handleModalClose={handleModalClose} /> }
                 { manageAsset === OPT_OUT && <OptOut /> }
                 { manageAsset === FREEZE && <Freeze /> }
                 { manageAsset === UNFREEZE && <Unfreeze /> }
@@ -95,7 +94,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={optInIcon} alt="" />
                     </div>
-                    <span>Opt-In</span>
+                    <span>Add Token</span>
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
@@ -103,7 +102,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={optOutIcon} alt="" />
                     </div>
-                    <span>Opt-Out</span>
+                    <span>Remove Token</span>
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
@@ -143,7 +142,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={destroyIcon} alt="" />
                     </div>
-                    <span>Destroy</span>
+                    <span>Delete Token</span>
                 </AssetItem>
             </Grid>
         </Fragment>

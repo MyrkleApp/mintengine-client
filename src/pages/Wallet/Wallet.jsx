@@ -23,9 +23,9 @@ function Dashboard() {
     const network = useSelector(state => state.network.network)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
 
-    // useEffect(() => {
-    //     dispatch(getActiveAlgorandWallet())
-    // }, [])
+    useEffect(() => {
+        dispatch(getActiveAlgorandWallet())
+    }, [])
 
     return (
         <DashboardWrapper>

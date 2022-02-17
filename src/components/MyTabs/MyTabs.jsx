@@ -13,13 +13,7 @@ const theme = createTheme({
     },
 });
   
-
 export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChange }) {
-  // const [value, setValue] = React.useState(0);
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   return (
     <ThemeProvider theme={theme}>

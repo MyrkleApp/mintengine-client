@@ -9,8 +9,8 @@ function OptOut() {
 
     return (
         <Fragment>
-            <ModalTitle>OPT-OUT</ModalTitle>
-            <p>Opt-Out with a given Asset ID to remove an Algorand asset holding from your account.</p>
+            <ModalTitle>REMOVE-TOKEN</ModalTitle>
+            <p>Remove token with a given Asset ID to remove an Algorand asset holding from your account.</p>
             <div style={{ backgroundColor: '#f5fefa' }}>
                 {
                     Array(3).fill().map((_, i) => (

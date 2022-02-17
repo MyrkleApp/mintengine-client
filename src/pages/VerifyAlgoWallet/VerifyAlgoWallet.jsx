@@ -14,14 +14,13 @@ import useDisclaimer from '../../Hooks/Disclaimer'
 import { CONFIRMED, CREATE } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 import { ALGO } from '../../constants/network'
-import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase'
 
 
 function VerifyWallet() {
     const dispatch = useDispatch()
     const history = useHistory()
     const walletId = useSelector(state => state.algorand.id)
-    const passphrase = useSelector(state => state.algorand.passphrase).split(" ")
+    const passphraseArray = useSelector(state => state.algorand.passphrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const { num3, num5, num12, num15, num24 } = missingWords
@@ -53,14 +52,14 @@ function VerifyWallet() {
     const handleVerifyPassphrase = () => {
         handleCloseModal()
 
-        const completedPassphrase = passphrase
+        const completedPassphrase = passphraseArray
         completedPassphrase[2] = num3.trim()
         completedPassphrase[4] = num5.trim()
         completedPassphrase[11] = num12.trim()
         completedPassphrase[14] = num15.trim()
         completedPassphrase[23] = num24.trim()
 
-        if (completedPassphrase !== MY_ALGORAND_PASSPHRASE || MY_ALGORAND_PASSPHRASE.length < 25) {
+        if ((completedPassphrase !== passphraseArray) || (passphraseArray.length < 25)) {
             dispatch(incorrectPassphraseError({
                 status: CREATE,
                 error: 'The entered passphrase does not match'
@@ -71,7 +70,8 @@ function VerifyWallet() {
         }
 
         dispatch(showBackdrop())
-        dispatch(confirmAlgorandPassphrase({ id: walletId, status: CONFIRMED }))
+        const confirmData = { id: walletId, status: CONFIRMED, active: true }
+        dispatch(confirmAlgorandPassphrase(confirmData))
         .unwrap()
         .then(res => {
             dispatch(hideBackdrop())
@@ -106,7 +106,7 @@ function VerifyWallet() {
 
     const navigateToDashboard = () => {
         handleCloseModal()
-        history.push('/dashboard')
+        history.push('/wallet')
     }
     
 
@@ -119,7 +119,7 @@ function VerifyWallet() {
             >
                 <Styles.Container>
                     <Styles.WordsBox>
-                        { passphrase?.slice(0, 2)?.map((item, i) => (
+                        { passphraseArray?.slice(0, 2)?.map((item, i) => (
                             <Styles.Word key={i}>                                        
                                 { `${i + 1}. ${item}` }
                             </Styles.Word>
@@ -129,13 +129,13 @@ function VerifyWallet() {
                             <input name="num3" value={num3} onChange={handleAlgoChange} />
                         </Styles.WordInput>
                         <Styles.Word>                                        
-                            { `${4}. ${passphrase[3]}` }
+                            { `${4}. ${passphraseArray[3]}` }
                         </Styles.Word>
                         <Styles.WordInput>
                             <span>5.</span>
                             <input name="num5" value={num5} onChange={handleAlgoChange} />
                         </Styles.WordInput>
-                        { passphrase?.slice(5, 11)?.map((item, i) => (
+                        { passphraseArray?.slice(5, 11)?.map((item, i) => (
                             <Styles.Word key={i}>                                        
                                 { `${i + 6}. ${item}` }
                             </Styles.Word>
@@ -144,7 +144,7 @@ function VerifyWallet() {
                             <span>12.</span>
                             <input name="num12" value={num12} onChange={handleAlgoChange} />
                         </Styles.WordInput>
-                        { passphrase?.slice(12, 14)?.map((item, i) => (
+                        { passphraseArray?.slice(12, 14)?.map((item, i) => (
                             <Styles.Word key={i}>                                        
                                 { `${i + 13}. ${item}` }
                             </Styles.Word>
@@ -153,7 +153,7 @@ function VerifyWallet() {
                             <span>15.</span>
                             <input name="num15" value={num15} onChange={handleAlgoChange} />
                         </Styles.WordInput>
-                        { passphrase?.slice(15, 23)?.map((item, i) => (
+                        { passphraseArray?.slice(15, 23)?.map((item, i) => (
                             <Styles.Word key={i}>                                        
                                 { `${i + 16}. ${item}` }
                             </Styles.Word>
@@ -163,7 +163,7 @@ function VerifyWallet() {
                             <input name="num24" value={num24} onChange={handleAlgoChange} />
                         </Styles.WordInput>
                         <Styles.Word>                                        
-                            { `25. ${passphrase[24]}` }
+                            { `25. ${passphraseArray[24]}` }
                         </Styles.Word>
                     </Styles.WordsBox>
                     
