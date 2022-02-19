@@ -61,6 +61,13 @@ export const UploadImageBox = styled.div`
     & > img {
         margin-right: 20px;
     }
+    & > span {
+        margin-left: 20px;
+        max-width: calc(100% - 250px);
+        /* white-space: nowrap;  */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `
 
 export const TableBox = styled(Box)`

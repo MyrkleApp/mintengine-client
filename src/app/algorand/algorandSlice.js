@@ -53,6 +53,9 @@ import {
   unfreezeAlgorandPending,
   unfreezeAlgorandFulfilled,
   unfreezeAlgorandRejected,
+  getAlgorandHoldingsPending,
+  getAlgorandHoldingsFulfilled,
+  getAlgorandHoldingsRejected,
 } from './actions';
 
 const namespace = 'algorand'
@@ -147,6 +150,15 @@ export const freezeAlgorand = createAsyncThunk(`${namespace}/freezeAlgorand`, as
   }
 })
 
+export const getAlgorandHoldings = createAsyncThunk(`${namespace}/getAlgorandHoldings`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/algorand/v1/holdings/`, objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 export const modifyAlgorand = createAsyncThunk(`${namespace}/modifyAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/algorand/v1/modify/`, objData)
@@ -228,6 +240,7 @@ const algorandSlice = createSlice({
     destroy: { status: null, data: null, error: null },
     fractionalNft: { status: null, data: null, error: null },
     freeze: { status: null, data: null, error: null },
+    holdings: { status: null, data: null, error: null },
     modify: { status: null, data: null, error: null },
     optIn: { status: null, data: null, error: null },
     optOut: { status: null, data: null, error: null },
@@ -286,6 +299,10 @@ const algorandSlice = createSlice({
     [freezeAlgorand.pending]: freezeAlgorandPending,
     [freezeAlgorand.fulfilled]: freezeAlgorandFulfilled,
     [freezeAlgorand.rejected]: freezeAlgorandRejected,
+
+    [getAlgorandHoldings.pending]: getAlgorandHoldingsPending,
+    [getAlgorandHoldings.fulfilled]: getAlgorandHoldingsFulfilled,
+    [getAlgorandHoldings.rejected]: getAlgorandHoldingsRejected,
 
     [modifyAlgorand.pending]: modifyAlgorandPending,
     [modifyAlgorand.fulfilled]: modifyAlgorandFulfilled,

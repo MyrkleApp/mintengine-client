@@ -146,6 +146,20 @@ export const freezeAlgorandRejected = (state, { payload }) => {
     state.freeze.error = payload
 }
 
+export const getAlgorandHoldingsPending = (state) => {
+    state.holdings.status = HTTP_STATUS.PENDING
+}
+
+export const getAlgorandHoldingsFulfilled = (state, { payload }) => {
+    state.holdings.status = HTTP_STATUS.FULFILLED
+    state.holdings.data = payload
+}
+
+export const getAlgorandHoldingsRejected = (state, { payload }) => {
+    state.holdings.status = HTTP_STATUS.REJECTED
+    state.holdings.error = payload
+}
+
 export const modifyAlgorandPending = (state) => {
     state.modify.status = HTTP_STATUS.PENDING
 }

@@ -6,10 +6,12 @@ import { Button } from '../../../components/UI/Button/button'
 import { algorandOptIn } from '../../../app/algorand/algorandSlice'
 import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import useSubmit from '../../../Hooks/Submit'
+import useFormValidity from '../../../Hooks/FormValidity'
 
 function OptIn({ handleModalClose }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const { formIsValid } = useFormValidity(assetIdValue, noteValue)
     const { handleSubmit } = useSubmit()
 
     const handleOptIn = () => {
@@ -39,7 +41,7 @@ function OptIn({ handleModalClose }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth onClick={handleOptIn}>add</Button>
+                <Button fullWidth onClick={handleOptIn} disabled={!formIsValid}>add</Button>
             </ButtonContainer>
         </Fragment>
     )

@@ -3,21 +3,43 @@ import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
 import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
+import useFormValidity from '../../../Hooks/FormValidity'
+import useSubmit from '../../../Hooks/Submit'
+import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
+import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
+import SelectInput from '../../../components/SelectInput/SelectInput'
 
-function Freeze() {
+function Freeze({ handleModalClose }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue, noteValue)
+    const { handleSubmit } = useSubmit()
+
+    const handleFreeze = () => {
+        handleModalClose()
+
+        const freezeData = { 
+            asset_id: assetIdValue, 
+            target_addr: targetAddressValue, 
+            note: noteValue, 
+            phrase: MY_ALGORAND_PASSPHRASE_STRING 
+        }
+        handleSubmit(freezeAlgorand(freezeData))
+    }
 
     return (
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify a freeze address.</p>
-            <FormControl 
+            {/* <FormControl 
                 type="text"
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
+            /> */}
+            <SelectInput 
+                label="Asset ID"
             />
             <FormControl 
                 type="text"
@@ -32,7 +54,7 @@ function Freeze() {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled>freeze</Button>
+                <Button fullWidth disabled={!formIsValid} onClick={handleFreeze}>freeze</Button>
             </ButtonContainer>
         </Fragment>
     )

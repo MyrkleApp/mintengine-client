@@ -30,6 +30,7 @@ function SelectInput({ half, exchange, label }) {
                             <KeyboardArrowDownIcon />
                         </div>
                     </div>
+                    
                     <Styles.DropdownContainer show={open}>
                         <Styles.DropdownItem>
                             <div className="left">

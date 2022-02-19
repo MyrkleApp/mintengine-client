@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import { AssetItem } from '../../components/AssetItem/AssetItem'
 import newAssetIcon from '../../assets/assetIcons/newAsset.png'
@@ -23,11 +23,18 @@ import Unfreeze from './manageAssets/Unfreeze'
 import Clawback from './manageAssets/Clawback'
 import Modify from './manageAssets/Modify'
 import Destroy from './manageAssets/Destroy'
+import { getAlgorandHoldings } from '../../app/algorand/algorandSlice'
+import { useDispatch } from 'react-redux'
 
 
 function AssetManagerAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const [manageAsset, setManageAsset] = useState('')
+
+    // const dispatch = useDispatch()
+    // useEffect(() => {
+    //     dispatch(getAlgorandHoldings())
+    // }, [])
 
     const handleOptInModal = () => {
         setManageAsset(OPT_IN)
@@ -71,12 +78,12 @@ function AssetManagerAlgo() {
                     <CloseIcon fontSize="large" />
                 </CloseModalBox>
                 { manageAsset === OPT_IN && <OptIn handleModalClose={handleModalClose} /> }
-                { manageAsset === OPT_OUT && <OptOut /> }
-                { manageAsset === FREEZE && <Freeze /> }
-                { manageAsset === UNFREEZE && <Unfreeze /> }
-                { manageAsset === CLAWBACK && <Clawback /> }
-                { manageAsset === MODIFY && <Modify /> }
-                { manageAsset === DESTROY && <Destroy /> }
+                { manageAsset === OPT_OUT && <OptOut handleModalClose={handleModalClose} /> }
+                { manageAsset === FREEZE && <Freeze handleModalClose={handleModalClose} /> }
+                { manageAsset === UNFREEZE && <Unfreeze handleModalClose={handleModalClose} /> }
+                { manageAsset === CLAWBACK && <Clawback handleModalClose={handleModalClose} /> }
+                { manageAsset === MODIFY && <Modify handleModalClose={handleModalClose} /> }
+                { manageAsset === DESTROY && <Destroy handleModalClose={handleModalClose} /> }
                 
             </Modal>
             <Grid item xs={6} md={4} lg={2}>
