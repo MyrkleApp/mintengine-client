@@ -25,7 +25,7 @@ function Destroy() {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled>destroy</Button>
+                <Button fullWidth disabled>delete</Button>
             </ButtonContainer>
         </Fragment>
     )

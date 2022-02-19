@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { Button, CopyButton } from '../../components/UI/Button/button'
-import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
-import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
+import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
+import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import { useDispatch, useSelector } from 'react-redux'

@@ -38,7 +38,7 @@ function OptOut() {
                 }
             </div>
             <ButtonContainer>
-                <Button fullWidth disabled>opt-out</Button>
+                <Button fullWidth disabled>remove</Button>
             </ButtonContainer>
         </Fragment>
     )

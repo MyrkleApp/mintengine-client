@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../../Sidebar/Sidebar'
+import Sidebar from '../../components/Sidebar/Sidebar'
 import * as Styles from './dashboardWrapper'
 
 function DashboardWrapper({ children }) {

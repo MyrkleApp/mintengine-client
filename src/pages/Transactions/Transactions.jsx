@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
 import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import Table from '../../components/Table/Table'

@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
-import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
+import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
 import { useHistory, useLocation } from 'react-router'

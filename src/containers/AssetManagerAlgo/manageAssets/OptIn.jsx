@@ -3,32 +3,24 @@ import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
 import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
-import { useDispatch } from 'react-redux'
 import { algorandOptIn } from '../../../app/algorand/algorandSlice'
-import { hideBackdrop, showBackdrop } from '../../../app/backdrop/backdropSlice'
 import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
+import useSubmit from '../../../Hooks/Submit'
 
 function OptIn({ handleModalClose }) {
-    const dispatch = useDispatch()
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const { handleSubmit } = useSubmit()
 
-    const handleSubmit = () => {
+    const handleOptIn = () => {
         handleModalClose()
-        dispatch(showBackdrop())
-
         /**
-         * ! MY_ALGORAND_PASSPHRASE SHOULD BE CHANGED TO USE REDUX STATE
-         */
+        * ! MY_ALGORAND_PASSPHRASE SHOULD BE CHANGED TO USE REDUX STATE
+        */
         const optInData = { asset_id: assetIdValue, note: noteValue, phrase: MY_ALGORAND_PASSPHRASE_STRING }
-        console.log(MY_ALGORAND_PASSPHRASE_STRING)
-
-        dispatch(algorandOptIn(optInData))
-        .unwrap()
-        .then(() => dispatch(hideBackdrop()))
-        .catch(() => dispatch(hideBackdrop()))
-
+        handleSubmit(algorandOptIn(optInData))
     }
+
 
     return (
         <Fragment>
@@ -47,7 +39,7 @@ function OptIn({ handleModalClose }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth onClick={handleSubmit}>opt-in</Button>
+                <Button fullWidth onClick={handleOptIn}>add</Button>
             </ButtonContainer>
         </Fragment>
     )

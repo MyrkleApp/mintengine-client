@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
 import * as Styles from './assetManager'
 import Table from '../../components/Table/Table'
 import { useSelector } from 'react-redux'

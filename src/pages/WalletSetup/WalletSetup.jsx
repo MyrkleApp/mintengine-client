@@ -1,13 +1,13 @@
 import React from 'react'
 import WalletCard from '../../components/WalletCard/WalletCard'
-import AuthWrapper from '../../components/Wrappers/AuthWrapper/AuthWrapper'
+import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import * as Styles from './walletSetup'
 import AddIcon from '@mui/icons-material/Add';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import WalletWrapper from '../../components/Wrappers/WalletWrapper/WalletWrapper'
+import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
 import { useDispatch } from 'react-redux'
 import { createAlgorandWallet } from '../../app/algorand/algorandSlice'

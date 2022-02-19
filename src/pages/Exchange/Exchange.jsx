@@ -1,6 +1,6 @@
 import React from 'react'
 import * as Styles from './exchange'
-import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
 import { Grid } from '@mui/material'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import SelectInput from '../../components/SelectInput/SelectInput'

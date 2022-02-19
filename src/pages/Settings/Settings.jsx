@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Grid } from '@mui/material'
 import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
-import DashboardWrapper from '../../components/Wrappers/DashboardWrapper/DashboardWrapper'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import * as Styles from './settings'
 import { useHistory } from 'react-router'
