@@ -24,6 +24,12 @@ import Clawback from './manageAssets/Clawback'
 import Modify from './manageAssets/Modify'
 import Destroy from './manageAssets/Destroy'
 import OptInRes from './manageAssetsResponse/OptInRes'
+import OptOutRes from './manageAssetsResponse/OptOutRes'
+import FreezeRes from './manageAssetsResponse/FreezeRes'
+import UnfreezeRes from './manageAssetsResponse/UnfreezeRes'
+import ClawbackRes from './manageAssetsResponse/ClawbackRes'
+import ModifyRes from './manageAssetsResponse/ModifyRes'
+import DestroyRes from './manageAssetsResponse/DestroyRes'
 
 
 function AssetManagerAlgo() {
@@ -122,6 +128,12 @@ function AssetManagerAlgo() {
                 { modalDisplay === DESTROY && <Destroy handleModalClose={handleModalClose} handleResponse={handleDestroyRes} /> } 
 
                 { modalDisplay === OPT_IN_RES && <OptInRes /> }
+                { modalDisplay === OPT_OUT_RES && <OptOutRes /> }
+                { modalDisplay === FREEZE_RES && <FreezeRes /> }
+                { modalDisplay === UNFREEZE_RES && <UnfreezeRes /> }
+                { modalDisplay === CLAWBACK_RES && <ClawbackRes /> }
+                { modalDisplay === MODIFY_RES && <ModifyRes /> }
+                { modalDisplay === DESTROY_RES && <DestroyRes /> }
                 
             </Modal>
             <Grid item xs={6} md={4} lg={2}>

@@ -9,7 +9,7 @@ import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 
-function Freeze({ handleModalClose }) {
+function Freeze({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -25,7 +25,7 @@ function Freeze({ handleModalClose }) {
             note: noteValue, 
             phrase: MY_ALGORAND_PASSPHRASE_STRING 
         }
-        handleSubmit(freezeAlgorand(freezeData))
+        handleSubmit(freezeAlgorand(freezeData), handleResponse, handleResponse)
     }
 
     return (
