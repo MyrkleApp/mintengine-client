@@ -9,7 +9,8 @@ import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 
-function OptIn({ handleModalClose }) {
+
+function OptIn({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, noteValue)
@@ -21,10 +22,10 @@ function OptIn({ handleModalClose }) {
         * ! MY_ALGORAND_PASSPHRASE SHOULD BE CHANGED TO USE REDUX STATE
         */
         const optInData = { asset_id: assetIdValue, note: noteValue, phrase: MY_ALGORAND_PASSPHRASE_STRING }
-        handleSubmit(algorandOptIn(optInData))
+        handleSubmit(algorandOptIn(optInData), handleResponse, handleResponse)
     }
 
-
+    
     return (
         <Fragment>
             <ModalTitle>ADD-TOKEN</ModalTitle>

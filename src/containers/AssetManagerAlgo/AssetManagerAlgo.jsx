@@ -15,7 +15,7 @@ import useModal from '../../Hooks/Modal'
 import Modal from '../../components/UI/Modal/Modal'
 import CloseIcon from '@mui/icons-material/Close';
 import { CloseModalBox } from '../../pages/AssetManager/assetManager'
-import { CLAWBACK, DESTROY, FREEZE, MODIFY, OPT_IN, OPT_OUT, UNFREEZE } from './constants'
+import { CLAWBACK, DESTROY, FREEZE, MODIFY, OPT_IN, OPT_OUT, UNFREEZE, CLAWBACK_RES, DESTROY_RES, FREEZE_RES, MODIFY_RES, OPT_IN_RES, OPT_OUT_RES, UNFREEZE_RES } from './constants'
 import OptIn from './manageAssets/OptIn'
 import OptOut from './manageAssets/OptOut'
 import Freeze from './manageAssets/Freeze'
@@ -23,46 +23,89 @@ import Unfreeze from './manageAssets/Unfreeze'
 import Clawback from './manageAssets/Clawback'
 import Modify from './manageAssets/Modify'
 import Destroy from './manageAssets/Destroy'
+import OptInRes from './manageAssetsResponse/OptInRes'
 
 
 function AssetManagerAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
-    const [manageAsset, setManageAsset] = useState('')
+    const [modalDisplay, setModalDisplay] = useState('')
+
 
     const handleOptInModal = () => {
-        setManageAsset(OPT_IN)
+        setModalDisplay(OPT_IN)
         handleModalOpen();
     }
 
     const handleOptOutModal = () => {
-        setManageAsset(OPT_OUT)
+        setModalDisplay(OPT_OUT)
         handleModalOpen();
     }
 
     const handleFreezeModal = () => {
-        setManageAsset(FREEZE)
+        setModalDisplay(FREEZE)
         handleModalOpen();
     }
 
     const handleUnfreezeModal = () => {
-        setManageAsset(UNFREEZE)
+        setModalDisplay(UNFREEZE)
         handleModalOpen();
     }
 
     const handleClawbackModal = () => {
-        setManageAsset(CLAWBACK)
+        setModalDisplay(CLAWBACK)
         handleModalOpen();
     }
 
     const handleModifyModal = () => {
-        setManageAsset(MODIFY)
+        setModalDisplay(MODIFY)
         handleModalOpen();
     }
 
     const handleDestroyModal = () => {
-        setManageAsset(DESTROY)
+        setModalDisplay(DESTROY)
         handleModalOpen();
     }
+
+    /**
+     * response handlers
+     */
+    const handleOptInRes = () => {
+        setModalDisplay(OPT_IN_RES)
+        handleModalOpen();
+    }
+
+    const handleOptOutRes = () => {
+        setModalDisplay(OPT_OUT_RES)
+        handleModalOpen();
+    }
+
+    const handleFreezeRes = () => {
+        setModalDisplay(FREEZE_RES)
+        handleModalOpen();
+    }
+
+    const handleUnfreezeRes = () => {
+        setModalDisplay(UNFREEZE_RES)
+        handleModalOpen();
+    }
+
+    const handleClawbackRes = () => {
+        setModalDisplay(CLAWBACK_RES)
+        handleModalOpen();
+    }
+
+    const handleModifyRes = () => {
+        setModalDisplay(MODIFY_RES)
+        handleModalOpen();
+    }
+
+    const handleDestroyRes = () => {
+        setModalDisplay(DESTROY_RES)
+        handleModalOpen();
+    }
+
+
+
 
     return (
         <Fragment>
@@ -70,13 +113,15 @@ function AssetManagerAlgo() {
                 <CloseModalBox onClick={handleModalClose}>
                     <CloseIcon fontSize="large" />
                 </CloseModalBox>
-                { manageAsset === OPT_IN && <OptIn handleModalClose={handleModalClose} /> }
-                { manageAsset === OPT_OUT && <OptOut handleModalClose={handleModalClose} /> }
-                { manageAsset === FREEZE && <Freeze handleModalClose={handleModalClose} /> }
-                { manageAsset === UNFREEZE && <Unfreeze handleModalClose={handleModalClose} /> }
-                { manageAsset === CLAWBACK && <Clawback handleModalClose={handleModalClose} /> }
-                { manageAsset === MODIFY && <Modify handleModalClose={handleModalClose} /> }
-                { manageAsset === DESTROY && <Destroy handleModalClose={handleModalClose} /> }
+                { modalDisplay === OPT_IN && <OptIn handleModalClose={handleModalClose} handleResponse={handleOptInRes} /> }
+                { modalDisplay === OPT_OUT && <OptOut handleModalClose={handleModalClose} handleResponse={handleOptOutRes} /> }
+                { modalDisplay === FREEZE && <Freeze handleModalClose={handleModalClose} handleResponse={handleFreezeRes} /> }
+                { modalDisplay === UNFREEZE && <Unfreeze handleModalClose={handleModalClose} handleResponse={handleUnfreezeRes} /> }
+                { modalDisplay === CLAWBACK && <Clawback handleModalClose={handleModalClose} handleResponse={handleClawbackRes} /> }
+                { modalDisplay === MODIFY && <Modify handleModalClose={handleModalClose} handleResponse={handleModifyRes} /> }
+                { modalDisplay === DESTROY && <Destroy handleModalClose={handleModalClose} handleResponse={handleDestroyRes} /> } 
+
+                { modalDisplay === OPT_IN_RES && <OptInRes /> }
                 
             </Modal>
             <Grid item xs={6} md={4} lg={2}>
