@@ -15,11 +15,16 @@ function useFormControl() {
 
     const typeForPasswordInput = visible ? 'text' : 'password'
 
+    const setValueByClick = data => {
+        setValue(data)
+    }
+
     return {
         value,
         handleChange,
         toggleVisibile,
-        typeForPasswordInput
+        typeForPasswordInput,
+        setValueByClick
     }
 }
 

@@ -5,14 +5,24 @@ import scannerIcon from '../../../assets/icons/scanner.svg'
 import addIcon from '../../../assets/icons/add.png'
 import { ButtonContainer } from '../wallet'
 import { Button } from '../../../components/UI/Button/button'
+import useFormControl from '../../../Hooks/FormControl'
 
 function MultipleTxn() {
+    const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()
+    const { value: recipientAddressValue, handleChange: handleRecipientAddressChange } = useFormControl()
 
     return (
         <Fragment>
-            <SelectInput label="Amount" />
+            <SelectInput 
+                label="Amount" 
+                value={amountValue}
+                handleChange={handleAmountChange}
+                handleItemClick={setAmountValueByClick}
+            />
             <FormControl
                 label="Recipient Address"
+                value={recipientAddressValue}
+                handleChange={handleRecipientAddressChange}
                 icon={scannerIcon}
                 type="text"
                 center

@@ -28,7 +28,7 @@ function Dashboard() {
         if (!walletData) {
             dispatch(getActiveAlgorandWallet())
         }
-    }, [network, dispatch])
+    }, [network, walletData, dispatch])
 
     return (
         <DashboardWrapper>

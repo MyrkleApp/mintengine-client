@@ -5,7 +5,7 @@ function useFormValidity(...args) {
 
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
-            if (args.every(input => input.trim().length > 0)) {
+            if (args.every(input => input.toString().trim().length > 0)) {
                 setFormIsValid(true)
             } else {
                 setFormIsValid(false)

@@ -6,8 +6,11 @@ import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import exchangeLogo from '../../assets/icons/exchange.png'
 import { Button } from '../../components/UI/Button/button'
+import useFormControl from '../../Hooks/FormControl'
 
 function ExchangeAlgo() {
+    const { value: fromValue, handleChange: handleFromChange, setValueByClick: setFromValueByClick } = useFormControl()
+    const { value: toValue, handleChange: handleToChange, setValueByClick: setToValueByClick } = useFormControl()
 
     return (
         <DashboardWrapper>
@@ -21,8 +24,11 @@ function ExchangeAlgo() {
                         <Styles.Container>
                             <div className="innerContainer">
                                 <SelectInput
-                                    exchange 
-                                    label="From" 
+                                    exchange
+                                    label="From"
+                                    value={fromValue}
+                                    handleChange={handleFromChange}
+                                    handleItemClick={setFromValueByClick}
                                 />
                                 <Styles.Info>
                                     Balance: <strong>2.023</strong>
@@ -35,6 +41,9 @@ function ExchangeAlgo() {
                                 <SelectInput
                                     exchange 
                                     label="To" 
+                                    value={toValue}
+                                    handleChange={handleToChange}
+                                    handleItemClick={setToValueByClick}
                                 />
                             </div>
                         </Styles.Container>

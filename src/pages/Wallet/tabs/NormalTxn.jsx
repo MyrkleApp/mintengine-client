@@ -5,14 +5,24 @@ import scannerIcon from '../../../assets/icons/scanner.svg'
 import { Label, TransactionFee, ButtonContainer } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
+import useFormControl from '../../../Hooks/FormControl'
 
 function NormalTxn() {
+    const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()
+    const { value: recipientAddressValue, handleChange: handleRecipientAddressChange } = useFormControl()
 
     return (
         <Fragment>
-            <SelectInput label="Amount" />
+            <SelectInput 
+                label="Amount" 
+                value={amountValue}
+                handleChange={handleAmountChange}
+                handleItemClick={setAmountValueByClick}
+            />
             <FormControl
                 label="Recipient Address"
+                value={recipientAddressValue}
+                handleChange={handleRecipientAddressChange}
                 icon={scannerIcon}
                 type="text"
                 center

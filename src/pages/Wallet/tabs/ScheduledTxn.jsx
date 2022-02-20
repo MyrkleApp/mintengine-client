@@ -8,21 +8,34 @@ import { Label, TransactionFee } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
 import { ButtonContainer } from '../wallet'
+import useFormControl from '../../../Hooks/FormControl'
 
 
 function ScheduledTxn() {
+    const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()
+    const { value: recipientAddressValue, handleChange: handleRecipientAddressChange } = useFormControl()
+    const { value: dateValue, handleChange: handleDateChange } = useFormControl()
 
     return (
         <Fragment>
-            <SelectInput label="Amount" />
+            <SelectInput 
+                label="Amount" 
+                value={amountValue}
+                handleChange={handleAmountChange}
+                handleItemClick={setAmountValueByClick}
+            />
             <FormControl
                 label="Recipient Address"
+                value={recipientAddressValue}
+                handleChange={handleRecipientAddressChange}
                 icon={scannerIcon}
                 type="text"
                 center
             />
             <FormControl
                 label="Date"
+                value={dateValue}
+                handleChange={handleDateChange}
                 icon={calenderIcon}
                 type="date"
                 center

@@ -10,7 +10,7 @@ import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 
 function Freeze({ handleModalClose }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue, noteValue)
@@ -32,14 +32,11 @@ function Freeze({ handleModalClose }) {
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify a freeze address.</p>
-            {/* <FormControl 
-                type="text"
+            <SelectInput
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-            /> */}
-            <SelectInput 
-                label="Asset ID"
+                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 type="text"

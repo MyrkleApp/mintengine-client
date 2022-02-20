@@ -51,6 +51,26 @@ export const Root = styled.div`
                 }
             }
         }
+
+        & > .rightBox {
+            width: 55%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 0 10px;
+
+            & > input {
+                color: gray;
+                border: none;
+                background-color: transparent;
+                font-size: 18px;
+                max-width: calc(100% - 50px);
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
     }
 `
 
@@ -120,4 +140,9 @@ export const DropdownItem = styled.div`
             }
         }
     }
+`
+
+export const LoaderContainer = styled.div`
+    box-sizing: border-box;
+    padding: 10px 20px;
 `

@@ -23,18 +23,11 @@ import Unfreeze from './manageAssets/Unfreeze'
 import Clawback from './manageAssets/Clawback'
 import Modify from './manageAssets/Modify'
 import Destroy from './manageAssets/Destroy'
-import { getAlgorandHoldings } from '../../app/algorand/algorandSlice'
-import { useDispatch } from 'react-redux'
 
 
 function AssetManagerAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const [manageAsset, setManageAsset] = useState('')
-
-    // const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch(getAlgorandHoldings())
-    // }, [])
 
     const handleOptInModal = () => {
         setManageAsset(OPT_IN)
