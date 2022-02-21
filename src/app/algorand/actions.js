@@ -257,3 +257,17 @@ export const unfreezeAlgorandRejected = (state, { payload }) => {
     state.unfreeze.status = HTTP_STATUS.REJECTED
     state.unfreeze.error = payload
 }
+
+export const createAlgorandUniqueNftPending = (state) => {
+    state.uniqueNft.status = HTTP_STATUS.PENDING
+}
+
+export const createAlgorandUniqueNftFulfilled = (state, { payload }) => {
+    state.uniqueNft.status = HTTP_STATUS.FULFILLED
+    state.uniqueNft.data = payload
+}
+
+export const createAlgorandUniqueNftRejected = (state, { payload }) => {
+    state.uniqueNft.status = HTTP_STATUS.REJECTED
+    state.uniqueNft.error = payload
+}

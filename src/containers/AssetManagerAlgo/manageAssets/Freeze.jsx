@@ -9,6 +9,10 @@ import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 
+//target address for testing
+// WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
+
+
 function Freeze({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()

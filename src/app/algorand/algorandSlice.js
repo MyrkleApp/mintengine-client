@@ -56,6 +56,9 @@ import {
   getAlgorandHoldingsPending,
   getAlgorandHoldingsFulfilled,
   getAlgorandHoldingsRejected,
+  createAlgorandUniqueNftPending,
+  createAlgorandUniqueNftFulfilled,
+  createAlgorandUniqueNftRejected,
 } from './actions';
 
 const namespace = 'algorand'
@@ -222,6 +225,15 @@ export const unfreezeAlgorand = createAsyncThunk(`${namespace}/unfreezeAlgorand`
   }
 })
 
+export const createAlgorandUniqueNft = createAsyncThunk(`${namespace}/createAlgorandUniqueNft`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/unique_nft/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 
 const algorandSlice = createSlice({
   name: 'algorand',
@@ -248,6 +260,7 @@ const algorandSlice = createSlice({
     send: { status: null, data: null, error: null },
     swap: { status: null, data: null, error: null },
     unfreeze: { status: null, data: null, error: null },
+    uniqueNft: { status: null, data: null, error: null },
 
   },
   reducers: {
@@ -331,6 +344,10 @@ const algorandSlice = createSlice({
     [unfreezeAlgorand.pending]: unfreezeAlgorandPending,
     [unfreezeAlgorand.fulfilled]: unfreezeAlgorandFulfilled,
     [unfreezeAlgorand.rejected]: unfreezeAlgorandRejected,
+
+    [createAlgorandUniqueNft.pending]: createAlgorandUniqueNftPending,
+    [createAlgorandUniqueNft.fulfilled]: createAlgorandUniqueNftFulfilled,
+    [createAlgorandUniqueNft.rejected]: createAlgorandUniqueNftRejected,
   }
 })
 
