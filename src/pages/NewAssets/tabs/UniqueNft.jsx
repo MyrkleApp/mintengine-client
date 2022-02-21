@@ -25,7 +25,7 @@ function UniqueNft() {
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        nftNameValue, unitValue, nftUrlValue, noteValue
+        nftNameValue, unitValue, nftUrlValue
     )
     const { handleSubmit } = useSubmit()
 

@@ -86,3 +86,32 @@ export const HelperText = styled.span`
     color: ${props => !props.error ? '#043923' : 'red'};
     font-size: 15px;
 `
+
+export const RadioContainer = styled.div`
+    display: flex;
+`
+
+export const SingleRadioBox = styled.div`
+    height: 65px;
+    width: 120px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    border: 2px solid #043923;
+    cursor: pointer;
+`
+
+export const RadioOptionCircle = styled.div`
+    width: 20px;
+    height: 20px;
+    border: 2px solid #043923;
+    border-radius: 50%;
+    margin: auto 10px;
+    background-color: ${props => props.checked ? 'green' : 'white'};
+`
+
+export const RadioOptionText = styled.span`
+    font-size: 18px;
+    font-weight: 500;
+    color: #043923;
+`

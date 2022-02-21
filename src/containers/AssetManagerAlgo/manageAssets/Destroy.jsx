@@ -12,7 +12,7 @@ import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 function Destroy({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue, noteValue)
+    const { formIsValid } = useFormValidity(assetIdValue)
     const { handleSubmit } = useSubmit()
 
     const handleDestroy = () => {

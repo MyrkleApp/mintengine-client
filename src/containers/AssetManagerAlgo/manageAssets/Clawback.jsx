@@ -13,7 +13,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue, noteValue)
+    const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
     const { handleSubmit } = useSubmit()
 
     const handleClawback = () => {

@@ -76,7 +76,7 @@ function ImportWallet() {
 
     const navigateToDashboard = () => {
         handleCloseModal()
-        history.push('/dashboard')
+        history.push('/wallet')
     }
 
     return (

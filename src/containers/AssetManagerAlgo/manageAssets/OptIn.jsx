@@ -13,7 +13,7 @@ import SelectInput from '../../../components/SelectInput/SelectInput'
 function OptIn({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue, noteValue)
+    const { formIsValid } = useFormValidity(assetIdValue)
     const { handleSubmit } = useSubmit()
 
     const handleOptIn = () => {

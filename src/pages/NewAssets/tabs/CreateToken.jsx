@@ -26,7 +26,7 @@ function CreateToken() {
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, noteValue
+        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
     )
     const { handleSubmit } = useSubmit()
 

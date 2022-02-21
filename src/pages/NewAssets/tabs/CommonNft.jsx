@@ -25,7 +25,7 @@ function CommonNft() {
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        nftNameValue, unitValue, totalSupplyValue, nftUrlValue, noteValue
+        nftNameValue, unitValue, totalSupplyValue, nftUrlValue
     )
     const { handleSubmit } = useSubmit()
 

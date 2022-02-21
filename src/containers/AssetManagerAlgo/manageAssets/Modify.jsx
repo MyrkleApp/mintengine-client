@@ -17,7 +17,7 @@ function Modify({ handleModalClose, handleResponse }) {
     const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(
-        assetIdValue, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue, noteValue
+        assetIdValue, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
     )
     const { handleSubmit } = useSubmit()
 
