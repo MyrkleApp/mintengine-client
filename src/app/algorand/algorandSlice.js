@@ -176,6 +176,15 @@ export const createAlgorandUniqueNft = createAsyncThunk(`${namespace}/createAlgo
   }
 })
 
+export const createAlgorandWeb3Ticket = createAsyncThunk(`${namespace}/createAlgorandWeb3Ticket`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/we3ticket/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -204,6 +213,7 @@ const algorandSlice = createSlice({
     swap: DEFAULT,
     unfreeze: DEFAULT,
     uniqueNft: DEFAULT,
+    web3Ticket: DEFAULT,
 
   },
   reducers: {
@@ -291,6 +301,10 @@ const algorandSlice = createSlice({
     [createAlgorandUniqueNft.pending]: actions.createAlgorandUniqueNftPending,
     [createAlgorandUniqueNft.fulfilled]: actions.createAlgorandUniqueNftFulfilled,
     [createAlgorandUniqueNft.rejected]: actions.createAlgorandUniqueNftRejected,
+
+    [createAlgorandWeb3Ticket.pending]: actions.createAlgorandWeb3TicketPending,
+    [createAlgorandWeb3Ticket.fulfilled]: actions.createAlgorandWeb3TicketFulfilled,
+    [createAlgorandWeb3Ticket.rejected]: actions.createAlgorandWeb3TicketRejected,
   }
 })
 

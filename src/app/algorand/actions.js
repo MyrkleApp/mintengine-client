@@ -91,17 +91,17 @@ export const createAlgorandTokenRejected = (state, { payload }) => {
 }
 
 export const createCustomAlgorandTokenPending = (state) => {
-    state.commonNft.status = HTTP_STATUS.PENDING
+    state.customToken.status = HTTP_STATUS.PENDING
 }
 
 export const createCustomAlgorandTokenFulfilled = (state, { payload }) => {
-    state.commonNft.status = HTTP_STATUS.FULFILLED
-    state.commonNft.data = payload
+    state.customToken.status = HTTP_STATUS.FULFILLED
+    state.customToken.data = payload
 }
 
 export const createCustomAlgorandTokenRejected = (state, { payload }) => {
-    state.commonNft.status = HTTP_STATUS.REJECTED
-    state.commonNft.error = payload
+    state.customToken.status = HTTP_STATUS.REJECTED
+    state.customToken.error = payload
 }
 
 export const destroyAlgorandPending = (state) => {
@@ -270,4 +270,18 @@ export const createAlgorandUniqueNftFulfilled = (state, { payload }) => {
 export const createAlgorandUniqueNftRejected = (state, { payload }) => {
     state.uniqueNft.status = HTTP_STATUS.REJECTED
     state.uniqueNft.error = payload
+}
+
+export const createAlgorandWeb3TicketPending = (state) => {
+    state.web3Ticket.status = HTTP_STATUS.PENDING
+}
+
+export const createAlgorandWeb3TicketFulfilled = (state, { payload }) => {
+    state.web3Ticket.status = HTTP_STATUS.FULFILLED
+    state.web3Ticket.data = payload
+}
+
+export const createAlgorandWeb3TicketRejected = (state, { payload }) => {
+    state.web3Ticket.status = HTTP_STATUS.REJECTED
+    state.web3Ticket.error = payload
 }

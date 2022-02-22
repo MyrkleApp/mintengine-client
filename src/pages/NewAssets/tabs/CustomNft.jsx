@@ -29,14 +29,14 @@ function CustomNft() {
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
+    const { value: defaultFrozenValue, handleClick: handleRadioClick } = useFormControlRadio()
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue, managerAddressValue, freezeAddressValue, reserveAddressValue, clawbackAddressValue
+        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue, managerAddressValue, freezeAddressValue, defaultFrozenValue, reserveAddressValue, clawbackAddressValue
     )
-    const { value: radioValue, handleClick: handleRadioClick } = useFormControlRadio()
 
     const { handleSubmit } = useSubmit()
 
@@ -59,7 +59,7 @@ function CustomNft() {
         formData.append('metadata_hash', metadataHashValue)
         formData.append('manager_addr', managerAddressValue)
         formData.append('freeze_addr', freezeAddressValue)
-        // formData.append('default_frozen', defaultFrozenValue)
+        formData.append('default_frozen', defaultFrozenValue)
         formData.append('reserve_addr', reserveAddressValue)
         formData.append('clawback_addr', clawbackAddressValue)
         formData.append('note', noteValue)
@@ -146,7 +146,7 @@ function CustomNft() {
                             <FormControlRadio
                                 label="Default Frozen"  
                                 options={['Yes', 'No']}
-                                value={radioValue}
+                                value={defaultFrozenValue}
                                 handleClick={handleRadioClick}
                             />
                             <FormControl 
