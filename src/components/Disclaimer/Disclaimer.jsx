@@ -1,5 +1,4 @@
-import React from 'react'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Button } from '../UI/Button/button'
 import successImg from '../../assets/icons/success.png'
 import { useSelector } from 'react-redux'

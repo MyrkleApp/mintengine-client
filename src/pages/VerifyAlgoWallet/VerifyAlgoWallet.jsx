@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import { Button, CopyButton } from '../../components/UI/Button/button'
 import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
@@ -7,13 +7,15 @@ import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import { useDispatch, useSelector } from 'react-redux'
 import { confirmAlgorandPassphrase, incorrectPassphraseError } from '../../app/algorand/algorandSlice'
-import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { CONFIRMED, CREATE } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 import { ALGO } from '../../constants/network'
+import useFormValidity from '../../Hooks/FormValidity'
+import useModal from '../../Hooks/Modal'
+import useSubmit from '../../Hooks/Submit'
 
 
 function VerifyWallet() {
@@ -22,11 +24,11 @@ function VerifyWallet() {
     const walletId = useSelector(state => state.algorand.id)
     const passphraseArray = useSelector(state => state.algorand.passphrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
-    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
     const { num3, num5, num12, num15, num24 } = missingWords
-    const [openModal, setOpenModal] = useState(false)
+    const { formIsValid } = useFormValidity(num3, num5, num12, num15, num24)
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
-
+    const { handleSubmit } = useSubmit()
 
     const handleAlgoChange = e => {
         setMissingWords(prevState => {
@@ -36,21 +38,27 @@ function VerifyWallet() {
         })
     }
 
-    const handleOpenModal = () => {
-        setOpenModal(true)
-    }
-
-    const handleCloseModal = () => {
-        setOpenModal(false)
+    const handleModalToDefault = () => {
+        handleModalClose()
         handleModalStatus(DEFAULT)
     }
 
     const showDisclaimerModal = () => {
-        handleOpenModal()
+        handleModalOpen()
+    }
+
+    const submitSuccess = () => {
+        handleModalStatus(SUCCESS)
+        handleModalOpen()
+    }
+
+    const submitError = () => {
+        handleModalStatus(ERROR)
+        handleModalOpen()
     }
 
     const handleVerifyPassphrase = () => {
-        handleCloseModal()
+        handleModalToDefault()
 
         const completedPassphrase = passphraseArray
         completedPassphrase[2] = num3.trim()
@@ -65,47 +73,18 @@ function VerifyWallet() {
                 error: 'The entered passphrase does not match'
             }))
             handleModalStatus(ERROR)
-            handleOpenModal()
+            handleModalOpen()
             return
         }
 
-        dispatch(showBackdrop())
         const confirmData = { id: walletId, status: CONFIRMED, active: true }
-        dispatch(confirmAlgorandPassphrase(confirmData))
-        .unwrap()
-        .then(res => {
-            dispatch(hideBackdrop())
-            //open modal with success message
-            handleModalStatus(SUCCESS)
-            handleOpenModal()
-            console.log(res)
-        })
-        .catch(err => {
-            dispatch(hideBackdrop())
-            //open modal with error message
-            handleModalStatus(ERROR)
-            handleOpenModal()
-            console.log(err)
-        })
+
+        handleSubmit(confirmAlgorandPassphrase(confirmData), submitSuccess, submitError)
 
     }
 
-    useEffect(() => {
-        if (
-            num3.trim().length > 0 &&
-            num5.trim().length > 0 &&
-            num12.trim().length > 0 &&
-            num15.trim().length > 0 &&
-            num24.trim().length > 0 
-        ) {
-            setButtonIsEnabled(true)
-        } else {
-            setButtonIsEnabled(false)
-        }
-    }, [missingWords])
-
     const navigateToDashboard = () => {
-        handleCloseModal()
+        handleModalToDefault()
         history.push('/wallet')
     }
     
@@ -170,7 +149,7 @@ function VerifyWallet() {
                     <Styles.ButtonsContainer>      
                         <Button 
                             fullWidth 
-                            disabled={!buttonIsEnabled} 
+                            disabled={!formIsValid} 
                             onClick={showDisclaimerModal}
                         >   
                             verify my backup
@@ -179,27 +158,30 @@ function VerifyWallet() {
 
                 </Styles.Container>
 
-                <Modal open={openModal} handleClose={handleCloseModal}>
+                <Modal open={modalState} handleClose={handleModalToDefault}>
                     <Styles.ModalContent>
                     {
-                        modalContentStatus === DEFAULT &&
-                        <DisclaimerDefault
-                            checkbox={checkbox}
-                            toggleCheckbox={toggleCheckbox}
-                            handleContinue={handleVerifyPassphrase}
-                            handleCloseModal={handleCloseModal}
-                        />
+                        modalContentStatus === DEFAULT && (
+                            <DisclaimerDefault
+                                checkbox={checkbox}
+                                toggleCheckbox={toggleCheckbox}
+                                handleContinue={handleVerifyPassphrase}
+                                handleCloseModal={handleModalToDefault}
+                            />
+                        )
                     }
                     {
-                        modalContentStatus === SUCCESS &&
-                        <DisclaimerSuccess 
-                            create
-                            handleClick={navigateToDashboard} 
-                        />
+                        modalContentStatus === SUCCESS && (
+                            <DisclaimerSuccess 
+                                create
+                                handleClick={navigateToDashboard} 
+                            />
+                        )
                     }
                     {
-                        modalContentStatus === ERROR &&
-                        <DisclaimerError />
+                        modalContentStatus === ERROR && (
+                            <DisclaimerError />
+                        )
                     }
                     </Styles.ModalContent>
                 </Modal>

@@ -86,7 +86,7 @@ export const DropdownContainer = styled.div`
 `
 
 export const DropdownItem = styled.div`
-    background-color: transparent;
+    background-color: ${props => props.selected ? '#097246' : 'transparent'};
     box-sizing: border-box;
     padding: 10px;
     cursor: pointer;

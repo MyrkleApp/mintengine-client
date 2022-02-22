@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import { DropdownItem } from '../../../components/SelectInput/selectInput'
+import SelectItem from '../../../components/SelectInput/SelectItem'
 import { Button } from '../../../components/UI/Button/button'
-import algorandLogo from '../../../assets/icons/algorandLogo.png'
-
+import { useSelector } from 'react-redux'
 
 function OptOut() {
+    const { status, data } = useSelector(state => state.algorand.holdings)
 
     return (
         <Fragment>
@@ -13,27 +13,11 @@ function OptOut() {
             <p>Remove token with a given Asset ID to remove an Algorand asset holding from your account.</p>
             <div style={{ backgroundColor: '#f5fefa' }}>
                 {
-                    Array(3).fill().map((_, i) => (
-                        <DropdownItem key={i}>
-                            <div className="left">
-                                <div className="leftTop">
-                                    <img src={algorandLogo} alt="" />
-                                    <span>ALGORAND</span>
-                                </div>
-                                <div className="leftBottom">
-                                    <span>ALGO</span>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <div className="rightTop">
-                                    <span>0.00</span>
-                                </div>
-                                <div className="rightBottom">
-                                    <span>Asset ID:</span>
-                                    <span>384303832</span>
-                                </div>
-                            </div>
-                        </DropdownItem>
+                    data?.assets?.map((_, i) => (
+                        <SelectItem key={i}
+                        
+                        />
+                            
                     ))
                 }
             </div>

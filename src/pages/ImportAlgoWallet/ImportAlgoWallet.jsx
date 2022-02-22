@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import { Button, CopyButton } from '../../components/UI/Button/button'
 import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
-import { useDispatch } from 'react-redux'
 import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
-import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
 import { IMPORT } from '../../constants/walletStatus'
 import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 import { ALGO } from '../../constants/network'
-
+import useModal from '../../Hooks/Modal'
+import useSubmit from '../../Hooks/Submit'
+import useFormValidity from '../../Hooks/FormValidity'
 
 
 function ImportWallet() {
-    const dispatch = useDispatch()
     const history = useHistory()
     const [missingWords, setMissingWords] = useState(Array(25).fill(''))
-    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
-    const [openModal, setOpenModal] = useState(false)
+    const { formIsValid } = useFormValidity(...missingWords)
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
-
+    const { handleSubmit } = useSubmit()
 
     const handleChange = (e, i) => {
         const values = [...missingWords]
@@ -32,50 +31,36 @@ function ImportWallet() {
         setMissingWords(values)
     }
 
-    useEffect(() => {
-        if (missingWords.every(word => word.trim().length > 0)) {
-            setButtonIsEnabled(true)
-        } else {
-            setButtonIsEnabled(false)
-        }
-    }, [missingWords])
-
-    const handleOpenModal = () => {
-        setOpenModal(true)
-    }
-
-    const handleCloseModal = () => {
-        setOpenModal(false)
+    const handleModalToDefault = () => {
+        handleModalClose()
         handleModalStatus(DEFAULT)
     }
 
     const showDisclaimerModal = () => {
-        handleOpenModal()
+        handleModalOpen()
+    }
+
+    const submitSuccess = () => {
+        handleModalStatus(SUCCESS)
+        handleModalOpen()
+    }
+
+    const submitError = () => {
+        handleModalStatus(ERROR)
+        handleModalOpen()
     }
 
     const handleImportWallet = () => {
-        handleCloseModal()
-        dispatch(showBackdrop())
-        const phrase = missingWords.join(" ")
+        handleModalToDefault()
 
-        dispatch(createAlgorandWallet({ status: IMPORT, phrase: phrase }))
-        .unwrap()
-        .then(res => {
-            dispatch(hideBackdrop())
-            handleModalStatus(SUCCESS)
-            handleOpenModal()
-            console.log(res)
-        })
-        .catch(err => {
-            dispatch(hideBackdrop())
-            handleModalStatus(ERROR)
-            handleOpenModal()
-            console.log(err)
-        })
+        const phrase = missingWords.join(" ")
+        const importData = { status: IMPORT, phrase: phrase, active: true }
+
+        handleSubmit(createAlgorandWallet(importData), submitSuccess, submitError)
     }
 
     const navigateToDashboard = () => {
-        handleCloseModal()
+        handleModalToDefault()
         history.push('/wallet')
     }
 
@@ -99,29 +84,33 @@ function ImportWallet() {
                     </Styles.WordsBox>
                 
                     <Styles.ButtonsContainer>     
-                        <Button fullWidth disabled={!buttonIsEnabled} onClick={showDisclaimerModal}>verify my backup</Button>
+                        <Button fullWidth disabled={!formIsValid} onClick={showDisclaimerModal}>verify my backup</Button>
                     </Styles.ButtonsContainer>
 
                 </Styles.Container>
 
-                <Modal open={openModal} handleOpen={handleOpenModal} handleClose={handleCloseModal}>
+                <Modal open={modalState} handleOpen={handleModalOpen} handleClose={handleModalToDefault}>
                     <Styles.ModalContent>
                     {
-                        modalContentStatus === DEFAULT &&
-                        <DisclaimerDefault
-                            checkbox={checkbox}
-                            toggleCheckbox={toggleCheckbox}
-                            handleContinue={handleImportWallet}
-                            handleCloseModal={handleCloseModal}
-                        />
+                        modalContentStatus === DEFAULT && (
+                            <DisclaimerDefault
+                                checkbox={checkbox}
+                                toggleCheckbox={toggleCheckbox}
+                                handleContinue={handleImportWallet}
+                                handleCloseModal={handleModalToDefault}
+                            />
+                        )
                     }
                     {
-                        modalContentStatus === SUCCESS &&
-                        <DisclaimerSuccess handleClick={navigateToDashboard} />
+                        modalContentStatus === SUCCESS && (
+                            <DisclaimerSuccess handleClick={navigateToDashboard} />
+                        )
+                        
                     }
                     {
-                        modalContentStatus === ERROR &&
-                        <DisclaimerError />
+                        modalContentStatus === ERROR && (
+                            <DisclaimerError />
+                        )
                     }
                     </Styles.ModalContent>
                 </Modal>
