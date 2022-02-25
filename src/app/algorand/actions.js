@@ -11,7 +11,7 @@ export const createAlgorandWalletFulfilled = (state, { payload }) => {
     state.passphrase = payload.passphrase
     state.user = payload.user
     state.createWallet.error = null
-    localStorage.setItem('algophrase', JSON.stringify(payload.passphrase))
+    // localStorage.setItem('algophrase', JSON.stringify(payload.passphrase))
 }
 
 export const createAlgorandWalletRejected = (state, { payload }) => {

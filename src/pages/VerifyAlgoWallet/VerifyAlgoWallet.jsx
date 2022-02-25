@@ -16,12 +16,15 @@ import { ALGO } from '../../constants/network'
 import useFormValidity from '../../Hooks/FormValidity'
 import useModal from '../../Hooks/Modal'
 import useSubmit from '../../Hooks/Submit'
+import DB from '../../app/db'
 
 
 function VerifyWallet() {
     const dispatch = useDispatch()
     const history = useHistory()
     const walletId = useSelector(state => state.algorand.id)
+    const walletAddress = useSelector(state => state.algorand.address)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const passphraseArray = useSelector(state => state.algorand.passphrase).split(" ")
     const [missingWords, setMissingWords] = useState({ num3: '', num5: '', num12: '', num15: '', num24: '' })
     const { num3, num5, num12, num15, num24 } = missingWords
@@ -47,9 +50,18 @@ function VerifyWallet() {
         handleModalOpen()
     }
 
+
+    const storePassphraseInBrowserDB = async () => {
+        const db = new DB()
+        const data = { [walletAddress]: passphrase, type: 'algorand' }
+        const res = await db.addPassphrase(data)
+        return res
+    }
+
     const submitSuccess = () => {
         handleModalStatus(SUCCESS)
         handleModalOpen()
+        storePassphraseInBrowserDB()
     }
 
     const submitError = () => {
@@ -80,6 +92,7 @@ function VerifyWallet() {
         const confirmData = { id: walletId, status: CONFIRMED, active: true }
 
         handleSubmit(confirmAlgorandPassphrase(confirmData), submitSuccess, submitError)
+
 
     }
 

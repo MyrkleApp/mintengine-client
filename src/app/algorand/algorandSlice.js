@@ -201,7 +201,7 @@ const algorandSlice = createSlice({
   initialState: {
     createWallet: { status: null, error: null },
     id: null,
-    address: null,
+    address: "",
     passphrase: "",
     user: null,
     confirmWallet: { status: null, success: null, error: "" },

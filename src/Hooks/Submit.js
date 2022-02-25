@@ -9,16 +9,16 @@ function useSubmit() {
 
         dispatch(submitData)
         .unwrap()
-        .then(() => {
+        .then((res) => {
             dispatch(hideBackdrop())
             if (nextAction) {
-                nextAction()
+                nextAction(res)
             }
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(hideBackdrop())
             if (handleError) {
-                handleError()
+                handleError(err)
             }
         })
     }

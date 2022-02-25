@@ -15,6 +15,7 @@ import { ALGO } from '../../constants/network'
 import useModal from '../../Hooks/Modal'
 import useSubmit from '../../Hooks/Submit'
 import useFormValidity from '../../Hooks/FormValidity'
+import DB from '../../app/db'
 
 
 function ImportWallet() {
@@ -40,9 +41,17 @@ function ImportWallet() {
         handleModalOpen()
     }
 
-    const submitSuccess = () => {
+    const storePassphraseInBrowserDB = async (res) => {
+        const db = new DB()
+        const data = { [res.address]: res.passphrase, type: 'algorand' }
+        const response = await db.addPassphrase(data)
+        return response
+    }
+
+    const submitSuccess = (res) => {
         handleModalStatus(SUCCESS)
         handleModalOpen()
+        storePassphraseInBrowserDB(res)
     }
 
     const submitError = () => {
