@@ -3,7 +3,7 @@ import * as Styles from './walletCard'
 import { Button } from '../UI/Button/button'
 import { Link } from 'react-router-dom'
 
-function WalletCard({ children, walletSetup, buttonText, title, text, image, link, handleClick }) {
+function WalletCard({ icon, walletSetup, buttonText, title, text, image, link, handleClick }) {
 
     return (
         <Styles.Root>
@@ -12,7 +12,7 @@ function WalletCard({ children, walletSetup, buttonText, title, text, image, lin
                     { 
                         walletSetup
                             ? <img src={image} alt="" />
-                            : children
+                            : icon
                     }
                 </Styles.Icon>
                 <div>

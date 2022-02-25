@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { DropdownItem } from './selectInput'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 
-function SelectItem({ name, assetId, amount, handleItemClick }) {
-    const [selected, setSelected] = useState(null)
+function SelectItem({ name, assetId, amount, handleItemClick, selected, setSelectedItem }) {
 
     const handleClick = () => {
         handleItemClick(assetId)
-        setSelected(assetId)
+        setSelectedItem(assetId)
     }
 
     return (
-        <DropdownItem onClick={handleClick} selected={selected === assetId}>
+        <DropdownItem onClick={handleClick} selected={selected}>
             <div className="left">
                 <div className="leftTop">
                     <img src={algorandLogo} alt="" />
-                    <span>ALGORAND</span>
+                    <span>{name}</span>
                 </div>
                 <div className="leftBottom">
-                    <span>{name}</span>
+                    <span>ALGO</span>
                 </div>
             </div>
             <div className="right">

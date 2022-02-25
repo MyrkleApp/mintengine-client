@@ -63,7 +63,7 @@ function WalletAddress() {
             </Styles.WalletPassphrase>
             <Styles.WalletAddress>
                 <div className="container">
-                    <span className="welcome">Welcome, Username</span>
+                    <span className="welcome">Welcome</span>
                     <Grid container>
                         <Grid item xs={12} md={5} className="left">
                             { data?.address || '' }

@@ -8,35 +8,28 @@ import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
-import { hideBackdrop, showBackdrop } from '../../app/backdrop/backdropSlice'
-import { useDispatch } from 'react-redux'
 import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
 import { CREATE } from '../../constants/walletStatus';
 import { ALGO, XRP } from '../../constants/network';
+import useSubmit from '../../Hooks/Submit';
 
 
 function WalletSetup() {
     const location = useLocation()
     const history = useHistory()
-    const dispatch = useDispatch()
     const { pathname } = location
     const urlQueryParams = new URLSearchParams(location.search)
     const selectedWallet = urlQueryParams.get('wallet')
+    const { handleSubmit } = useSubmit()
+
+    const submitSuccess = () => {
+        history.push(`/create-wallet/${selectedWallet}`)
+    }
 
     const handleCreateWallet = () => {
         if (selectedWallet === ALGO) {
-            dispatch(showBackdrop())
-            dispatch(createAlgorandWallet({ status: CREATE }))
-            .unwrap()
-            .then(res => {
-                console.log(res)
-                dispatch(hideBackdrop())
-                history.push(`/create-wallet/${selectedWallet}`)
-            })
-            .catch(err => {
-                console.log(err)
-                dispatch(hideBackdrop())
-            })
+            const data = { status: CREATE }
+            handleSubmit(createAlgorandWallet(data), submitSuccess)
         } else if (selectedWallet === XRP) {
             alert('create ripple wallet')
         }
@@ -83,18 +76,16 @@ function WalletSetup() {
                         buttonText="create wallet"
                         link={`/create-wallet/${selectedWallet}`}
                         handleClick={handleCreateWallet}
-                    >
-                        <AddIcon fontSize="large" style={{ color: '#097246' }} />
-                    </WalletCard>
+                        icon={<AddIcon fontSize="large" style={{ color: '#097246' }} />}
+                    />
                     <WalletCard
                         title="import existing wallet"
                         text="Restore your existing Algorand wallet using your passphrase."
                         buttonText="import wallet"
                         link={`/import-wallet/${selectedWallet}`}
                         handleClick={handleImportWallet}
-                    >
-                        <SystemUpdateAltIcon fontSize="large" style={{ color: '#097246' }} />
-                    </WalletCard>
+                        icon={<SystemUpdateAltIcon fontSize="large" style={{ color: '#097246' }} />}
+                    />
                 </>
             }
             </WalletWrapper>

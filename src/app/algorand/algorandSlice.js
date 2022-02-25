@@ -32,6 +32,15 @@ export const getActiveAlgorandWallet = createAsyncThunk(`${namespace}/getActiveA
   }
 })
 
+export const getAllAlgorandWallets = createAsyncThunk(`${namespace}/getAllAlgorandWallets`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get('/algorand/v1/wallet/')
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 export const createAlgorandClawback = createAsyncThunk(`${namespace}/createAlgorandClawback`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/algorand/v1/clawback/`, objData)
@@ -97,7 +106,7 @@ export const freezeAlgorand = createAsyncThunk(`${namespace}/freezeAlgorand`, as
 
 export const getAlgorandHoldings = createAsyncThunk(`${namespace}/getAlgorandHoldings`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.get(`/algorand/v1/holdings/`, objData)
+    const { data } = await axios.get(`/algorand/v1/holdings/`)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -133,7 +142,7 @@ export const algorandOptOut = createAsyncThunk(`${namespace}/algorandOptOut`, as
 
 export const getAlgorandSendList = createAsyncThunk(`${namespace}/getAlgorandSendList`, async (objData, { rejectWithValue }) => {
   try {
-    const { data } = await axios.get('/algorand/v1/send/', objData)
+    const { data } = await axios.get('/algorand/v1/send/')
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -197,6 +206,7 @@ const algorandSlice = createSlice({
     user: null,
     confirmWallet: { status: null, success: null, error: "" },
     activeWallet: DEFAULT,
+    allWallets: DEFAULT,
     clawback: DEFAULT,
     commonNft: DEFAULT,
     token: DEFAULT,
@@ -237,6 +247,10 @@ const algorandSlice = createSlice({
     [getActiveAlgorandWallet.pending]: actions.getActiveAlgorandWalletPending,
     [getActiveAlgorandWallet.fulfilled]: actions.getActiveAlgorandWalletFulfilled,
     [getActiveAlgorandWallet.rejected]: actions.getActiveAlgorandWalletRejected,
+
+    [getAllAlgorandWallets.pending]: actions.getAllAlgorandWalletsPending,
+    [getAllAlgorandWallets.fulfilled]: actions.getAllAlgorandWalletsFulfilled,
+    [getAllAlgorandWallets.rejected]: actions.getAllAlgorandWalletsRejected,
 
     [createAlgorandClawback.pending]: actions.createAlgorandClawbackPending,
     [createAlgorandClawback.fulfilled]: actions.createAlgorandClawbackFulfilled,

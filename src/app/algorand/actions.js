@@ -48,6 +48,20 @@ export const getActiveAlgorandWalletRejected = (state, { payload }) => {
     state.activeWallet.error = payload
 }
 
+export const getAllAlgorandWalletsPending = (state) => {
+    state.allWallets.status = HTTP_STATUS.PENDING
+}
+
+export const getAllAlgorandWalletsFulfilled = (state, { payload }) => {
+    state.allWallets.status = HTTP_STATUS.FULFILLED
+    state.allWallets.data = payload
+}
+
+export const getAllAlgorandWalletsRejected = (state, { payload }) => {
+    state.allWallets.status = HTTP_STATUS.REJECTED
+    state.allWallets.error = payload
+}
+
 export const createAlgorandClawbackPending = (state) => {
     state.clawback.status = HTTP_STATUS.PENDING
 }

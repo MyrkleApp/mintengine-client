@@ -14,6 +14,7 @@ function SelectInput({ half, exchange, label, value, handleChange, handleItemCli
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
+    const [selectedItem, setSelectedItem] = useState(null)
 
     useEffect(() => {
         if (open && !data) {
@@ -74,6 +75,8 @@ function SelectInput({ half, exchange, label, value, handleChange, handleItemCli
                                         name={asset.name}
                                         amount={asset.amount}
                                         handleItemClick={handleItemClick}
+                                        selected={selectedItem === asset.id}
+                                        setSelectedItem={setSelectedItem}
                                     />
                                 )) 
                                 :

@@ -92,6 +92,7 @@ export const DropdownItem = styled.div`
     cursor: pointer;
     display: flex;
     border-radius: 10px;
+    color: ${props => props.selected ? 'white' : 'black'};
 
     &:hover {
         background-color: #097246;
