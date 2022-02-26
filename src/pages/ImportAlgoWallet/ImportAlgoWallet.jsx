@@ -16,6 +16,7 @@ import useModal from '../../Hooks/Modal'
 import useSubmit from '../../Hooks/Submit'
 import useFormValidity from '../../Hooks/FormValidity'
 import DB from '../../app/db'
+import useEncrypt from '../../Hooks/Encrypt'
 
 
 function ImportWallet() {
@@ -24,6 +25,7 @@ function ImportWallet() {
     const { formIsValid } = useFormValidity(...missingWords)
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
+    const { encryptString } = useEncrypt()
     const { handleSubmit } = useSubmit()
 
     const handleChange = (e, i) => {
@@ -43,7 +45,7 @@ function ImportWallet() {
 
     const storePassphraseInBrowserDB = async (res) => {
         const db = new DB()
-        const data = { [res.address]: res.passphrase, type: 'algorand' }
+        const data = { [res.address]: encryptString(res.passphrase), type: 'algorand' }
         const response = await db.addPassphrase(data)
         return response
     }
@@ -84,7 +86,7 @@ function ImportWallet() {
                     <Styles.WordsBox import>
                     {
                         missingWords.map((_, i) => (
-                            <Styles.WordInput>
+                            <Styles.WordInput key={i}>
                                 <span>{i+1}.</span>
                                 <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
                             </Styles.WordInput>

@@ -22,13 +22,13 @@ function Dashboard() {
     const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
-    const { data: walletData } = useSelector(networkDataToReturn[network.toLowerCase()])
+    const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()])
 
     useEffect(() => {
-        if (!walletData) {
+        if (!activeWalletData) {
             dispatch(getActiveAlgorandWallet())
         }
-    }, [network, walletData, dispatch])
+    }, [network, activeWalletData, dispatch])
 
     return (
         <DashboardWrapper>

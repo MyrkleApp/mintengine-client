@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import * as Styles from './walletAddress'
 import qrCode from '../../assets/icons/qrCode.svg'
@@ -6,20 +6,26 @@ import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import { CopyButton, WalletAddressButton } from '../../components/UI/Button/button';
 import { Word } from '../../components/UI/WalletShared/walletShared';
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
-import { MY_ALGORAND_PASSPHRASE } from '../../constants/passphrase';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ALGORAND, networkDataToReturn, RIPPLE } from '../../constants/network';
 import { ThreeDots } from 'react-loader-spinner';
 import { HTTP_STATUS } from '../../constants/httpStatus';
-
+import DB from '../../app/db';
+import { setAlgorandPassphrase } from '../../app/algorand/algorandSlice';
+import useEncrypt from '../../Hooks/Encrypt'
 
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
+    const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
+    const deviceFingerprint = useSelector(state => state.deviceFingerprint.deviceFingerprint)
     const rippleSeed = 'c6c108b3e923ea40067d129715065d96733528fc4ae5317814f795999f22b88f866a3343237b206daf6537ab593cba0b42a8f51721a6df3c5771cdc9312afc46'
-    const textToCopy = network === ALGORAND ? MY_ALGORAND_PASSPHRASE : rippleSeed
-    const { status, data } = useSelector(networkDataToReturn[network.toLowerCase()]);
+    const { status, data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
+    const activeWalletAddress = activeWalletData?.address
+    const algorandPassphrase = useSelector(state => state.algorand.passphrase)
+    const textToCopy = network === ALGORAND ? algorandPassphrase : rippleSeed
+    const { decryptString } = useEncrypt()
 
     const showPassphrase = () => {
         setOpen(true)
@@ -29,6 +35,24 @@ function WalletAddress() {
         setOpen(false)
     }
 
+    const db = new DB()
+
+    /**
+     * retrieve passphrase stored in browser db
+     */
+    useEffect(() => {
+        const getActiveWalletPassphrase = async () => {
+            //!adjust "const algorandPassphrase" to work for all networks and not just algorand
+            if (activeWalletAddress && !algorandPassphrase) {
+                const allPassphrases = await db.getPassphrase()
+                const activePassphrase = await allPassphrases.filter(obj => obj.doc[activeWalletAddress])[0]
+                const decryptedPassphrase = decryptString(activePassphrase.doc[activeWalletAddress])
+                dispatch(setAlgorandPassphrase(decryptedPassphrase))
+            }
+        }
+        getActiveWalletPassphrase()
+    }, [activeWalletAddress, deviceFingerprint])
+
     return (
         <Styles.Parent show={open}>
             <Styles.WalletPassphrase show={open}>
@@ -36,7 +60,7 @@ function WalletAddress() {
                     <Grid item xs={12} md={9} className="wordsBox">
                     {
                         network === ALGORAND && (
-                            MY_ALGORAND_PASSPHRASE.map((item, i) => (
+                            algorandPassphrase?.split(" ").map((item, i) => (
                                 <Word key={i}>{ `${i + 1}. ${item}` }</Word>
                             ))
                         )
@@ -66,7 +90,7 @@ function WalletAddress() {
                     <span className="welcome">Welcome</span>
                     <Grid container>
                         <Grid item xs={12} md={5} className="left">
-                            { data?.address || '' }
+                            { activeWalletAddress || '' }
                             { 
                                 status === HTTP_STATUS.PENDING && (
                                     <ThreeDots
@@ -77,7 +101,11 @@ function WalletAddress() {
                                     />
                                 )
                             }
-                            <ContentCopyOutlinedIcon className="copyIcon" />
+                            <CopyButtonWithTooltip 
+                                textToCopy={activeWalletAddress} 
+                                text="copy" 
+                                onlyIcon
+                            />
                         </Grid>
 
                         <Grid item xs={12} md={3} className="center">
@@ -90,7 +118,7 @@ function WalletAddress() {
                             <span className="amount">0.00 </span>
                             <span className="coinName">ALGO</span><br />
                             <div className="dollarAmount">~ $0</div>
-                            <WalletAddressButton onClick={showPassphrase}>
+                            <WalletAddressButton onClick={showPassphrase} disabled={!algorandPassphrase ? true : false}>
                                 { network === ALGORAND ? 'Show Passphrase' : 'Show Seed' }
                             </WalletAddressButton>
                         </Grid>

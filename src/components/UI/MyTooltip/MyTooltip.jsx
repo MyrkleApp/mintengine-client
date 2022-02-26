@@ -3,9 +3,10 @@ import Tooltip from '@mui/material/Tooltip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { CopyButton } from '../Button/button';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 
 
-export default function TriggersTooltips({ textToCopy }) {
+export default function TriggersTooltips({ textToCopy, onlyIcon }) {
   const [open, setOpen] = useState(false);
 
   const handleTooltipClose = () => {
@@ -18,7 +19,7 @@ export default function TriggersTooltips({ textToCopy }) {
 
   const handleCopyToClipboard = () => {
     handleTooltipOpen();
-    navigator.clipboard.writeText(textToCopy);
+    navigator.clipboard.writeText(textToCopy || '');
   }
 
   useEffect(() => {
@@ -41,9 +42,15 @@ export default function TriggersTooltips({ textToCopy }) {
         title="copied to clipboard"
         placement="right-end"
       >
-        <CopyButton outlined onClick={handleCopyToClipboard}>
-          copy <ContentCopyIcon fontSize="small" sx={{ ml: '7px' }} />
-        </CopyButton>
+        {
+          !onlyIcon ? (
+            <CopyButton outlined onClick={handleCopyToClipboard}>
+              copy <ContentCopyIcon fontSize="small" sx={{ ml: '7px' }} />
+            </CopyButton>
+          ) : (
+            <ContentCopyOutlinedIcon className="copyIcon" onClick={handleCopyToClipboard} style={{ cursor: 'pointer' }} />
+          )
+        }
       </Tooltip>
     </ClickAwayListener>
   );

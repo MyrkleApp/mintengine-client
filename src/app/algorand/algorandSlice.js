@@ -233,6 +233,10 @@ const algorandSlice = createSlice({
       } else if (action.payload.status === IMPORT) {
         state.confirmWallet.error = action.payload.error
       }
+    },
+    //used to set passphase from browser db
+    setAlgorandPassphrase(state, action) {
+      state.passphrase = action.payload
     }
   },
   extraReducers: { 
@@ -322,6 +326,6 @@ const algorandSlice = createSlice({
   }
 })
 
-export const { incorrectPassphraseError } = algorandSlice.actions
+export const { incorrectPassphraseError, setAlgorandPassphrase } = algorandSlice.actions
 
 export default algorandSlice.reducer

@@ -15,7 +15,7 @@ function Transactions() {
         <DashboardWrapper>
             <ChooseNetwork />
             <SharedStyles.HeaderBox>
-                <h2>YOUR TRANSACTIONS</h2>
+                <h2>TRANSACTIONS</h2>
                 <MyTabs 
                     tabs={tabs} 
                     tabValue={tabValue}

@@ -15,6 +15,7 @@ import { DEFAULT, ERROR, SUCCESS } from '../../constants/modalStatus'
 import { ALGO } from '../../constants/network'
 import useFormValidity from '../../Hooks/FormValidity'
 import useModal from '../../Hooks/Modal'
+import useEncrypt from '../../Hooks/Encrypt'
 import useSubmit from '../../Hooks/Submit'
 import DB from '../../app/db'
 
@@ -31,6 +32,7 @@ function VerifyWallet() {
     const { formIsValid } = useFormValidity(num3, num5, num12, num15, num24)
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { checkbox, modalContentStatus, toggleCheckbox, handleModalStatus } = useDisclaimer()
+    const { encryptString } = useEncrypt()
     const { handleSubmit } = useSubmit()
 
     const handleAlgoChange = e => {
@@ -50,10 +52,9 @@ function VerifyWallet() {
         handleModalOpen()
     }
 
-
     const storePassphraseInBrowserDB = async () => {
         const db = new DB()
-        const data = { [walletAddress]: passphrase, type: 'algorand' }
+        const data = { [walletAddress]: encryptString(passphrase), type: 'algorand' }
         const res = await db.addPassphrase(data)
         return res
     }

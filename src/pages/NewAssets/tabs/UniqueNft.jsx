@@ -57,7 +57,7 @@ function UniqueNft() {
                 <div className="container">
                     <Grid container columnSpacing={3}>
                         <Grid item xs={12} md={5}>
-                            <SharedStyles.Title>Unique Nft</SharedStyles.Title>
+                            <SharedStyles.Title>Nft</SharedStyles.Title>
                             <SharedStyles.Description>
                                 Create and manage unique non-fungible tokens that represent real-world or Digital assets and collectibles on the Algorand blockchain with Mint Engine.
                             </SharedStyles.Description>

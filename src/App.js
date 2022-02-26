@@ -20,8 +20,15 @@ import ImportRippleWallet from './pages/ImportRippleWallet/ImportRippleWallet';
 import Exchange from './pages/Exchange/Exchange';
 import NewAssets from './pages/NewAssets/NewAssets';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import useDeviceFingerprint from './Hooks/DeviceFingerprint';
 
 function App() {
+  
+  /**
+   * store device fingerprint in redux state
+   */
+  useDeviceFingerprint()
+
 
   return (
     <Router>

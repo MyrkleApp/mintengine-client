@@ -59,7 +59,7 @@ function CommonNft() {
                 <div className="container">
                     <Grid container columnSpacing={3}>
                         <Grid item xs={12} md={5}>
-                            <SharedStyles.Title>Common Nft</SharedStyles.Title>
+                            <SharedStyles.Title>Nft Collection</SharedStyles.Title>
                             <SharedStyles.Description>
                                 Create and manage digital representations of multiple real-world or digital collectibles tied by the same unique ID on the Algorand blockchain, which can be later sold or distributed as parts of a collection.
                             </SharedStyles.Description>

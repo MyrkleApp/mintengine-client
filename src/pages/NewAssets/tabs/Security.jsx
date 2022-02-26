@@ -64,7 +64,7 @@ function Security() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Security</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Create and manage algorithmically backed digital representations of tradable financial instruments on the Algorand blockchain with Mint Engine. This is a proof of concept derived from the custom Fungible token template.
+                                Create and manage algorithmically backed digital representations of tradable financial instruments on the Algorand blockchain with Mint Engine. 
                             </SharedStyles.Description>
                         </Grid>
 

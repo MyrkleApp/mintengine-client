@@ -1,6 +1,6 @@
 export const CREATE_TOKEN = "Create Token"
-export const UNIQUE_NFT = "Unique NFT"
-export const COMMON_NFT = "Common NFT"
+export const UNIQUE_NFT = "NFT"
+export const COMMON_NFT = "NFT Collection"
 export const CUSTOM_NFT = "Custom Token"
 export const WEB3_TICKET = "Web3 Ticket"
 export const FRACTIONAL_NFT = "Fractional NFT"
