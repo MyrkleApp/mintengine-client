@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import './myTabs.css'
 import { createTheme, ThemeProvider } from '@mui/material';
 
-const theme = createTheme({
+export const theme = createTheme({
     palette: {
       primary: {
         main: '#0EB56F',

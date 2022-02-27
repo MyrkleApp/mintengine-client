@@ -4,6 +4,7 @@ import SelectInput from '../../../components/SelectInput/SelectInput'
 import scannerIcon from '../../../assets/icons/scanner.svg'
 import { Label, TransactionFee, ButtonContainer } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
+import addIcon from '../../../assets/icons/add.png'
 import { Button } from '../../../components/UI/Button/button'
 import useFormControl from '../../../Hooks/FormControl'
 
@@ -27,6 +28,9 @@ function NormalTxn() {
                 type="text"
                 center
             />
+            <div style={{ width: '100%' }}>
+                <img src={addIcon} alt="" style={{ margin: '10px auto 0 0', cursor: 'pointer' }} />
+            </div>
             <Label>Transaction Fee</Label>
             <TransactionFee>
                 <img src={algorandLogo} alt="" />

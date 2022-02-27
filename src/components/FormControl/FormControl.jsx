@@ -1,11 +1,23 @@
+import React, { useImperativeHandle, useRef } from 'react'
 import { Grid } from '@mui/material'
-import React from 'react'
 import * as Styles from'./formControl'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
-function Input(props) {
-    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea } = props;
+const Input = React.forwardRef((props, ref) => {
+    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick } = props;
+
+    const inputRef = useRef()
+
+    const click = () => {
+        inputRef.current.click()
+    }
+
+    useImperativeHandle(ref, () => {
+        return {
+            click: click
+        }
+    })
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
@@ -22,7 +34,8 @@ function Input(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         center={center}
-                        required={type === 'date' ? true : false}
+                        ref={inputRef}
+                        onClick={handleClick}
                     /> :
                     <Styles.TextArea
                         icon={icon}
@@ -46,12 +59,12 @@ function Input(props) {
                 }
                 {
                     typeof(icon) === "string" && (
-                        <img src={icon} alt="" className="icon" />
+                        <img src={icon} alt="" className="icon" onClick={handleClick} />
                     )
                 }
             </Styles.Root>
         </Grid>
     )
-}
+})
 
-export default React.memo(Input)
+export default Input

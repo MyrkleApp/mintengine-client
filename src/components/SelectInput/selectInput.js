@@ -64,7 +64,8 @@ export const Root = styled.div`
                 color: gray;
                 border: none;
                 background-color: transparent;
-                font-size: 18px;
+                font-size: 24px;
+                text-align: right;
                 max-width: calc(100% - 50px);
                 &:focus {
                     outline: none;
@@ -127,6 +128,7 @@ export const DropdownItem = styled.div`
 
     & > .right {
         width: 60%;
+        
         & .rightTop, .rightBottom {
             display: flex;
             justify-content: flex-end;

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Root = styled.div `
+export const Root = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -15,7 +15,7 @@ export const Root = styled.div `
     & .icon {
         color: #0EB56F;
         position: absolute;
-        cursor: ${props => props.center ? 'auto' : 'pointer'};
+        cursor: pointer;
         right: 20px;
         top: 50px;
         /* transform: scale(1.5); */

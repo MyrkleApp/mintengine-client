@@ -16,7 +16,7 @@ import MultipleTxn from './tabs/MultipleTxn'
 import Ripple from './ripple/Ripple'
 import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
 
-const tabs = [NORMAL_TXN, MULTIPLE_TXN, SCHEDULED_TXN]
+const tabs = [NORMAL_TXN, SCHEDULED_TXN]
 
 function Dashboard() {
     const dispatch = useDispatch()
@@ -56,7 +56,7 @@ function Dashboard() {
                                     network === ALGORAND && (
                                         <>
                                             { tabValue === NORMAL_TXN && <NormalTxn /> }
-                                            { tabValue === MULTIPLE_TXN && <MultipleTxn /> }
+                                            {/* { tabValue === MULTIPLE_TXN && <MultipleTxn /> } */}
                                             { tabValue === SCHEDULED_TXN && <ScheduledTxn /> }
                                         </>
                                     )
