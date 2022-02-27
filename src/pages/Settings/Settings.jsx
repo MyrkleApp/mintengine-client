@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
@@ -11,11 +11,14 @@ import useTabs from '../../Hooks/Tabs'
 import MyTabs from '../../components/MyTabs/MyTabs'
 import AlgorandAddressItem from '../../components/AlgorandAddressItem/AlgorandAddressItem'
 import useFormControl from '../../Hooks/FormControl'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllAlgorandWallets } from '../../app/algorand/algorandSlice'
 
 const tabs = [ALGORAND_ADDRESS, RIPPLE_ADDRESS]
 
 function Settings() {
     const history = useHistory()
+    const dispatch = useDispatch()
     const [detailsToShow, setDetailsToShow] = useState(CHANGE_DETAILS)
     const [openDetailsForMobile, setOpenDetailsForMobile] = useState(false)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
@@ -53,6 +56,14 @@ function Settings() {
     const handleAddNewWallet = () => {
         history.push('/wallet-setup')
     }
+
+    const { data: allWallets } = useSelector(state => state.algorand.allWallets)
+
+    useEffect(() => {
+        if ((detailsToShow === MY_WALLET_ADDRESS) && (allWallets === null)) {
+            dispatch(getAllAlgorandWallets())
+        }
+    }, [detailsToShow, allWallets, dispatch])
 
     return (
         <DashboardWrapper>
@@ -105,8 +116,14 @@ function Settings() {
                                     tabValue={tabValue}
                                     handleTabChange={handleTabChange}
                                 />
-                                <AlgorandAddressItem />
-                                <AlgorandAddressItem />
+                                {
+                                    allWallets?.map(wallet => (
+                                        <AlgorandAddressItem 
+                                            key={wallet.id} 
+                                            walletAddress={wallet.address}
+                                        />
+                                    ))
+                                }
                             </Grid>
                         )
                     }

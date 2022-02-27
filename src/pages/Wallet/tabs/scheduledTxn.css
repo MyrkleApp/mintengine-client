@@ -1,0 +1,4 @@
+/* hide pen icon on mui calender to prevent error */
+.css-ctu4nj .PrivateDatePickerToolbar-penIcon {
+    display: none; 
+}

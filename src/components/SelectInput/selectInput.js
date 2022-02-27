@@ -69,6 +69,7 @@ export const Root = styled.div`
                 max-width: calc(100% - 50px);
                 &:focus {
                     outline: none;
+                    /* background-color: transparent; */
                 }
             }
         }

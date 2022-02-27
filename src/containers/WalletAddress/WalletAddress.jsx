@@ -76,7 +76,6 @@ function WalletAddress() {
                     <Grid item xs={12} md={3} className="passphraseRight">
                         <CopyButtonWithTooltip 
                             textToCopy={textToCopy} 
-                            text="copy" 
                         />
                         {/* <CopyButton outlined>Copy</CopyButton> */}
                         <WalletAddressButton onClick={hidePassphrase}>
@@ -103,7 +102,6 @@ function WalletAddress() {
                             }
                             <CopyButtonWithTooltip 
                                 textToCopy={activeWalletAddress} 
-                                text="copy" 
                                 onlyIcon
                             />
                         </Grid>

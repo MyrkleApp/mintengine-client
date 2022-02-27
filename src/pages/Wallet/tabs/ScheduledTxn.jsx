@@ -15,6 +15,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../../../components/MyTabs/MyTabs'
+import './scheduledTxn.css'
 
 function ScheduledTxn() {
     const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()

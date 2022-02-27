@@ -13,4 +13,9 @@ export const Root = styled.div`
         word-break: break-word;
         font-size: 18px;
     }
+
+    & .copyIconContainer:last-child {
+        color: #097246;
+        font-size: 30px;
+    }
 `
