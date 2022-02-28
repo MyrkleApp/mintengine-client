@@ -14,6 +14,7 @@ function OptOut({ handleModalClose, handleResponse }) {
     const { value: assetToOptOut, setValueByClick: setAssetToOptOut } = useFormControl()
     const { formIsValid } = useFormValidity(assetToOptOut)
     const [selectedItem, setSelectedItem] = useState(null)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleOptOut = () => {

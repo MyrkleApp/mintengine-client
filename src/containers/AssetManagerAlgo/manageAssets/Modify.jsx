@@ -6,8 +6,8 @@ import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { modifyAlgorand } from '../../../app/algorand/algorandSlice'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import { useSelector } from 'react-redux'
 
 function Modify({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
@@ -19,6 +19,7 @@ function Modify({ handleModalClose, handleResponse }) {
     const { formIsValid } = useFormValidity(
         assetIdValue, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
     )
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleModify = () => {
@@ -31,7 +32,7 @@ function Modify({ handleModalClose, handleResponse }) {
             freeze_addr: freezeAddressValue,
             clawback_addr: clawbackAddressValue,
             note: noteValue, 
-            phrase: MY_ALGORAND_PASSPHRASE_STRING 
+            phrase: passphrase
         }
         handleSubmit(modifyAlgorand(modifyData), handleResponse, handleResponse)
     }

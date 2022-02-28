@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import * as Styles from './walletAddress'
 import qrCode from '../../assets/icons/qrCode.svg'
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import { CopyButton, WalletAddressButton } from '../../components/UI/Button/button';
+import { WalletAddressButton } from '../../components/UI/Button/button';
 import { Word } from '../../components/UI/WalletShared/walletShared';
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 import { useDispatch, useSelector } from 'react-redux';

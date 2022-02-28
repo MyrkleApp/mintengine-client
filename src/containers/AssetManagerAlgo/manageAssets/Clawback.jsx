@@ -6,14 +6,15 @@ import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { createAlgorandClawback } from '../../../app/algorand/algorandSlice'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import { useSelector } from 'react-redux'
 
 function Unfreeze({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleClawback = () => {
@@ -23,7 +24,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
             asset_id: assetIdValue, 
             target_addr: targetAddressValue, 
             note: noteValue, 
-            phrase: MY_ALGORAND_PASSPHRASE_STRING 
+            phrase: passphrase
         }
         handleSubmit(createAlgorandClawback(clawbackData), handleResponse, handleResponse)
     }

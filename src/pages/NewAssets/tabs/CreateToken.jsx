@@ -16,12 +16,13 @@ import useModal from '../../../Hooks/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useSelector } from 'react-redux'
+import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CreateToken() {
     const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
-    const { value: decimalValue, handleChange: handleDecimalChange } = useFormControl()
+    const { value: decimalValue, handleChange: handleDecimalChange, setValueByClick: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
@@ -60,6 +61,7 @@ function CreateToken() {
     const { status } = useSelector(state => state.algorand.token)
     const success = status === HTTP_STATUS.FULFILLED
 
+
     return (
         <Fragment>
             <SharedStyles.BoxContainer>
@@ -95,18 +97,31 @@ function CreateToken() {
                                 value={unitValue}
                                 handleChange={handleUnitChange}
                             />
-                            <FormControl 
-                                type="text"
-                                label="Total Supply"
-                                value={totalSupplyValue}
-                                handleChange={handleTotalSupplyChange}
-                            />
-                            <FormControl 
-                                type="text"
-                                label="Decimal"
-                                value={decimalValue}
-                                handleChange={handleDecimalChange}
-                            />
+                            
+                            <Grid item container xs={12} columnSpacing={2}>
+                                <Grid item xs={8}>
+                                    <FormControl 
+                                        type="text"
+                                        label="Total Supply"
+                                        value={totalSupplyValue}
+                                        handleChange={handleTotalSupplyChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={4} style={{ position: 'relative' }}>
+                                    {/* <FormControl 
+                                        type="text"
+                                        label="Decimal"
+                                        value={decimalValue}
+                                        handleChange={handleDecimalChange}
+                                        handleClick={handleDecimalInputClick}
+                                    /> */}
+                                    <DecimalDropdown 
+                                        value={decimalValue}
+                                        handleChange={handleDecimalChange}
+                                        handleClick={setDecimalValueByClick}
+                                    />
+                                </Grid>
+                            </Grid>
                             <FormControl 
                                 type="text"
                                 label="Asset URL"

@@ -5,9 +5,9 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import { useSelector } from 'react-redux'
 
 //target address for testing
 // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
@@ -18,6 +18,7 @@ function Freeze({ handleModalClose, handleResponse }) {
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleFreeze = () => {
@@ -27,7 +28,7 @@ function Freeze({ handleModalClose, handleResponse }) {
             asset_id: assetIdValue, 
             target_addr: targetAddressValue, 
             note: noteValue, 
-            phrase: MY_ALGORAND_PASSPHRASE_STRING 
+            phrase: passphrase
         }
         handleSubmit(freezeAlgorand(freezeData), handleResponse, handleResponse)
     }

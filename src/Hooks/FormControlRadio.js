@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-function useFormControlRadio() {
-    const [value, setValue] = useState('')
+function useFormControlRadio(defaultValue = "") {
+    const [value, setValue] = useState(defaultValue)
 
     const handleClick = (data) => {
         setValue(data)

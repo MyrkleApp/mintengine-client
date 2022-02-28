@@ -7,12 +7,13 @@ import SelectInput from '../../../components/SelectInput/SelectInput'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { destroyAlgorand } from '../../../app/algorand/algorandSlice'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
+import { useSelector } from 'react-redux'
 
 function Destroy({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleDestroy = () => {
@@ -21,7 +22,7 @@ function Destroy({ handleModalClose, handleResponse }) {
         const destroyData = { 
             asset_id: assetIdValue, 
             note: noteValue, 
-            phrase: MY_ALGORAND_PASSPHRASE_STRING 
+            phrase: passphrase
         }
         handleSubmit(destroyAlgorand(destroyData), handleResponse, handleResponse)
     }

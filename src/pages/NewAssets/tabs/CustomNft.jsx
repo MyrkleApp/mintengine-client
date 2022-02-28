@@ -29,7 +29,7 @@ function CustomNft() {
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
-    const { value: defaultFrozenValue, handleClick: handleRadioClick } = useFormControlRadio()
+    const { value: defaultFrozenValue, handleClick: handleRadioClick } = useFormControlRadio("No")
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()

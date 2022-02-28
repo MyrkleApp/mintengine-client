@@ -4,24 +4,23 @@ import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetMa
 import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import { algorandOptIn } from '../../../app/algorand/algorandSlice'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import { useSelector } from 'react-redux'
 
 
 function OptIn({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue)
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const handleOptIn = () => {
         handleModalClose()
-        /**
-        * ! MY_ALGORAND_PASSPHRASE SHOULD BE CHANGED TO USE REDUX STATE
-        */
-        const optInData = { asset_id: assetIdValue, note: noteValue, phrase: MY_ALGORAND_PASSPHRASE_STRING }
+        
+        const optInData = { asset_id: assetIdValue, note: noteValue, phrase: passphrase }
         handleSubmit(algorandOptIn(optInData), handleResponse, handleResponse)
     }
 
