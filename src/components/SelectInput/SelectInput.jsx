@@ -9,6 +9,7 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import { ThreeDots } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
+import questionMarkImg from '../../assets/icons/questionMark.jpg'
 
 function SelectInput({ half, exchange, label, value, handleChange, handleItemClick }) {
     const dispatch = useDispatch()
@@ -38,8 +39,8 @@ function SelectInput({ half, exchange, label, value, handleChange, handleItemCli
                     <div className="container">
                         <div className="select" onClick={toggleSelect}> 
                             <div className="left">
-                                <img src={algorandLogo} alt="" />
-                                <span>ALGO</span>
+                                <img src={ selectedItem ? (selectedItem.img || questionMarkImg) : algorandLogo } alt="" />
+                                <span>{ selectedItem?.name || 'ALGO' }</span>
                             </div>
                             <KeyboardArrowDownIcon />
                         </div>
@@ -53,7 +54,7 @@ function SelectInput({ half, exchange, label, value, handleChange, handleItemCli
                     
                     <Styles.DropdownContainer show={open}>
                         { 
-                            status === HTTP_STATUS.PENDING && (
+                            status === HTTP_STATUS.PENDING ? (
                                 <Styles.LoaderContainer>
                                     <ThreeDots
                                         height="15"
@@ -62,26 +63,21 @@ function SelectInput({ half, exchange, label, value, handleChange, handleItemCli
                                         ariaLabel='loading'
                                     />
                                 </Styles.LoaderContainer>
-                            )
-                        }
-                        {
-                            status === HTTP_STATUS.FULFILLED && (
-                                data?.assets?.length > 0
+                            ) : (
+                                (data?.assets?.length > 0)
                                 ?
-                                data?.assets?.map((asset) => (
+                                data?.assets?.map(asset => (
                                     <SelectItem
                                         key={asset.id}
-                                        assetId={asset.id}
-                                        name={asset.name}
-                                        amount={asset.amount}
+                                        asset={asset}
                                         handleItemClick={handleItemClick}
-                                        selected={selectedItem === asset.id}
+                                        selected={selectedItem === asset}
                                         setSelectedItem={setSelectedItem}
                                     />
                                 )) 
                                 :
                                 <Styles.LoaderContainer>
-                                    <span>You don't have any assets</span>
+                                    <span>No assets found</span>
                                 </Styles.LoaderContainer>
                             )
                         }

@@ -7,7 +7,6 @@ import imageFrame from '../../../assets/icons/imageFrame.png'
 import useFormControl from '../../../Hooks/FormControl'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import useImageHandle from '../../../Hooks/ImageHandle'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { createAlgorandToken } from '../../../app/algorand/algorandSlice'
@@ -26,12 +25,13 @@ function CreateToken() {
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
         tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
     )
     const { handleSubmit } = useSubmit()
 
-    const hiddenInputRef = useRef(null);
+    const hiddenInputRef = useRef();
 
     const handleUploadImage = () => {
         hiddenInputRef.current.click()
@@ -48,7 +48,7 @@ function CreateToken() {
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('phrase', passphrase)
         
         handleSubmit(createAlgorandToken(formData), handleModalOpen, handleModalOpen)
 
@@ -97,7 +97,6 @@ function CreateToken() {
                                 value={unitValue}
                                 handleChange={handleUnitChange}
                             />
-                            
                             <Grid item container xs={12} columnSpacing={2}>
                                 <Grid item xs={8}>
                                     <FormControl 
@@ -108,13 +107,6 @@ function CreateToken() {
                                     />
                                 </Grid>
                                 <Grid item xs={4} style={{ position: 'relative' }}>
-                                    {/* <FormControl 
-                                        type="text"
-                                        label="Decimal"
-                                        value={decimalValue}
-                                        handleChange={handleDecimalChange}
-                                        handleClick={handleDecimalInputClick}
-                                    /> */}
                                     <DecimalDropdown 
                                         value={decimalValue}
                                         handleChange={handleDecimalChange}

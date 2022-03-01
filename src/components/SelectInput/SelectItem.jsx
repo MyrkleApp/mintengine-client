@@ -1,20 +1,21 @@
 import React from 'react'
 import { DropdownItem } from './selectInput'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
+import questionMarkImg from '../../assets/icons/questionMark.jpg'
 
-function SelectItem({ name, assetId, amount, handleItemClick, selected, setSelectedItem }) {
+function SelectItem({ asset, handleItemClick, selected, setSelectedItem }) {
 
     const handleClick = () => {
-        handleItemClick(assetId)
-        setSelectedItem(assetId)
+        handleItemClick(asset.id)
+        setSelectedItem(asset)
     }
 
     return (
         <DropdownItem onClick={handleClick} selected={selected}>
             <div className="left">
                 <div className="leftTop">
-                    <img src={algorandLogo} alt="" />
-                    <span>{name}</span>
+                    <img src={asset.img || questionMarkImg} alt="" />
+                    <span>{asset.name}</span>
                 </div>
                 <div className="leftBottom">
                     <span>ALGO</span>
@@ -22,11 +23,11 @@ function SelectItem({ name, assetId, amount, handleItemClick, selected, setSelec
             </div>
             <div className="right">
                 <div className="rightTop">
-                    <span>{amount}</span>
+                    <span>{asset.amount}</span>
                 </div>
                 <div className="rightBottom">
                     <span>Asset ID:</span>
-                    <span>{assetId}</span>
+                    <span>{asset.id}</span>
                 </div>
             </div>
         </DropdownItem>

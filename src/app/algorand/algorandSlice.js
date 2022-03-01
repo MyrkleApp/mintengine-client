@@ -194,6 +194,15 @@ export const createAlgorandWeb3Ticket = createAsyncThunk(`${namespace}/createAlg
   }
 })
 
+export const getAlgorandTransactions = createAsyncThunk(`${namespace}/getAlgorandTransactions`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get('/algorand/v1/transactions/')
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -224,6 +233,7 @@ const algorandSlice = createSlice({
     unfreeze: DEFAULT,
     uniqueNft: DEFAULT,
     web3Ticket: DEFAULT,
+    transactions: DEFAULT
 
   },
   reducers: {
@@ -323,6 +333,10 @@ const algorandSlice = createSlice({
     [createAlgorandWeb3Ticket.pending]: actions.createAlgorandWeb3TicketPending,
     [createAlgorandWeb3Ticket.fulfilled]: actions.createAlgorandWeb3TicketFulfilled,
     [createAlgorandWeb3Ticket.rejected]: actions.createAlgorandWeb3TicketRejected,
+
+    [getAlgorandTransactions.pending]: actions.getAlgorandTransactionsPending,
+    [getAlgorandTransactions.fulfilled]: actions.getAlgorandTransactionsFulfilled,
+    [getAlgorandTransactions.rejected]: actions.getAlgorandTransactionsRejected,
   }
 })
 

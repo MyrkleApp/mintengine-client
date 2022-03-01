@@ -299,3 +299,17 @@ export const createAlgorandWeb3TicketRejected = (state, { payload }) => {
     state.web3Ticket.status = HTTP_STATUS.REJECTED
     state.web3Ticket.error = payload
 }
+
+export const getAlgorandTransactionsPending = (state) => {
+    state.transactions.status = HTTP_STATUS.PENDING
+}
+
+export const getAlgorandTransactionsFulfilled = (state, { payload }) => {
+    state.transactions.status = HTTP_STATUS.FULFILLED
+    state.transactions.data = payload
+}
+
+export const getAlgorandTransactionsRejected = (state, { payload }) => {
+    state.transactions.status = HTTP_STATUS.REJECTED
+    state.transactions.error = payload
+}
