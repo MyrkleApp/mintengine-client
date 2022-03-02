@@ -9,12 +9,14 @@ import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import { useDispatch, useSelector } from 'react-redux'
 import { ALGORAND, networkDataToReturn, RIPPLE } from '../../constants/network'
 import useTabs from '../../Hooks/Tabs'
-import { MULTIPLE_TXN, NORMAL_TXN, SCHEDULED_TXN } from './constants'
+import { NORMAL_TXN, SCHEDULED_TXN } from './constants'
 import NormalTxn from './tabs/NormalTxn'
 import ScheduledTxn from './tabs/ScheduledTxn'
-import MultipleTxn from './tabs/MultipleTxn'
 import Ripple from './ripple/Ripple'
-import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
+import { getActiveAlgorandWallet, getAlgorandHoldings } from '../../app/algorand/algorandSlice'
+import { HTTP_STATUS } from '../../constants/httpStatus'
+import { ThreeDots } from 'react-loader-spinner'
+import { QrCodeScanner } from '../../components/QrCodeScanner/QrCodeScanner'
 
 const tabs = [NORMAL_TXN, SCHEDULED_TXN]
 
@@ -30,10 +32,19 @@ function Dashboard() {
         }
     }, [network, activeWalletData, dispatch])
 
+    const { status: holdingsStatus, data: holdingsData } = useSelector(state => state.algorand.holdings)
+
+    useEffect(() => {
+        if (!holdingsData) {
+            dispatch(getAlgorandHoldings())
+        }
+    }, [holdingsData])
+
     return (
         <DashboardWrapper>
             <ChooseNetwork />
             <WalletAddress />
+            {/* <QrCodeScanner /> */}
             <Grid container spacing={3}>
 
                 <Grid item xs={12} lg={8}>
@@ -56,7 +67,6 @@ function Dashboard() {
                                     network === ALGORAND && (
                                         <>
                                             { tabValue === NORMAL_TXN && <NormalTxn /> }
-                                            {/* { tabValue === MULTIPLE_TXN && <MultipleTxn /> } */}
                                             { tabValue === SCHEDULED_TXN && <ScheduledTxn /> }
                                         </>
                                     )
@@ -81,8 +91,25 @@ function Dashboard() {
                                     <Styles.SubTitle>{network === ALGORAND ? 'Asset ID' : 'Issuer Add'}</Styles.SubTitle>
                                 </Grid>
                                 <Grid item container xs={12} rowSpacing={4}>
-                                    <WalletAssetItem />
-                                    <WalletAssetItem clawback />
+                                    {
+                                        holdingsStatus === HTTP_STATUS.PENDING ? (
+                                            <ThreeDots
+                                                height="100"
+                                                width="100"
+                                                color='gray'
+                                                ariaLabel='loading'
+                                            />
+                                        ) : (
+                                            (holdingsData?.assets?.length > 0)
+                                            ?
+                                            holdingsData?.assets?.map(asset => (
+                                                <WalletAssetItem key={asset.id} asset={asset} />
+                                            )) 
+                                            :
+                                            <Styles.NoAssetsFound>No assets found</Styles.NoAssetsFound>
+                                        )
+                                    }
+                                    {/* <WalletAssetItem clawback /> */}
                                 </Grid>
                             </Grid>
                         </div>

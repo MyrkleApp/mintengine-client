@@ -5,7 +5,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const Input = React.forwardRef((props, ref) => {
-    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick } = props;
+    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick, readOnly } = props;
 
     const inputRef = useRef()
 
@@ -36,6 +36,7 @@ const Input = React.forwardRef((props, ref) => {
                         center={center}
                         ref={inputRef}
                         onClick={handleClick}
+                        readOnly={readOnly}
                     /> :
                     <Styles.TextArea
                         icon={icon}

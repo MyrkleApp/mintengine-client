@@ -112,7 +112,7 @@ function WalletAddress() {
                         </Grid>
 
                         <Grid item xs={12} md={4} className="right">
-                            <span className="amount">0.00 </span>
+                            <span className="amount">{ activeWalletData?.balance }&nbsp;</span>
                             <span className="coinName">ALGO</span><br />
                             <div className="dollarAmount">~ $0</div>
                             <WalletAddressButton onClick={showPassphrase} disabled={!algorandPassphrase ? true : false}>

@@ -1,19 +1,18 @@
 import React, { Fragment, useState } from 'react'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
-import SelectItem from '../../../components/SelectInput/SelectItem'
 import { Button } from '../../../components/UI/Button/button'
 import { useSelector } from 'react-redux'
-import useFormControl from '../../../Hooks/FormControl'
 import useFormValidity from '../../../Hooks/FormValidity'
 import { algorandOptOut } from '../../../app/algorand/algorandSlice'
 import useSubmit from '../../../Hooks/Submit'
+import useSelectInput from '../../../Hooks/SelectInput'
+import SelectInput from '../../../components/SelectInput/SelectInput'
 
 
 function OptOut({ handleModalClose, handleResponse }) {
     const { status, data } = useSelector(state => state.algorand.holdings)
-    const { value: assetToOptOut, setValueByClick: setAssetToOptOut } = useFormControl()
-    const { formIsValid } = useFormValidity(assetToOptOut)
-    const [selectedItem, setSelectedItem] = useState(null)
+    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
+    const { formIsValid } = useFormValidity(assetValue.id)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
@@ -28,21 +27,13 @@ function OptOut({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>REMOVE-TOKEN</ModalTitle>
             <p>Remove token with a given Asset ID to remove an Algorand asset holding from your account.</p>
-            <div style={{ backgroundColor: '#f5fefa' }}>
-                {
-                    data?.assets?.map((asset) => (
-                        <SelectItem
-                            key={asset.id}
-                            assetId={asset.id}
-                            name={asset.name}
-                            amount={asset.amount}
-                            handleItemClick={setAssetToOptOut}
-                            selected={selectedItem === asset.id}
-                            setSelectedItem={setSelectedItem}
-                        />
-                    ))
-                }
-            </div>
+            <SelectInput
+                label="Asset"
+                value={assetValue.id}
+                selectedItem={assetValue}
+                handleChange={(e) => handleAssetSelectChange('id', e)}
+                handleItemClick={setAssetValueByClick}
+            />
             <ButtonContainer>
                 <Button fullWidth disabled={!formIsValid} onClick={handleOptOut}>remove</Button>
             </ButtonContainer>

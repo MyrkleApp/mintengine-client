@@ -64,3 +64,11 @@ export const ButtonContainer = styled.div`
     margin: 30px auto 30px auto;
     width: calc(100% - 150px);
 `
+
+export const NoAssetsFound = styled.div`
+    width: calc(100% - 30px);
+    margin: 30px auto;
+    font-weight: 500;
+    color: #043923;
+    font-size: 20px;
+`

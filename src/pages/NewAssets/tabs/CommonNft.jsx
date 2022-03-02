@@ -67,7 +67,7 @@ function CommonNft() {
 
                         <Grid item xs={12} md={7}>
                             <FormControl 
-                                label="NFT Name"
+                                label="NFT Collection Name"
                                 type="text"
                                 value={nftNameValue}
                                 handleChange={handleNftNameChange}

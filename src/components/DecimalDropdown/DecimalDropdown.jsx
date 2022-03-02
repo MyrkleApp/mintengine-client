@@ -23,14 +23,14 @@ function DecimalDropdown({ value, handleChange, handleClick }) {
                         type="text"
                         label="Decimal"
                         value={value}
-                        handleChange={handleChange}
+                        readOnly
                         handleClick={handleDecimalInputClick}
                     />
                     <Styles.Root displayDropdown={displayDropdown}>
                         <div className="container">
                             {
                                 Array(19).fill().map((_, i) => (
-                                    <Styles.DecimalDropdownItem onClick={() => handleClick(i + 1)}>
+                                    <Styles.DecimalDropdownItem key={i} onClick={() => handleClick(i + 1)}>
                                         { i + 1}
                                     </Styles.DecimalDropdownItem>
                                 ))

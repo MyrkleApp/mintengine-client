@@ -6,11 +6,11 @@ import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import exchangeLogo from '../../assets/icons/exchange.png'
 import { Button } from '../../components/UI/Button/button'
-import useFormControl from '../../Hooks/FormControl'
+import useSelectInput from '../../Hooks/SelectInput'
 
 function ExchangeAlgo() {
-    const { value: fromValue, handleChange: handleFromChange, setValueByClick: setFromValueByClick } = useFormControl()
-    const { value: toValue, handleChange: handleToChange, setValueByClick: setToValueByClick } = useFormControl()
+    const { value: fromValue, setValueByClick: setFromValueByClick, handleSelectChange: handleFromSelectChange } = useSelectInput()
+    const { value: toValue, setValueByClick: setToValueByClick, handleSelectChange: handleToSelectChange } = useSelectInput()
 
     return (
         <DashboardWrapper>
@@ -26,8 +26,9 @@ function ExchangeAlgo() {
                                 <SelectInput
                                     exchange
                                     label="From"
-                                    value={fromValue}
-                                    handleChange={handleFromChange}
+                                    value={fromValue.id}
+                                    selectedItem={fromValue}
+                                    handleChange={(e) => handleFromSelectChange('id', e)}
                                     handleItemClick={setFromValueByClick}
                                 />
                                 <Styles.Info>
@@ -39,10 +40,11 @@ function ExchangeAlgo() {
                         <Styles.Container>
                             <div className="innerContainer">
                                 <SelectInput
-                                    exchange 
-                                    label="To" 
-                                    value={toValue}
-                                    handleChange={handleToChange}
+                                    exchange
+                                    label="To"
+                                    value={toValue.id}
+                                    selectedItem={toValue}
+                                    handleChange={(e) => handleToSelectChange('id', e)}
                                     handleItemClick={setToValueByClick}
                                 />
                             </div>
