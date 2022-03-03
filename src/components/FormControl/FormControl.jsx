@@ -35,7 +35,7 @@ const Input = React.forwardRef((props, ref) => {
                         onBlur={handleBlur}
                         center={center}
                         ref={inputRef}
-                        onClick={handleClick}
+                        // onClick={handleClick}
                         readOnly={readOnly}
                     /> :
                     <Styles.TextArea

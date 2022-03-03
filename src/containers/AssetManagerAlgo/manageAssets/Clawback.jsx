@@ -6,11 +6,11 @@ import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { createAlgorandClawback } from '../../../app/algorand/algorandSlice'
-import SelectInput from '../../../components/SelectInput/SelectInput'
 import { useSelector } from 'react-redux'
+import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 
 function Unfreeze({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
@@ -33,11 +33,10 @@ function Unfreeze({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>CLAWBACK</ModalTitle>
             <p>The clawback address represents an account that is allowed to transfer assets from and to any asset holder.</p>
-            <SelectInput
+            <SelectWithoutDropdown
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 type="text"

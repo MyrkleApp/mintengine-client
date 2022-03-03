@@ -6,15 +6,15 @@ import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
-import SelectInput from '../../../components/SelectInput/SelectInput'
 import { useSelector } from 'react-redux'
+import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 
 //target address for testing
 // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
 
 
 function Freeze({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
@@ -37,11 +37,10 @@ function Freeze({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify a freeze address.</p>
-            <SelectInput
+            <SelectWithoutDropdown
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 type="text"

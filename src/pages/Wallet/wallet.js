@@ -72,3 +72,17 @@ export const NoAssetsFound = styled.div`
     color: #043923;
     font-size: 20px;
 `
+
+export const IconButton = styled.button`
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid #0eb56f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0eb56f;
+    background-color: white;
+    cursor: pointer;
+    margin: 20px 20px 20px 0;
+`

@@ -6,12 +6,12 @@ import { Button } from '../../../components/UI/Button/button'
 import { algorandOptIn } from '../../../app/algorand/algorandSlice'
 import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
-import SelectInput from '../../../components/SelectInput/SelectInput'
 import { useSelector } from 'react-redux'
+import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 
 
 function OptIn({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
@@ -29,11 +29,11 @@ function OptIn({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>ADD-TOKEN</ModalTitle>
             <p>Add token with a given asset ID to receive an Algorand asset to your account.</p>
-            <SelectInput
+
+            <SelectWithoutDropdown
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 label="Note"

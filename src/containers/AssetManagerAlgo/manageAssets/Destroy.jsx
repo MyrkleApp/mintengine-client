@@ -3,14 +3,14 @@ import useFormControl from '../../../Hooks/FormControl'
 import { ButtonContainer, ModalTitle } from '../../../pages/AssetManager/assetManager'
 import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
-import SelectInput from '../../../components/SelectInput/SelectInput'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { destroyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
+import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 
 function Destroy({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
@@ -31,11 +31,10 @@ function Destroy({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>DELETE TOKEN</ModalTitle>
             <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
-            <SelectInput
+            <SelectWithoutDropdown
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 label="Note"

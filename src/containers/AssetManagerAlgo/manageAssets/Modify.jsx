@@ -6,11 +6,11 @@ import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { modifyAlgorand } from '../../../app/algorand/algorandSlice'
-import SelectInput from '../../../components/SelectInput/SelectInput'
 import { useSelector } from 'react-redux'
+import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 
 function Modify({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange, setValueByClick: setAssetIdValueByClick } = useFormControl()
+    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
@@ -41,11 +41,10 @@ function Modify({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>MODIFY</ModalTitle>
             <p>After an asset has been created only the manager, reserve, freeze and clawback accounts can be changed.</p>
-            <SelectInput
+            <SelectWithoutDropdown
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
-                handleItemClick={setAssetIdValueByClick}
             />
             <FormControl 
                 type="text"
