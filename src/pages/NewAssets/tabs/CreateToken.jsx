@@ -98,7 +98,7 @@ function CreateToken() {
                                 handleChange={handleUnitChange}
                             />
                             <Grid item container xs={12} columnSpacing={2}>
-                                <Grid item xs={8}>
+                                <Grid item xs={9}>
                                     <FormControl 
                                         type="text"
                                         label="Total Supply"
@@ -106,7 +106,7 @@ function CreateToken() {
                                         handleChange={handleTotalSupplyChange}
                                     />
                                 </Grid>
-                                <Grid item xs={4} style={{ position: 'relative' }}>
+                                <Grid item xs={3} style={{ position: 'relative' }}>
                                     <DecimalDropdown 
                                         value={decimalValue}
                                         handleChange={handleDecimalChange}

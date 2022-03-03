@@ -16,7 +16,6 @@ import Ripple from './ripple/Ripple'
 import { getActiveAlgorandWallet, getAlgorandHoldings } from '../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import { ThreeDots } from 'react-loader-spinner'
-import { QrCodeScanner } from '../../components/QrCodeScanner/QrCodeScanner'
 
 const tabs = [NORMAL_TXN, SCHEDULED_TXN]
 
@@ -44,7 +43,6 @@ function Dashboard() {
         <DashboardWrapper>
             <ChooseNetwork />
             <WalletAddress />
-            {/* <QrCodeScanner /> */}
             <Grid container spacing={3}>
 
                 <Grid item xs={12} lg={8}>

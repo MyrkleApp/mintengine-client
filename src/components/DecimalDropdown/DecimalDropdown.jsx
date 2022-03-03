@@ -3,13 +3,12 @@ import * as Styles from './decimalDropdown'
 import FormControl from '../FormControl/FormControl'
 import ClickAwayListener from 'react-click-away-listener';
 
-function DecimalDropdown({ value, handleChange, handleClick }) {
+function DecimalDropdown({ value, handleClick }) {
     const [displayDropdown, setDisplayDropdown] = useState(false)
 
     const handleDecimalInputClick = () => {
         setDisplayDropdown(prevState => !prevState)
     }
-
 
     const handleClickAway = () => {
         setDisplayDropdown(false)
@@ -25,6 +24,7 @@ function DecimalDropdown({ value, handleChange, handleClick }) {
                         value={value}
                         readOnly
                         handleClick={handleDecimalInputClick}
+                        center
                     />
                     <Styles.Root displayDropdown={displayDropdown}>
                         <div className="container">

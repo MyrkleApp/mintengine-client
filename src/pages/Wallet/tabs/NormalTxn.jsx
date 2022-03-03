@@ -55,9 +55,9 @@ function NormalTxn() {
                 value={recipientAddressValue}
                 handleChange={handleRecipientAddressChange}
                 icon={scannerIcon}
-                handleClick={() => setDisplayScanner(true)}
                 type="text"
                 center
+                handleIconClick={() => setDisplayScanner(true)}
             />
             
             {

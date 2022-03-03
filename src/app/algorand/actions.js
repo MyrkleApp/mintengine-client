@@ -313,3 +313,59 @@ export const getAlgorandTransactionsRejected = (state, { payload }) => {
     state.transactions.status = HTTP_STATUS.REJECTED
     state.transactions.error = payload
 }
+
+export const checkAlgorandAssetIsValidPending = (state) => {
+    state.assetIsValid.status = HTTP_STATUS.PENDING
+}
+
+export const checkAlgorandAssetIsValidFulfilled = (state, { payload }) => {
+    state.assetIsValid.status = HTTP_STATUS.FULFILLED
+    state.assetIsValid.data = payload
+}
+
+export const checkAlgorandAssetIsValidRejected = (state, { payload }) => {
+    state.assetIsValid.status = HTTP_STATUS.REJECTED
+    state.assetIsValid.error = payload
+}
+
+export const checkAlgorandAddressIsValidPending = (state) => {
+    state.addressIsValid.status = HTTP_STATUS.PENDING
+}
+
+export const checkAlgorandAddressIsValidFulfilled = (state, { payload }) => {
+    state.addressIsValid.status = HTTP_STATUS.FULFILLED
+    state.addressIsValid.data = payload
+}
+
+export const checkAlgorandAddressIsValidRejected = (state, { payload }) => {
+    state.addressIsValid.status = HTTP_STATUS.REJECTED
+    state.addressIsValid.error = payload
+}
+
+export const checkCanClawbackAlgorandAssetPending = (state) => {
+    state.canClawbackAsset.status = HTTP_STATUS.PENDING
+}
+
+export const checkCanClawbackAlgorandAssetFulfilled = (state, { payload }) => {
+    state.canClawbackAsset.status = HTTP_STATUS.FULFILLED
+    state.canClawbackAsset.data = payload
+}
+
+export const checkCanClawbackAlgorandAssetRejected = (state, { payload }) => {
+    state.canClawbackAsset.status = HTTP_STATUS.REJECTED
+    state.canClawbackAsset.error = payload
+}
+
+export const checkCanDestroyAlgorandAssetPending = (state) => {
+    state.canDestroyAsset.status = HTTP_STATUS.PENDING
+}
+
+export const checkCanDestroyAlgorandAssetFulfilled = (state, { payload }) => {
+    state.canDestroyAsset.status = HTTP_STATUS.FULFILLED
+    state.canDestroyAsset.data = payload
+}
+
+export const checkCanDestroyAlgorandAssetRejected = (state, { payload }) => {
+    state.canDestroyAsset.status = HTTP_STATUS.REJECTED
+    state.canDestroyAsset.error = payload
+}

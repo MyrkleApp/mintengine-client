@@ -203,6 +203,42 @@ export const getAlgorandTransactions = createAsyncThunk(`${namespace}/getAlgoran
   }
 })
 
+export const checkAlgorandAssetIsValid = createAsyncThunk(`${namespace}/checkAlgorandAssetIsValid`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/checks/valid_asset/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const checkAlgorandAddressIsValid = createAsyncThunk(`${namespace}/checkAlgorandAddressIsValid`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/checks/valid_address/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const checkCanClawbackAlgorandAsset = createAsyncThunk(`${namespace}/checkCanClawbackAlgorandAsset`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/checks/can_clawback/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const checkCanDestroyAlgorandAsset = createAsyncThunk(`${namespace}/checkCanDestroyAlgorandAsset`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/checks/can_destroy/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -233,7 +269,11 @@ const algorandSlice = createSlice({
     unfreeze: DEFAULT,
     uniqueNft: DEFAULT,
     web3Ticket: DEFAULT,
-    transactions: DEFAULT
+    transactions: DEFAULT,
+    assetIsValid: DEFAULT,
+    addressIsValid: DEFAULT,
+    canClawbackAsset: DEFAULT,
+    canDeleteAsset: DEFAULT,
 
   },
   reducers: {
@@ -337,6 +377,22 @@ const algorandSlice = createSlice({
     [getAlgorandTransactions.pending]: actions.getAlgorandTransactionsPending,
     [getAlgorandTransactions.fulfilled]: actions.getAlgorandTransactionsFulfilled,
     [getAlgorandTransactions.rejected]: actions.getAlgorandTransactionsRejected,
+
+    [checkAlgorandAssetIsValid.pending]: actions.checkAlgorandAssetIsValidPending,
+    [checkAlgorandAssetIsValid.fulfilled]: actions.checkAlgorandAssetIsValidFulfilled,
+    [checkAlgorandAssetIsValid.rejected]: actions.checkAlgorandAssetIsValidRejected,
+
+    [checkAlgorandAddressIsValid.pending]: actions.checkAlgorandAddressIsValidPending,
+    [checkAlgorandAddressIsValid.fulfilled]: actions.checkAlgorandAddressIsValidFulfilled,
+    [checkAlgorandAddressIsValid.rejected]: actions.checkAlgorandAddressIsValidRejected,
+
+    [checkCanClawbackAlgorandAsset.pending]: actions.checkCanClawbackAlgorandAssetPending,
+    [checkCanClawbackAlgorandAsset.fulfilled]: actions.checkCanClawbackAlgorandAssetFulfilled,
+    [checkCanClawbackAlgorandAsset.rejected]: actions.checkCanClawbackAlgorandAssetRejected,
+
+    [checkCanDestroyAlgorandAsset.pending]: actions.checkCanDestroyAlgorandAssetPending,
+    [checkCanDestroyAlgorandAsset.fulfilled]: actions.checkCanDestroyAlgorandAssetFulfilled,
+    [checkCanDestroyAlgorandAsset.rejected]: actions.checkCanDestroyAlgorandAssetRejected,
   }
 })
 

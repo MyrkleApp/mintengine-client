@@ -66,6 +66,7 @@ function ScheduledTxn() {
                 type="text"
                 center
                 handleClick={handleDateClick}
+                handleIconClick={handleDateClick}
             />
             <TripleInput />
             <Label>Transaction Fee</Label>

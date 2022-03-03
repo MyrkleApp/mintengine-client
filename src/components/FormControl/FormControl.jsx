@@ -5,7 +5,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const Input = React.forwardRef((props, ref) => {
-    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick, readOnly } = props;
+    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick, readOnly, ...otherProps } = props;
 
     const inputRef = useRef()
 
@@ -35,7 +35,7 @@ const Input = React.forwardRef((props, ref) => {
                         onBlur={handleBlur}
                         center={center}
                         ref={inputRef}
-                        // onClick={handleClick}
+                        onClick={handleClick}
                         readOnly={readOnly}
                     /> :
                     <Styles.TextArea
@@ -60,7 +60,7 @@ const Input = React.forwardRef((props, ref) => {
                 }
                 {
                     typeof(icon) === "string" && (
-                        <img src={icon} alt="" className="icon" onClick={handleClick} />
+                        <img src={icon} alt="" className="icon" onClick={otherProps.handleIconClick} />
                     )
                 }
             </Styles.Root>
