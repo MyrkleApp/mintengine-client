@@ -16,7 +16,7 @@ import { Backdrop } from '@mui/material'
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
-    const { value: recipientAddressValue, handleChange: handleRecipientAddressChange } = useFormControl()
+    const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
     const [displayScanner, setDisplayScanner] = useState(false)
 
     const [addedTxns, setAddedTxns] = useState([])
@@ -41,6 +41,26 @@ function NormalTxn() {
         setAddedTxns(txns)
     }
 
+    const [addressToSetByScan, setAddressToSetByScan] = useState(null)
+
+    const openScanner = (address) => {
+        setAddressToSetByScan(address)
+        setDisplayScanner(true)
+    }
+
+    const closeScanner = () => {
+        setDisplayScanner(false)
+        setAddressToSetByScan(null)
+    }
+
+    const setAddedTxnAddressByScan = scannedData => {
+        const txns = [...addedTxns]
+        txns[addressToSetByScan].address = scannedData
+        setAddedTxns(txns)
+    }
+
+
+
     return (
         <Fragment>
             <SelectInput
@@ -57,7 +77,7 @@ function NormalTxn() {
                 icon={scannerIcon}
                 type="text"
                 center
-                handleIconClick={() => setDisplayScanner(true)}
+                handleIconClick={() => openScanner('main')}
             />
             
             {
@@ -76,6 +96,7 @@ function NormalTxn() {
                             icon={scannerIcon}
                             type="text"
                             center
+                            handleIconClick={() => openScanner(i)}
                         />
                     </Fragment>
                 ))
@@ -103,7 +124,8 @@ function NormalTxn() {
                 displayScanner && (
                     <Backdrop open={displayScanner} onClick={() => setDisplayScanner(false)}>
                         <QrCodeScanner 
-
+                            setValue={addressToSetByScan === 'main' ? handleSetRecipientAddressValue : setAddedTxnAddressByScan}
+                            handleClose={closeScanner}
                         />
                     </Backdrop>
                 )

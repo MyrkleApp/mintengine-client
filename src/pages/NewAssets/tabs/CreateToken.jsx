@@ -21,7 +21,7 @@ function CreateToken() {
     const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
-    const { value: decimalValue, handleChange: handleDecimalChange, setValueByClick: setDecimalValueByClick } = useFormControl()
+    const { value: decimalValue, handleChange: handleDecimalChange, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()

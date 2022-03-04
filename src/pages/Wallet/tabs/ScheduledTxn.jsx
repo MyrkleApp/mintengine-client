@@ -18,7 +18,7 @@ import { theme } from '../../../components/MyTabs/MyTabs'
 import './scheduledTxn.css'
 
 function ScheduledTxn() {
-    const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()
+    const { value: amountValue, handleChange: handleAmountChange, handleSetValue: setAmountValueByClick } = useFormControl()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange } = useFormControl()
     const [dateValue, setDateValue] = useState(new Date());
 
