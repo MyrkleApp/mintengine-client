@@ -12,7 +12,6 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
-import { Backdrop } from '@mui/material'
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
@@ -53,12 +52,16 @@ function NormalTxn() {
         setAddressToSetByScan(null)
     }
 
-    const setAddedTxnAddressByScan = scannedData => {
+    const setAddedTxnAddressByScan = (scannedData) => {
         const txns = [...addedTxns]
         txns[addressToSetByScan].address = scannedData
         setAddedTxns(txns)
     }
 
+    const scanSuccessCallback = (decodedText) => {
+        addressToSetByScan === 'main' ? handleSetRecipientAddressValue(decodedText) : setAddedTxnAddressByScan(decodedText)
+        setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
+    }
 
 
     return (
@@ -122,12 +125,13 @@ function NormalTxn() {
 
             {
                 displayScanner && (
-                    <Backdrop open={displayScanner} onClick={() => setDisplayScanner(false)}>
-                        <QrCodeScanner 
-                            setValue={addressToSetByScan === 'main' ? handleSetRecipientAddressValue : setAddedTxnAddressByScan}
-                            handleClose={closeScanner}
-                        />
-                    </Backdrop>
+                    <QrCodeScanner
+                        handleClickAway={closeScanner}
+                        fps={10}
+                        qrbox={250}
+                        disableFlip={false}
+                        qrCodeSuccessCallback={scanSuccessCallback}
+                    />
                 )
             }
             
