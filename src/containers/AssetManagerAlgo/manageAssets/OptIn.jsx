@@ -19,7 +19,6 @@ function OptIn({ handleModalClose, handleResponse }) {
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetIdValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
-    const { status: assetIsValidStatus, data: assetIsValidData } = useSelector(state => state.algorand.assetIsValid)
     const { handleSubmit } = useSubmit()
 
     const handleOptIn = () => {
@@ -30,8 +29,7 @@ function OptIn({ handleModalClose, handleResponse }) {
     }
 
     //send check request on input change
-    const assetData = { asset_id: assetIdValue }
-    useUserInputDispatch(assetIdValue, assetData, checkAlgorandAssetIsValid)
+    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
     
     return (
         <Fragment>
@@ -46,18 +44,9 @@ function OptIn({ handleModalClose, handleResponse }) {
             />
             <p>{assetIsValidData?.message}</p>
 
-            {
-                assetIsValidStatus === HTTP_STATUS.PENDING && (
-                    <LoaderContainer>
-                        <ThreeDots
-                            height="80"
-                            width="80"
-                            color='gray'
-                            ariaLabel='loading'
-                        />
-                    </LoaderContainer>
-                )
-            }
+            { assetIsValidStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             
             <FormControl 
                 label="Note"

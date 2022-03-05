@@ -4,7 +4,7 @@ function useSelectInput() {
     const [value, setValue] = useState({ id: '', amount: '' })
 
     const setValueByClick = data => {
-        setValue({ ...data, img: '' })
+        setValue({ ...data, amount: '' })
     }
 
     const handleSelectChange = (fieldToChange, e) => {

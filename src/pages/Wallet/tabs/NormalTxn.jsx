@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import FormControl from '../../../components/FormControl/FormControl'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 import scannerIcon from '../../../assets/icons/scanner.svg'
-import { Label, TransactionFee, ButtonContainer } from '../wallet'
+import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
 import useFormControl from '../../../Hooks/FormControl'
@@ -12,6 +12,10 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
+import { ThreeDots } from 'react-loader-spinner'
+import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
+import { checkAlgorandAddressIsValid } from '../../../app/algorand/algorandSlice'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
@@ -30,7 +34,7 @@ function NormalTxn() {
         if (addedTxns.length === 0) return
 
         const txns = [...addedTxns]
-        txns.splice(addedTxns.length - 1, 1)
+        txns.splice((addedTxns.length - 1), 1)
         setAddedTxns(txns)
     }
 
@@ -42,8 +46,8 @@ function NormalTxn() {
 
     const [addressToSetByScan, setAddressToSetByScan] = useState(null)
 
-    const openScanner = (address) => {
-        setAddressToSetByScan(address)
+    const openScanner = (i) => {
+        setAddressToSetByScan(i)
         setDisplayScanner(true)
     }
 
@@ -63,13 +67,15 @@ function NormalTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
+    const { status: recipientAddressStatus, data } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientAddressValue }, checkAlgorandAddressIsValid)
+
 
     return (
         <Fragment>
             <SelectInput
                 label="Amount"
                 value={assetValue.amount}
-                selectedItem={assetValue}
+                asset={assetValue}
                 handleChange={(e) => handleAmountSelectChange('amount', e)}
                 handleItemClick={setAssetValueByClick}
             />
@@ -82,7 +88,8 @@ function NormalTxn() {
                 center
                 handleIconClick={() => openScanner('main')}
             />
-            
+            { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+            { recipientAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
             {
                 addedTxns.map((txn, i) => (
                     <Fragment key={i}>

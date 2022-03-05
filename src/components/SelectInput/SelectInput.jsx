@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 import questionMarkImg from '../../assets/icons/questionMark.jpg'
 
-function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, selectedItem }) {
+function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset }) {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
@@ -31,14 +31,14 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
 
     return (
         <Grid item xs={half ? 6 : 12}>
-            <ClickAwayListener onClickAway={handleClickAway}>
-                <Styles.Root exchange={exchange}>
-                    <label>{label}</label>
+            <Styles.Root exchange={exchange}>
+                <label>{label}</label>
+                <ClickAwayListener onClickAway={handleClickAway}>
                     <div className="container">
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
-                                <img src={selectedItem?.img ? selectedItem?.img : algorandLogo} alt="" />
-                                <span>{selectedItem?.name || 'ALGO'}</span>
+                                <img src={asset?.img ? asset?.img : algorandLogo} alt="" />
+                                <span>{asset?.name || 'ALGO'}</span>
                             </div>
                             <KeyboardArrowDownIcon />
                         </div>
@@ -50,52 +50,52 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                             />
                         </div>
                     </div>
+                </ClickAwayListener>
 
-                    <Styles.DropdownContainer show={open}>
-                        {
-                            status === HTTP_STATUS.PENDING ? (
+                <Styles.DropdownContainer show={open}>
+                    {
+                        status === HTTP_STATUS.PENDING ? (
+                            <Styles.LoaderContainer>
+                                <ThreeDots
+                                    height="15"
+                                    width="100"
+                                    color='gray'
+                                    ariaLabel='loading'
+                                />
+                            </Styles.LoaderContainer>
+                        ) : (
+                            (data?.assets?.length > 0)
+                                ?
+                                data?.assets?.map(asset => (
+                                    <Styles.DropdownItem key={asset.id} onClick={() => handleItemClick(asset)}>
+                                        <div className="left">
+                                            <div className="leftTop">
+                                                <img src={asset.img || questionMarkImg} alt="" />
+                                                <span>{asset.name}</span>
+                                            </div>
+                                            <div className="leftBottom">
+                                                <span>ALGO</span>
+                                            </div>
+                                        </div>
+                                        <div className="right">
+                                            <div className="rightTop">
+                                                <span>{asset.amount}</span>
+                                            </div>
+                                            <div className="rightBottom">
+                                                <span>Asset ID:</span>
+                                                <span>{asset.id}</span>
+                                            </div>
+                                        </div>
+                                    </Styles.DropdownItem>
+                                ))
+                                :
                                 <Styles.LoaderContainer>
-                                    <ThreeDots
-                                        height="15"
-                                        width="100"
-                                        color='gray'
-                                        ariaLabel='loading'
-                                    />
+                                    <span>No assets found</span>
                                 </Styles.LoaderContainer>
-                            ) : (
-                                (data?.assets?.length > 0)
-                                    ?
-                                    data?.assets?.map(asset => (
-                                        <Styles.DropdownItem key={asset.id} onClick={() => handleItemClick(asset)}>
-                                            <div className="left">
-                                                <div className="leftTop">
-                                                    <img src={asset.img || questionMarkImg} alt="" />
-                                                    <span>{asset.name}</span>
-                                                </div>
-                                                <div className="leftBottom">
-                                                    <span>ALGO</span>
-                                                </div>
-                                            </div>
-                                            <div className="right">
-                                                <div className="rightTop">
-                                                    <span>{asset.amount}</span>
-                                                </div>
-                                                <div className="rightBottom">
-                                                    <span>Asset ID:</span>
-                                                    <span>{asset.id}</span>
-                                                </div>
-                                            </div>
-                                        </Styles.DropdownItem>
-                                    ))
-                                    :
-                                    <Styles.LoaderContainer>
-                                        <span>No assets found</span>
-                                    </Styles.LoaderContainer>
-                            )
-                        }
-                    </Styles.DropdownContainer>
-                </Styles.Root>
-            </ClickAwayListener>
+                        )
+                    }
+                </Styles.DropdownContainer>
+            </Styles.Root>
         </Grid>
     )
 }

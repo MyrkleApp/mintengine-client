@@ -30,7 +30,7 @@ function OptOut({ handleModalClose, handleResponse }) {
             <SelectInput
                 label="Asset"
                 value={assetValue.id}
-                selectedItem={assetValue}
+                asset={assetValue}
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
             />

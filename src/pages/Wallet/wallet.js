@@ -86,3 +86,16 @@ export const IconButton = styled.button`
     cursor: pointer;
     margin: 20px 20px 20px 0;
 `
+
+export const LoaderContainer = styled.div`
+    width: 100%;
+    & svg {
+        margin: -30px auto -30px auto;
+    }
+`
+
+export const ErrorMessage = styled.p`
+    width: 100%; 
+    margin-top: 0; 
+    color: red;
+`
