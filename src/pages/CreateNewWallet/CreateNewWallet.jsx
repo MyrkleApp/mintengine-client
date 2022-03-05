@@ -12,7 +12,7 @@ import { ALGO, XRP } from '../../constants/network'
 function CreateNewWallet() {
     const { wallet } = useParams()
     const history = useHistory()
-    const passPhrase = useSelector(state => state.algorand.passphrase).split(" ")
+    const passphrase = useSelector(state => state.algorand.passphrase)
 
     const handleClick = () => {
         if (wallet === ALGO) {
@@ -38,7 +38,7 @@ function CreateNewWallet() {
                         wallet === ALGO 
                         ?   <Styles.WordsBox>
                             {
-                                passPhrase?.map((item, i) => (
+                                passphrase?.split(" ")?.map((item, i) => (
                                     <Styles.Word key={i}>
                                         { `${i + 1}. ${item}` }
                                     </Styles.Word>
@@ -51,7 +51,7 @@ function CreateNewWallet() {
                     }
                     
                     <Styles.ButtonsContainer>
-                        <CopyButtonWithTooltip textToCopy={passPhrase} text="copy" />       
+                        <CopyButtonWithTooltip textToCopy={passphrase} text="copy" />       
                         <Button fullWidth onClick={handleClick}>
                         {
                             wallet === ALGO

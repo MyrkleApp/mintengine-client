@@ -43,6 +43,21 @@ function VerifyWallet() {
         })
     }
 
+    const handlePastePassphrase = () => {
+        if (!navigator.clipboard.readText) return
+
+        navigator.clipboard.readText().then(text => {
+            const copiedTextToArray = text.split(" ")
+            setMissingWords({
+                num3: copiedTextToArray[2] || '', 
+                num5: copiedTextToArray[4] || '', 
+                num12: copiedTextToArray[11] || '', 
+                num15: copiedTextToArray[14] || '', 
+                num24: copiedTextToArray[23] || ''
+            })
+        })
+    }
+
     const handleModalToDefault = () => {
         handleModalClose()
         handleModalStatus(DEFAULT)
@@ -160,7 +175,10 @@ function VerifyWallet() {
                         </Styles.Word>
                     </Styles.WordsBox>
                     
-                    <Styles.ButtonsContainer>      
+                    <Styles.ButtonsContainer>   
+                        <CopyButton outlined onClick={handlePastePassphrase}>
+                            paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
+                        </CopyButton>   
                         <Button 
                             fullWidth 
                             disabled={!formIsValid} 

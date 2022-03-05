@@ -1,4 +1,9 @@
-/* hide pen icon on mui calender to prevent error */
+/* hide pen icon on mui date and time picker to prevent error */
+
 .css-ctu4nj .PrivateDatePickerToolbar-penIcon {
     display: none; 
+}
+
+.css-171rwdv-MuiGrid-root .css-zylse7-MuiButtonBase-root-MuiIconButton-root {
+    display: none;
 }
