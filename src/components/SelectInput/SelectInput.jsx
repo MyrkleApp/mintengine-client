@@ -37,7 +37,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                     <div className="container">
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
-                                <img src={asset?.img ? asset?.img : algorandLogo} alt="" />
+                                <img src={!asset?.id ? algorandLogo : (asset?.image === "null" ? questionMarkImg : asset?.image)} alt="" />
                                 <span>{asset?.name || 'ALGO'}</span>
                             </div>
                             <KeyboardArrowDownIcon />

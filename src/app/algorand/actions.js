@@ -90,34 +90,6 @@ export const createAlgorandCommonNftRejected = (state, { payload }) => {
     state.commonNft.error = payload
 }
 
-export const createAlgorandTokenPending = (state) => {
-    state.token.status = HTTP_STATUS.PENDING
-}
-
-export const createAlgorandTokenFulfilled = (state, { payload }) => {
-    state.token.status = HTTP_STATUS.FULFILLED
-    state.token.data = payload
-}
-
-export const createAlgorandTokenRejected = (state, { payload }) => {
-    state.token.status = HTTP_STATUS.REJECTED
-    state.token.error = payload
-}
-
-export const createCustomAlgorandTokenPending = (state) => {
-    state.customToken.status = HTTP_STATUS.PENDING
-}
-
-export const createCustomAlgorandTokenFulfilled = (state, { payload }) => {
-    state.customToken.status = HTTP_STATUS.FULFILLED
-    state.customToken.data = payload
-}
-
-export const createCustomAlgorandTokenRejected = (state, { payload }) => {
-    state.customToken.status = HTTP_STATUS.REJECTED
-    state.customToken.error = payload
-}
-
 export const destroyAlgorandPending = (state) => {
     state.destroy.status = HTTP_STATUS.PENDING
 }
@@ -130,20 +102,6 @@ export const destroyAlgorandFulfilled = (state, { payload }) => {
 export const destroyAlgorandRejected = (state, { payload }) => {
     state.destroy.status = HTTP_STATUS.REJECTED
     state.destroy.error = payload
-}
-
-export const createAlgorandFractionalNftPending = (state) => {
-    state.fractionalNft.status = HTTP_STATUS.PENDING
-}
-
-export const createAlgorandFractionalNftFulfilled = (state, { payload }) => {
-    state.fractionalNft.status = HTTP_STATUS.FULFILLED
-    state.fractionalNft.data = payload
-}
-
-export const createAlgorandFractionalNftRejected = (state, { payload }) => {
-    state.fractionalNft.status = HTTP_STATUS.REJECTED
-    state.fractionalNft.error = payload
 }
 
 export const freezeAlgorandPending = (state) => {
@@ -270,34 +228,6 @@ export const unfreezeAlgorandFulfilled = (state, { payload }) => {
 export const unfreezeAlgorandRejected = (state, { payload }) => {
     state.unfreeze.status = HTTP_STATUS.REJECTED
     state.unfreeze.error = payload
-}
-
-export const createAlgorandUniqueNftPending = (state) => {
-    state.uniqueNft.status = HTTP_STATUS.PENDING
-}
-
-export const createAlgorandUniqueNftFulfilled = (state, { payload }) => {
-    state.uniqueNft.status = HTTP_STATUS.FULFILLED
-    state.uniqueNft.data = payload
-}
-
-export const createAlgorandUniqueNftRejected = (state, { payload }) => {
-    state.uniqueNft.status = HTTP_STATUS.REJECTED
-    state.uniqueNft.error = payload
-}
-
-export const createAlgorandWeb3TicketPending = (state) => {
-    state.web3Ticket.status = HTTP_STATUS.PENDING
-}
-
-export const createAlgorandWeb3TicketFulfilled = (state, { payload }) => {
-    state.web3Ticket.status = HTTP_STATUS.FULFILLED
-    state.web3Ticket.data = payload
-}
-
-export const createAlgorandWeb3TicketRejected = (state, { payload }) => {
-    state.web3Ticket.status = HTTP_STATUS.REJECTED
-    state.web3Ticket.error = payload
 }
 
 export const getAlgorandTransactionsPending = (state) => {

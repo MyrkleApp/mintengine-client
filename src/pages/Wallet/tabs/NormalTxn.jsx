@@ -19,39 +19,75 @@ import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
 import { sendAlgorand } from '../../../app/algorand/algorandSlice'
+import { Grid } from '@mui/material'
+import useAddressIsValid from '../../../Hooks/AddressIsValid'
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
+
+    const { value: assetTwoValue, handleSelectChange: handleAmountTwoSelectChange } = useSelectInput()
+    const { value: recipientTwoAddressValue, handleChange: handleRecipientTwoAddressChange, handleSetValue: handleSetRecipientTwoAddressValue } = useFormControl()
+
+    const { value: assetThreeValue, handleSelectChange: handleAmountThreeSelectChange } = useSelectInput()
+    const { value: recipientThreeAddressValue, handleChange: handleRecipientThreeAddressChange, handleSetValue: handleSetRecipientThreeAddressValue } = useFormControl()
+
+    const { value: assetFourValue, handleSelectChange: handleAmountFourSelectChange } = useSelectInput()
+    const { value: recipientFourAddressValue, handleChange: handleRecipientFourAddressChange, handleSetValue: handleSetRecipientFourAddressValue } = useFormControl()
+    
+    const { value: assetFiveValue, handleSelectChange: handleAmountFiveSelectChange } = useSelectInput()
+    const { value: recipientFiveAddressValue, handleChange: handleRecipientFiveAddressChange, handleSetValue: handleSetRecipientFiveAddressValue } = useFormControl()
+    
+    const [addedTxns, setAddedTxns] = useState({ two: false, three: false, four: false, five: false })
+
+    const [numOfTxns, setNumOfTxns] = useState(1)
+    
     const passphrase = useSelector(state => state.algorand.passphrase)
     const [displayScanner, setDisplayScanner] = useState(false)
 
-    const [addedTxns, setAddedTxns] = useState([])
+    
 
     const addTxn = () => {
-        if (addedTxns.length === 4) return
+        if (numOfTxns === 1) {
+            setAddedTxns({ two: true, three: false, four: false, five: false })
+            setNumOfTxns(2)
+        } else if (numOfTxns === 2) {
+            setAddedTxns({ two: true, three: true, four: false, five: false })
+            setNumOfTxns(3)
+        } else if (numOfTxns === 3) {
+            setAddedTxns({ two: true, three: true, four: true, five: false })
+            setNumOfTxns(4)
+        } else if (numOfTxns === 4) {
+            setAddedTxns({ two: true, three: true, four: true, five: true })
+            setNumOfTxns(5)
+        } else {
+            return
+        }
 
-        setAddedTxns(prevState => [...prevState, { amount: '', address: '' }])
     }
 
     const removeTxn = () => {
-        if (addedTxns.length === 0) return
-
-        const txns = [...addedTxns]
-        txns.splice((addedTxns.length - 1), 1)
-        setAddedTxns(txns)
-    }
-
-    const handleAddedTxnChange = (index, e, fieldToChange) => {
-        const txns = [...addedTxns]
-        txns[index][fieldToChange] = e.target.value
-        setAddedTxns(txns)
+        if (numOfTxns === 5) {
+            setAddedTxns({ two: true, three: true, four: true, five: false })
+            setNumOfTxns(4)
+        } else if (numOfTxns === 4) {
+            setAddedTxns({ two: true, three: true, four: false, five: false })
+            setNumOfTxns(3)
+        } else if (numOfTxns === 3) {
+            setAddedTxns({ two: true, three: false, four: false, five: false })
+            setNumOfTxns(2)
+        } else if (numOfTxns === 2) {
+            setAddedTxns({ two: false, three: false, four: false, five: false })
+            setNumOfTxns(1)
+        } else {
+            return
+        }
     }
 
     const [addressToSetByScan, setAddressToSetByScan] = useState(null)
 
-    const openScanner = (i) => {
-        setAddressToSetByScan(i)
+    const openScanner = (num) => {
+        setAddressToSetByScan(num)
         setDisplayScanner(true)
     }
 
@@ -67,22 +103,56 @@ function NormalTxn() {
     }
 
     const scanSuccessCallback = (decodedText) => {
-        addressToSetByScan === 'main' ? handleSetRecipientAddressValue(decodedText) : setAddedTxnAddressByScan(decodedText)
+        if (addressToSetByScan === 'main') handleSetRecipientAddressValue(decodedText)
+        else if (addressToSetByScan === 'two') handleSetRecipientTwoAddressValue(decodedText)
+        else if (addressToSetByScan === 'three') handleSetRecipientThreeAddressValue(decodedText)
+        else if (addressToSetByScan === 'four') handleSetRecipientFourAddressValue(decodedText)
+        else if (addressToSetByScan === 'five') handleSetRecipientFiveAddressValue(decodedText)
+
+        // addressToSetByScan === 'main' ? handleSetRecipientAddressValue(decodedText) : setAddedTxnAddressByScan(decodedText)
+
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
     const { status: recipientAddressStatus, data } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientAddressValue }, checkAlgorandAddressIsValid)
+    // const { status: recipientTwoAddressStatus, data: dataTwo } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientTwoAddressValue }, checkAlgorandAddressIsValid)
+    // const { status: recipientThreeAddressStatus, data: dataThree } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientThreeAddressValue }, checkAlgorandAddressIsValid)
+    // const { status: recipientFourAddressStatus, data: dataFour } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientFourAddressValue }, checkAlgorandAddressIsValid)
+    // const { status: recipientFiveAddressStatus, data: dataFive } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientFiveAddressValue }, checkAlgorandAddressIsValid)
+    const { status: recipientTwoAddressStatus, data: dataTwo } = useAddressIsValid(recipientTwoAddressValue)
+    const { status: recipientThreeAddressStatus, data: dataThree } = useAddressIsValid(recipientThreeAddressValue)
+    const { status: recipientFourAddressStatus, data: dataFour } = useAddressIsValid(recipientFourAddressValue)
+    const { status: recipientFiveAddressStatus, data: dataFive } = useAddressIsValid(recipientFiveAddressValue)
+
+    console.log(recipientTwoAddressStatus)
 
     const { handleSubmit } = useSubmit()
 
     const sendAsset = () => {
 
         const formData = new FormData()
-        formData.append('transaction_type', addedTxns.length === 0 ? 'direct' : 'multiple')
+        formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
         formData.append('currency_type', !assetValue.id ? 'algo' : 'asset')
         if (assetValue.id) formData.append('asset_id', assetValue.id) //if currency is an asset
-        if (addedTxns.length === 0) formData.append('receiver_addr', recipientAddressValue)
-        if (addedTxns.length === 0) formData.append('amount', assetValue.amount)
+        if (numOfTxns === 1) formData.append('receiver_addr', recipientAddressValue)
+        if (numOfTxns === 1) formData.append('amount', assetValue.amount)
+
+        let amountsArray = []
+        if (numOfTxns === 2) amountsArray = [assetValue, assetTwoValue]
+        if (numOfTxns === 3) amountsArray = [assetValue, assetTwoValue, assetThreeValue]
+        if (numOfTxns === 4) amountsArray = [assetValue, assetTwoValue, assetThreeValue, assetFourValue]
+        if (numOfTxns === 5) amountsArray = [assetValue, assetTwoValue, assetThreeValue, assetFourValue, assetFiveValue]
+
+        if (numOfTxns > 1) formData.append('amount_array', amountsArray)
+
+        let addressesArray = []
+        if (numOfTxns === 2) addressesArray = [recipientAddressValue, recipientTwoAddressValue]
+        if (numOfTxns === 3) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue]
+        if (numOfTxns === 4) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue]
+        if (numOfTxns === 5) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
+
+        if (numOfTxns > 1) formData.append('address_array', addressesArray)
+
         formData.append('phrase', passphrase)
 
         handleSubmit(sendAlgorand(formData))
@@ -108,32 +178,93 @@ function NormalTxn() {
             />
             { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
             { recipientAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
-            {
-                addedTxns.map((txn, i) => (
-                    <Fragment key={i}>
-                        <SelectWithoutDropdown 
-                            label="Amount"
-                            value={txn.amount}
-                            asset={assetValue}
-                            handleChange={e => handleAddedTxnChange(i, e, 'amount')}
-                        />
-                        <FormControl
-                            label="Recipient Address"
-                            value={txn.address}
-                            handleChange={e => handleAddedTxnChange(i, e, 'address')}
-                            icon={scannerIcon}
-                            type="text"
-                            center
-                            handleIconClick={() => openScanner(i)}
-                        />
-                    </Fragment>
-                ))
-            }
+            
+            <Grid item container style={{ display: addedTxns.two ? 'block' : 'none' }}>
+                <SelectWithoutDropdown 
+                    label="Amount"
+                    value={assetTwoValue.amount}
+                    asset={assetValue}
+                    handleChange={(e) => handleAmountTwoSelectChange('amount', e)}
+                />
+                <FormControl
+                    label="Recipient Address"
+                    value={recipientTwoAddressValue}
+                    handleChange={handleRecipientTwoAddressChange}
+                    icon={scannerIcon}
+                    type="text"
+                    center
+                    handleIconClick={() => openScanner('two')}
+                />
+                { recipientTwoAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                { recipientTwoAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+            </Grid>
 
-            <IconButton onClick={addTxn} style={{ display: addedTxns.length === 4 && 'none' }}>
+            <Grid item container style={{ display: addedTxns.three ? 'block' : 'none' }}>
+                <SelectWithoutDropdown 
+                    label="Amount"
+                    value={assetThreeValue.amount}
+                    asset={assetValue}
+                    handleChange={(e) => handleAmountThreeSelectChange('amount', e)}
+                />
+                <FormControl
+                    label="Recipient Address"
+                    value={recipientThreeAddressValue}
+                    handleChange={handleRecipientThreeAddressChange}
+                    icon={scannerIcon}
+                    type="text"
+                    center
+                    handleIconClick={() => openScanner('three')}
+                />
+                { recipientThreeAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                { recipientThreeAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+            </Grid>
+
+            <Grid item container style={{ display: addedTxns.four ? 'block' : 'none' }}>
+                <SelectWithoutDropdown 
+                    label="Amount"
+                    value={assetFourValue.amount}
+                    asset={assetValue}
+                    handleChange={(e) => handleAmountFourSelectChange('amount', e)}
+                />
+                <FormControl
+                    label="Recipient Address"
+                    value={recipientFourAddressValue}
+                    handleChange={handleRecipientFourAddressChange}
+                    icon={scannerIcon}
+                    type="text"
+                    center
+                    handleIconClick={() => openScanner('four')}
+                />
+                { recipientFourAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                { recipientFourAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+            </Grid>
+
+            <Grid item container style={{ display: addedTxns.five ? 'block' : 'none' }}>
+                <SelectWithoutDropdown 
+                    label="Amount"
+                    value={assetFiveValue.amount}
+                    asset={assetValue}
+                    handleChange={(e) => handleAmountFiveSelectChange('amount', e)}
+                />
+                <FormControl
+                    label="Recipient Address"
+                    value={recipientFiveAddressValue}
+                    handleChange={handleRecipientFiveAddressChange}
+                    icon={scannerIcon}
+                    type="text"
+                    center
+                    handleIconClick={() => openScanner('five')}
+                />
+                { recipientFiveAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                { recipientFiveAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+            </Grid>
+
+
+
+            <IconButton onClick={addTxn} style={{ display: numOfTxns === 5 && 'none' }}>
                 <AddIcon fontSize="large" />
             </IconButton>
-            <IconButton onClick={removeTxn} style={{ display: addedTxns.length === 0 && 'none' }}>
+            <IconButton onClick={removeTxn} style={{ display: numOfTxns === 1 && 'none' }}>
                 <RemoveIcon fontSize="large" />
             </IconButton>
 

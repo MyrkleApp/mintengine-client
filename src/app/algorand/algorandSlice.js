@@ -50,45 +50,9 @@ export const createAlgorandClawback = createAsyncThunk(`${namespace}/createAlgor
   }
 })
 
-export const createAlgorandCommonNft = createAsyncThunk(`${namespace}/createAlgorandCommonNft`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post(`/algorand/v1/common_nft/`, objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
-export const createAlgorandToken = createAsyncThunk(`${namespace}/createAlgorandToken`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post(`/algorand/v1/create_asset/`, objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
-export const createCustomAlgorandToken = createAsyncThunk(`${namespace}/createCustomAlgorandToken`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post(`/algorand/v1/custom_asset/`, objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
 export const destroyAlgorand = createAsyncThunk(`${namespace}/destroyAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/algorand/v1/destroy/`, objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
-export const createAlgorandFractionalNft = createAsyncThunk(`${namespace}/createAlgorandFractionalNft`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post(`/algorand/v1/fractional_nft/`, objData)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -176,24 +140,6 @@ export const unfreezeAlgorand = createAsyncThunk(`${namespace}/unfreezeAlgorand`
   }
 })
 
-export const createAlgorandUniqueNft = createAsyncThunk(`${namespace}/createAlgorandUniqueNft`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post('/algorand/v1/unique_nft/', objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
-export const createAlgorandWeb3Ticket = createAsyncThunk(`${namespace}/createAlgorandWeb3Ticket`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post('/algorand/v1/we3ticket/', objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
 export const getAlgorandTransactions = createAsyncThunk(`${namespace}/getAlgorandTransactions`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.get('/algorand/v1/transactions/')
@@ -262,11 +208,7 @@ const algorandSlice = createSlice({
     activeWallet: DEFAULT,
     allWallets: DEFAULT,
     clawback: DEFAULT,
-    commonNft: DEFAULT,
-    token: DEFAULT,
-    customToken: DEFAULT,
     destroy: DEFAULT,
-    fractionalNft: DEFAULT,
     freeze: DEFAULT,
     holdings: DEFAULT,
     modify: DEFAULT,
@@ -276,15 +218,12 @@ const algorandSlice = createSlice({
     send: DEFAULT,
     swap: DEFAULT,
     unfreeze: DEFAULT,
-    uniqueNft: DEFAULT,
-    web3Ticket: DEFAULT,
     transactions: DEFAULT,
     assetIsValid: DEFAULT,
     addressIsValid: DEFAULT,
     canClawbackAsset: DEFAULT,
     canDeleteAsset: DEFAULT,
     createAsset: DEFAULT,
-
   },
   reducers: {
     incorrectPassphraseError(state, action) {
@@ -320,25 +259,9 @@ const algorandSlice = createSlice({
     [createAlgorandClawback.fulfilled]: actions.createAlgorandClawbackFulfilled,
     [createAlgorandClawback.rejected]: actions.createAlgorandClawbackRejected,
 
-    [createAlgorandCommonNft.pending]: actions.createAlgorandCommonNftPending,
-    [createAlgorandCommonNft.fulfilled]: actions.createAlgorandCommonNftFulfilled,
-    [createAlgorandCommonNft.rejected]: actions.createAlgorandCommonNftRejected,
-
-    [createAlgorandToken.pending]: actions.createAlgorandTokenPending,
-    [createAlgorandToken.fulfilled]: actions.createAlgorandTokenFulfilled,
-    [createAlgorandToken.rejected]: actions.createAlgorandTokenRejected,
-
-    [createCustomAlgorandToken.pending]: actions.createCustomAlgorandTokenPending,
-    [createCustomAlgorandToken.fulfilled]: actions.createCustomAlgorandTokenFulfilled,
-    [createCustomAlgorandToken.rejected]: actions.createCustomAlgorandTokenRejected,
-
     [destroyAlgorand.pending]: actions.destroyAlgorandPending,
     [destroyAlgorand.fulfilled]: actions.destroyAlgorandFulfilled,
     [destroyAlgorand.rejected]: actions.destroyAlgorandRejected,
-
-    [createAlgorandFractionalNft.pending]: actions.createAlgorandFractionalNftPending,
-    [createAlgorandFractionalNft.fulfilled]: actions.createAlgorandFractionalNftFulfilled,
-    [createAlgorandFractionalNft.rejected]: actions.createAlgorandFractionalNftRejected,
 
     [freezeAlgorand.pending]: actions.freezeAlgorandPending,
     [freezeAlgorand.fulfilled]: actions.freezeAlgorandFulfilled,
@@ -375,14 +298,6 @@ const algorandSlice = createSlice({
     [unfreezeAlgorand.pending]: actions.unfreezeAlgorandPending,
     [unfreezeAlgorand.fulfilled]: actions.unfreezeAlgorandFulfilled,
     [unfreezeAlgorand.rejected]: actions.unfreezeAlgorandRejected,
-
-    [createAlgorandUniqueNft.pending]: actions.createAlgorandUniqueNftPending,
-    [createAlgorandUniqueNft.fulfilled]: actions.createAlgorandUniqueNftFulfilled,
-    [createAlgorandUniqueNft.rejected]: actions.createAlgorandUniqueNftRejected,
-
-    [createAlgorandWeb3Ticket.pending]: actions.createAlgorandWeb3TicketPending,
-    [createAlgorandWeb3Ticket.fulfilled]: actions.createAlgorandWeb3TicketFulfilled,
-    [createAlgorandWeb3Ticket.rejected]: actions.createAlgorandWeb3TicketRejected,
 
     [getAlgorandTransactions.pending]: actions.getAlgorandTransactionsPending,
     [getAlgorandTransactions.fulfilled]: actions.getAlgorandTransactionsFulfilled,
