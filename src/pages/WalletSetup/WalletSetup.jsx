@@ -44,7 +44,10 @@ function WalletSetup() {
             <WalletWrapper
                 title="WALLET SETUP"
                 description="Setup a wallet on one blockchain and you can set up the other in the profile section."
-                link={ pathname === '/create-wallet' ? '/wallet-setup' : '' }
+                /**
+                 *!!!!!!! REMOVE ARROW BACK ICON FOR WHEN THER IS NO USER !!!!!!
+                 */
+                link={ pathname === '/create-wallet' ? '/wallet-setup' : '/settings' }
             >
             {
                 pathname === '/wallet-setup' &&

@@ -369,3 +369,20 @@ export const checkCanDestroyAlgorandAssetRejected = (state, { payload }) => {
     state.canDestroyAsset.status = HTTP_STATUS.REJECTED
     state.canDestroyAsset.error = payload
 }
+
+export const createAlgorandAssetPending = (state) => {
+    state.createAsset.status = HTTP_STATUS.PENDING
+}
+
+export const createAlgorandAssetFulfilled = (state, { payload }) => {
+    state.createAsset.status = HTTP_STATUS.FULFILLED
+    state.createAsset.data = payload
+
+    const oldAssets = state.holdings.data.assets
+    state.holdings.data.assets = [...oldAssets, payload]
+}
+
+export const createAlgorandAssetRejected = (state, { payload }) => {
+    state.createAsset.status = HTTP_STATUS.REJECTED
+    state.createAsset.error = payload
+}

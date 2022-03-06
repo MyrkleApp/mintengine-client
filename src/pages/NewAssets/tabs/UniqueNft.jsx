@@ -9,9 +9,8 @@ import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
-import { createAlgorandUniqueNft } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 import useModal from '../../../Hooks/Modal'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { Fragment } from 'react'
@@ -19,14 +18,15 @@ import { useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function UniqueNft() {
-    const { value: nftNameValue, handleChange: handleNftNameChange } = useFormControl()
+    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: nftUrlValue, handleChange: handleNftUrlChange } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        nftNameValue, unitValue, nftUrlValue
+        assetNameValue, unitValue, assetUrlValue
     )
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const hiddenInputRef = useRef();
@@ -39,16 +39,17 @@ function UniqueNft() {
 
     const handleUniqueNf = () => {
         const formData = new FormData()
-        formData.append('name', nftNameValue)
+        formData.append('asset_type', 'unique_nft')
+        formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
-        formData.append('asset_url', nftUrlValue)
+        formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('phrase', passphrase)
 
-        handleSubmit(createAlgorandUniqueNft(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
     }
 
-    const { status } = useSelector(state => state.algorand.uniqueNft)
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -67,8 +68,8 @@ function UniqueNft() {
                             <FormControl 
                                 label="NFT Name"
                                 type="text"
-                                value={nftNameValue}
-                                handleChange={handleNftNameChange}
+                                value={assetNameValue}
+                                handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -89,8 +90,8 @@ function UniqueNft() {
                             <FormControl 
                                 label="NFT URL"
                                 type="text"
-                                value={nftUrlValue}
-                                handleChange={handleNftUrlChange}
+                                value={assetUrlValue}
+                                handleChange={handleAssetUrlChange}
                             />
                             <FormControl 
                                 textArea

@@ -56,6 +56,7 @@ function Dashboard() {
                                             tabs={tabs}
                                             tabValue={tabValue}
                                             handleTabChange={handleTabChange}
+                                            center
                                         />
                                     </div>
                                 )

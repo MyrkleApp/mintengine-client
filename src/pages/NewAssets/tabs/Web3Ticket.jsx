@@ -7,25 +7,25 @@ import imageFrame from '../../../assets/icons/imageFrame.png'
 import useFormControl from '../../../Hooks/FormControl'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
-import { createAlgorandWeb3Ticket } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import useModal from '../../../Hooks/Modal'
 import useSubmit from '../../../Hooks/Submit'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 
 function Web3Ticket() {
-    const { value: nameValue, handleChange: handleNameChange } = useFormControl()
+    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        nameValue, assetUrlValue, totalSupplyValue
+        assetNameValue, assetUrlValue, totalSupplyValue
     )
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const hiddenInputRef = useRef()
@@ -38,17 +38,18 @@ function Web3Ticket() {
 
     const handleWeb3Ticket = () => {
         const formData = new FormData()
-        formData.append('name', nameValue)
+        formData.append('asset_type', 'web3ticket')
+        formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('total_supply', totalSupplyValue)
         formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandWeb3Ticket(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
     }
 
-    const { status } = useSelector(state => state.algorand.web3Ticket)
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -67,8 +68,8 @@ function Web3Ticket() {
                             <FormControl 
                                 label="Name"
                                 type="text"
-                                value={nameValue}
-                                handleChange={handleNameChange}
+                                value={assetNameValue}
+                                handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />

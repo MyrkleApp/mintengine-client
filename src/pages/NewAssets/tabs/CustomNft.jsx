@@ -12,7 +12,7 @@ import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
-import { createCustomAlgorandToken } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
@@ -22,7 +22,7 @@ import useFormControlRadio from '../../../Hooks/FormControlRadio'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CustomNft() {
-    const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
+    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
     const { value: decimalValue, handleChange: handleDecimalChange, handleSetValue: setDecimalValueByClick } = useFormControl()
@@ -36,8 +36,9 @@ function CustomNft() {
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue, managerAddressValue, freezeAddressValue, defaultFrozenValue, reserveAddressValue, clawbackAddressValue
+        assetNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue, managerAddressValue, freezeAddressValue, defaultFrozenValue, reserveAddressValue, clawbackAddressValue
     )
+    const passphrase = useSelector(state => state.algorand.passphrase)
 
     const { handleSubmit } = useSubmit()
 
@@ -51,7 +52,8 @@ function CustomNft() {
 
     const handleCustomNft = () => {
         const formData = new FormData()
-        formData.append('asset_name', tokenNameValue)
+        formData.append('asset_type', 'custom_asset')
+        formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
         formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
@@ -64,12 +66,12 @@ function CustomNft() {
         formData.append('reserve_addr', reserveAddressValue)
         formData.append('clawback_addr', clawbackAddressValue)
         formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('phrase', passphrase)
 
-        handleSubmit(createCustomAlgorandToken(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
     }
 
-    const { status } = useSelector(state => state.algorand.uniqueNft)
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -89,8 +91,8 @@ function CustomNft() {
                             <FormControl 
                                 label="Token Name"
                                 type="text"
-                                value={tokenNameValue}
-                                handleChange={handleTokenNameChange}
+                                value={assetNameValue}
+                                handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />

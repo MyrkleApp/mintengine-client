@@ -13,7 +13,7 @@ export const theme = createTheme({
     },
 });
   
-export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChange }) {
+export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChange, center }) {
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,7 +40,8 @@ export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChan
                         color: tabValue !== item && '#879C93',
                         fontWeight: 600,
                         fontSize: '17px',
-                        textTransform: 'none'
+                        textTransform: 'none',
+                        margin: center && '0 auto'
                       }}
                     />
                 ))

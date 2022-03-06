@@ -239,6 +239,15 @@ export const checkCanDestroyAlgorandAsset = createAsyncThunk(`${namespace}/check
   }
 })
 
+export const createAlgorandAsset = createAsyncThunk(`${namespace}/createAlgorandAsset`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/general_asset/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -274,6 +283,7 @@ const algorandSlice = createSlice({
     addressIsValid: DEFAULT,
     canClawbackAsset: DEFAULT,
     canDeleteAsset: DEFAULT,
+    createAsset: DEFAULT,
 
   },
   reducers: {
@@ -393,6 +403,10 @@ const algorandSlice = createSlice({
     [checkCanDestroyAlgorandAsset.pending]: actions.checkCanDestroyAlgorandAssetPending,
     [checkCanDestroyAlgorandAsset.fulfilled]: actions.checkCanDestroyAlgorandAssetFulfilled,
     [checkCanDestroyAlgorandAsset.rejected]: actions.checkCanDestroyAlgorandAssetRejected,
+
+    [createAlgorandAsset.pending]: actions.createAlgorandAssetPending,
+    [createAlgorandAsset.fulfilled]: actions.createAlgorandAssetFulfilled,
+    [createAlgorandAsset.rejected]: actions.createAlgorandAssetRejected,
   }
 })
 

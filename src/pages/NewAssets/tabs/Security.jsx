@@ -12,22 +12,23 @@ import useModal from '../../../Hooks/Modal'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 
 function Security() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
+    const { value: assetName, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: nftUrlValue, handleChange: handleNftUrlChange } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
-        assetNameValue, unitValue, totalSupplyValue, decimalValue, nftUrlValue, metadataHashValue
+        assetName, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue
     )
     const { handleSubmit } = useSubmit()
 
@@ -41,20 +42,20 @@ function Security() {
 
     const handleSecurityToken = () => {
         const formData = new FormData()
-        // formData.append('nft_name', nftNameValue)
-        // formData.append('image', imageValue)
-        // formData.append('unit', unitValue)
-        // formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
-        // formData.append('decimal', decimalValue)
-        // formData.append('nft_url', nftUrlValue)
-        // formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('asset_type', 'security')
+        formData.append('asset_name', assetName)
+        formData.append('image', imageValue)
+        formData.append('unit', unitValue)
+        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
+        formData.append('decimal', decimalValue)
+        formData.append('asset_url', assetUrlValue)
+        formData.append('note', noteValue)
+        formData.append('phrase', passphrase)
         
-        // handleSubmit(createAlgorandSecurityToken(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
     }
 
-    // const { status } = useSelector(state => state.algorand.securityToken)
-    const status = null;
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -73,7 +74,7 @@ function Security() {
                             <FormControl 
                                 label="Asset Name"
                                 type="text"
-                                value={assetNameValue}
+                                value={assetName}
                                 handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
@@ -113,8 +114,8 @@ function Security() {
                             <FormControl 
                                 label="NFT URL"
                                 type="text"
-                                value={nftUrlValue}
-                                handleChange={handleNftUrlChange}
+                                value={assetUrlValue}
+                                handleChange={handleAssetUrlChange}
                             />
                             <FormControl 
                                 label="Metadata Hash"

@@ -6,7 +6,7 @@ import * as SharedStyles from '../../../components/UI/DashboardShared/dashboardS
 import imageFrame from '../../../assets/icons/imageFrame.png'
 import useFormControl from '../../../Hooks/FormControl'
 import useImageHandle from '../../../Hooks/ImageHandle'
-import { createAlgorandFractionalNft } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
@@ -19,16 +19,17 @@ import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function FractionalNft() {
-    const { value: nftNameValue, handleChange: handleNftNameChange } = useFormControl()
+    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: nftUrlValue, handleChange: handleNftUrlChange } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
-        nftNameValue, unitValue, totalSupplyValue, decimalValue, nftUrlValue
+        assetNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
     )
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const hiddenInputRef = useRef()
@@ -41,19 +42,20 @@ function FractionalNft() {
 
     const handleFractionalNft = () => {
         const formData = new FormData()
-        formData.append('nft_name', nftNameValue)
+        formData.append('asset_type', 'fractional_nft')
+        formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
         formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
         formData.append('decimal', decimalValue)
-        formData.append('nft_url', nftUrlValue)
+        formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
-        formData.append('phrase', MY_ALGORAND_PASSPHRASE_STRING)
+        formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandFractionalNft(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
     }
 
-    const { status } = useSelector(state => state.algorand.fractionalNft)
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -72,8 +74,8 @@ function FractionalNft() {
                             <FormControl 
                                 label="NFT Name"
                                 type="text"
-                                value={nftNameValue}
-                                handleChange={handleNftNameChange}
+                                value={assetNameValue}
+                                handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -123,8 +125,8 @@ function FractionalNft() {
                             <FormControl 
                                 label="NFT URL"
                                 type="text"
-                                value={nftUrlValue}
-                                handleChange={handleNftUrlChange}
+                                value={assetUrlValue}
+                                handleChange={handleAssetUrlChange}
                             />
                             <FormControl 
                                 textArea

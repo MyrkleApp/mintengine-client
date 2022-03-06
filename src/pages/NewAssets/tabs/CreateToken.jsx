@@ -9,7 +9,7 @@ import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { createAlgorandToken } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 import Modal from '../../../components/UI/Modal/Modal'
 import useModal from '../../../Hooks/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CreateToken() {
-    const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
+    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
@@ -27,7 +27,7 @@ function CreateToken() {
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
-        tokenNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
+        assetNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
     )
     const { handleSubmit } = useSubmit()
 
@@ -41,7 +41,8 @@ function CreateToken() {
 
     const handleCreateToken = () => {
         const formData = new FormData()
-        formData.append('asset_name', tokenNameValue)
+        formData.append('asset_type', 'token')
+        formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
         formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
@@ -50,7 +51,7 @@ function CreateToken() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandToken(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
 
 
         // for (let pair of formData.entries()) {
@@ -58,7 +59,7 @@ function CreateToken() {
         // }
     }
 
-    const { status } = useSelector(state => state.algorand.token)
+    const { status } = useSelector(state => state.algorand.createAsset)
     const success = status === HTTP_STATUS.FULFILLED
 
 
@@ -78,8 +79,8 @@ function CreateToken() {
                             <FormControl 
                                 type="text"
                                 label="Token Name"
-                                value={tokenNameValue}
-                                handleChange={handleTokenNameChange}
+                                value={assetNameValue}
+                                handleChange={handleAssetNameChange}
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
