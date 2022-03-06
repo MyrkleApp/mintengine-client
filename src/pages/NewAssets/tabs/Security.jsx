@@ -15,12 +15,13 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
+import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function Security() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
-    const { value: decimalValue, handleChange: handleDecimalChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: nftUrlValue, handleChange: handleNftUrlChange } = useFormControl()
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -43,7 +44,7 @@ function Security() {
         // formData.append('nft_name', nftNameValue)
         // formData.append('image', imageValue)
         // formData.append('unit', unitValue)
-        // formData.append('total_supply', totalSupplyValue)
+        // formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
         // formData.append('decimal', decimalValue)
         // formData.append('nft_url', nftUrlValue)
         // formData.append('note', noteValue)
@@ -91,18 +92,24 @@ function Security() {
                                 value={unitValue}
                                 handleChange={handleUnitChange}
                             />
-                            <FormControl 
-                                label="Total Suppy"
-                                type="text"
-                                value={totalSupplyValue}
-                                handleChange={handleTotalSupplyChange}
-                            />
-                            <FormControl 
-                                label="Decimal"
-                                type="text"
-                                value={decimalValue}
-                                handleChange={handleDecimalChange}
-                            />
+                            <Grid item container xs={12} columnSpacing={2}>
+                                <Grid item xs={9}>
+                                    <FormControl 
+                                        type="text"
+                                        label="Total Supply"
+                                        value={totalSupplyValue}
+                                        handleChange={handleTotalSupplyChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={3} style={{ position: 'relative' }}>
+                                    <DecimalDropdown 
+                                        value={decimalValue}
+                                        handleClick={setDecimalValueByClick}
+                                        totalSupplyValue={totalSupplyValue}
+                                        setTotalSupplyValue={handleSetTotalSupplyValue}
+                                    />
+                                </Grid>
+                            </Grid>
                             <FormControl 
                                 label="NFT URL"
                                 type="text"

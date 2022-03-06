@@ -16,10 +16,14 @@ import { ThreeDots } from 'react-loader-spinner'
 import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
 import { checkAlgorandAddressIsValid } from '../../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { useSelector } from 'react-redux'
+import useSubmit from '../../../Hooks/Submit'
+import { sendAlgorand } from '../../../app/algorand/algorandSlice'
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
+    const passphrase = useSelector(state => state.algorand.passphrase)
     const [displayScanner, setDisplayScanner] = useState(false)
 
     const [addedTxns, setAddedTxns] = useState([])
@@ -69,6 +73,20 @@ function NormalTxn() {
 
     const { status: recipientAddressStatus, data } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientAddressValue }, checkAlgorandAddressIsValid)
 
+    const { handleSubmit } = useSubmit()
+
+    const sendAsset = () => {
+
+        const formData = new FormData()
+        formData.append('transaction_type', addedTxns.length === 0 ? 'direct' : 'multiple')
+        formData.append('currency_type', !assetValue.id ? 'algo' : 'asset')
+        if (assetValue.id) formData.append('asset_id', assetValue.id) //if currency is an asset
+        if (addedTxns.length === 0) formData.append('receiver_addr', recipientAddressValue)
+        if (addedTxns.length === 0) formData.append('amount', assetValue.amount)
+        formData.append('phrase', passphrase)
+
+        handleSubmit(sendAlgorand(formData))
+    }
 
     return (
         <Fragment>
@@ -127,7 +145,7 @@ function NormalTxn() {
             </TransactionFee>
 
             <ButtonContainer>
-                <Button fullWidth disabled>send asset</Button>
+                <Button fullWidth onClick={sendAsset}>send asset</Button>
             </ButtonContainer>
 
             {

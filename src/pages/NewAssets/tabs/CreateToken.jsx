@@ -20,8 +20,8 @@ import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown
 function CreateToken() {
     const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
-    const { value: decimalValue, handleChange: handleDecimalChange, handleSetValue: setDecimalValueByClick } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
@@ -44,7 +44,7 @@ function CreateToken() {
         formData.append('asset_name', tokenNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', totalSupplyValue)
+        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
@@ -109,8 +109,9 @@ function CreateToken() {
                                 <Grid item xs={3} style={{ position: 'relative' }}>
                                     <DecimalDropdown 
                                         value={decimalValue}
-                                        handleChange={handleDecimalChange}
                                         handleClick={setDecimalValueByClick}
+                                        totalSupplyValue={totalSupplyValue}
+                                        setTotalSupplyValue={handleSetTotalSupplyValue}
                                     />
                                 </Grid>
                             </Grid>

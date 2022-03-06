@@ -28,6 +28,17 @@ function ImportWallet() {
     const { encryptString } = useEncrypt()
     const { handleSubmit } = useSubmit()
 
+    const handlePastePassphrase = () => {
+        if (!navigator.clipboard.readText) return
+
+        navigator.clipboard.readText().then(text => {
+            const copiedTextToArray = text.trim().split(" ")
+            setMissingWords(copiedTextToArray)
+        })
+    }
+
+    console.log(Array(25).fill('word').join(" "))
+
     const handleChange = (e, i) => {
         const values = [...missingWords]
         values[i] = e.target.value
@@ -94,7 +105,10 @@ function ImportWallet() {
                     }
                     </Styles.WordsBox>
                 
-                    <Styles.ButtonsContainer>     
+                    <Styles.ButtonsContainer>
+                        <CopyButton outlined onClick={handlePastePassphrase}>
+                            paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
+                        </CopyButton>     
                         <Button fullWidth disabled={!formIsValid} onClick={showDisclaimerModal}>verify my backup</Button>
                     </Styles.ButtonsContainer>
 

@@ -19,12 +19,13 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { Fragment } from 'react'
 import FormControlRadio from '../../../components/FormControl/FormControlRadio'
 import useFormControlRadio from '../../../Hooks/FormControlRadio'
+import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CustomNft() {
     const { value: tokenNameValue, handleChange: handleTokenNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
-    const { value: decimalValue, handleChange: handleDecimalChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: decimalValue, handleChange: handleDecimalChange, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
@@ -53,7 +54,7 @@ function CustomNft() {
         formData.append('asset_name', tokenNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', totalSupplyValue)
+        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('metadata_hash', metadataHashValue)
@@ -107,18 +108,25 @@ function CustomNft() {
                                 value={unitValue}
                                 handleChange={handleUnitChange}
                             />
-                            <FormControl 
-                                label="Total Suppy"
-                                type="text"
-                                value={totalSupplyValue}
-                                handleChange={handleTotalSupplyChange}
-                            />
-                            <FormControl 
-                                label="Decimal"
-                                type="text"
-                                value={decimalValue}
-                                handleChange={handleDecimalChange}
-                            />
+                            <Grid item container xs={12} columnSpacing={2}>
+                                <Grid item xs={9}>
+                                    <FormControl 
+                                        type="text"
+                                        label="Total Supply"
+                                        value={totalSupplyValue}
+                                        handleChange={handleTotalSupplyChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={3} style={{ position: 'relative' }}>
+                                    <DecimalDropdown 
+                                        value={decimalValue}
+                                        handleChange={handleDecimalChange}
+                                        handleClick={setDecimalValueByClick}
+                                        totalSupplyValue={totalSupplyValue}
+                                        setTotalSupplyValue={handleSetTotalSupplyValue}
+                                    />
+                                </Grid>
+                            </Grid>
                             <FormControl 
                                 label="Asset URL"
                                 type="text"

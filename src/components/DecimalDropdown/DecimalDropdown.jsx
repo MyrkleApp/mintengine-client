@@ -1,14 +1,23 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import * as Styles from './decimalDropdown'
 import FormControl from '../FormControl/FormControl'
 import ClickAwayListener from 'react-click-away-listener';
 
-function DecimalDropdown({ value, handleClick }) {
+
+function DecimalDropdown({ value, handleClick, totalSupplyValue, setTotalSupplyValue }) {
     const [displayDropdown, setDisplayDropdown] = useState(false)
 
     const handleDecimalInputClick = () => {
         setDisplayDropdown(prevState => !prevState)
     }
+
+    const handleDecimalDropdownClick = (i) => {
+        if (!totalSupplyValue) return
+
+        handleClick(i + 1)
+    }
+
+    useEffect(() => setTotalSupplyValue((totalSupplyValue/Math.pow(10, value)).toFixed(value)), [value])
 
     const handleClickAway = () => {
         setDisplayDropdown(false)
@@ -30,7 +39,7 @@ function DecimalDropdown({ value, handleClick }) {
                         <div className="container">
                             {
                                 Array(19).fill().map((_, i) => (
-                                    <Styles.DecimalDropdownItem key={i} onClick={() => handleClick(i + 1)}>
+                                    <Styles.DecimalDropdownItem key={i} onClick={() => handleDecimalDropdownClick(i)}>
                                         { i + 1}
                                     </Styles.DecimalDropdownItem>
                                 ))
