@@ -23,7 +23,15 @@ function Transactions() {
         }
     }, [data])
 
-    const rows = data?.map((item, i) => (
+    const filter = {
+        "All Transactions": data,
+        "Algo TXNs": data?.filter(txn => txn.asset_name === 'algo'),
+        "Asa TXNs": data?.filter(txn => txn.asset_name !== 'algo'),
+        "Scheduled TXNs": data?.filter(txn => txn.tx_type === 'scheduled'),
+    }
+
+
+    const rows = filter[tabValue]?.map((item, i) => (
         <tr key={i}>
             <td>{item.txid}</td>
             <td>{item.asset_name}</td>

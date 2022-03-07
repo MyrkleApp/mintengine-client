@@ -20,7 +20,7 @@ import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown
 function CreateToken() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -45,7 +45,7 @@ function CreateToken() {
         formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
+        formData.append('total_supply', totalSupplyValue)
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
@@ -111,11 +111,10 @@ function CreateToken() {
                                     <DecimalDropdown 
                                         value={decimalValue}
                                         handleClick={setDecimalValueByClick}
-                                        totalSupplyValue={totalSupplyValue}
-                                        setTotalSupplyValue={handleSetTotalSupplyValue}
                                     />
                                 </Grid>
                             </Grid>
+                            <SharedStyles.CalcResult>{`Total Supply = ${(totalSupplyValue/Math.pow(10, decimalValue)).toFixed(decimalValue)}`}</SharedStyles.CalcResult>
                             <FormControl 
                                 type="text"
                                 label="Asset URL"

@@ -4,20 +4,12 @@ import FormControl from '../FormControl/FormControl'
 import ClickAwayListener from 'react-click-away-listener';
 
 
-function DecimalDropdown({ value, handleClick, totalSupplyValue, setTotalSupplyValue }) {
+function DecimalDropdown({ value, handleClick }) {
     const [displayDropdown, setDisplayDropdown] = useState(false)
 
     const handleDecimalInputClick = () => {
         setDisplayDropdown(prevState => !prevState)
     }
-
-    const handleDecimalDropdownClick = (i) => {
-        if (!totalSupplyValue) return
-
-        handleClick(i + 1)
-    }
-
-    useEffect(() => setTotalSupplyValue((totalSupplyValue/Math.pow(10, value)).toFixed(value)), [value])
 
     const handleClickAway = () => {
         setDisplayDropdown(false)
@@ -26,7 +18,7 @@ function DecimalDropdown({ value, handleClick, totalSupplyValue, setTotalSupplyV
     return (
         <Fragment>
             <ClickAwayListener onClickAway={handleClickAway}>
-                <div>
+                <div> 
                     <FormControl 
                         type="text"
                         label="Decimal"
@@ -35,21 +27,20 @@ function DecimalDropdown({ value, handleClick, totalSupplyValue, setTotalSupplyV
                         handleClick={handleDecimalInputClick}
                         center
                     />
-                    <Styles.Root displayDropdown={displayDropdown}>
-                        <div className="container">
-                            {
-                                Array(19).fill().map((_, i) => (
-                                    <Styles.DecimalDropdownItem key={i} onClick={() => handleDecimalDropdownClick(i)}>
-                                        { i + 1}
-                                    </Styles.DecimalDropdownItem>
-                                ))
-                            }
-                        </div>
-                    </Styles.Root>
                 </div>
             </ClickAwayListener>
+            <Styles.Root displayDropdown={displayDropdown}>
+                <div className="container">
+                    {
+                        Array(19).fill().map((_, i) => (
+                            <Styles.DecimalDropdownItem key={i} onClick={() => handleClick(i + 1)}>
+                                { i + 1}
+                            </Styles.DecimalDropdownItem>
+                        ))
+                    }
+                </div>
+            </Styles.Root>            
         </Fragment>
-        
     )
 }
 

@@ -20,7 +20,7 @@ import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 function Security() {
     const { value: assetName, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
@@ -46,7 +46,7 @@ function Security() {
         formData.append('asset_name', assetName)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
+        formData.append('total_supply', totalSupplyValue)
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
@@ -106,11 +106,10 @@ function Security() {
                                     <DecimalDropdown 
                                         value={decimalValue}
                                         handleClick={setDecimalValueByClick}
-                                        totalSupplyValue={totalSupplyValue}
-                                        setTotalSupplyValue={handleSetTotalSupplyValue}
                                     />
                                 </Grid>
                             </Grid>
+                            <SharedStyles.CalcResult>{`Total Supply = ${(totalSupplyValue/Math.pow(10, decimalValue)).toFixed(decimalValue)}`}</SharedStyles.CalcResult>
                             <FormControl 
                                 label="NFT URL"
                                 type="text"

@@ -13,7 +13,6 @@ import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import useModal from '../../../Hooks/Modal'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
@@ -21,7 +20,7 @@ import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown
 function FractionalNft() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -46,7 +45,7 @@ function FractionalNft() {
         formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', Math.ceil(totalSupplyValue * Math.pow(10, decimalValue)))
+        formData.append('total_supply', totalSupplyValue)
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
@@ -106,22 +105,10 @@ function FractionalNft() {
                                     <DecimalDropdown 
                                         value={decimalValue}
                                         handleClick={setDecimalValueByClick}
-                                        totalSupplyValue={totalSupplyValue}
-                                        setTotalSupplyValue={handleSetTotalSupplyValue}
                                     />
                                 </Grid>
                             </Grid>
-                            {/* <FormControl 
-                                label="Total Suppy"
-                                value={totalSupplyValue}
-                                handleChange={handleTotalSupplyChange}
-                            />
-                            <FormControl 
-                                label="Decimal"
-                                type="text"
-                                value={decimalValue}
-                                handleChange={handleDecimalChange}
-                            /> */}
+                            <SharedStyles.CalcResult>{`Total Supply = ${(totalSupplyValue/Math.pow(10, decimalValue)).toFixed(decimalValue)}`}</SharedStyles.CalcResult>
                             <FormControl 
                                 label="NFT URL"
                                 type="text"

@@ -17,7 +17,7 @@ function Table({ columnTitles, rows, noDataTitle, noDataText }) {
             </Styles.Table>
 
             {
-                !rows && (
+                (!rows || rows.length === 0) && (
                     <Styles.EmptyTable>
                         <h1>{noDataTitle}</h1>
                         <p>{noDataText}</p>

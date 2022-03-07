@@ -70,6 +70,11 @@ export const UploadImageBox = styled.div`
     }
 `
 
+export const CalcResult = styled.p`
+    color: #2a5744;
+    margin-top: -8px;
+`
+
 export const TableBox = styled(Box)`
     border-radius: 0 0 20px 20px;
     margin-bottom: 40px;
