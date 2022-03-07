@@ -76,3 +76,10 @@ export const TableBox = styled(Box)`
     min-height: 600px;
     overflow-x: auto;
 `
+
+export const LoaderContainer = styled.div`
+    width: 100%;
+    & svg {
+        margin: 0px auto 0 auto;
+    }
+`

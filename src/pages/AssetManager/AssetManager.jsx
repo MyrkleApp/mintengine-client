@@ -8,6 +8,7 @@ import AssetManagerAlgo from '../../containers/AssetManagerAlgo/AssetManagerAlgo
 import { ALGORAND, RIPPLE } from '../../constants/network'
 import AssetManagerRipple from '../../containers/AssetManagerRipple/AssetManagerRipple'
 import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
+import CreatedAssetsAlgo from '../../containers/CreatedAssetsAlgo/CreatedAssetsAlgo'
 
 
 function AssetManager() {
@@ -25,7 +26,7 @@ function AssetManager() {
             </Styles.ManageAssets>
             <Styles.Title>CREATED ASSETS</Styles.Title>
             <Styles.TableBox>
-                <Table />
+                { network === ALGORAND && <CreatedAssetsAlgo /> }
             </Styles.TableBox>
         </DashboardWrapper>
     )

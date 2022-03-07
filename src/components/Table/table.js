@@ -28,6 +28,10 @@ export const Table = styled.table`
         height: 55px;
         color: #043923;
         font-size: 18px;
+        max-width: 250px;
+        /* white-space: nowrap; */
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     & th {
@@ -38,6 +42,22 @@ export const Table = styled.table`
         font-weight: 500;
         color: #3E554B;
     }
+`
 
+export const EmptyTable = styled.div`
+    text-align: center;
+    margin: 100px auto 0 auto;
+    width: calc(100% - 100px);
 
+    & > h1 {
+        font-weight: 600;
+        font-size: 28px;
+        margin-bottom: 50px;
+        color: #043923;
+        text-transform: uppercase;
+    }
+    & > p {
+        font-size: 18px;
+        color: #3E554B;
+    }
 `
