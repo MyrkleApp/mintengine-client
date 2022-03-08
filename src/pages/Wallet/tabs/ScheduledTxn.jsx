@@ -19,12 +19,17 @@ import { theme } from '../../../components/MyTabs/MyTabs'
 import './scheduledTxn.css'
 import useSelectInput from '../../../Hooks/SelectInput'
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
+import { formattedTime, getTimeZone } from '../constants'
+import { useSelector } from 'react-redux'
+import useSubmit from '../../../Hooks/Submit'
+import { sendAlgorand } from '../../../app/algorand/algorandSlice'
 
 function ScheduledTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
-    const [dateValue, setDateValue] = useState(new Date());
-    const [timeValue, setTimeValue] = React.useState(new Date());
+    const [timeValue, setTimeValue] = useState(new Date());
+    const passphrase = useSelector(state => state.algorand.passphrase)
+    const { handleSubmit } = useSubmit()
 
     const [displayScanner, setDisplayScanner] = useState(false)
 
@@ -41,6 +46,28 @@ function ScheduledTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
+    const sendAsset = () => {
+
+        // console.log(timeValue.toLocaleDateString(undefined, {day:'2-digit',timeZoneName: 'short' }))
+
+        const formData = new FormData()
+        formData.append('transaction_type', 'scheduled')
+        formData.append('currency_type', !assetValue.id ? 'algo' : 'asset')
+        formData.append('set_time', formattedTime(timeValue))
+        formData.append('receiver_addr', recipientAddressValue)
+        formData.append('amount', assetValue.amount)
+        formData.append('phrase', passphrase)
+        formData.append('timezone', getTimeZone(timeValue))
+
+        //if currency is an asset
+        if (assetValue.id) formData.append('asset_id', assetValue.id)
+
+        // handleSubmit(sendAlgorand(formData))
+
+        // target address for testing
+        // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
+    }
+
     return (
         <Fragment>
             <ThemeProvider theme={theme}>
@@ -49,8 +76,8 @@ function ScheduledTxn() {
                         <MobileDatePicker
                             // label="Date desktop"
                             inputFormat="dd/MM/yyyy"
-                            value={dateValue}
-                            onChange={(newValue) => setDateValue(newValue)}
+                            value={timeValue}
+                            onChange={(newValue) => setTimeValue(newValue)}
                             renderInput={(params) => <TextField {...params} />}
                             inputRef={dateRef}
                         />
@@ -82,7 +109,7 @@ function ScheduledTxn() {
             />
             <FormControl
                 label="Date"
-                value={dateValue.toDateString()}
+                value={timeValue.toDateString()}
                 readOnly
                 icon={calenderIcon}
                 type="text"
@@ -91,7 +118,7 @@ function ScheduledTxn() {
                 handleIconClick={handleDateClick}
             />
             <TimeInput 
-                label="Time"
+                label="Time (24 hour)"
                 value={timeValue}
                 handleClick={handleTimeClick}
             />
@@ -101,8 +128,9 @@ function ScheduledTxn() {
                 <p>0.001</p>
             </TransactionFee>
             <ButtonContainer>
-                <Button fullWidth disabled>send asset</Button>
+                <Button fullWidth onClick={sendAsset}>send asset</Button>
             </ButtonContainer>
+
 
             {
                 displayScanner && (

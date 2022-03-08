@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
 import * as Styles from './walletAddress'
 import qrCode from '../../assets/icons/qrCode.svg'
@@ -12,6 +12,8 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import DB from '../../app/db';
 import { setAlgorandPassphrase } from '../../app/algorand/algorandSlice';
 import useEncrypt from '../../Hooks/Encrypt'
+import useModal from '../../Hooks/Modal';
+import Modal from '../../components/UI/Modal/Modal';
 
 
 function WalletAddress() {
@@ -52,77 +54,85 @@ function WalletAddress() {
         getActiveWalletPassphrase()
     }, [activeWalletAddress, deviceFingerprint])
 
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
+
     return (
-        <Styles.Parent show={open}>
-            <Styles.WalletPassphrase show={open}>
-                <Grid container className="gridContainer">
-                    <Grid item xs={12} md={9} className="wordsBox">
-                    {
-                        network === ALGORAND && (
-                            algorandPassphrase?.split(" ").map((item, i) => (
-                                <Word key={i}>{ `${i + 1}. ${item}` }</Word>
-                            ))
-                        )
-                    }
-                    {
-                        network === RIPPLE && (
-                            <Styles.RippleSeed>
-                                { rippleSeed }
-                            </Styles.RippleSeed>
-                        )
-                    }
-                    </Grid>
-                    <Grid item xs={12} md={3} className="passphraseRight">
-                        <CopyButtonWithTooltip 
-                            textToCopy={textToCopy} 
-                        />
-                        {/* <CopyButton outlined>Copy</CopyButton> */}
-                        <WalletAddressButton onClick={hidePassphrase}>
-                            { network === ALGORAND ? 'Hide Passphrase' : 'Hide Seed' }
-                        </WalletAddressButton>
-                    </Grid>
-                </Grid>
-            </Styles.WalletPassphrase>
-            <Styles.WalletAddress>
-                <div className="container">
-                    <span className="welcome">Welcome</span>
-                    <Grid container>
-                        <Grid item xs={12} md={5} className="left">
-                            { activeWalletAddress || '' }
-                            { 
-                                status === HTTP_STATUS.PENDING && (
-                                    <ThreeDots
-                                        height="30"
-                                        width="100"
-                                        color='gray'
-                                        ariaLabel='loading'
-                                    />
-                                )
-                            }
+        <Fragment>
+            <Styles.Parent show={open}>
+                <Styles.WalletPassphrase show={open}>
+                    <Grid container className="gridContainer">
+                        <Grid item xs={12} md={9} className="wordsBox">
+                        {
+                            network === ALGORAND && (
+                                algorandPassphrase?.split(" ").map((item, i) => (
+                                    <Word key={i}>{ `${i + 1}. ${item}` }</Word>
+                                ))
+                            )
+                        }
+                        {
+                            network === RIPPLE && (
+                                <Styles.RippleSeed>
+                                    { rippleSeed }
+                                </Styles.RippleSeed>
+                            )
+                        }
+                        </Grid>
+                        <Grid item xs={12} md={3} className="passphraseRight">
                             <CopyButtonWithTooltip 
-                                textToCopy={activeWalletAddress} 
-                                onlyIcon
+                                textToCopy={textToCopy} 
                             />
-                        </Grid>
-
-                        <Grid item xs={12} md={3} className="center">
-                            <div className="qrBox">
-                                <img src={qrCode} alt="" />
-                            </div>
-                        </Grid>
-
-                        <Grid item xs={12} md={4} className="right">
-                            <span className="amount">{ activeWalletData?.balance }&nbsp;</span>
-                            <span className="coinName">ALGO</span><br />
-                            <div className="dollarAmount">~ $0</div>
-                            <WalletAddressButton onClick={showPassphrase} disabled={!algorandPassphrase ? true : false}>
-                                { network === ALGORAND ? 'Show Passphrase' : 'Show Seed' }
+                            {/* <CopyButton outlined>Copy</CopyButton> */}
+                            <WalletAddressButton onClick={hidePassphrase}>
+                                { network === ALGORAND ? 'Hide Passphrase' : 'Hide Seed' }
                             </WalletAddressButton>
                         </Grid>
                     </Grid>
-                </div>
-            </Styles.WalletAddress>
-        </Styles.Parent>
+                </Styles.WalletPassphrase>
+                <Styles.WalletAddress>
+                    <div className="container">
+                        <span className="welcome">Welcome</span>
+                        <Grid container>
+                            <Grid item xs={12} md={5} className="left">
+                                { activeWalletAddress || '' }
+                                { 
+                                    status === HTTP_STATUS.PENDING && (
+                                        <ThreeDots
+                                            height="30"
+                                            width="100"
+                                            color='gray'
+                                            ariaLabel='loading'
+                                        />
+                                    )
+                                }
+                                <CopyButtonWithTooltip 
+                                    textToCopy={activeWalletAddress} 
+                                    onlyIcon
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={3} className="center">
+                                <div className="qrBox">
+                                    <img src={qrCode} alt="" onClick={handleModalOpen} style={{ cursor: 'pointer' }} />
+                                </div>
+                            </Grid>
+
+                            <Grid item xs={12} md={4} className="right">
+                                <span className="amount">{ activeWalletData?.balance }&nbsp;</span>
+                                <span className="coinName">ALGO</span><br />
+                                <div className="dollarAmount">~ $0</div>
+                                <WalletAddressButton onClick={showPassphrase} disabled={!algorandPassphrase ? true : false}>
+                                    { network === ALGORAND ? 'Show Passphrase' : 'Show Seed' }
+                                </WalletAddressButton>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Styles.WalletAddress>
+            </Styles.Parent>
+
+            <Modal open={modalState} handleClose={handleModalClose}>
+                <Styles.QrCodeMainImg src={qrCode} />             
+            </Modal>
+        </Fragment>
     )
 }
 

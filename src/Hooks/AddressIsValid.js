@@ -7,9 +7,14 @@ function useAddressIsValid(inputValue) {
     const [status, setStatus] = useState(null)
 
     useEffect(() => {
-        // const inputRateTimer = setTimeout(() => {
+        const inputRateTimer = setTimeout(() => {
 
-            if (inputValue.length === 58) {
+            if ((inputValue.trim().length > 0) && (inputValue.trim().length !== 58)) {
+                setData(false)
+                // return
+            } 
+
+            if (inputValue.trim().length === 58) {
                 setStatus(HTTP_STATUS.PENDING)
                 axios.post('/algorand/v1/checks/valid_address/', { wallet_address: inputValue })
                 .then((res) => {
@@ -22,9 +27,10 @@ function useAddressIsValid(inputValue) {
                     console.log(err)
                 })
             }
-        // }, 1000)
 
-        // return(() => clearTimeout(inputRateTimer))
+        }, 1000)
+
+        return(() => clearTimeout(inputRateTimer))
     }, [inputValue])
 
     return { data, status }

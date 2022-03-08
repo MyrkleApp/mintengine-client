@@ -7,12 +7,16 @@ import { algorandOptOut } from '../../../app/algorand/algorandSlice'
 import useSubmit from '../../../Hooks/Submit'
 import useSelectInput from '../../../Hooks/SelectInput'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import useFormControl from '../../../Hooks/FormControl'
+import FormControl from '../../../components/FormControl/FormControl'
 
 
 function OptOut({ handleModalClose, handleResponse }) {
     const { status, data } = useSelector(state => state.algorand.holdings)
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
-    const { formIsValid } = useFormValidity(assetValue.id)
+    const { value: receiverAddressValue, handleChange: handleReceiverAddressChange } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const { formIsValid } = useFormValidity(assetValue.id, receiverAddressValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
@@ -33,6 +37,18 @@ function OptOut({ handleModalClose, handleResponse }) {
                 asset={assetValue}
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
+            />
+            <FormControl 
+                type="text"
+                label="Receiver Address"
+                value={receiverAddressValue}
+                handleChange={handleReceiverAddressChange}
+            />
+            <FormControl 
+                label="Note"
+                textArea
+                value={noteValue}
+                handleChange={handleNoteChange}
             />
             <ButtonContainer>
                 <Button fullWidth disabled={!formIsValid} onClick={handleOptOut}>remove</Button>

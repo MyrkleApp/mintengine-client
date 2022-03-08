@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 function useSelectInput() {
-    const [value, setValue] = useState({ id: '', amount: 0 })
+    const [value, setValue] = useState({ id: '', amount: '' })
 
     const setValueByClick = data => {
         setValue({ ...data, amount: 0 })

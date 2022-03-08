@@ -165,3 +165,18 @@ export const RippleSeed = styled.span`
     width: 100%;
     line-height: 25px;
 `
+
+export const QrCodeMainImg = styled.img`
+    width: 400px;
+    height: auto;
+    margin-left: 50px;
+
+    @media(max-width: 600px) {
+        width: 300px;
+        margin-left: 0px;
+    }
+
+    @media(max-width: 400px) {
+        width: 250px;
+    }
+`

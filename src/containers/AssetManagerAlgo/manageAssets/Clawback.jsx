@@ -11,9 +11,11 @@ import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithout
 
 function Unfreeze({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: amountValue, handleChange: handleAmountChange } = useFormControl()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
+    const { value: receivingAddressValue, handleChange: handleReceivingAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
+    const { formIsValid } = useFormValidity(assetIdValue, amountValue, targetAddressValue, receivingAddressValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
@@ -22,7 +24,9 @@ function Unfreeze({ handleModalClose, handleResponse }) {
 
         const clawbackData = { 
             asset_id: assetIdValue, 
+            amount: amountValue,
             target_addr: targetAddressValue, 
+            receiving_address: receivingAddressValue,
             note: noteValue, 
             phrase: passphrase
         }
@@ -40,9 +44,21 @@ function Unfreeze({ handleModalClose, handleResponse }) {
             />
             <FormControl 
                 type="text"
+                label="Amount"
+                value={amountValue}
+                handleChange={handleAmountChange}
+            />
+            <FormControl 
+                type="text"
                 label="Target Address"
                 value={targetAddressValue}
                 handleChange={handleTargetAddressChange}
+            />
+            <FormControl 
+                type="text"
+                label="Receiving Address"
+                value={receivingAddressValue}
+                handleChange={handleReceivingAddressChange}
             />
             <FormControl 
                 label="Note"

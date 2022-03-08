@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 import questionMarkImg from '../../assets/icons/questionMark.jpg'
 
-function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset }) {
+function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly }) {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
@@ -47,6 +47,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                 name={name}
                                 value={value}
                                 onChange={handleChange}
+                                readOnly={readOnly}
                             />
                         </div>
                     </div>

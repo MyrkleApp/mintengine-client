@@ -27,19 +27,20 @@ function DecimalDropdown({ value, handleClick }) {
                         handleClick={handleDecimalInputClick}
                         center
                     />
+                
+                    <Styles.Root displayDropdown={displayDropdown}>
+                        <div className="container">
+                            {
+                                Array(19).fill().map((_, i) => (
+                                    <Styles.DecimalDropdownItem key={i} onClick={() => handleClick(i + 1)}>
+                                        { i + 1}
+                                    </Styles.DecimalDropdownItem>
+                                ))
+                            }
+                        </div>
+                    </Styles.Root>  
                 </div>
-            </ClickAwayListener>
-            <Styles.Root displayDropdown={displayDropdown}>
-                <div className="container">
-                    {
-                        Array(19).fill().map((_, i) => (
-                            <Styles.DecimalDropdownItem key={i} onClick={() => handleClick(i + 1)}>
-                                { i + 1}
-                            </Styles.DecimalDropdownItem>
-                        ))
-                    }
-                </div>
-            </Styles.Root>            
+            </ClickAwayListener>          
         </Fragment>
     )
 }

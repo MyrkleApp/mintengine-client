@@ -13,14 +13,25 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
 import { ThreeDots } from 'react-loader-spinner'
-import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
-import { checkAlgorandAddressIsValid } from '../../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
 import { sendAlgorand } from '../../../app/algorand/algorandSlice'
 import { Grid } from '@mui/material'
 import useAddressIsValid from '../../../Hooks/AddressIsValid'
+import useFormValidity from '../../../Hooks/FormValidity'
+
+import Modal from '../../../components/UI/Modal/Modal'
+import useModal from '../../../Hooks/Modal'
+import ModalResponse from '../../../components/ModalResponse/ModalResponse'
+
+
+// `https://data.messari.io/api/v1/assets/${coin}/metrics`
+
+/**
+ * 
+ * !!! MAKE SURE TO REWRITE THIS COMPONENT CODE!!!
+ */
 
 function NormalTxn() {
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
@@ -114,19 +125,38 @@ function NormalTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
-    const { status: recipientAddressStatus, data } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientAddressValue }, checkAlgorandAddressIsValid)
-    // const { status: recipientTwoAddressStatus, data: dataTwo } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientTwoAddressValue }, checkAlgorandAddressIsValid)
-    // const { status: recipientThreeAddressStatus, data: dataThree } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientThreeAddressValue }, checkAlgorandAddressIsValid)
-    // const { status: recipientFourAddressStatus, data: dataFour } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientFourAddressValue }, checkAlgorandAddressIsValid)
-    // const { status: recipientFiveAddressStatus, data: dataFive } = useUserInputDispatch(recipientAddressValue, { wallet_address: recipientFiveAddressValue }, checkAlgorandAddressIsValid)
+    const { status: recipientAddressStatus, data } = useAddressIsValid(recipientAddressValue)
     const { status: recipientTwoAddressStatus, data: dataTwo } = useAddressIsValid(recipientTwoAddressValue)
     const { status: recipientThreeAddressStatus, data: dataThree } = useAddressIsValid(recipientThreeAddressValue)
     const { status: recipientFourAddressStatus, data: dataFour } = useAddressIsValid(recipientFourAddressValue)
     const { status: recipientFiveAddressStatus, data: dataFive } = useAddressIsValid(recipientFiveAddressValue)
 
-    console.log(recipientTwoAddressStatus)
 
     const { handleSubmit } = useSubmit()
+
+    const addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
+    const amountsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
+
+    const { formIsValid } = useFormValidity(...addressesArray.slice(0, numOfTxns), ...amountsArray.slice(0, numOfTxns));
+
+    const addressData = [data, dataTwo, dataThree, dataFour, dataFive]
+    const allAddressesAreValid = addressData.slice(0, numOfTxns).every(address => address === true)
+
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
+
+    let sendStatus = ""
+
+    const submitSuccessCallback = (res) => {
+        handleModalOpen()
+        sendStatus = HTTP_STATUS.FULFILLED
+        console.log(res)
+    }
+
+    const submitErrorCallback = (err) => {
+        handleModalOpen()
+        sendStatus = HTTP_STATUS.REJECTED
+        console.log(err)
+    }
 
     const sendAsset = () => {
 
@@ -134,29 +164,24 @@ function NormalTxn() {
         formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
         formData.append('currency_type', !assetValue.id ? 'algo' : 'asset')
         if (assetValue.id) formData.append('asset_id', assetValue.id) //if currency is an asset
-        if (numOfTxns === 1) formData.append('receiver_addr', recipientAddressValue)
-        if (numOfTxns === 1) formData.append('amount', assetValue.amount)
 
-        let amountsArray = []
-        if (numOfTxns === 2) amountsArray = [assetValue, assetTwoValue]
-        if (numOfTxns === 3) amountsArray = [assetValue, assetTwoValue, assetThreeValue]
-        if (numOfTxns === 4) amountsArray = [assetValue, assetTwoValue, assetThreeValue, assetFourValue]
-        if (numOfTxns === 5) amountsArray = [assetValue, assetTwoValue, assetThreeValue, assetFourValue, assetFiveValue]
+        if (numOfTxns === 1) {
+            formData.append('receiver_addr', recipientAddressValue)
+            formData.append('amount', assetValue.amount)
+        } 
 
-        if (numOfTxns > 1) formData.append('amount_array', amountsArray)
-
-        let addressesArray = []
-        if (numOfTxns === 2) addressesArray = [recipientAddressValue, recipientTwoAddressValue]
-        if (numOfTxns === 3) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue]
-        if (numOfTxns === 4) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue]
-        if (numOfTxns === 5) addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
-
-        if (numOfTxns > 1) formData.append('address_array', addressesArray)
-
+        if (numOfTxns > 1) {
+            formData.append('address_array', addressesArray.slice(0, numOfTxns))
+            formData.append('amount_array', amountsArray.slice(0, numOfTxns))
+        }
+        
         formData.append('phrase', passphrase)
 
-        handleSubmit(sendAlgorand(formData))
+        handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
     }
+
+    
+    const success = sendStatus === HTTP_STATUS.FULFILLED
 
     return (
         <Fragment>
@@ -177,7 +202,7 @@ function NormalTxn() {
                 handleIconClick={() => openScanner('main')}
             />
             { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-            { recipientAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+            { data === false && <ErrorMessage>Address is invalid</ErrorMessage> }
             
             <Grid item container style={{ display: addedTxns.two ? 'block' : 'none' }}>
                 <SelectWithoutDropdown 
@@ -196,7 +221,7 @@ function NormalTxn() {
                     handleIconClick={() => openScanner('two')}
                 />
                 { recipientTwoAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { recipientTwoAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+                { dataTwo === false && <ErrorMessage>Address is invalid</ErrorMessage> }
             </Grid>
 
             <Grid item container style={{ display: addedTxns.three ? 'block' : 'none' }}>
@@ -216,7 +241,7 @@ function NormalTxn() {
                     handleIconClick={() => openScanner('three')}
                 />
                 { recipientThreeAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { recipientThreeAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+                { dataThree === false && <ErrorMessage>Address is invalid</ErrorMessage> }
             </Grid>
 
             <Grid item container style={{ display: addedTxns.four ? 'block' : 'none' }}>
@@ -236,7 +261,7 @@ function NormalTxn() {
                     handleIconClick={() => openScanner('four')}
                 />
                 { recipientFourAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { recipientFourAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+                { dataFour === false && <ErrorMessage>Address is invalid</ErrorMessage> }
             </Grid>
 
             <Grid item container style={{ display: addedTxns.five ? 'block' : 'none' }}>
@@ -256,7 +281,7 @@ function NormalTxn() {
                     handleIconClick={() => openScanner('five')}
                 />
                 { recipientFiveAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { recipientFiveAddressStatus === HTTP_STATUS.REJECTED && <ErrorMessage>Address is invalid</ErrorMessage> }
+                { dataFive === false && <ErrorMessage>Address is invalid</ErrorMessage> }
             </Grid>
 
 
@@ -276,7 +301,7 @@ function NormalTxn() {
             </TransactionFee>
 
             <ButtonContainer>
-                <Button fullWidth onClick={sendAsset}>send asset</Button>
+                <Button fullWidth onClick={sendAsset} disabled={!formIsValid || !allAddressesAreValid}>send asset</Button>
             </ButtonContainer>
 
             {
@@ -290,6 +315,17 @@ function NormalTxn() {
                     />
                 )
             }
+
+            {/* response modal */}
+            <Modal open={modalState} handleClose={handleModalClose}>
+                <ModalResponse
+                    success={success}
+                    title={success ? 'success' : 'error'}
+                    description={
+                        success ? 'Sent successfully' : 'something went wrong'
+                    }
+                />
+            </Modal>
             
         </Fragment>
     )
