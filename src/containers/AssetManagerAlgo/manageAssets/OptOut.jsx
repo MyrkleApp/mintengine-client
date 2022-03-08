@@ -12,8 +12,8 @@ import FormControl from '../../../components/FormControl/FormControl'
 
 
 function OptOut({ handleModalClose, handleResponse }) {
-    const { status, data } = useSelector(state => state.algorand.holdings)
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
+    const activeWalletAddress = useSelector(state => state.algorand.activeWallet.data?.address)
     const { value: receiverAddressValue, handleChange: handleReceiverAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetValue.id, receiverAddressValue)
@@ -21,10 +21,16 @@ function OptOut({ handleModalClose, handleResponse }) {
     const { handleSubmit } = useSubmit()
 
     const handleOptOut = () => {
-        // const optOutData = { 
-        //     sender_addr: 
-        // }
-        // handleSubmit(algorandOptOut(optOutData), handleResponse, handleResponse)
+        handleModalClose()
+
+        const optOutData = { 
+            asset_id: assetValue.id,
+            sender_addr: activeWalletAddress,
+            receiver_addr: receiverAddressValue,
+            note: noteValue, 
+            phrase: passphrase
+        }
+        handleSubmit(algorandOptOut(optOutData), handleResponse, handleResponse)
     }
 
     return (

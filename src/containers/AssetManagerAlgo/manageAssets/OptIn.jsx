@@ -30,7 +30,7 @@ function OptIn({ handleModalClose, handleResponse }) {
 
     //send check request on input change
     const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
-    
+    console.log(assetIsValidData)
     return (
         <Fragment>
             <ModalTitle>ADD-TOKEN</ModalTitle>
@@ -55,7 +55,7 @@ function OptIn({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth onClick={handleOptIn} disabled={!formIsValid}>add</Button>
+                <Button fullWidth onClick={handleOptIn} disabled={!formIsValid || !assetIsValidData.name}>add</Button>
             </ButtonContainer>
         </Fragment>
     )

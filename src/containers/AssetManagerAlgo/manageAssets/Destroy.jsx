@@ -5,9 +5,13 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { destroyAlgorand } from '../../../app/algorand/algorandSlice'
+import { checkAlgorandAssetIsValid, destroyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
+import { LoaderContainer } from '../assetManagerAlgo'
+import { ThreeDots } from 'react-loader-spinner'
 
 function Destroy({ handleModalClose, handleResponse }) {
     const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
@@ -15,6 +19,9 @@ function Destroy({ handleModalClose, handleResponse }) {
     const { formIsValid } = useFormValidity(assetIdValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
+
+    //send check request on input change
+    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     const handleDestroy = () => {
         handleModalClose()
@@ -35,7 +42,11 @@ function Destroy({ handleModalClose, handleResponse }) {
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
+                asset={assetIsValidData}
             />
+            { assetIsValidStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             <FormControl 
                 label="Note"
                 textArea
@@ -43,7 +54,7 @@ function Destroy({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid} onClick={handleDestroy}>delete</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleDestroy}>delete</Button>
             </ButtonContainer>
         </Fragment>
     )

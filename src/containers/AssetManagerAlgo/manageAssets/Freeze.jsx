@@ -5,9 +5,13 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
+import { checkAlgorandAssetIsValid, freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
+import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { ThreeDots } from 'react-loader-spinner'
+import { LoaderContainer } from '../assetManagerAlgo'
 
 //target address for testing
 // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
@@ -20,6 +24,9 @@ function Freeze({ handleModalClose, handleResponse }) {
     const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
+
+    //send check request on input change
+    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     const handleFreeze = () => {
         handleModalClose()
@@ -41,7 +48,13 @@ function Freeze({ handleModalClose, handleResponse }) {
                 label="Asset ID"
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
+                asset={assetIsValidData}
             />
+            <p>{assetIsValidData?.message}</p>
+
+            { assetIsValidStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             <FormControl 
                 type="text"
                 label="Target Address"
@@ -55,7 +68,7 @@ function Freeze({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid} onClick={handleFreeze}>freeze</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleFreeze}>freeze</Button>
             </ButtonContainer>
         </Fragment>
     )
