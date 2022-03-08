@@ -113,9 +113,10 @@ export const getAlgorandSendList = createAsyncThunk(`${namespace}/getAlgorandSen
   }
 })
 
-export const sendAlgorand = createAsyncThunk(`${namespace}/sendAlgorand`, async (objData, { rejectWithValue }) => {
+export const sendAlgorand = createAsyncThunk(`${namespace}/sendAlgorand`, async (objData, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await axios.post('/algorand/v1/send/', objData)
+    dispatch(getActiveAlgorandWallet())
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -197,6 +198,16 @@ export const createAlgorandAsset = createAsyncThunk(`${namespace}/createAlgorand
 export const getCreatedAssets = createAsyncThunk(`${namespace}/getCreatedAssets`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.get('/algorand/v1/created_assets/')
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const updateActiveWallet = createAsyncThunk(`${namespace}/updateActiveWallet`, async (objData, { rejectWithValue, dispatch }) => {
+  try {
+    const { data } = await axios.patch(`/algorand/v1/wallet/${objData.id}/`, objData)
+    dispatch(getActiveAlgorandWallet())
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)

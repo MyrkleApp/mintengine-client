@@ -12,7 +12,11 @@ import MyTabs from '../../components/MyTabs/MyTabs'
 import AlgorandAddressItem from '../../components/AlgorandAddressItem/AlgorandAddressItem'
 import useFormControl from '../../Hooks/FormControl'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllAlgorandWallets } from '../../app/algorand/algorandSlice'
+import { getAllAlgorandWallets, updateActiveWallet } from '../../app/algorand/algorandSlice'
+import useSubmit from '../../Hooks/Submit'
+import { HTTP_STATUS } from '../../constants/httpStatus'
+import { ThreeDots } from 'react-loader-spinner'
+import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
 
 const tabs = [ALGORAND_ADDRESS, RIPPLE_ADDRESS]
 
@@ -22,6 +26,7 @@ function Settings() {
     const [detailsToShow, setDetailsToShow] = useState(CHANGE_DETAILS)
     const [openDetailsForMobile, setOpenDetailsForMobile] = useState(false)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
+    const { handleSubmit } = useSubmit()
     const {
         value: currentPasswordValue,
         handleChange: handleCurrentPasswordChange,
@@ -57,7 +62,7 @@ function Settings() {
         history.push('/wallet-setup')
     }
 
-    const { data: allWallets } = useSelector(state => state.algorand.allWallets)
+    const { status: getWalletsStatus, data: allWallets } = useSelector(state => state.algorand.allWallets)
 
     useEffect(() => {
         if ((detailsToShow === MY_WALLET_ADDRESS) && (allWallets === null)) {
@@ -65,13 +70,24 @@ function Settings() {
         }
     }, [detailsToShow, allWallets, dispatch])
 
+    const changeActiveWallet = (walletId) => {
+        const updateActiveWalletData = { id: walletId, active: true }
+        handleSubmit(updateActiveWallet(updateActiveWalletData))
+    }
+
     return (
         <DashboardWrapper>
             <Styles.Root open={openDetailsForMobile}>
                 <div className="left">
-                    <button className="navItems" onClick={handleChangeDetails}>Change Details</button><br />
-                    <button className="navItems" onClick={handleMyWalletAddress}>My Wallet</button><br />
-                    <button className="navItems" onClick={handleAddNewWallet}>Add New Wallet</button>
+                    <button className="navItems" onClick={handleChangeDetails} style={{ color: detailsToShow === CHANGE_DETAILS && '#0eb56f' }}>
+                        Change Details
+                    </button><br />
+                    <button className="navItems" onClick={handleMyWalletAddress} style={{ color: detailsToShow === MY_WALLET_ADDRESS && '#0eb56f' }}>
+                        My Wallet
+                    </button><br />
+                    <button className="navItems" onClick={handleAddNewWallet}>
+                        Add New Wallet
+                    </button>
                 </div>
 
                 <div className="right">
@@ -117,12 +133,19 @@ function Settings() {
                                     handleTabChange={handleTabChange}
                                 />
                                 {
-                                    allWallets?.map(wallet => (
-                                        <AlgorandAddressItem 
-                                            key={wallet.id} 
-                                            walletAddress={wallet.address}
-                                        />
-                                    ))
+                                    getWalletsStatus === HTTP_STATUS.PENDING ? (
+                                        <LoaderContainer>
+                                            <ThreeDots height="250" width="250" color='gray' />
+                                        </LoaderContainer>
+                                    ) : (
+                                        allWallets?.map(wallet => (
+                                            <AlgorandAddressItem 
+                                                key={wallet.id} 
+                                                walletAddress={wallet.address}
+                                                handleClick={() => changeActiveWallet(wallet.id)}
+                                            />
+                                        ))
+                                    )
                                 }
                             </Grid>
                         )

@@ -12,6 +12,8 @@ export const Root = styled.div`
         width: calc(100% - 50px);
         word-break: break-word;
         font-size: 18px;
+        color: ${props => props.active && 'green'};
+        cursor: pointer;
     }
 
     & .copyIconContainer:last-child {
