@@ -37,8 +37,6 @@ function ImportWallet() {
         })
     }
 
-    console.log(Array(25).fill('word').join(" "))
-
     const handleChange = (e, i) => {
         const values = [...missingWords]
         values[i] = e.target.value
@@ -75,7 +73,9 @@ function ImportWallet() {
     const handleImportWallet = () => {
         handleModalToDefault()
 
-        const phrase = missingWords.join(" ")
+        const missingWords2 = missingWords.map(word => word.trim())
+        const phrase = missingWords2.join(' ')
+        
         const importData = { status: IMPORT, phrase: phrase, active: true }
 
         handleSubmit(createAlgorandWallet(importData), submitSuccess, submitError)

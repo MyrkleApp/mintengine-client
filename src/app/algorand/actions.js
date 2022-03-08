@@ -316,3 +316,17 @@ export const createAlgorandAssetRejected = (state, { payload }) => {
     state.createAsset.status = HTTP_STATUS.REJECTED
     state.createAsset.error = payload
 }
+
+export const getCreatedAssetsPending = (state) => {
+    state.createdAssets.status = HTTP_STATUS.PENDING
+}
+
+export const getCreatedAssetsFulfilled = (state, { payload }) => {
+    state.createdAssets.status = HTTP_STATUS.FULFILLED
+    state.createdAssets.data = payload
+}
+
+export const getCreatedAssetsRejected = (state, { payload }) => {
+    state.createdAssets.status = HTTP_STATUS.REJECTED
+    state.createdAssets.error = payload
+}

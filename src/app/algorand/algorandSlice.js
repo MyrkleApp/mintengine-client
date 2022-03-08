@@ -194,6 +194,15 @@ export const createAlgorandAsset = createAsyncThunk(`${namespace}/createAlgorand
   }
 })
 
+export const getCreatedAssets = createAsyncThunk(`${namespace}/getCreatedAssets`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get('/algorand/v1/created_assets/')
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -224,6 +233,7 @@ const algorandSlice = createSlice({
     canClawbackAsset: DEFAULT,
     canDeleteAsset: DEFAULT,
     createAsset: DEFAULT,
+    createdAssets: DEFAULT,
   },
   reducers: {
     incorrectPassphraseError(state, action) {
@@ -322,6 +332,10 @@ const algorandSlice = createSlice({
     [createAlgorandAsset.pending]: actions.createAlgorandAssetPending,
     [createAlgorandAsset.fulfilled]: actions.createAlgorandAssetFulfilled,
     [createAlgorandAsset.rejected]: actions.createAlgorandAssetRejected,
+
+    [getCreatedAssets.pending]: actions.getCreatedAssetsPending,
+    [getCreatedAssets.fulfilled]: actions.getCreatedAssetsFulfilled,
+    [getCreatedAssets.rejected]: actions.getCreatedAssetsRejected,
   }
 })
 

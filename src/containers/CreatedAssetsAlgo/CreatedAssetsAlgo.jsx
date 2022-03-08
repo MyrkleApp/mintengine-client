@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { ThreeDots } from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlgorandHoldings } from '../../app/algorand/algorandSlice'
+import { getCreatedAssets } from '../../app/algorand/algorandSlice'
 import Table from '../../components/Table/Table'
 import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
 import { HTTP_STATUS } from '../../constants/httpStatus'
@@ -9,19 +9,19 @@ import { HTTP_STATUS } from '../../constants/httpStatus'
 
 function CreatedAssetsAlgo() {
     const dispatch = useDispatch()
-    const { status, data } = useSelector(state => state.algorand.holdings)
+    const { status, data } = useSelector(state => state.algorand.createdAssets)
 
     useEffect(() => {
-        if ((data === null) && (status !== HTTP_STATUS.PENDING)) {
-            dispatch(getAlgorandHoldings())
+        if (data === null) {
+            dispatch(getCreatedAssets())
         }
     }, [data])
 
-    const rows = data?.assets?.map((item, i) => (
-        <tr key={i}>
-            <td>{item.id}</td>
+    const rows = data?.asset_created?.map((item, i) => (
+        <tr key={item.id}>
+            <td><a href={`https://testnet.algoexplorer.io/asset/${item.id}`} target="_blank">{item.id}</a></td>
             <td>{item.name}</td>
-            <td>{item.unit}</td>
+            <td>{item.unit_name}</td>
             <td>{item.url}</td>
             <td>{item.date}</td>
         </tr>

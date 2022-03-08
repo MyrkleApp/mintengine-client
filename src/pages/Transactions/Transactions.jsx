@@ -32,8 +32,8 @@ function Transactions() {
 
 
     const rows = filter[tabValue]?.map((item, i) => (
-        <tr key={i}>
-            <td>{item.txid}</td>
+        <tr key={item.txid}>
+            <td><a href={`https://testnet.algoexplorer.io/tx/${item.txid}`} target="_blank">{item.txid}</a></td>
             <td>{item.asset_name}</td>
             <td>{item.amount}</td>
             <td>{item.tx_type}</td>

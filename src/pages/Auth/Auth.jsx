@@ -5,8 +5,7 @@ import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
 import { useHistory, useLocation } from 'react-router'
 import * as Styles from './auth'
-import FingerprintJS from '@fingerprintjs/fingerprintjs'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, registerUser } from '../../app/auth/authSlice'
 import { showBackdrop, hideBackdrop } from '../../app/backdrop/backdropSlice'
 import { passwordReducer } from './reducers'
@@ -16,10 +15,10 @@ function Auth() {
     const { pathname } = useLocation()
     const history = useHistory()
     const dispatch = useDispatch()
+    const deviceFingerprint = useSelector(state => state.deviceFingerprint.deviceFingerprint)
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
-    const [fingerPrint, setFingerPrint] = useState('')
     const [password, dispatchPassword] = useReducer(passwordReducer, {
         passwordValue: '',
         passwordHelperText: '',
@@ -48,30 +47,30 @@ function Auth() {
         }
     }, [pathname, passwordValue])
 
-    const handlePasswordBlur = useCallback(() => {
+    const handlePasswordBlur = () => {
         if (pathname !== '/signup') return
 
         dispatchPassword({
             type: 'SIGNUP_PASSWORD_BLUR',
             passwordHelperText: 'Your password must be up to 8 characters and must include a number'
         })
-    }, [])
+    }
 
-    const handleConfirmPasswordChange = useCallback((e) => {
+    const handleConfirmPasswordChange = (e) => {
         dispatchPassword({
             type: 'CONFIRM_PASSWORD_INPUT',
             confirmPasswordValue: e.target.value,
             confirmPasswordIsValid: e.target.value === passwordValue
         })
-    }, [confirmPasswordValue, confirmPasswordIsValid])
+    }
 
-    const toggleShowPassword = useCallback(() => {
+    const toggleShowPassword = () => {
         setShowPassword(prevState => !prevState)
-    }, [])
+    }
 
-    const toggleShowConfirmPassword = useCallback(() => {
+    const toggleShowConfirmPassword = () => {
         setShowConfirmPassword(prevState => !prevState)
-    }, [])
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -82,7 +81,7 @@ function Auth() {
             dispatch(registerUser({
                 password1: passwordValue,
                 password2: confirmPasswordValue,
-                deviceID: fingerPrint
+                deviceID: deviceFingerprint
             }))
             .unwrap()
             .then(res => {
@@ -101,7 +100,7 @@ function Auth() {
         } else if (pathname === '/login') {
             dispatch(loginUser({
                 password: passwordValue,
-                deviceID: fingerPrint
+                deviceID: deviceFingerprint
             }))
             .unwrap()
             .then(() => {
@@ -112,7 +111,7 @@ function Auth() {
                 dispatch(hideBackdrop())
                 dispatchPassword({
                     type: 'LOGIN_ERROR',
-                    passwordHelperText: err.error[0]
+                    passwordHelperText: err?.error[0]
                 })
                 console.log(err)
             })
@@ -140,26 +139,7 @@ function Auth() {
         }
     }, [passwordIsValid, confirmPasswordIsValid])
 
-    useEffect(() => {
-        // Initialize the agent at application startup.
-        const fpPromise = new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.onload = resolve;
-            script.onerror = reject;
-            script.async = true;
-            script.src = 'https://cdn.jsdelivr.net/npm/'
-                + '@fingerprintjs/fingerprintjs-pro@3/dist/fp.min.js';
-            document.head.appendChild(script);
-        })
-        .then(() => FingerprintJS.load({
-            token: process.env.REACT_APP_FINGERPRINT
-        }));
 
-        // Get the visitor identifier when you need it.
-        fpPromise
-            .then(fp => fp.get())
-            .then(result => setFingerPrint(result.visitorId));
-    }, [])
 
     return (
         <AuthWrapper>
@@ -198,9 +178,9 @@ function Auth() {
                             <Button
                                 fullWidth
                                 type="submit"
-                                disabled={!buttonIsEnabled}
+                                disabled={!buttonIsEnabled || !deviceFingerprint}
                             >
-                                { pathname === '/signup' ? 'Create my wallet' : 'Access my wallet' }
+                                { !deviceFingerprint ? 'loading ID' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') }
                             </Button>
                         </Grid>
                     </Grid>

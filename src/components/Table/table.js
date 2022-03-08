@@ -42,6 +42,10 @@ export const Table = styled.table`
         font-weight: 500;
         color: #3E554B;
     }
+
+    & a {
+        color: #097246;
+    }
 `
 
 export const EmptyTable = styled.div`
