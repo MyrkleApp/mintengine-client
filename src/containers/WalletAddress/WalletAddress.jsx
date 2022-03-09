@@ -44,15 +44,15 @@ function WalletAddress() {
     useEffect(() => {
         const getActiveWalletPassphrase = async () => {
             //!adjust "const algorandPassphrase" to work for all networks and not just algorand
-            if (activeWalletAddress && !algorandPassphrase) {
+            if (activeWalletAddress) {
                 const allPassphrases = await db.getPassphrase()
                 const activePassphrase = await allPassphrases.filter(obj => obj.doc[activeWalletAddress])[0]
                 const decryptedPassphrase = decryptString(activePassphrase.doc[activeWalletAddress])
-                dispatch(setAlgorandPassphrase(decryptedPassphrase))
+                dispatch(setAlgorandPassphrase(decryptedPassphrase || ''))
             }
         }
         getActiveWalletPassphrase()
-    }, [activeWalletAddress, deviceFingerprint])
+    }, [activeWalletAddress, deviceFingerprint, dispatch])
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 

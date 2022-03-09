@@ -11,7 +11,7 @@ function useEncrypt() {
 
     const decryptString = (ciphertext) => {
         const bytes = CryptoJS.AES.decrypt(ciphertext, key);
-        const originalText = bytes.toString(CryptoJS.enc.Utf8);
+        const originalText = bytes?.toString(CryptoJS.enc.Utf8);
         return originalText;
     };
 

@@ -210,7 +210,6 @@ export const updateActiveWallet = createAsyncThunk(`${namespace}/updateActiveWal
   try {
     const { data } = await axios.patch(`/algorand/v1/wallet/${objData.id}/`, objData)
     dispatch(getActiveAlgorandWallet())
-    dispatch(setAlgorandPassphrase(''))
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
