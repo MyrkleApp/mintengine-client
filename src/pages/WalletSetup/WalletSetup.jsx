@@ -12,6 +12,7 @@ import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
 import { CREATE } from '../../constants/walletStatus';
 import { ALGO, XRP } from '../../constants/network';
 import useSubmit from '../../Hooks/Submit';
+import { useSelector } from 'react-redux';
 
 
 function WalletSetup() {
@@ -20,6 +21,7 @@ function WalletSetup() {
     const { pathname } = location
     const urlQueryParams = new URLSearchParams(location.search)
     const selectedWallet = urlQueryParams.get('wallet')
+    const { isLoggedIn } = useSelector(state => state.auth)
     const { handleSubmit } = useSubmit()
 
     const submitSuccess = () => {
@@ -44,10 +46,7 @@ function WalletSetup() {
             <WalletWrapper
                 title="WALLET SETUP"
                 description="Setup a wallet on one blockchain and you can set up the other in the profile section."
-                /**
-                 *!!!!!!! REMOVE ARROW BACK ICON FOR WHEN THER IS NO USER !!!!!!
-                 */
-                link={ pathname === '/create-wallet' ? '/wallet-setup' : '/settings' }
+                link={ pathname === '/create-wallet' ? '/wallet-setup' : (isLoggedIn ? '/settings' : '') }
             >
             {
                 pathname === '/wallet-setup' &&

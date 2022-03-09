@@ -8,19 +8,19 @@ export const ScannerContainer = styled.div`
     left: 50%;
     z-index: 2000;
     position: fixed;
-    background-color: gray;
-    box-shadow: 0 0 15px #424242;
+    background-color: white;
+    box-shadow: 0 0 22px gray;
     margin-top: -300px;
     margin-left: -225px;
     border-radius: 20px;
 
     & button {
-        background-color: white;
-        color: '#0EB56F';
+        background-color: #0EB56F;
+        color: white;
         text-transform: uppercase;
         margin-bottom: 30px;
         padding: 15px 15px;
-        box-shadow: 0 0 5px white;
+        box-shadow: 0 0 5px gray;
         font-size: 16px;
         font-weight: bold;
         border-radius: 12px;
@@ -29,7 +29,7 @@ export const ScannerContainer = styled.div`
     }
 
     & a {
-        color: white;
+        color: black;
         font-weight: bold;
     }
 `

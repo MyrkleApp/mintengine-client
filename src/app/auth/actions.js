@@ -8,6 +8,7 @@ const registerUserFulfilled = (state, { payload }) => {
     state.register.status = HTTP_STATUS.FULFILLED
     state.token = payload.key
     localStorage.setItem('mint-engine', JSON.stringify(payload.key))
+    state.isLoggedIn = true
 }
 
 const registerUserRejected = (state, { payload }) => {
@@ -23,11 +24,16 @@ const loginUserFulfilled = (state, { payload }) => {
     state.login.status = HTTP_STATUS.FULFILLED
     state.token = payload.key
     localStorage.setItem('mint-engine', JSON.stringify(payload.key))
+    state.isLoggedIn = true
 }
 
 const loginUserRejected = (state, { payload }) => {
     state.login.status = HTTP_STATUS.REJECTED
     state.login.error = payload
+}
+
+const getUserFulfilled = (state, { payload }) => {
+    state.isLoggedIn = true
 }
 
 export {
@@ -36,5 +42,6 @@ export {
     registerUserRejected,
     loginUserPending,
     loginUserFulfilled,
-    loginUserRejected
+    loginUserRejected,
+    getUserFulfilled
 }

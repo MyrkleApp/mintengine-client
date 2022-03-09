@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../axios'
 import { 
+  getUserFulfilled,
   loginUserFulfilled, 
   loginUserPending, 
   loginUserRejected, 
@@ -29,6 +30,15 @@ export const loginUser = createAsyncThunk(`${namespace}/loginUser`, async (objDa
   }
 })
 
+export const getUser = createAsyncThunk(`${namespace}/getUser`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get('/accounts/user/')
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -36,10 +46,12 @@ const authSlice = createSlice({
     register: { status: null, error: "" },
     login: { status: null, error: "" },
     token: null,
+    isLoggedIn: false,
   },
   reducers: {
     logout(state) {
       state.token = null;
+      state.isLoggedIn = false
       localStorage.removeItem('mint-engine')
     },
   },
@@ -51,6 +63,8 @@ const authSlice = createSlice({
     [loginUser.pending]: loginUserPending,
     [loginUser.fulfilled]: loginUserFulfilled,
     [loginUser.rejected]: loginUserRejected,
+
+    [getUser.fulfilled]: getUserFulfilled
   }
 })
 

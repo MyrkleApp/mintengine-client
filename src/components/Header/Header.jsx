@@ -1,13 +1,24 @@
-import React, { Fragment } from 'react'
-import { useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import logo from '../../assets/icons/logo.svg'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import * as Styles from './header'
+import { useSelector } from 'react-redux'
+import useSubmit from '../../Hooks/Submit'
+import { getUser } from '../../app/auth/authSlice'
 
 
 function Header() {
     const { pathname } = useLocation() 
+    const history = useHistory()
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const { handleSubmit } = useSubmit()
+ 
+    useEffect(() => {
+        if (localStorage.getItem('mint-engine')) {
+          handleSubmit(getUser(), () => history.push('/wallet'), (err) => console.log(err));
+        }
+    }, [])
 
     return (
         <Fragment>
@@ -20,9 +31,13 @@ function Header() {
                         </Link>
                     </div>
                     <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>
-                        <Link to={ pathname === '/signup' ? '/login' : '/signup' }>
-                            { pathname === '/signup' ? 'LOGIN' : 'SIGN UP' }
-                        </Link>
+                        {
+                            !isLoggedIn && (
+                                <Link to={ pathname === '/signup' ? '/login' : '/signup' }>
+                                    { pathname === '/signup' ? 'LOGIN' : 'SIGN UP' }
+                                </Link>
+                            )
+                        }
                         <MobileSidebar />   
                     </div>
                 </div>

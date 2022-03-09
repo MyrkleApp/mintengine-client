@@ -22,9 +22,12 @@ import NewAssets from './pages/NewAssets/NewAssets';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import useFingerprint from './Hooks/Fingerprint';
 
+
 function App() {
+  
   //get unique browser ID
   useFingerprint()
+
 
   return (
     <Router>

@@ -14,7 +14,7 @@ function Sidebar({ mobile }) {
     const { pathname } = useLocation()
     const history = useHistory()
     const dispatch = useDispatch()
-    const userToken = useSelector(state => state.auth.token)
+    const { isLoggedIn } = useSelector(state => state.auth)
 
     const activeLink = (link1, link2) => {
         if (link1 === pathname || link2 === pathname) {
@@ -76,7 +76,7 @@ function Sidebar({ mobile }) {
                 : 
                 <>
                 {
-                    userToken 
+                    isLoggedIn 
                     ? mainContent 
                     :
                     <>
