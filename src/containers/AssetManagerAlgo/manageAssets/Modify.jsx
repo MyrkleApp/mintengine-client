@@ -90,7 +90,7 @@ function Modify({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleModify}>modify</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleModify}>modify</Button>
             </ButtonContainer>
         </Fragment>
     )

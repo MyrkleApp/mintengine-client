@@ -54,7 +54,7 @@ function Destroy({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleDestroy}>delete</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleDestroy}>delete</Button>
             </ButtonContainer>
         </Fragment>
     )

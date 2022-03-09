@@ -68,7 +68,7 @@ function Freeze({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleFreeze}>freeze</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleFreeze}>freeze</Button>
             </ButtonContainer>
         </Fragment>
     )

@@ -39,28 +39,3 @@ function useFingerprint() {
 }
 
 export default useFingerprint
-
-
-
-// import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react'
-
-
-// function useFingerprint() {
-//     const dispatch = useDispatch()
-
-//     const {
-//         isLoading,
-//         error,
-//         data,
-//     } = useVisitorData();
-
-//     useEffect(() => {
-//         if (data) {
-//             dispatch(setDeviceFingerprint(data.visitorId))
-//         }
-//     }, [data])
-
-
-// }
-
-// export default useFingerprint

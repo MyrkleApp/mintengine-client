@@ -55,7 +55,7 @@ function OptIn({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth onClick={handleOptIn} disabled={!formIsValid || !assetIsValidData.name}>add</Button>
+                <Button fullWidth onClick={handleOptIn} disabled={!formIsValid || !assetIsValidData?.name}>add</Button>
             </ButtonContainer>
         </Fragment>
     )

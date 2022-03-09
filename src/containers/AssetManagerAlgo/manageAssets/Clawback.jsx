@@ -80,7 +80,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData.name} onClick={handleClawback}>clawback</Button>
+                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleClawback}>clawback</Button>
             </ButtonContainer>
         </Fragment>
     )

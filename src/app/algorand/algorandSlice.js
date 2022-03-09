@@ -5,9 +5,20 @@ import * as actions from './actions';
 
 const namespace = 'algorand'
 
-export const createAlgorandWallet = createAsyncThunk(`${namespace}/createAlgorandWallet`, async (objData, { rejectWithValue }) => {
+
+export const getActiveAlgorandWallet = createAsyncThunk(`${namespace}/getActiveAlgorandWallet`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/algorand/v1/active_wallet/`)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
+export const createAlgorandWallet = createAsyncThunk(`${namespace}/createAlgorandWallet`, async (objData, { rejectWithValue, dispatch }) => {
   try {
     const { data } = await axios.post('/algorand/v1/wallet/', objData)
+    dispatch(getActiveAlgorandWallet())
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
@@ -17,15 +28,6 @@ export const createAlgorandWallet = createAsyncThunk(`${namespace}/createAlgoran
 export const confirmAlgorandPassphrase = createAsyncThunk(`${namespace}/confirmAlgorandPassphrase`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.put(`/algorand/v1/wallet/${objData.id}/`, objData)
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response.data)
-  }
-})
-
-export const getActiveAlgorandWallet = createAsyncThunk(`${namespace}/getActiveAlgorandWallet`, async (objData, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.get(`/algorand/v1/active_wallet/`)
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)
