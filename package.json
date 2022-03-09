@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.6.0",
     "@fingerprintjs/fingerprintjs": "^3.3.2",
     "@fingerprintjs/fingerprintjs-pro": "^3.5.6",
+    "@fingerprintjs/fingerprintjs-pro-react": "^0.2.1",
     "@mui/icons-material": "^5.2.4",
     "@mui/lab": "^5.0.0-alpha.70",
     "@mui/material": "^5.2.4",

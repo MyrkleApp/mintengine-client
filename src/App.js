@@ -21,7 +21,7 @@ import Exchange from './pages/Exchange/Exchange';
 import NewAssets from './pages/NewAssets/NewAssets';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import useFingerprint from './Hooks/Fingerprint';
-
+import PrivateRoute from './privateRoute'
 
 function App() {
   
@@ -48,18 +48,43 @@ function App() {
                     <Switch location={location}>
                       <Route exact path="/" component={LandingPage} />
                       <Route exact path={['/signup', '/login']} component={Auth} />
-                      <Route exact path={["/wallet-setup", "/create-wallet"]} component={WalletSetup} />
-                      <Route exact path="/create-wallet/:wallet" component={CreateNewWallet} />
-                      <Route exact path="/verify-wallet/algo" component={VerifyAlgoWallet} />
-                      <Route exact path="/verify-wallet/xrp" component={VerifyRippleWallet} />
-                      <Route exact path="/import-wallet/algo" component={ImportAlgoWallet} />
-                      <Route exact path="/import-wallet/xrp" component={ImportRippleWallet} />
-                      <Route exact path="/wallet" component={Wallet} />
-                      <Route exact path="/transactions" component={Transactions} />
-                      <Route exact path="/asset-manager" component={AssetManager} />
-                      <Route exact path="/new-assets" component={NewAssets} />
-                      <Route exact path="/exchange" component={Exchange} />
-                      <Route exact path="/settings" component={Settings} />
+                      
+                      <PrivateRoute exact path={["/wallet-setup", "/create-wallet"]}>
+                        <WalletSetup />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/create-wallet/:wallet">
+                        <CreateNewWallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/verify-wallet/algo">
+                        <VerifyAlgoWallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/verify-wallet/xrp">
+                        <VerifyRippleWallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/import-wallet/algo">
+                        <ImportAlgoWallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/import-wallet/xrp">
+                        <ImportRippleWallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/wallet">
+                        <Wallet />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/transactions">
+                        <Transactions />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/asset-manager">
+                        <AssetManager />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/new-assets">
+                        <NewAssets />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/exchange">
+                        <Exchange />
+                      </PrivateRoute>
+                      <PrivateRoute exact path="/settings">
+                        <Settings />
+                      </PrivateRoute>
                       <Route component={NotFound} />
                     </Switch>
                   </CSSTransition>

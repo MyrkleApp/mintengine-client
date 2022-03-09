@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router'
-import { Button, CopyButton } from '../../components/UI/Button/button'
+import { Button } from '../../components/UI/Button/button'
 import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
-import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
 import { useDispatch, useSelector } from 'react-redux'
 import { confirmAlgorandPassphrase, incorrectPassphraseError } from '../../app/algorand/algorandSlice'
 import Modal from '../../components/UI/Modal/Modal'
@@ -40,21 +39,6 @@ function VerifyWallet() {
             return {
                 ...prevState, [e.target.name]: e.target.value
             }
-        })
-    }
-
-    const handlePastePassphrase = () => {
-        if (!navigator.clipboard.readText) return
-
-        navigator.clipboard.readText().then(text => {
-            const copiedTextToArray = text.split(" ")
-            setMissingWords({
-                num3: copiedTextToArray[2] || '', 
-                num5: copiedTextToArray[4] || '', 
-                num12: copiedTextToArray[11] || '', 
-                num15: copiedTextToArray[14] || '', 
-                num24: copiedTextToArray[23] || ''
-            })
         })
     }
 
@@ -175,10 +159,7 @@ function VerifyWallet() {
                         </Styles.Word>
                     </Styles.WordsBox>
                     
-                    <Styles.ButtonsContainer>   
-                        <CopyButton outlined onClick={handlePastePassphrase}>
-                            paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
-                        </CopyButton>   
+                    <Styles.ButtonsContainer> 
                         <Button 
                             fullWidth 
                             disabled={!formIsValid} 

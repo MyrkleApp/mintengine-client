@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const deviceFingerprintSlice = createSlice({
     name: 'deviceFingerprint',
     initialState: {
-        deviceFingerprint: ''
+        deviceFingerprint: '',
+        error: ''
     },
     reducers: {
         setDeviceFingerprint(state, action) {

@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import { FpjsProvider } from '@fingerprintjs/fingerprintjs-pro-react';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <FpjsProvider loadOptions = {{ apiKey: process.env.REACT_APP_FINGERPRINT }}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </FpjsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
