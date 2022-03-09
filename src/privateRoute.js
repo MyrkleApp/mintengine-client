@@ -7,7 +7,7 @@ function PrivateRoute ({ children, ...rest }) {
 
     return (
       <Route {...rest} render={() => {
-        return isLoggedIn
+        return (isLoggedIn || localStorage.getItem('mint-engine'))
           ? children
           : <Redirect to='/' />
       }} />

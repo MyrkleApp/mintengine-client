@@ -7,6 +7,10 @@ export const Root = styled.div`
     background-color: white;
     padding: 20px 0 150px 0;
     border-radius: 20px;
+
+    @media(max-width: 1200px) {
+        margin-top: 150px;
+    }
 `
 
 export const Title = styled.h2`

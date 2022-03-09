@@ -115,10 +115,9 @@ export const getAlgorandSendList = createAsyncThunk(`${namespace}/getAlgorandSen
   }
 })
 
-export const sendAlgorand = createAsyncThunk(`${namespace}/sendAlgorand`, async (objData, { rejectWithValue, dispatch }) => {
+export const sendAlgorand = createAsyncThunk(`${namespace}/sendAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post('/algorand/v1/send/', objData)
-    dispatch(getActiveAlgorandWallet())
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)

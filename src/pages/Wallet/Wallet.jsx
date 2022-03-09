@@ -23,10 +23,10 @@ function Dashboard() {
     const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
     const { tabValue, handleTabChange } = useTabs(tabs[0])
-    const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()])
+    const { status: activeWalletStatus, data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()])
 
     useEffect(() => {
-        if (!activeWalletData) {
+        if (!activeWalletData && (activeWalletStatus !== HTTP_STATUS.PENDING)) {
             dispatch(getActiveAlgorandWallet())
         }
     }, [network, activeWalletData, dispatch])
@@ -34,7 +34,7 @@ function Dashboard() {
     const { status: holdingsStatus, data: holdingsData } = useSelector(state => state.algorand.holdings)
 
     useEffect(() => {
-        if (!holdingsData) {
+        if (!holdingsData && holdingsStatus !== HTTP_STATUS.PENDING) {
             dispatch(getAlgorandHoldings())
         }
     }, [holdingsData])

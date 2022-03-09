@@ -5,7 +5,7 @@ export const Table = styled.table`
     width: 100%;
     padding-bottom: 50px;
 
-    & tr:first-child {
+    & thead:first-child {
         background-color: #E7FDF3;
     }
 

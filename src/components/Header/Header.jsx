@@ -3,22 +3,33 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import logo from '../../assets/icons/logo.svg'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import * as Styles from './header'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useSubmit from '../../Hooks/Submit'
-import { getUser } from '../../app/auth/authSlice'
-
+import { getUser, logout } from '../../app/auth/authSlice'
+import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
 
 function Header() {
     const { pathname } = useLocation() 
     const history = useHistory()
+    const dispatch = useDispatch()
     const { isLoggedIn } = useSelector(state => state.auth)
     const { handleSubmit } = useSubmit()
+
+    const getUserSuccessCallback = () => {
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const getUserErrorCallback = () => {
+        dispatch(logout())
+        history.push('/')
+    }
  
     useEffect(() => {
         if (localStorage.getItem('mint-engine')) {
-          handleSubmit(getUser(), () => history.push('/wallet'), (err) => console.log(err));
+          handleSubmit(getUser(), getUserSuccessCallback, getUserErrorCallback);
         }
     }, [])
+
 
     return (
         <Fragment>
@@ -42,7 +53,6 @@ function Header() {
                     </div>
                 </div>
             </Styles.Root>
-            {/* <Styles.WhiteStripe /> */}
         </Fragment>
     )
 }

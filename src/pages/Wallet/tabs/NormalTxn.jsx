@@ -14,9 +14,9 @@ import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithout
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
 import { ThreeDots } from 'react-loader-spinner'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
-import { sendAlgorand } from '../../../app/algorand/algorandSlice'
+import { sendAlgorand, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import { Grid } from '@mui/material'
 import useAddressIsValid from '../../../Hooks/AddressIsValid'
 import useFormValidity from '../../../Hooks/FormValidity'
@@ -34,6 +34,8 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
  */
 
 function NormalTxn() {
+    const dispatch = useDispatch()
+
     const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
 
@@ -144,21 +146,22 @@ function NormalTxn() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
-    let sendStatus = ""
+    const [sendCurrencyStatus, setSendCurrencyStatus] = useState('')
 
     const submitSuccessCallback = (res) => {
+        setSendCurrencyStatus(HTTP_STATUS.FULFILLED)
         handleModalOpen()
-        sendStatus = HTTP_STATUS.FULFILLED
+        dispatch(getActiveAlgorandWallet())
         console.log(res)
     }
 
     const submitErrorCallback = (err) => {
+        setSendCurrencyStatus(HTTP_STATUS.REJECTED)
         handleModalOpen()
-        sendStatus = HTTP_STATUS.REJECTED
         console.log(err)
     }
 
-    const sendAsset = () => {
+    const sendCurrency = () => {
 
         const formData = new FormData()
         formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
@@ -177,11 +180,15 @@ function NormalTxn() {
         
         formData.append('phrase', passphrase)
 
+        // for (let pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]); 
+        // }
+
         handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
     }
 
     
-    const success = sendStatus === HTTP_STATUS.FULFILLED
+    const success = sendCurrencyStatus === HTTP_STATUS.FULFILLED
 
     return (
         <Fragment>
@@ -301,7 +308,7 @@ function NormalTxn() {
             </TransactionFee>
 
             <ButtonContainer>
-                <Button fullWidth onClick={sendAsset} disabled={!formIsValid || !allAddressesAreValid}>send asset</Button>
+                <Button fullWidth onClick={sendCurrency} disabled={!formIsValid || !allAddressesAreValid}>send asset</Button>
             </ButtonContainer>
 
             {
@@ -322,7 +329,7 @@ function NormalTxn() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Sent successfully' : 'something went wrong'
+                        success ? 'Sent successfully' : 'Sorry, unable to dispense at the moment'
                     }
                 />
             </Modal>

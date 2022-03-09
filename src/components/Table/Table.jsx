@@ -6,13 +6,17 @@ function Table({ columnTitles, rows, noDataTitle, noDataText }) {
     return (
         <Fragment>
             <Styles.Table>
-                <tr>
-                    { columnTitles?.map((item, i) => (
-                        <th key={i}>{item}</th>
-                    ))}
-                </tr>
+                <thead>
+                    <tr>
+                        { columnTitles?.map((item, i) => (
+                            <th key={i}>{item}</th>
+                        ))}
+                    </tr>
+                </thead>
 
-                { rows }
+                <tbody>
+                    { rows }
+                </tbody>
                 
             </Styles.Table>
 

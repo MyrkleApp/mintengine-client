@@ -75,7 +75,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                                 <span>{asset.name}</span>
                                             </div>
                                             <div className="leftBottom">
-                                                <span>ALGO</span>
+                                                <span>{asset.unit}</span>
                                             </div>
                                         </div>
                                         <div className="right">

@@ -1,10 +1,12 @@
 import { Grid } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/UI/Button/button'
 import * as Styles from './landingPageTop'
 
 function LandingPageTop() {
+    const { isLoggedIn } = useSelector(state => state.auth)
     
     return (
         <Styles.LandingTopRoot>
@@ -34,12 +36,14 @@ function LandingPageTop() {
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    <Link to='/signup'>
-                        <Button>get started</Button>
+                    <Link to={ !isLoggedIn ? '/signup' : '/wallet'}>
+                        <Button>{!isLoggedIn ? 'get started' : 'my wallet'}</Button>
                     </Link>
-                    <Link to='/login'>
-                        <Button outlined>login</Button>
-                    </Link>
+                    { !isLoggedIn && (
+                        <Link to='/login'>
+                            <Button outlined>login</Button>
+                        </Link>
+                    )}
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>

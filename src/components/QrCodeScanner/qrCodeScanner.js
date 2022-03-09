@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ScannerContainer = styled.div`
-    padding: 120px 0 170px;
+    padding: 120px 0 170px 0;
     height: calc(100vh - 350px);
     width: 450px;
     top: 50%;
@@ -13,6 +13,15 @@ export const ScannerContainer = styled.div`
     margin-top: -300px;
     margin-left: -225px;
     border-radius: 20px;
+    overflow: hidden;
+
+    @media(max-width: 600px) {
+        width: 100%;
+        left: 0;
+        margin-left: 0;
+        height: calc(100% - 500px);
+        padding: 70px 0 170px 0;
+    }
 
     & button {
         background-color: #0EB56F;
