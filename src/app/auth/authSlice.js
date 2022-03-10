@@ -1,14 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../axios'
-import { 
-  getUserFulfilled,
-  loginUserFulfilled, 
-  loginUserPending, 
-  loginUserRejected, 
-  registerUserFulfilled, 
-  registerUserPending, 
-  registerUserRejected 
-} from './actions'
+import * as actions from './actions'
 
 const namespace = 'auth'
 
@@ -39,6 +31,15 @@ export const getUser = createAsyncThunk(`${namespace}/getUser`, async (objData, 
   }
 })
 
+export const verifyPassword = createAsyncThunk(`${namespace}/verifyPassword`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/accounts/verify_password/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -47,6 +48,7 @@ const authSlice = createSlice({
     login: { status: null, error: "" },
     token: null,
     isLoggedIn: false,
+    verifyPassword: { status: null, data: null, error: null }
   },
   reducers: {
     logout(state) {
@@ -56,15 +58,19 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    [registerUser.pending]: registerUserPending,
-    [registerUser.fulfilled]: registerUserFulfilled,
-    [registerUser.rejected]: registerUserRejected,
+    [registerUser.pending]: actions.registerUserPending,
+    [registerUser.fulfilled]: actions.registerUserFulfilled,
+    [registerUser.rejected]: actions.registerUserRejected,
     
-    [loginUser.pending]: loginUserPending,
-    [loginUser.fulfilled]: loginUserFulfilled,
-    [loginUser.rejected]: loginUserRejected,
+    [loginUser.pending]: actions.loginUserPending,
+    [loginUser.fulfilled]: actions.loginUserFulfilled,
+    [loginUser.rejected]: actions.loginUserRejected,
 
-    [getUser.fulfilled]: getUserFulfilled
+    [getUser.fulfilled]: actions.getUserFulfilled,
+
+    [verifyPassword.pending]: actions.verifyPasswordPending,
+    [verifyPassword.fulfilled]: actions.verifyPasswordFulfilled,
+    [verifyPassword.rejected]: actions.verifyPasswordRejected
   }
 })
 

@@ -11,3 +11,9 @@ export const networkDataToReturn = {
         return state.algorand.activeWallet
     }
 }
+
+export const coinToReturn = {
+    algorand: 'algo',
+    ripple: 'xrp'
+}
+

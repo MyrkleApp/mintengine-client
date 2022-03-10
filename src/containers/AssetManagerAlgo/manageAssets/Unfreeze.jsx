@@ -5,30 +5,24 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { checkAlgorandAssetIsValid, unfreezeAlgorand } from '../../../app/algorand/algorandSlice'
+import { unfreezeAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
-import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
-import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
-import { ThreeDots } from 'react-loader-spinner'
-import { LoaderContainer } from '../assetManagerAlgo'
-import { HTTP_STATUS } from '../../../constants/httpStatus'
+import useSelectInput from '../../../Hooks/SelectInput'
+import SelectInput from '../../../components/SelectInput/SelectInput'
 
 function Unfreeze({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue, targetAddressValue)
+    const { formIsValid } = useFormValidity(assetValue.id, targetAddressValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
-
-    //send check request on input change
-    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     const handleUnfreeze = () => {
         handleModalClose()
 
         const unfreezeData = { 
-            asset_id: assetIdValue, 
+            asset_id: assetValue.id, 
             target_addr: targetAddressValue, 
             note: noteValue, 
             phrase: passphrase 
@@ -40,17 +34,13 @@ function Unfreeze({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>UNFREEZE</ModalTitle>
             <p>Upon creation of an asset, you can specify an unfreeze address.</p>
-            <SelectWithoutDropdown
-                label="Asset ID"
-                value={assetIdValue}
-                handleChange={handleAssetIdChange}
-                asset={assetIsValidData}
+            <SelectInput
+                label="Asset"
+                value={assetValue.id}
+                asset={assetValue}
+                handleChange={(e) => handleAssetSelectChange('id', e)}
+                handleItemClick={setAssetValueByClick}
             />
-            <p>{assetIsValidData?.message}</p>
-
-            { assetIsValidStatus === HTTP_STATUS.PENDING && (
-                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
-            )}
             <FormControl 
                 type="text"
                 label="Target Address"
@@ -64,7 +54,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleUnfreeze}>unfreeze</Button>
+                <Button fullWidth disabled={!formIsValid} onClick={handleUnfreeze}>unfreeze</Button>
             </ButtonContainer>
         </Fragment>
     )

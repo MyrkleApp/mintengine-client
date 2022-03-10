@@ -5,29 +5,23 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { checkAlgorandAssetIsValid, destroyAlgorand } from '../../../app/algorand/algorandSlice'
+import { destroyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
-import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
-import { HTTP_STATUS } from '../../../constants/httpStatus'
-import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
-import { LoaderContainer } from '../assetManagerAlgo'
-import { ThreeDots } from 'react-loader-spinner'
+import useSelectInput from '../../../Hooks/SelectInput'
+import SelectInput from '../../../components/SelectInput/SelectInput'
 
 function Destroy({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetIdValue)
+    const { formIsValid } = useFormValidity(assetValue.id)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
-
-    //send check request on input change
-    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     const handleDestroy = () => {
         handleModalClose()
 
         const destroyData = { 
-            asset_id: assetIdValue, 
+            asset_id: assetValue.id, 
             note: noteValue, 
             phrase: passphrase
         }
@@ -38,15 +32,13 @@ function Destroy({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>DELETE TOKEN</ModalTitle>
             <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
-            <SelectWithoutDropdown
-                label="Asset ID"
-                value={assetIdValue}
-                handleChange={handleAssetIdChange}
-                asset={assetIsValidData}
+            <SelectInput
+                label="Asset"
+                value={assetValue.id}
+                asset={assetValue}
+                handleChange={(e) => handleAssetSelectChange('id', e)}
+                handleItemClick={setAssetValueByClick}
             />
-            { assetIsValidStatus === HTTP_STATUS.PENDING && (
-                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
-            )}
             <FormControl 
                 label="Note"
                 textArea
@@ -54,7 +46,7 @@ function Destroy({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleDestroy}>delete</Button>
+                <Button fullWidth disabled={!formIsValid} onClick={handleDestroy}>delete</Button>
             </ButtonContainer>
         </Fragment>
     )

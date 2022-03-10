@@ -54,6 +54,26 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                 </ClickAwayListener>
 
                 <Styles.DropdownContainer show={open}>
+                    <Styles.DropdownItem onClick={() => handleItemClick({ id: '', amount: '' })}>
+                        <div className="left">
+                            <div className="leftTop">
+                                <img src={algorandLogo} alt="" />
+                                <span>Algorand</span>
+                            </div>
+                            <div className="leftBottom">
+                                <span>Algo</span>
+                            </div>
+                        </div>
+                        <div className="right">
+                            <div className="rightTop">
+                                {/* <span>{asset.amount}</span> */}
+                            </div>
+                            <div className="rightBottom">
+                                {/* <span>Asset ID:</span>
+                                <span>{asset.id}</span> */}
+                            </div>
+                        </div>
+                    </Styles.DropdownItem>
                     {
                         status === HTTP_STATUS.PENDING ? (
                             <Styles.LoaderContainer>

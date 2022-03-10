@@ -5,35 +5,29 @@ import FormControl from '../../../components/FormControl/FormControl'
 import { Button } from '../../../components/UI/Button/button'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { checkAlgorandAssetIsValid, modifyAlgorand } from '../../../app/algorand/algorandSlice'
+import { modifyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
-import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
-import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
-import { LoaderContainer } from '../assetManagerAlgo'
-import { ThreeDots } from 'react-loader-spinner'
-import { HTTP_STATUS } from '../../../constants/httpStatus'
+import SelectInput from '../../../components/SelectInput/SelectInput'
+import useSelectInput from '../../../Hooks/SelectInput'
 
 function Modify({ handleModalClose, handleResponse }) {
-    const { value: assetIdValue, handleChange: handleAssetIdChange } = useFormControl()
+    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
     const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(
-        assetIdValue, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
+        assetValue.id, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
     )
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
-
-    //send check request on input change
-    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     const handleModify = () => {
         handleModalClose()
 
         const modifyData = { 
-            asset_id: assetIdValue, 
+            asset_id: assetValue.id, 
             manager_addr: managerAddressValue, 
             reserve_addr: reserveAddressValue,
             freeze_addr: freezeAddressValue,
@@ -48,17 +42,13 @@ function Modify({ handleModalClose, handleResponse }) {
         <Fragment>
             <ModalTitle>MODIFY</ModalTitle>
             <p>After an asset has been created only the manager, reserve, freeze and clawback accounts can be changed.</p>
-            <SelectWithoutDropdown
-                label="Asset ID"
-                value={assetIdValue}
-                handleChange={handleAssetIdChange}
-                asset={assetIsValidData}
+            <SelectInput
+                label="Asset"
+                value={assetValue.id}
+                asset={assetValue}
+                handleChange={(e) => handleAssetSelectChange('id', e)}
+                handleItemClick={setAssetValueByClick}
             />
-            <p>{assetIsValidData?.message}</p>
-
-            { assetIsValidStatus === HTTP_STATUS.PENDING && (
-                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
-            )}
             <FormControl 
                 type="text"
                 label="Manager's Address"
@@ -90,7 +80,7 @@ function Modify({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid || !assetIsValidData?.name} onClick={handleModify}>modify</Button>
+                <Button fullWidth disabled={!formIsValid} onClick={handleModify}>modify</Button>
             </ButtonContainer>
         </Fragment>
     )

@@ -4,6 +4,7 @@ import backdropReducer from './backdrop/backdropSlice'
 import algorandReducer from './algorand/algorandSlice'
 import networkReducer from './network/networkSlice'
 import deviceFingerprintReducer from './deviceFingerprint/deviceFingerprintSlice'
+import priceReducer from './price/priceSlice'
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     algorand: algorandReducer,
     network: networkReducer,
     deviceFingerprint: deviceFingerprintReducer,
+    price: priceReducer,
   },
 })
