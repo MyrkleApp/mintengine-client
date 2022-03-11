@@ -19,7 +19,7 @@ import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 function Web3Ticket() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
@@ -70,6 +70,7 @@ function Web3Ticket() {
                                 type="text"
                                 value={assetNameValue}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -86,6 +87,7 @@ function Web3Ticket() {
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 label="Total Suppy"

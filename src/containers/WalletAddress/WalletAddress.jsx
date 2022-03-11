@@ -18,7 +18,6 @@ import { verifyPassword } from '../../app/auth/authSlice'
 import { getCoinPrice } from '../../app/price/priceSlice';
 import ModalResponse from '../../components/ModalResponse/ModalResponse';
 
-
 function WalletAddress() {
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
@@ -31,6 +30,7 @@ function WalletAddress() {
     const algorandPassphrase = useSelector(state => state.algorand.passphrase)
     const textToCopy = network === ALGORAND ? algorandPassphrase : rippleSeed
     const balanceInDollars = (coinPrice * activeWalletData?.balance || 0).toFixed(3)
+    const [qrCodeIsLoading, setQrCodeIsLoading] = useState(true)
     const { handleSubmit } = useSubmit()
 
     const showPassphrase = () => {
@@ -159,7 +159,10 @@ function WalletAddress() {
             </Styles.Parent>
 
             <Modal open={qrCodeModalState} handleClose={handleQrCodeModalClose}>
-                <Styles.QrCodeMainImg src={activeWalletQrCode} />             
+                <Styles.QrCodeMainImgLoaderContainer show={qrCodeIsLoading}>
+                    <ThreeDots height="200" width="200" color='gray' />
+                </Styles.QrCodeMainImgLoaderContainer>
+                <Styles.QrCodeMainImg src={activeWalletQrCode} onLoad={() => setQrCodeIsLoading(false)} />             
             </Modal>
 
             <Modal open={passwordModalState} handleClose={handlePasswordModalClose}>

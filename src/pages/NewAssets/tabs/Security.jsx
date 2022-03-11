@@ -20,7 +20,7 @@ import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
 function Security() {
     const { value: assetName, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
@@ -76,6 +76,7 @@ function Security() {
                                 type="text"
                                 value={assetName}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                     <img src={imageFrame} alt="" />
@@ -92,6 +93,7 @@ function Security() {
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
+                                maxLength="8"
                             />
                             <Grid item container xs={12} columnSpacing={2}>
                                 <Grid item xs={9}>
@@ -115,6 +117,7 @@ function Security() {
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 label="Metadata Hash"

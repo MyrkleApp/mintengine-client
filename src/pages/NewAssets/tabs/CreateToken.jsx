@@ -20,7 +20,7 @@ import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown
 function CreateToken() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -81,6 +81,7 @@ function CreateToken() {
                                 label="Token Name"
                                 value={assetNameValue}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -97,6 +98,7 @@ function CreateToken() {
                                 label="Unit"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
+                                maxLength="8"
                             />
                             <Grid item container xs={12} columnSpacing={2}>
                                 <Grid item xs={9}>
@@ -120,6 +122,7 @@ function CreateToken() {
                                 label="Asset URL"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 textArea

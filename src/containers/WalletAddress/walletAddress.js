@@ -166,6 +166,14 @@ export const RippleSeed = styled.span`
     line-height: 25px;
 `
 
+export const QrCodeMainImgLoaderContainer = styled.div`
+    width: 400px;
+    height: 400px;
+    display: ${props => props.show ? 'flex' : 'none'};
+    justify-content: center;
+    align-items: center;
+`
+
 export const QrCodeMainImg = styled.img`
     width: 400px;
     height: auto;

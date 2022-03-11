@@ -19,7 +19,7 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 function CommonNft() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
@@ -72,6 +72,7 @@ function CommonNft() {
                                 type="text"
                                 value={assetNameValue}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                     <img src={imageFrame} alt="" />
@@ -88,6 +89,7 @@ function CommonNft() {
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
+                                maxLength="8"
                             />
                             <FormControl 
                                 label="Total Suppy"
@@ -100,6 +102,7 @@ function CommonNft() {
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 textArea

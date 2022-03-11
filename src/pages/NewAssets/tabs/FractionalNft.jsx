@@ -20,7 +20,7 @@ import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown
 function FractionalNft() {
     const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
     const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
     const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
@@ -75,6 +75,7 @@ function FractionalNft() {
                                 type="text"
                                 value={assetNameValue}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -91,6 +92,7 @@ function FractionalNft() {
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
+                                maxLength="8"
                             />
                             <Grid item container xs={12} columnSpacing={2}>
                                 <Grid item xs={9}>
@@ -114,6 +116,7 @@ function FractionalNft() {
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 textArea

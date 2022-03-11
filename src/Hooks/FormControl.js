@@ -1,9 +1,16 @@
 import { useState } from 'react';
 
-function useFormControl() {
+function useFormControl(type) {
     const [value, setValue] = useState('')
 
     const handleChange = e => {
+        if (type === 'number') {
+            const numValue = e.target.value
+            const reg = new RegExp('^[0-9]*$');
+            if (!reg.test(numValue)) {
+                return
+            }
+        }
         setValue(e.target.value)
     }
 

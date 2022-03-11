@@ -70,6 +70,7 @@ function UniqueNft() {
                                 type="text"
                                 value={assetNameValue}
                                 handleChange={handleAssetNameChange}
+                                maxLength="32"
                             />
                             <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
@@ -86,12 +87,14 @@ function UniqueNft() {
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
+                                maxLength="8"
                             />
                             <FormControl 
                                 label="NFT URL"
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
+                                maxLength="96"
                             />
                             <FormControl 
                                 textArea
