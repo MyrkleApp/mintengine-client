@@ -8,7 +8,6 @@ import useFormControl from '../../../Hooks/FormControl'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useModal from '../../../Hooks/Modal'
-import { MY_ALGORAND_PASSPHRASE_STRING } from '../../../constants/passphrase'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
@@ -81,7 +80,7 @@ function CustomNft() {
                     
                     <Grid container columnSpacing={3}>
                         <Grid item xs={12} md={5}>
-                            <SharedStyles.Title>Custom Token</SharedStyles.Title>
+                            <SharedStyles.Title>Custom Asset</SharedStyles.Title>
                             <SharedStyles.Description>
                                 Mint Engine gives you the option to fully interact with the ASA creation layer and explores all the features provided by the smart contract.
                             </SharedStyles.Description>
@@ -189,7 +188,7 @@ function CustomNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created your custom nft' : 'an error occurred while creating your nft'
+                        success ? 'Successfully created your custom nft' : 'An error occurred while creating your asset'
                     }
                 />
             </Modal>

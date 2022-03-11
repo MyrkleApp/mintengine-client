@@ -43,7 +43,7 @@ function Footer() {
                         </a>
                     </div>
                 </div>
-                <p>Powered by 0xEngine Labs</p>
+                <p>Powered by Algorand</p>
             </div>
         </Styles.Root>
     )

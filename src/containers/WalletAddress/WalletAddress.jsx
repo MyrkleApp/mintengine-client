@@ -9,9 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ALGORAND, coinToReturn, networkDataToReturn, RIPPLE } from '../../constants/network';
 import { ThreeDots } from 'react-loader-spinner';
 import { HTTP_STATUS } from '../../constants/httpStatus';
-import DB from '../../app/db';
-import { setAlgorandPassphrase } from '../../app/algorand/algorandSlice';
-import useEncrypt from '../../Hooks/Encrypt'
 import useModal from '../../Hooks/Modal';
 import Modal from '../../components/UI/Modal/Modal';
 import useFormControl from '../../Hooks/FormControl';
@@ -19,20 +16,21 @@ import FormControl from '../../components/FormControl/FormControl'
 import useSubmit from '../../Hooks/Submit'
 import { verifyPassword } from '../../app/auth/authSlice'
 import { getCoinPrice } from '../../app/price/priceSlice';
+import ModalResponse from '../../components/ModalResponse/ModalResponse';
 
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
-    const deviceFingerprint = useSelector(state => state.deviceFingerprint.deviceFingerprint)
     const rippleSeed = 'c6c108b3e923ea40067d129715065d96733528fc4ae5317814f795999f22b88f866a3343237b206daf6537ab593cba0b42a8f51721a6df3c5771cdc9312afc46'
     const { status, data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
-    const { status: coinPriceStatus, data: coinPrice } = useSelector(state => state.price.price)
+    const { data: coinPrice } = useSelector(state => state.price.price)
     const activeWalletAddress = activeWalletData?.address
+    const activeWalletQrCode = activeWalletData?.qrcode
     const algorandPassphrase = useSelector(state => state.algorand.passphrase)
     const textToCopy = network === ALGORAND ? algorandPassphrase : rippleSeed
-    const { decryptString } = useEncrypt()
+    const balanceInDollars = (coinPrice * activeWalletData?.balance || 0).toFixed(3)
     const { handleSubmit } = useSubmit()
 
     const showPassphrase = () => {
@@ -42,24 +40,6 @@ function WalletAddress() {
     const hidePassphrase = () => {
         setOpen(false)
     }
-
-    const db = new DB()
-
-    /**
-     * retrieve passphrase stored in browser db
-     */
-    useEffect(() => {
-        const getActiveWalletPassphrase = async () => {
-            //!adjust "const algorandPassphrase" to work for all networks and not just algorand
-            if (activeWalletAddress) {
-                const allPassphrases = await db.getPassphrase()
-                const activePassphrase = await allPassphrases.filter(obj => obj.doc[activeWalletAddress])[0]
-                const decryptedPassphrase = decryptString(activePassphrase.doc[activeWalletAddress])
-                dispatch(setAlgorandPassphrase(decryptedPassphrase || ''))
-            }
-        }
-        getActiveWalletPassphrase()
-    }, [activeWalletAddress, deviceFingerprint, dispatch])
 
     useEffect(() => {
         dispatch(getCoinPrice({ coin: coinToReturn[network.toLowerCase()] }))
@@ -77,6 +57,12 @@ function WalletAddress() {
         handleModalClose: handlePasswordModalClose, 
     } = useModal()
 
+    const { 
+        modalState: wrongPasswordModalState, 
+        handleModalOpen: handleWrongPasswordModalOpen, 
+        handleModalClose: handleWrongPasswordModalClose, 
+    } = useModal()
+
     const {
         value: passwordValue,
         handleChange: handlePasswordChange,
@@ -90,9 +76,13 @@ function WalletAddress() {
         handleSetPasswordValue('')
     }
 
+    const verifyPasswordErrorCallback = () => {
+        handleWrongPasswordModalOpen()
+    }
+
     const handleVerifyPassword = () => {
         handlePasswordModalClose()
-        handleSubmit(verifyPassword({ password: passwordValue }), verifyPasswordSuccessCallback)
+        handleSubmit(verifyPassword({ password: passwordValue }), verifyPasswordSuccessCallback, verifyPasswordErrorCallback)
     }
 
     return (
@@ -157,7 +147,7 @@ function WalletAddress() {
                             <Grid item xs={12} md={4} className="right">
                                 <span className="amount">{ activeWalletData?.balance }&nbsp;</span>
                                 <span className="coinName">ALGO</span><br />
-                                <div className="dollarAmount">{`~ $${(coinPrice * activeWalletData?.balance).toFixed(3)}`}</div>
+                                <div className="dollarAmount">{`~ $${balanceInDollars}`}</div>
 
                                 <WalletAddressButton onClick={handlePasswordModalOpen} disabled={!algorandPassphrase}>
                                     { network === ALGORAND ? 'Show Passphrase' : 'Show Seed' }
@@ -169,8 +159,9 @@ function WalletAddress() {
             </Styles.Parent>
 
             <Modal open={qrCodeModalState} handleClose={handleQrCodeModalClose}>
-                <Styles.QrCodeMainImg src={qrCode} />             
+                <Styles.QrCodeMainImg src={activeWalletQrCode} />             
             </Modal>
+
             <Modal open={passwordModalState} handleClose={handlePasswordModalClose}>
                 <FormControl
                     icon
@@ -181,6 +172,14 @@ function WalletAddress() {
                     toggleShowPassword={togglePasswordVisibile}
                 />
                 <Button fullWidth onClick={handleVerifyPassword} disabled={passwordValue.length === 0}>Show Passphrase</Button>
+            </Modal>
+
+            <Modal open={wrongPasswordModalState} handleClose={handleWrongPasswordModalClose}>
+                <ModalResponse
+                    success={false}
+                    title="Wrong password"
+                    description="The password you entered is incorrect."
+                />            
             </Modal>
         </Fragment>
     )

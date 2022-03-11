@@ -12,7 +12,7 @@ import MyTabs from '../../components/MyTabs/MyTabs'
 import AlgorandAddressItem from '../../components/AlgorandAddressItem/AlgorandAddressItem'
 import useFormControl from '../../Hooks/FormControl'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllAlgorandWallets, updateActiveWallet } from '../../app/algorand/algorandSlice'
+import { getActiveAlgorandWallet, getAllAlgorandWallets, updateActiveWallet } from '../../app/algorand/algorandSlice'
 import useSubmit from '../../Hooks/Submit'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import { ThreeDots } from 'react-loader-spinner'
@@ -70,9 +70,13 @@ function Settings() {
         }
     }, [detailsToShow, allWallets, dispatch])
 
+    const changeActiveWalletSuccessCallback = () => {
+        dispatch(getActiveAlgorandWallet())
+    }
+
     const changeActiveWallet = (walletId) => {
         const updateActiveWalletData = { id: walletId, active: true }
-        handleSubmit(updateActiveWallet(updateActiveWalletData))
+        handleSubmit(updateActiveWallet(updateActiveWalletData), changeActiveWalletSuccessCallback)
     }
 
     return (
@@ -80,7 +84,7 @@ function Settings() {
             <Styles.Root open={openDetailsForMobile}>
                 <div className="left">
                     <button className="navItems" onClick={handleChangeDetails} style={{ color: detailsToShow === CHANGE_DETAILS && '#0eb56f' }}>
-                        Change Details
+                        Change Password
                     </button><br />
                     <button className="navItems" onClick={handleMyWalletAddress} style={{ color: detailsToShow === MY_WALLET_ADDRESS && '#0eb56f' }}>
                         My Wallet

@@ -22,6 +22,7 @@ import NewAssets from './pages/NewAssets/NewAssets';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import useFingerprint from './Hooks/Fingerprint';
 import PrivateRoute from './privateRoute'
+import ActiveWalletPassphrase from './Hooks/ActiveWalletPassphrase';
 
 function App() {
   
@@ -35,6 +36,7 @@ function App() {
         <Header />
         <Backdrop />
         <ScrollToTop />
+        <ActiveWalletPassphrase />
         <Route
           render={({ location }) => {
             return (

@@ -8,7 +8,8 @@ import { HTTP_STATUS } from '../../constants/httpStatus';
 import { ThreeDots } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
-import questionMarkImg from '../../assets/icons/questionMark.jpg'
+import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
+import useCheckImageExists from '../../Hooks/checkImageExists';
 
 function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly }) {
     const dispatch = useDispatch()
@@ -37,7 +38,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                     <div className="container">
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
-                                <img src={!asset?.id ? algorandLogo : (asset?.image === "null" ? questionMarkImg : asset?.image)} alt="" />
+                                <img src={asset?.image || noAssetImage} alt="" />
                                 <span>{asset?.name || 'ALGO'}</span>
                             </div>
                             <KeyboardArrowDownIcon />
@@ -54,7 +55,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                 </ClickAwayListener>
 
                 <Styles.DropdownContainer show={open}>
-                    <Styles.DropdownItem onClick={() => handleItemClick({ id: '', amount: '' })}>
+                    <Styles.DropdownItem onClick={() => handleItemClick({ id: '', amount: 0, image: algorandLogo })}>
                         <div className="left">
                             <div className="leftTop">
                                 <img src={algorandLogo} alt="" />
@@ -88,26 +89,11 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                             (data?.assets?.length > 0)
                                 ?
                                 data?.assets?.map(asset => (
-                                    <Styles.DropdownItem key={asset.id} onClick={() => handleItemClick(asset)}>
-                                        <div className="left">
-                                            <div className="leftTop">
-                                                <img src={asset.img || questionMarkImg} alt="" />
-                                                <span>{asset.name}</span>
-                                            </div>
-                                            <div className="leftBottom">
-                                                <span>{asset.unit}</span>
-                                            </div>
-                                        </div>
-                                        <div className="right">
-                                            <div className="rightTop">
-                                                <span>{asset.amount}</span>
-                                            </div>
-                                            <div className="rightBottom">
-                                                <span>Asset ID:</span>
-                                                <span>{asset.id}</span>
-                                            </div>
-                                        </div>
-                                    </Styles.DropdownItem>
+                                    <DropdownItem
+                                        key={asset.id}
+                                        asset={asset}
+                                        handleItemClick={handleItemClick}
+                                    />
                                 ))
                                 :
                                 <Styles.LoaderContainer>
@@ -118,6 +104,37 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                 </Styles.DropdownContainer>
             </Styles.Root>
         </Grid>
+    )
+}
+
+function DropdownItem({ asset, handleItemClick }) {
+    const { tinyManAssetImage } = useCheckImageExists(asset?.id)
+
+    const handleClick = () => {
+        handleItemClick(asset)
+    }
+
+    return (
+        <Styles.DropdownItem onClick={handleClick}>
+            <div className="left">
+                <div className="leftTop">
+                    <img src={ tinyManAssetImage || asset.image || noAssetImage } alt="" />
+                    <span>{asset.name}</span>
+                </div>
+                <div className="leftBottom">
+                    <span>{asset.unit}</span>
+                </div>
+            </div>
+            <div className="right">
+                <div className="rightTop">
+                    <span>{asset.amount}</span>
+                </div>
+                <div className="rightBottom">
+                    <span>Asset ID:</span>
+                    <span>{asset.id}</span>
+                </div>
+            </div>
+        </Styles.DropdownItem>
     )
 }
 

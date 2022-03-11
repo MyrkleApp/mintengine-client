@@ -69,7 +69,7 @@ function CreateToken() {
                 <div className="container">
                     <Grid container columnSpacing={3}>
                         <Grid item xs={12} md={5}>
-                            <SharedStyles.Title>Create Token</SharedStyles.Title>
+                            <SharedStyles.Title>Create Asset</SharedStyles.Title>
                             <SharedStyles.Description>
                                 Create and manage fungible tokens on the Algorand blockchain with Mint engine.
                             </SharedStyles.Description>

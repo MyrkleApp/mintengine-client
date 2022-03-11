@@ -205,10 +205,9 @@ export const getCreatedAssets = createAsyncThunk(`${namespace}/getCreatedAssets`
   }
 })
 
-export const updateActiveWallet = createAsyncThunk(`${namespace}/updateActiveWallet`, async (objData, { rejectWithValue, dispatch }) => {
+export const updateActiveWallet = createAsyncThunk(`${namespace}/updateActiveWallet`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.patch(`/algorand/v1/wallet/${objData.id}/`, objData)
-    dispatch(getActiveAlgorandWallet())
     return data;
   } catch (err) {
     return rejectWithValue(err.response.data)

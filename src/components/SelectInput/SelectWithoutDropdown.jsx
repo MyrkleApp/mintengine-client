@@ -1,9 +1,18 @@
 import { Grid } from '@mui/material'
 import * as Styles from './selectInput'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
-import questionMarkImg from '../../assets/icons/questionMark.jpg'
+import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
+import { useSelector } from 'react-redux'
+import useCheckImageExists from '../../Hooks/checkImageExists'
+
+const availableNetworks = {
+    ALGORAND: { name: 'ALGO', image: algorandLogo },
+    RIPPLE: { name: 'XRP', image: '' }
+}
 
 function SelectWithoutDropdown({ half, name, label, value, handleChange, asset }) {
+    const network = useSelector(state => state.network.network)
+    const { tinyManAssetImage } = useCheckImageExists(asset?.id)
 
     return (
         <Grid item xs={half ? 6 : 12}>
@@ -12,8 +21,11 @@ function SelectWithoutDropdown({ half, name, label, value, handleChange, asset }
                 <div className="container">
                     <div className="select">
                         <div className="left">
-                            <img src={!asset ? algorandLogo : asset.image === "Shameless comrade, it isn't ready yet" ? questionMarkImg : asset?.image} alt="" />
-                            <span>{asset?.name || 'ALGO'}</span>
+                            <img 
+                                src={ !asset ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
+                                alt="" 
+                            />
+                            <span>{ !asset ? availableNetworks[network].name : asset.name }</span>
                         </div>
                     </div>
                     <div className="rightBox">
