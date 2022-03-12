@@ -89,7 +89,7 @@ function Dashboard() {
                                 <Grid item xs={6}>
                                     <Styles.SubTitle>{network === ALGORAND ? 'Asset ID' : 'Issuer Add'}</Styles.SubTitle>
                                 </Grid>
-                                <Grid item container xs={12} rowSpacing={4}>
+                                <Grid item container xs={12} rowSpacing={4} className="walletAssets__container">
                                     {
                                         holdingsStatus === HTTP_STATUS.PENDING ? (
                                             <ThreeDots

@@ -11,8 +11,8 @@ export const AssetName = styled.div`
 `
 
 export const Image = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
     border-radius: 30%;
 `
 

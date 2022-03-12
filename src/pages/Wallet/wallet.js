@@ -15,6 +15,7 @@ export const Box = styled.div`
     border-radius: 25px;
     padding-bottom: 50px;
     margin-bottom: 50px;
+    
     & > .container {
         width: calc(100% - 50px);
         height: calc(100% - 50px);
@@ -22,6 +23,27 @@ export const Box = styled.div`
         margin: auto;
         & > .tabsContainer {
             margin-bottom: 50px;
+        }
+    }
+
+    &  .walletAssets__container {
+        margin-top: 20px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 555px;
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #cfd8dc;
+            border-radius: 50px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #b0bec5;
+            border-radius: 50px;
         }
     }
 `

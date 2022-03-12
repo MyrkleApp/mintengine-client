@@ -24,6 +24,7 @@ export const ModalContent = styled.div`
     overflow-y: scroll;
     max-height: calc(100vh - 100px);
     padding-right: 20px;
+    padding-top: 20px;
 
     @media(max-width: 600px) {
         margin: ${props => props.fullScreen && 'auto'};

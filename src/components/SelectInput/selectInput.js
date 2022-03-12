@@ -39,6 +39,7 @@ export const Root = styled.div`
             & > .left {
                 display: flex;
                 align-items: center;
+                width: 90%;
                 & > img {
                     height: 30px;
                     width: 30px;
@@ -48,6 +49,9 @@ export const Root = styled.div`
                 & > span {
                     font-size: 20px;
                     font-weight: 600;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
         }
