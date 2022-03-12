@@ -49,3 +49,17 @@ export const verifyPasswordRejected = (state, { payload }) => {
     state.verifyPassword.status = HTTP_STATUS.REJECTED
     state.verifyPassword.error = payload
 }
+
+export const changePasswordPending = (state) => {
+    state.changePassword.status = HTTP_STATUS.PENDING
+}
+
+export const changePasswordFulfilled = (state, { payload }) => {
+    state.changePassword.status = HTTP_STATUS.FULFILLED
+    state.changePassword.data = payload
+}
+
+export const changePasswordRejected = (state, { payload }) => {
+    state.changePassword.status = HTTP_STATUS.REJECTED
+    state.changePassword.error = payload
+}
