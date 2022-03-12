@@ -28,7 +28,7 @@ function ChangePassword() {
         toggleVisibile: toggleNewPasswordVisibile,
         typeForPasswordInput: typeForNewPasswordInput,
         handlePasswordBlur: handleNewPasswordBlur,
-        helperText: newPasswordHelpertext
+        errorText: newPasswordErrortext
     } = useFormControl()
 
     const {
@@ -36,7 +36,7 @@ function ChangePassword() {
         handleConfirmPasswordChange,
         toggleVisibile: toggleConfirmPasswordVisibile,
         typeForPasswordInput: typeForConfirmPasswordInput,
-        helperText: confirmPasswordHelperText
+        errorText: confirmPasswordErrorText
     } = useFormControl()
 
     const { passwordsAreValid } = useFormControlPasswordCheck(newPasswordValue, confirmPasswordValue)
@@ -72,8 +72,7 @@ function ChangePassword() {
                     type={typeForNewPasswordInput}
                     toggleShowPassword={toggleNewPasswordVisibile}
                     handleBlur={handleNewPasswordBlur}
-                    helperText={newPasswordHelpertext}
-                    error={newPasswordHelpertext && true}
+                    errorText={newPasswordErrortext}
                 />
                 <FormControl
                     icon
@@ -82,8 +81,7 @@ function ChangePassword() {
                     handleChange={(e) => handleConfirmPasswordChange(e, newPasswordValue)}
                     type={typeForConfirmPasswordInput}
                     toggleShowPassword={toggleConfirmPasswordVisibile}
-                    helperText={confirmPasswordHelperText}
-                    error={confirmPasswordHelperText && true}
+                    errorText={confirmPasswordErrorText}
                 />
                 <Button fullWidth disabled={!passwordsAreValid || (currentPasswordValue.length === 0)} onClick={handleChangePassword}>save my changes</Button>
             </Grid>

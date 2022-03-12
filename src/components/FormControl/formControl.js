@@ -83,7 +83,7 @@ export const TextArea = styled.textarea`
 export const HelperText = styled.span`
     margin-top: 5px;
     margin-bottom: 5px;
-    color: ${props => !props.error ? '#043923' : 'red'};
+    color: red;
     font-size: 15px;
 `
 

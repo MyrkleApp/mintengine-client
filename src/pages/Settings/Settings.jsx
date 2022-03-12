@@ -98,6 +98,7 @@ function Settings() {
                                         allWallets?.map(wallet => (
                                             <AlgorandAddressItem 
                                                 key={wallet.id} 
+                                                walletId={wallet.id}
                                                 walletAddress={wallet.address}
                                                 handleClick={() => changeActiveWallet(wallet.id)}
                                             />

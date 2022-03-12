@@ -5,7 +5,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 const Input = React.forwardRef((props, ref) => {
-    const { half, label, name, type, placeholder, helperText, error, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick, readOnly, ...otherProps } = props;
+    const { half, label, name, type, placeholder, errorText, value, handleChange, handleBlur, toggleShowPassword, icon, center, textArea, handleClick, readOnly, ...otherProps } = props;
 
     const inputRef = useRef()
 
@@ -51,7 +51,7 @@ const Input = React.forwardRef((props, ref) => {
                         center={center}
                     /> 
                 }
-                <Styles.HelperText error={error}>{helperText}</Styles.HelperText>
+                <Styles.HelperText>{errorText}</Styles.HelperText>
 
                 {
                     typeof(icon) === 'boolean' && (

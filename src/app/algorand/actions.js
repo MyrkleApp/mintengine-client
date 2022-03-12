@@ -330,3 +330,17 @@ export const getCreatedAssetsRejected = (state, { payload }) => {
     state.createdAssets.status = HTTP_STATUS.REJECTED
     state.createdAssets.error = payload
 }
+
+export const removeWalletPending = (state) => {
+    state.removeWallet.status = HTTP_STATUS.PENDING
+}
+
+export const removeWalletFulfilled = (state, { payload }) => {
+    state.removeWallet.status = HTTP_STATUS.FULFILLED
+    state.removeWallet.data = 'removed wallet'
+}
+
+export const removeWalletRejected = (state, { payload }) => {
+    state.removeWallet.status = HTTP_STATUS.REJECTED
+    state.removeWallet.error = payload
+}

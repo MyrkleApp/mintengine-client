@@ -16,8 +16,10 @@ export const Root = styled.div`
         cursor: pointer;
     }
 
-    & .copyIconContainer:last-child {
+    & .iconsContainer {
         color: #097246;
         font-size: 30px;
+        display: flex;
+        flex-direction: column;
     }
 `

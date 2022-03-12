@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 function useFormControl(type) {
     const [value, setValue] = useState('')
     
-    const [helperText, setHelperText] = useState('')
+    const [errorText, setErrorText] = useState('')
 
     const handleChange = e => {
         if (type === 'number') {
@@ -30,17 +30,17 @@ function useFormControl(type) {
 
     const handlePasswordBlur = () => {
         if ((value.trim().length >= 8) && (/\d/.test(value))) {
-            setHelperText('')
+            setErrorText('')
         } else {
-            setHelperText('Minimum of 8 characters in length, include a number.')
+            setErrorText('Minimum of 8 characters in length, include a number.')
         }
     }
 
     const handleConfirmPasswordChange = (e, passwordValue) => {
         if (e.target.value !== passwordValue) {
-            setHelperText('Password does not match')
+            setErrorText('Password does not match')
         } else {
-            setHelperText('')
+            setErrorText('')
         }
         
         setValue(e.target.value)
@@ -53,7 +53,7 @@ function useFormControl(type) {
         toggleVisibile,
         typeForPasswordInput,
         handleSetValue,
-        helperText,
+        errorText,
         handlePasswordBlur,
         handleConfirmPasswordChange
     }

@@ -214,6 +214,15 @@ export const updateActiveWallet = createAsyncThunk(`${namespace}/updateActiveWal
   }
 })
 
+export const removeWallet = createAsyncThunk(`${namespace}/removeWallet`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.delete(`/algorand/v1/wallet/${objData.id}/`, objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -245,6 +254,7 @@ const algorandSlice = createSlice({
     canDeleteAsset: DEFAULT,
     createAsset: DEFAULT,
     createdAssets: DEFAULT,
+    removeWallet: DEFAULT,
   },
   reducers: {
     incorrectPassphraseError(state, action) {
@@ -347,6 +357,10 @@ const algorandSlice = createSlice({
     [getCreatedAssets.pending]: actions.getCreatedAssetsPending,
     [getCreatedAssets.fulfilled]: actions.getCreatedAssetsFulfilled,
     [getCreatedAssets.rejected]: actions.getCreatedAssetsRejected,
+
+    [removeWallet.pending]: actions.removeWalletPending,
+    [removeWallet.fulfilled]: actions.removeWalletFulfilled,
+    [removeWallet.rejected]: actions.removeWalletRejected,
   }
 })
 

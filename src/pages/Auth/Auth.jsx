@@ -1,149 +1,79 @@
+import React, { useState } from 'react'
 import { Grid } from '@mui/material'
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import FormControl from '../../components/FormControl/FormControl'
 import { Button } from '../../components/UI/Button/button'
 import { useHistory, useLocation } from 'react-router'
 import * as Styles from './auth'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { loginUser, registerUser } from '../../app/auth/authSlice'
-import { showBackdrop, hideBackdrop } from '../../app/backdrop/backdropSlice'
-import { passwordReducer } from './reducers'
+import useFormControl, { useFormControlPasswordCheck } from '../../Hooks/FormControl'
+import useSubmit from '../../Hooks/Submit'
 
 
 function Auth() {
     const { pathname } = useLocation()
     const history = useHistory()
-    const dispatch = useDispatch()
     const deviceFingerprint = useSelector(state => state.deviceFingerprint.deviceFingerprint)
-    const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-    const [buttonIsEnabled, setButtonIsEnabled] = useState(false)
-    const [password, dispatchPassword] = useReducer(passwordReducer, {
-        passwordValue: '',
-        passwordHelperText: '',
-        passwordError: false,
-        passwordIsValid: false,
-        confirmPasswordValue: '',
-        confirmPasswordError: false,
-        confirmPasswordIsValid: false
-    })
+    const { handleSubmit } = useSubmit()
+    const [passwordError, setPasswordError] = useState('')
+    
     const {
-        passwordValue,
-        passwordHelperText,
-        passwordError,
-        passwordIsValid,
-        confirmPasswordValue,
-        confirmPasswordHelperText,
-        confirmPasswordError,
-        confirmPasswordIsValid
-    } = password
+        value: passwordValue,
+        handleChange: handlePasswordChange,
+        toggleVisibile: togglePasswordVisibile,
+        typeForPasswordInput: typeForPasswordInput,
+        handlePasswordBlur: handlePasswordBlur,
+        errorText: passwordErrortext
+    } = useFormControl()
 
-    const handlePasswordChange = useCallback((e) => {
-        if (pathname === '/signup') {
-            dispatchPassword({ type: 'SIGNUP_PASSWORD_INPUT', passwordValue: e.target.value })
-        } else {
-            dispatchPassword({ type: 'LOGIN_PASSWORD_INPUT', passwordValue: e.target.value })
-        }
-    }, [pathname, passwordValue])
+    const {
+        value: confirmPasswordValue,
+        handleConfirmPasswordChange,
+        toggleVisibile: toggleConfirmPasswordVisibile,
+        typeForPasswordInput: typeForConfirmPasswordInput,
+        errorText: confirmPasswordErrorText
+    } = useFormControl()
 
-    const handlePasswordBlur = () => {
-        if (pathname !== '/signup') return
+    const { passwordsAreValid } = useFormControlPasswordCheck(passwordValue, confirmPasswordValue)
 
-        dispatchPassword({
-            type: 'SIGNUP_PASSWORD_BLUR',
-            passwordHelperText: 'Your password must be up to 8 characters and must include a number'
-        })
+    const registerUserSuccessCallback = () => {
+        history.push('/wallet-setup')
     }
 
-    const handleConfirmPasswordChange = (e) => {
-        dispatchPassword({
-            type: 'CONFIRM_PASSWORD_INPUT',
-            confirmPasswordValue: e.target.value,
-            confirmPasswordIsValid: e.target.value === passwordValue
-        })
+    const loginUserSuccessCallback = () => {
+        history.push('/wallet')
     }
 
-    const toggleShowPassword = () => {
-        setShowPassword(prevState => !prevState)
+    const authErrorCallback = (err) => {
+        setPasswordError(err?.error[0])
     }
 
-    const toggleShowConfirmPassword = () => {
-        setShowConfirmPassword(prevState => !prevState)
-    }
-
-    const handleSubmit = e => {
+    const handleAuth = e => {
         e.preventDefault();
 
-        dispatch(showBackdrop())
-
         if (pathname === '/signup') {
-            dispatch(registerUser({
+            const registerUserData = {
                 password1: passwordValue,
                 password2: confirmPasswordValue,
                 deviceID: deviceFingerprint
-            }))
-            .unwrap()
-            .then(res => {
-                dispatch(hideBackdrop())
-                history.push('/wallet-setup')
-                console.log('then block');
-            })
-            .catch(err => {
-                dispatch(hideBackdrop())
-                dispatchPassword({
-                    type: 'LOGIN_ERROR',
-                    passwordHelperText: err.error[0]
-                })
-                console.log('catch block')
-            })
+            }
+            handleSubmit(registerUser(registerUserData), registerUserSuccessCallback, authErrorCallback)
+            
         } else if (pathname === '/login') {
-            dispatch(loginUser({
+            const loginUserData = {
                 password: passwordValue,
                 deviceID: deviceFingerprint
-            }))
-            .unwrap()
-            .then(() => {
-                dispatch(hideBackdrop())
-                history.push('/wallet')
-            })
-            .catch(err => {
-                dispatch(hideBackdrop())
-                dispatchPassword({
-                    type: 'LOGIN_ERROR',
-                    passwordHelperText: err?.error[0]
-                })
-                console.log(err)
-            })
+            }
+            handleSubmit(loginUser(loginUserData), loginUserSuccessCallback, authErrorCallback)
         }
     }
-
-    useEffect(() => {
-        switch (pathname) {
-            case '/signup':
-                if (passwordIsValid && confirmPasswordIsValid) {
-                    setButtonIsEnabled(true)
-                } else {
-                    setButtonIsEnabled(false)
-                }
-                break
-            case '/login':
-                if (passwordIsValid) {
-                    setButtonIsEnabled(true)
-                } else {
-                    setButtonIsEnabled(false)
-                }
-                break
-            default:
-                break
-        }
-    }, [passwordIsValid, confirmPasswordIsValid])
 
 
 
     return (
         <AuthWrapper>
-            <Styles.Form onSubmit={handleSubmit}>
+            <Styles.Form onSubmit={handleAuth}>
                 <Grid container>
                     <Grid item xs={1} md={2} />
                     <Grid item container xs={10} md={7} rowSpacing={2} columnSpacing={1}>
@@ -152,33 +82,33 @@ function Auth() {
                         </Grid>
                         <FormControl
                             icon
-                            name="password"
                             label="Password"
-                            type={showPassword ? 'text' : 'password'}
                             value={passwordValue}
                             handleChange={handlePasswordChange}
+                            type={typeForPasswordInput}
+                            toggleShowPassword={togglePasswordVisibile}
                             handleBlur={handlePasswordBlur}
-                            helperText={passwordHelperText}
-                            error={passwordError}
-                            toggleShowPassword={toggleShowPassword}
+                            errorText={pathname === '/signup' && passwordErrortext}
                         />
-                        {pathname === '/signup' &&
+                        <p style={{ fontSize: '15px', color: 'red', marginTop: '-5px', marginLeft: '10px' }}>
+                            {passwordError}
+                        </p>
+                        { pathname === '/signup' && (
                             <FormControl
                                 icon
-                                name="confirmPassword"
                                 label="Confirm Password"
-                                type={showConfirmPassword ? 'text' : 'password'}
                                 value={confirmPasswordValue}
-                                handleChange={handleConfirmPasswordChange}
-                                helperText={confirmPasswordHelperText}
-                                error={confirmPasswordError}
-                                toggleShowPassword={toggleShowConfirmPassword}
-                            />}
+                                handleChange={(e) => handleConfirmPasswordChange(e, passwordValue)}
+                                type={typeForConfirmPasswordInput}
+                                toggleShowPassword={toggleConfirmPasswordVisibile}
+                                errorText={confirmPasswordErrorText}
+                            />
+                        )}
                         <Grid item xs={12}>
                             <Button
                                 fullWidth
                                 type="submit"
-                                disabled={!buttonIsEnabled || !deviceFingerprint}
+                                disabled={(pathname === '/signup' && !passwordsAreValid) || (pathname === '/login' && passwordValue.trim().length < 8) || !deviceFingerprint}
                             >
                                 { !deviceFingerprint ? 'loading ID' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') }
                             </Button>
