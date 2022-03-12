@@ -26,8 +26,6 @@ import useModal from '../../../Hooks/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 
 
-// `https://data.messari.io/api/v1/assets/${coin}/metrics`
-
 /**
  * 
  * !!! MAKE SURE TO REWRITE THIS COMPONENT CODE!!!
@@ -329,7 +327,7 @@ function NormalTxn() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Sent successfully' : 'Sorry, unable to dispense at the moment'
+                        success ? 'Sent successfully' : 'Sorry, unable to complete your transfer at the moment'
                     }
                 />
             </Modal>

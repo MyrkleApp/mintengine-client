@@ -26,4 +26,8 @@ export const Right = styled.div`
 export const RightContainer = styled.div`
     width: calc(100% - 50px);
     margin: 0 auto;
+
+    @media(max-width: 800px) {
+        width: calc(100% - 20px);
+    }
 `

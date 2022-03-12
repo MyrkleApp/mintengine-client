@@ -94,7 +94,9 @@ function ChangePassword() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Your password has been changed successfully' : error?.old_password[0]
+                        success ? 
+                        'Your password has been changed successfully' : 
+                        (error?.old_password[0] ? 'The entered current password is incorrect' : 'Sorry, your password could not be changed')
                     }
                 />
             </Modal>

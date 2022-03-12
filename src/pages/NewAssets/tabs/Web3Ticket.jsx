@@ -42,7 +42,7 @@ function Web3Ticket() {
         formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('asset_url', assetUrlValue)
-        formData.append('total_supply', totalSupplyValue)
+        formData.append('total_supply', `${totalSupplyValue}`)
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         

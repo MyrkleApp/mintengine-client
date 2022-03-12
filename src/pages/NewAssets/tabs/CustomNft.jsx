@@ -55,7 +55,7 @@ function CustomNft() {
         formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
         formData.append('unit', unitValue)
-        formData.append('total_supply', totalSupplyValue)
+        formData.append('total_supply', `${totalSupplyValue}`)
         formData.append('decimal', decimalValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('metadata_hash', metadataHashValue)

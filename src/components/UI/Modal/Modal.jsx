@@ -1,9 +1,10 @@
 import * as React from 'react';
 import MuiModal from '@mui/material/Modal';
-import { ModalBox, ModalContent } from './modal';
+import { CloseModalBox, ModalBox, ModalContent } from './modal';
+import CloseIcon from '@mui/icons-material/Close';
 
 
-export default function Modal({ children, open, handleClose }) {
+export default function Modal({ children, open, handleClose, fullScreenForMobile }) {
 
   return (
     <MuiModal
@@ -12,9 +13,14 @@ export default function Modal({ children, open, handleClose }) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <ModalBox>
-        <ModalContent>
+      <ModalBox fullScreen={fullScreenForMobile}>
+        <ModalContent fullScreen={fullScreenForMobile}>
+          <CloseModalBox onClick={handleClose}>
+            <CloseIcon fontSize="large" />
+          </CloseModalBox>
+
           { children }
+
         </ModalContent>
       </ModalBox>
     </MuiModal>

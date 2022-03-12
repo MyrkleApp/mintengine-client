@@ -31,22 +31,6 @@ export const TableBox = styled(Box)`
     overflow-x: auto;
 `
 
-export const CloseModalBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    background-color: #F5FEFA;
-    color: #043923;
-    cursor: pointer;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    z-index: 1;
-`
-
 export const ModalTitle = styled.h2`
     color: #043923;
     font-size: 20px;

@@ -13,8 +13,6 @@ import { Grid } from '@mui/material'
 import { Link } from 'react-router-dom'
 import useModal from '../../Hooks/Modal'
 import Modal from '../../components/UI/Modal/Modal'
-import CloseIcon from '@mui/icons-material/Close';
-import { CloseModalBox } from '../../pages/AssetManager/assetManager'
 import { CLAWBACK, DESTROY, FREEZE, MODIFY, OPT_IN, OPT_OUT, UNFREEZE, CLAWBACK_RES, DESTROY_RES, FREEZE_RES, MODIFY_RES, OPT_IN_RES, OPT_OUT_RES, UNFREEZE_RES } from './constants'
 import OptIn from './manageAssets/OptIn'
 import OptOut from './manageAssets/OptOut'
@@ -35,40 +33,48 @@ import DestroyRes from './manageAssetsResponse/DestroyRes'
 function AssetManagerAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const [modalDisplay, setModalDisplay] = useState('')
+    const [modalFullScreenForMobile, setModalFullScreenForMobile] = useState(false)
 
 
     const handleOptInModal = () => {
         setModalDisplay(OPT_IN)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleOptOutModal = () => {
         setModalDisplay(OPT_OUT)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleFreezeModal = () => {
         setModalDisplay(FREEZE)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleUnfreezeModal = () => {
         setModalDisplay(UNFREEZE)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleClawbackModal = () => {
         setModalDisplay(CLAWBACK)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleModifyModal = () => {
         setModalDisplay(MODIFY)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
     const handleDestroyModal = () => {
         setModalDisplay(DESTROY)
+        setModalFullScreenForMobile(true)
         handleModalOpen();
     }
 
@@ -77,36 +83,43 @@ function AssetManagerAlgo() {
      */
     const handleOptInRes = () => {
         setModalDisplay(OPT_IN_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleOptOutRes = () => {
         setModalDisplay(OPT_OUT_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleFreezeRes = () => {
         setModalDisplay(FREEZE_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleUnfreezeRes = () => {
         setModalDisplay(UNFREEZE_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleClawbackRes = () => {
         setModalDisplay(CLAWBACK_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleModifyRes = () => {
         setModalDisplay(MODIFY_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
     const handleDestroyRes = () => {
         setModalDisplay(DESTROY_RES)
+        setModalFullScreenForMobile(false)
         handleModalOpen();
     }
 
@@ -115,10 +128,8 @@ function AssetManagerAlgo() {
 
     return (
         <Fragment>
-            <Modal open={modalState} handleClose={handleModalClose}>
-                <CloseModalBox onClick={handleModalClose}>
-                    <CloseIcon fontSize="large" />
-                </CloseModalBox>
+            <Modal open={modalState} handleClose={handleModalClose} fullScreenForMobile={modalFullScreenForMobile}>
+                
                 { modalDisplay === OPT_IN && <OptIn handleModalClose={handleModalClose} handleResponse={handleOptInRes} /> }
                 { modalDisplay === OPT_OUT && <OptOut handleModalClose={handleModalClose} handleResponse={handleOptOutRes} /> }
                 { modalDisplay === FREEZE && <Freeze handleModalClose={handleModalClose} handleResponse={handleFreezeRes} /> }
