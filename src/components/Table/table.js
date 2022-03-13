@@ -46,6 +46,12 @@ export const Table = styled.table`
     & a {
         color: #097246;
     }
+
+    & .hide-on-mobile {
+        @media(max-width: 800px) {
+            display: none;
+        }
+    }
 `
 
 export const EmptyTable = styled.div`

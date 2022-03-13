@@ -79,6 +79,8 @@ export const TableBox = styled(Box)`
     border-radius: 0 0 20px 20px;
     margin-bottom: 40px;
     min-height: 600px;
+    max-height: 800px;
+    overflow-y: scroll;
     overflow-x: auto;
 `
 

@@ -124,6 +124,15 @@ export const sendAlgorand = createAsyncThunk(`${namespace}/sendAlgorand`, async 
   }
 })
 
+export const getAlgorandSwapValue = createAsyncThunk(`${namespace}/getAlgorandSwapValue`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/algorand/v1/checks/get_swap_value/${objData.from_asset}/${objData.to_asset}/${objData.asset_amount}/`)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 export const swapAlgorand = createAsyncThunk(`${namespace}/swapAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post('/algorand/v1/swap/', objData)
@@ -245,6 +254,7 @@ const algorandSlice = createSlice({
     optOut: DEFAULT,
     sendList: DEFAULT,
     send: DEFAULT,
+    swapValue: DEFAULT,
     swap: DEFAULT,
     unfreeze: DEFAULT,
     transactions: DEFAULT,
@@ -254,6 +264,7 @@ const algorandSlice = createSlice({
     canDeleteAsset: DEFAULT,
     createAsset: DEFAULT,
     createdAssets: DEFAULT,
+    updateActiveWallet: DEFAULT,
     removeWallet: DEFAULT,
   },
   reducers: {
@@ -322,6 +333,10 @@ const algorandSlice = createSlice({
     [sendAlgorand.fulfilled]: actions.sendAlgorandFulfilled,
     [sendAlgorand.rejected]: actions.sendAlgorandRejected,
 
+    [getAlgorandSwapValue.pending]: actions.getAlgorandSwapValuePending,
+    [getAlgorandSwapValue.fulfilled]: actions.getAlgorandSwapValueFulfilled,
+    [getAlgorandSwapValue.rejected]: actions.getAlgorandSwapValueRejected,
+
     [swapAlgorand.pending]: actions.swapAlgorandPending,
     [swapAlgorand.fulfilled]: actions.swapAlgorandFulfilled,
     [swapAlgorand.rejected]: actions.swapAlgorandRejected,
@@ -357,6 +372,10 @@ const algorandSlice = createSlice({
     [getCreatedAssets.pending]: actions.getCreatedAssetsPending,
     [getCreatedAssets.fulfilled]: actions.getCreatedAssetsFulfilled,
     [getCreatedAssets.rejected]: actions.getCreatedAssetsRejected,
+
+    [updateActiveWallet.pending]: actions.updateActiveWalletPending,
+    [updateActiveWallet.fulfilled]: actions.updateActiveWalletFulfilled,
+    [updateActiveWallet.rejected]: actions.updateActiveWalletRejected,
 
     [removeWallet.pending]: actions.removeWalletPending,
     [removeWallet.fulfilled]: actions.removeWalletFulfilled,

@@ -174,7 +174,7 @@ function WalletAddress() {
                     type={typeForPasswordInput}
                     toggleShowPassword={togglePasswordVisibile}
                 />
-                <Button fullWidth onClick={handleVerifyPassword} disabled={passwordValue.length === 0}>Show Passphrase</Button>
+                <Button fullWidth onClick={handleVerifyPassword} disabled={passwordValue.length < 8}>Show Passphrase</Button>
             </Modal>
 
             <Modal open={wrongPasswordModalState} handleClose={handleWrongPasswordModalClose}>

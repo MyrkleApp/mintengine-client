@@ -128,7 +128,7 @@ function ScheduledTxn() {
                 <p>0.001</p>
             </TransactionFee>
             <ButtonContainer>
-                <Button fullWidth onClick={sendAsset}>send asset</Button>
+                <Button fullWidth onClick={sendAsset} disabled>send asset</Button>
             </ButtonContainer>
 
 

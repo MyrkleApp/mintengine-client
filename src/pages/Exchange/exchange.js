@@ -61,3 +61,13 @@ export const ButtonContainer = styled.div`
     margin: 30px auto 30px auto;
     width: calc(100% - 150px);
 `
+
+export const LoaderContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    
+    & svg {
+        margin: -30px 0 -10px 0;
+    }
+`

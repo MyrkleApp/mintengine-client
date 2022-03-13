@@ -1,5 +1,7 @@
 import { HTTP_STATUS } from "../../constants/httpStatus"
 
+const DEFAULT = { status: null, data: null, error: null }
+
 export const createAlgorandWalletPending = (state) => {
     state.createWallet.status = HTTP_STATUS.PENDING
 }
@@ -11,7 +13,6 @@ export const createAlgorandWalletFulfilled = (state, { payload }) => {
     state.passphrase = payload.passphrase
     state.user = payload.user
     state.createWallet.error = null
-    // localStorage.setItem('algophrase', JSON.stringify(payload.passphrase))
 }
 
 export const createAlgorandWalletRejected = (state, { payload }) => {
@@ -124,7 +125,7 @@ export const getAlgorandHoldingsPending = (state) => {
 
 export const getAlgorandHoldingsFulfilled = (state, { payload }) => {
     state.holdings.status = HTTP_STATUS.FULFILLED
-    state.holdings.data = payload
+    state.holdings.data = { ...payload, assets: payload?.assets?.reverse() }
 }
 
 export const getAlgorandHoldingsRejected = (state, { payload }) => {
@@ -195,11 +196,27 @@ export const sendAlgorandPending = (state) => {
 export const sendAlgorandFulfilled = (state, { payload }) => {
     state.send.status = HTTP_STATUS.FULFILLED
     state.send.data = payload
+
+    state.transactions = DEFAULT
 }
 
 export const sendAlgorandRejected = (state, { payload }) => {
     state.send.status = HTTP_STATUS.REJECTED
     state.send.error = payload
+}
+
+export const getAlgorandSwapValuePending = (state) => {
+    state.swapValue.status = HTTP_STATUS.PENDING
+}
+
+export const getAlgorandSwapValueFulfilled = (state, { payload }) => {
+    state.swapValue.status = HTTP_STATUS.FULFILLED
+    state.swapValue.data = payload
+}
+
+export const getAlgorandSwapValueRejected = (state, { payload }) => {
+    state.swapValue.status = HTTP_STATUS.REJECTED
+    state.swapValue.error = payload
 }
 
 export const swapAlgorandPending = (state) => {
@@ -236,7 +253,7 @@ export const getAlgorandTransactionsPending = (state) => {
 
 export const getAlgorandTransactionsFulfilled = (state, { payload }) => {
     state.transactions.status = HTTP_STATUS.FULFILLED
-    state.transactions.data = payload
+    state.transactions.data = payload.reverse()
 }
 
 export const getAlgorandTransactionsRejected = (state, { payload }) => {
@@ -309,7 +326,9 @@ export const createAlgorandAssetFulfilled = (state, { payload }) => {
     state.createAsset.data = payload
 
     const oldAssets = state.holdings.data.assets
-    state.holdings.data.assets = [...oldAssets, payload]
+    state.holdings.data.assets = [payload, ...oldAssets]
+
+    state.createdAssets = DEFAULT
 }
 
 export const createAlgorandAssetRejected = (state, { payload }) => {
@@ -329,6 +348,23 @@ export const getCreatedAssetsFulfilled = (state, { payload }) => {
 export const getCreatedAssetsRejected = (state, { payload }) => {
     state.createdAssets.status = HTTP_STATUS.REJECTED
     state.createdAssets.error = payload
+}
+
+export const updateActiveWalletPending = (state) => {
+    state.updateActiveWallet.status = HTTP_STATUS.PENDING
+}
+
+export const updateActiveWalletFulfilled = (state, { payload }) => {
+    state.updateActiveWallet.status = HTTP_STATUS.FULFILLED
+    state.updateActiveWallet.data = payload
+    state.holdings = DEFAULT
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
+}
+
+export const updateActiveWalletRejected = (state, { payload }) => {
+    state.updateActiveWallet.status = HTTP_STATUS.REJECTED
+    state.updateActiveWallet.error = payload
 }
 
 export const removeWalletPending = (state) => {

@@ -12,10 +12,15 @@ function useSelectInput() {
         setValue({ ...value, [fieldToChange]: e.target.value })
     }
 
+    const handleSetValue = (fieldToChange, data) => {
+        setValue({ ...value, [fieldToChange]: data})
+    }
+
     return {
         value,
         setValueByClick,
-        handleSelectChange
+        handleSelectChange,
+        handleSetValue
     }
 }
 

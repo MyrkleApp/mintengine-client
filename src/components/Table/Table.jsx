@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import * as Styles from './table'
 
-function Table({ columnTitles, rows, noDataTitle, noDataText }) {
+function Table({ columnTitles, rows, noDataTitle, noDataText, columnsToHideOnMobile }) {
 
     return (
         <Fragment>
@@ -9,7 +9,7 @@ function Table({ columnTitles, rows, noDataTitle, noDataText }) {
                 <thead>
                     <tr>
                         { columnTitles?.map((item, i) => (
-                            <th key={i}>{item}</th>
+                            <th key={i} className={columnsToHideOnMobile.includes(i) ? 'hide-on-mobile' : ''}>{item}</th>
                         ))}
                     </tr>
                 </thead>

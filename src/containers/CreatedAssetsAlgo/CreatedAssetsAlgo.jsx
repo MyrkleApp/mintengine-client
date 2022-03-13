@@ -20,10 +20,10 @@ function CreatedAssetsAlgo() {
     const rows = data?.asset_created?.map((item, i) => (
         <tr key={item.id}>
             <td><a href={`https://testnet.algoexplorer.io/asset/${item.id}`} target="_blank">{item.id}</a></td>
-            <td>{item.name}</td>
-            <td>{item.unit_name}</td>
+            <td className="hide-on-mobile">{item.name}</td>
+            <td className="hide-on-mobile">{item.unit_name}</td>
             <td>{item.url}</td>
-            <td>{item.date}</td>
+            <td className="hide-on-mobile">{item.date}</td>
         </tr>
     ))
 
@@ -37,6 +37,7 @@ function CreatedAssetsAlgo() {
                 ) : (
                     <Table
                         columnTitles={['asset id', 'asset name', 'unit', 'url', 'date']}
+                        columnsToHideOnMobile={[1, 2, 4]}
                         rows={rows}
                         noDataTitle="NO ASSET MANAGEMENT ACTIVITY YET"
                         noDataText="You don’t have any activity that can be displayed yet."
