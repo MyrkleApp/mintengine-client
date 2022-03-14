@@ -85,6 +85,9 @@ export const TransactionFee = styled.div`
 export const ButtonContainer = styled.div`
     margin: 30px auto 30px auto;
     width: calc(100% - 150px);
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 `
 
 export const NoAssetsFound = styled.div`

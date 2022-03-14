@@ -125,7 +125,7 @@ export const getAlgorandHoldingsPending = (state) => {
 
 export const getAlgorandHoldingsFulfilled = (state, { payload }) => {
     state.holdings.status = HTTP_STATUS.FULFILLED
-    state.holdings.data = { ...payload, assets: payload?.assets?.reverse() }
+    state.holdings.data = payload
 }
 
 export const getAlgorandHoldingsRejected = (state, { payload }) => {
@@ -326,7 +326,7 @@ export const createAlgorandAssetFulfilled = (state, { payload }) => {
     state.createAsset.data = payload
 
     const oldAssets = state.holdings.data.assets
-    state.holdings.data.assets = [payload, ...oldAssets]
+    state.holdings.data.assets = [...oldAssets, payload]
 
     state.createdAssets = DEFAULT
 }
@@ -342,7 +342,7 @@ export const getCreatedAssetsPending = (state) => {
 
 export const getCreatedAssetsFulfilled = (state, { payload }) => {
     state.createdAssets.status = HTTP_STATUS.FULFILLED
-    state.createdAssets.data = payload
+    state.createdAssets.data = { ...payload, asset_created: payload?.asset_created?.reverse() }
 }
 
 export const getCreatedAssetsRejected = (state, { payload }) => {
@@ -374,6 +374,9 @@ export const removeWalletPending = (state) => {
 export const removeWalletFulfilled = (state, { payload }) => {
     state.removeWallet.status = HTTP_STATUS.FULFILLED
     state.removeWallet.data = 'removed wallet'
+    state.holdings = DEFAULT
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const removeWalletRejected = (state, { payload }) => {

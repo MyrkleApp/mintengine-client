@@ -22,7 +22,9 @@ function WalletAsset({ asset, clawback }) {
                 <Styles.AssetAmount>{ asset.amount }</Styles.AssetAmount>
             </Grid>
             <Grid item xs={network === ALGORAND ? 6 : 8}>
-                <Styles.AssetNumber>{ asset.id }</Styles.AssetNumber>
+                <Styles.AssetNumber>
+                    <a href={`https://testnet.algoexplorer.io/asset/${asset.id}`} style={{ color: '#3E554B' }} target="_blank">{asset.id}</a>
+                </Styles.AssetNumber>
             </Grid>
             { network === ALGORAND && (
                 <Grid item xs={2}>

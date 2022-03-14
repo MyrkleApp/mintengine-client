@@ -43,4 +43,7 @@ export const ModalTitle = styled.h2`
 export const ButtonContainer = styled.div`
     margin: 30px auto 30px auto;
     width: calc(100% - 100px);
+    @media (max-width: 800px) {
+        width: 100%;
+    }
 `

@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux'
 import useCheckImageExists from '../../Hooks/checkImageExists'
 
 const availableNetworks = {
-    ALGORAND: { name: 'ALGO', image: algorandLogo },
-    RIPPLE: { name: 'XRP', image: '' }
+    ALGORAND: { unit: 'ALGO', image: algorandLogo },
+    RIPPLE: { unit: 'XRP', image: '' }
 }
 
 function SelectWithoutDropdown({ half, name, label, value, handleChange, asset }) {
@@ -22,10 +22,10 @@ function SelectWithoutDropdown({ half, name, label, value, handleChange, asset }
                     <div className="select">
                         <div className="left">
                             <img 
-                                src={ !asset ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
+                                src={ !asset?.id ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
                                 alt="" 
                             />
-                            <span>{ !asset ? availableNetworks[network].name : asset.name }</span>
+                            <span>{ !asset?.id ? availableNetworks[network].unit : asset.unit }</span>
                         </div>
                     </div>
                     <div className="rightBox">

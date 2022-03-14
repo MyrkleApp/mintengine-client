@@ -38,9 +38,62 @@ export const Container = styled.div`
     margin: auto auto 16px auto;
     padding: 20px 0 5px 0;
     position: relative;
+    @media (max-width: 800px) {
+        width: calc(100% - 10px);
+    }
     & > .innerContainer {
         width: calc(100% - 40px);
         margin: auto;
+
+        position: relative;
+
+        & > input.asset-id {
+            position: absolute;
+            left: 47%;
+            top: 30px;
+            height: 60px;
+            width: 23%;
+            border: none;
+            background-color: white;
+            color: gray;
+            font-size: 24px;
+            text-align: right;
+            &:focus {
+                outline: none;
+            }
+
+        }
+
+        & > label.asset-id {
+            position: absolute;
+            left: 47%;
+            top: 0px;
+            font-weight: 500;
+        }
+
+        & > input.asset-amount {
+            position: absolute;
+            right: 0;
+            top: 30px;
+            height: 60px;
+            width: 23%;
+            border: none;
+            background-color: white;
+            border-radius: 0 10px 10px 0;
+            color: gray;
+            font-size: 24px;
+            text-align: right;
+            &:focus {
+                outline: none;
+            }
+        }
+
+        & > label.asset-amount {
+            position: absolute;
+            left: 77%;
+            top: 0px;
+            font-weight: 500;
+        }
     }
 
     & > img {
@@ -60,6 +113,9 @@ export const Info = styled.p`
 export const ButtonContainer = styled.div`
     margin: 30px auto 30px auto;
     width: calc(100% - 150px);
+    @media (max-width: 800px) {
+        width: calc(100% - 45px);
+    }
 `
 
 export const LoaderContainer = styled.div`

@@ -11,7 +11,7 @@ import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
 import useCheckImageExists from '../../Hooks/checkImageExists';
 
-function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly }) {
+function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly, hideInput, handleFocus }) {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
@@ -30,16 +30,20 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
         setOpen(false)
     }
 
+    const handleDropdownClick = () => {
+        handleItemClick({ id: 0, amount: 0, image: algorandLogo })
+        setTimeout(() => setOpen(false), 100)
+    }
+
     return (
         <Grid item xs={half ? 6 : 12}>
-            <Styles.Root exchange={exchange}>
+            <Styles.Root exchange={exchange} hideInput={hideInput}>
                 <label>{label}</label>
-                <ClickAwayListener onClickAway={handleClickAway}>
                     <div className="container">
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
                                 <img src={asset?.image || noAssetImage} alt="" />
-                                <span>{asset?.name || 'ALGO'}</span>
+                                <span>{asset?.unit || 'ALGO'}</span>
                             </div>
                             <KeyboardArrowDownIcon />
                         </div>
@@ -49,13 +53,13 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                 value={value}
                                 onChange={handleChange}
                                 readOnly={readOnly}
+                                onFocus={handleFocus}
                             />
                         </div>
                     </div>
-                </ClickAwayListener>
 
                 <Styles.DropdownContainer show={open}>
-                    <Styles.DropdownItem onClick={() => handleItemClick({ id: '', amount: 0, image: algorandLogo })}>
+                    <Styles.DropdownItem onClick={handleDropdownClick}>
                         <div className="left">
                             <div className="leftTop">
                                 <img src={algorandLogo} alt="" />
@@ -93,6 +97,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                         key={asset.id}
                                         asset={asset}
                                         handleItemClick={handleItemClick}
+                                        setOpen={setOpen}
                                     />
                                 ))
                                 :
@@ -107,11 +112,12 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
     )
 }
 
-function DropdownItem({ asset, handleItemClick }) {
+function DropdownItem({ asset, handleItemClick, setOpen }) {
     const { tinyManAssetImage } = useCheckImageExists(asset?.id)
 
     const handleClick = () => {
         handleItemClick(asset)
+        setTimeout(() => setOpen(false), 100)
     }
 
     return (

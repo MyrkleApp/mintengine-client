@@ -67,10 +67,14 @@ export const Root = styled.div`
             & > input {
                 color: gray;
                 border: none;
-                background-color: transparent;
+                background-color: ${props => !props.exchange ? 'transparent' : 'white'};
+                height: 100%;
+                border-radius: ${props => props.exchange && '0 15px 15px 0'};
+                padding-right: ${props => props.exchange && '25px'};
+                display: ${props => props.hideInput && 'none'};
                 font-size: 24px;
                 text-align: right;
-                max-width: calc(100% - 50px);
+                max-width: ${props => !props.exchange ? 'calc(100% - 50px)' : 'calc(100% - 10px)'};
                 &:focus {
                     outline: none;
                     /* background-color: transparent; */
