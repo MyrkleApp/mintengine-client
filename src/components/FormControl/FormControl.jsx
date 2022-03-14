@@ -39,6 +39,8 @@ const Input = React.forwardRef((props, ref) => {
                         readOnly={readOnly}
                         max={otherProps.max}
                         maxLength={otherProps.maxLength}
+                        exchange={otherProps.exchange}
+                        onFocus={otherProps.handleFocus}
                     /> :
                     <Styles.TextArea
                         icon={icon}

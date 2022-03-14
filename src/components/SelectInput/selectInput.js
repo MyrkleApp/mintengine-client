@@ -71,7 +71,7 @@ export const Root = styled.div`
                 height: 100%;
                 border-radius: ${props => props.exchange && '0 15px 15px 0'};
                 padding-right: ${props => props.exchange && '25px'};
-                display: ${props => props.hideInput && 'none'};
+                /* display: ${props => props.hideInput && 'none'}; */
                 font-size: 24px;
                 text-align: right;
                 max-width: ${props => !props.exchange ? 'calc(100% - 50px)' : 'calc(100% - 10px)'};

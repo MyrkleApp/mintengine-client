@@ -47,19 +47,19 @@ export const Root = styled.div`
 `
 
 export const CustomInput = styled.input`
-    height: 65px;
+    height: ${props => !props.exchange ? '65px' : '58px'};
     padding-left: 15px;
     padding-right: ${props => props.icon ? '58px' : '15px'};
     /* margin: 10px 0px 20px 0px; */
-    border: 2px solid #043923;
+    border: ${props => !props.exchange ? '2px solid #043923' : 'none'};
     border-radius: 16px;
-    background-color: transparent;
+    background-color: ${props => !props.exchange ? 'transparent' : 'white'};
     font-size: 18px;
     text-align: ${props => props.center ? 'center' : 'left'};
 
     &:focus {
         outline: none;
-        border: 2px solid #0EB56F;
+        border: ${props => !props.exchange ? '2px solid #0EB56F' : 'none'};
     }
 `
 

@@ -278,6 +278,9 @@ const algorandSlice = createSlice({
     //used to set passphase from browser db
     setAlgorandPassphrase(state, action) {
       state.passphrase = action.payload
+    },
+    resetSwapValueData(state) {
+      state.swapValue = DEFAULT
     }
   },
   extraReducers: { 
@@ -383,6 +386,6 @@ const algorandSlice = createSlice({
   }
 })
 
-export const { incorrectPassphraseError, setAlgorandPassphrase } = algorandSlice.actions
+export const { incorrectPassphraseError, setAlgorandPassphrase, resetSwapValueData } = algorandSlice.actions
 
 export default algorandSlice.reducer

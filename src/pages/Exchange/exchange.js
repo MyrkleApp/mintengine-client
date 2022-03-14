@@ -47,7 +47,7 @@ export const Container = styled.div`
 
         position: relative;
 
-        & > input.asset-id {
+        /* & > input.asset-id {
             position: absolute;
             left: 47%;
             top: 30px;
@@ -86,14 +86,14 @@ export const Container = styled.div`
             &:focus {
                 outline: none;
             }
-        }
+        }*/
 
         & > label.asset-amount {
             position: absolute;
-            left: 77%;
+            right: 0;
             top: 0px;
             font-weight: 500;
-        }
+        } 
     }
 
     & > img {

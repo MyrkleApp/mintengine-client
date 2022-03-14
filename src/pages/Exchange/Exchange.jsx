@@ -9,13 +9,16 @@ import { Button } from '../../components/UI/Button/button'
 import useSelectInput from '../../Hooks/SelectInput'
 import useFormValidity from '../../Hooks/FormValidity'
 import { useDispatch, useSelector } from 'react-redux'
-import { checkAlgorandAssetIsValid, getAlgorandSwapValue, swapAlgorand } from '../../app/algorand/algorandSlice'
+import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand } from '../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import Modal from '../../components/UI/Modal/Modal'
 import ModalResponse from '../../components/ModalResponse/ModalResponse'
 import useModal from '../../Hooks/Modal'
 import useSubmit from '../../Hooks/Submit'
 import { ThreeDots } from 'react-loader-spinner'
+import FormControl from '../../components/FormControl/FormControl'
+import { networkDataToReturn } from '../../constants/network'
+
 
 function ExchangeAlgo() {
     const dispatch = useDispatch()
@@ -35,6 +38,9 @@ function ExchangeAlgo() {
         handleSelectChange: handleToAssetSelectChange,
         handleSetAssetValue: handleSetToAssetWholeValue
     } = useSelectInput()
+
+    const network = useSelector(state => state.network.network)
+    const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
 
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { data: holdingsData } = useSelector(state => state.algorand.holdings)
@@ -138,6 +144,10 @@ function ExchangeAlgo() {
         handleSetFromAssetWholeValue(fromAsset)
     }
 
+    useEffect(() => {
+        return () => dispatch(resetSwapValueData())
+    }, [])
+
     return (
         <DashboardWrapper>
             <ChooseNetwork />
@@ -149,6 +159,7 @@ function ExchangeAlgo() {
                         <Styles.Line />
                         <Styles.Container>
                             <div className="innerContainer">
+                                <label className="asset-amount">Amount</label>
                                 <SelectInput
                                     exchange
                                     label="From"
@@ -159,13 +170,14 @@ function ExchangeAlgo() {
                                     handleFocus={handleFromAssetFocus}
                                 />
                                 <Styles.Info>
-                                    Balance: <strong>2.023</strong>
+                                    Balance: <strong>{activeWalletData?.balance}</strong>
                                 </Styles.Info>
                             </div>
                             <img src={exchangeLogo} alt="" />
                         </Styles.Container>
                         <Styles.Container>
                             <div className="innerContainer">
+                                <label className="asset-amount">Amount</label>
                                 <SelectInput
                                     exchange
                                     hideInput
@@ -173,21 +185,33 @@ function ExchangeAlgo() {
                                     asset={toAsset}
                                     value={toAsset.amount}
                                     handleItemClick={setToAssetByClick}
-                                    readOnly
+                                    handleChange={e => handleToAssetSelectChange('amount', e)}
+                                    handleFocus={handleToAssetFocus}
                                 />
-                                <label className="asset-id">Asset ID</label>
+
+                                <FormControl 
+                                    type="text"
+                                    label="Asset ID"
+                                    center
+                                    exchange
+                                    value={toAsset.id}
+                                    handleChange={e => handleToAssetSelectChange('id', e)}
+                                />
+                                
+                                {/* <label className="asset-id">Asset ID</label>
                                 <input 
                                     className="asset-id" 
                                     value={toAsset.id}
                                     onChange={e => handleToAssetSelectChange('id', e)}
-                                />
-                                <label className="asset-amount">Amount</label>
+                                /> */}
+
+                                {/* <label className="asset-amount">Amount</label>
                                 <input 
                                     className="asset-amount" 
                                     value={toAsset.amount}
                                     onChange={e => handleToAssetSelectChange('amount', e)}
                                     onFocus={handleToAssetFocus}
-                                />
+                                /> */}
                                 <p>{checkValidAssetData?.message}</p>
                                 <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p>
                                 { ((getSwapValueStatus === HTTP_STATUS.PENDING) ||  (checkValidAssetStatus === HTTP_STATUS.PENDING)) && (
