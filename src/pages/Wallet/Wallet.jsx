@@ -34,7 +34,7 @@ function Dashboard() {
     const { status: holdingsStatus, data: holdingsData } = useSelector(state => state.algorand.holdings)
 
     useEffect(() => {
-        if (!holdingsData && holdingsStatus !== HTTP_STATUS.PENDING) {
+        if ((holdingsData.length === 1) && (holdingsStatus !== HTTP_STATUS.PENDING)) {
             dispatch(getAlgorandHoldings())
         }
     }, [holdingsData])
@@ -99,9 +99,9 @@ function Dashboard() {
                                                 ariaLabel='loading'
                                             />
                                         ) : (
-                                            (holdingsData?.assets?.length > 0)
+                                            (holdingsData?.length > 1)
                                             ?
-                                            holdingsData?.assets?.map(asset => (
+                                            holdingsData?.filter(asset => asset.id !== 0).map(asset => (
                                                 <WalletAssetItem key={asset.id} asset={asset} />
                                             )) 
                                             :

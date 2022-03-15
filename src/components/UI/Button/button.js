@@ -12,6 +12,10 @@ export const Button = styled.button`
     border: ${props => props.outlined ? '1px solid #0EB56F' : 'none'};
     cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
     opacity: ${props => props.disabled ? '0.5' : '1.0'};
+
+    @media(max-width: 800px) {
+        padding: 15px 18px;
+    }
 `
 
 export const CopyButton = styled(Button)`

@@ -14,6 +14,10 @@ export const Root = styled.div`
         font-size: 18px;
         color: ${props => props.active && 'green'};
         cursor: pointer;
+
+        @media(max-width: 800px) {
+            font-size: 16px;
+        }
     }
 
     & .iconsContainer {
@@ -21,5 +25,9 @@ export const Root = styled.div`
         font-size: 30px;
         display: flex;
         flex-direction: column;
+
+        @media(max-width: 800px) {
+            transform: scale(.9);
+        }
     }
 `

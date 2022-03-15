@@ -34,9 +34,9 @@ function Transactions() {
     const rows = filter[tabValue]?.map((item, i) => (
         <tr key={item.txid}>
             <td><a href={`https://testnet.algoexplorer.io/tx/${item.txid}`} target="_blank">{item.txid}</a></td>
-            <td className="hide-on-mobile">{item.asset_name}</td>
-            <td className="hide-on-mobile">{item.amount}</td>
-            <td>{item.tx_type}</td>
+            <td>{item.asset_name}</td>
+            <td>{`${item.tx_type === 'sent' ? '-' : '+'} ${item.amount}`}</td>
+            <td className="hide-on-mobile">{item.tx_type}</td>
             <td className="hide-on-mobile">{item.tx_time}</td>
         </tr>
     ))
@@ -63,7 +63,7 @@ function Transactions() {
                     ) : (
                         <Table
                             columnTitles={['transaction id', 'asset name', 'amount', 'txn type', 'date']}
-                            columnsToHideOnMobile={[1, 2, 4]}
+                            columnsToHideOnMobile={[3, 4]}
                             rows={rows}
                             noDataTitle="NO TRANSACTIONS YET"
                             noDataText="You don’t have any transaction that can be displayed yet."

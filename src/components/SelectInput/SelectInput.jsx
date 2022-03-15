@@ -10,11 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
 import useCheckImageExists from '../../Hooks/checkImageExists';
+import { availableNetworks } from './SelectWithoutDropdown';
 
-function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly, hideInput, handleFocus }) {
+function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly, hideInput, handleFocus, placeholder }) {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
+    const network = useSelector(state => state.network.network)
 
     useEffect(() => {
         if (open && !data) {
@@ -42,8 +44,11 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                     <div className="container">
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
-                                <img src={asset?.image || noAssetImage} alt="" />
-                                <span>{asset?.unit || 'ALGO'}</span>
+                                <img 
+                                    src={(asset?.id === 0 ? availableNetworks[network].image : asset?.image) || noAssetImage} 
+                                    alt="" 
+                                />
+                                <span>{asset?.id === 0 ? availableNetworks[network].unit : asset?.unit}</span>
                             </div>
                             <KeyboardArrowDownIcon />
                         </div>
@@ -54,31 +59,12 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                 onChange={handleChange}
                                 readOnly={readOnly}
                                 onFocus={handleFocus}
+                                placeholder={placeholder}
                             />
                         </div>
                     </div>
 
                 <Styles.DropdownContainer show={open}>
-                    <Styles.DropdownItem onClick={handleDropdownClick}>
-                        <div className="left">
-                            <div className="leftTop">
-                                <img src={algorandLogo} alt="" />
-                                <span>Algorand</span>
-                            </div>
-                            <div className="leftBottom">
-                                <span>Algo</span>
-                            </div>
-                        </div>
-                        <div className="right">
-                            <div className="rightTop">
-                                {/* <span>{asset.amount}</span> */}
-                            </div>
-                            <div className="rightBottom">
-                                {/* <span>Asset ID:</span>
-                                <span>{asset.id}</span> */}
-                            </div>
-                        </div>
-                    </Styles.DropdownItem>
                     {
                         status === HTTP_STATUS.PENDING ? (
                             <Styles.LoaderContainer>
@@ -90,9 +76,9 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                 />
                             </Styles.LoaderContainer>
                         ) : (
-                            (data?.assets?.length > 0)
+                            (data?.length > 0)
                                 ?
-                                data?.assets?.map(asset => (
+                                data?.map(asset => (
                                     <DropdownItem
                                         key={asset.id}
                                         asset={asset}
@@ -113,7 +99,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
 }
 
 function DropdownItem({ asset, handleItemClick, setOpen }) {
-    const { tinyManAssetImage } = useCheckImageExists(asset?.id)
+    const { tinyManAssetImage } = useCheckImageExists(asset.id)
 
     const handleClick = () => {
         handleItemClick(asset)
@@ -124,7 +110,7 @@ function DropdownItem({ asset, handleItemClick, setOpen }) {
         <Styles.DropdownItem onClick={handleClick}>
             <div className="left">
                 <div className="leftTop">
-                    <img src={ tinyManAssetImage || asset.image || noAssetImage } alt="" />
+                    <img src={ tinyManAssetImage || (asset.image || noAssetImage) } alt="" />
                     <span>{asset.name}</span>
                 </div>
                 <div className="leftBottom">

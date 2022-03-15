@@ -18,7 +18,11 @@ export const Root = styled.div`
         cursor: pointer;
         right: 20px;
         top: 50px;
-        /* transform: scale(1.5); */
+
+        @media(max-width: 800px) {
+            top: 40px;
+            right: 15px;
+        }
     }
 
     &   input[type=date]::-webkit-inner-spin-button, 
@@ -56,6 +60,15 @@ export const CustomInput = styled.input`
     background-color: ${props => !props.exchange ? 'transparent' : 'white'};
     font-size: 18px;
     text-align: ${props => props.center ? 'center' : 'left'};
+
+    @media(max-width: 800px) {
+        height: 45px;
+        font-size: 16px;
+    }
+
+    ::placeholder {
+        color: #bdbdbd;
+    }
 
     &:focus {
         outline: none;

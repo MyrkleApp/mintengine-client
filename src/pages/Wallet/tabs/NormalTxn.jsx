@@ -163,8 +163,8 @@ function NormalTxn() {
 
         const formData = new FormData()
         formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
-        formData.append('currency_type', !assetValue.id ? 'algo' : 'asset')
-        if (assetValue.id) formData.append('asset_id', assetValue.id) //if currency is an asset
+        formData.append('currency_type', assetValue?.id === 0 ? 'algo' : 'asset')
+        if (assetValue?.id !== 0) formData.append('asset_id', assetValue.id) //if currency is an asset
 
         if (numOfTxns === 1) {
             formData.append('receiver_addr', recipientAddressValue)
@@ -196,6 +196,7 @@ function NormalTxn() {
                 asset={assetValue}
                 handleChange={(e) => handleAmountSelectChange('amount', e)}
                 handleItemClick={setAssetValueByClick}
+                placeholder="0"
             />
             <FormControl
                 label="Recipient Address"
@@ -215,6 +216,8 @@ function NormalTxn() {
                     value={assetTwoValue.amount}
                     asset={assetValue}
                     handleChange={(e) => handleAmountTwoSelectChange('amount', e)}
+                    placeholder="0"
+                    passedDown
                 />
                 <FormControl
                     label="Recipient Address"
@@ -235,6 +238,8 @@ function NormalTxn() {
                     value={assetThreeValue.amount}
                     asset={assetValue}
                     handleChange={(e) => handleAmountThreeSelectChange('amount', e)}
+                    placeholder="0"
+                    passedDown
                 />
                 <FormControl
                     label="Recipient Address"
@@ -255,6 +260,8 @@ function NormalTxn() {
                     value={assetFourValue.amount}
                     asset={assetValue}
                     handleChange={(e) => handleAmountFourSelectChange('amount', e)}
+                    placeholder="0"
+                    passedDown
                 />
                 <FormControl
                     label="Recipient Address"
@@ -275,6 +282,8 @@ function NormalTxn() {
                     value={assetFiveValue.amount}
                     asset={assetValue}
                     handleChange={(e) => handleAmountFiveSelectChange('amount', e)}
+                    placeholder="0"
+                    passedDown
                 />
                 <FormControl
                     label="Recipient Address"

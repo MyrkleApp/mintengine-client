@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { CREATE, IMPORT } from '../../constants/walletStatus';
 import axios from '../axios'
 import * as actions from './actions';
+import algorandLogo from '../../assets/icons/algorandLogo.png'
 
 const namespace = 'algorand'
 
@@ -248,7 +249,7 @@ const algorandSlice = createSlice({
     clawback: DEFAULT,
     destroy: DEFAULT,
     freeze: DEFAULT,
-    holdings: DEFAULT,
+    holdings: { ...DEFAULT, data: [{ id: 0, name: 'Algorand', unit: 'Algo', image: algorandLogo }] },
     modify: DEFAULT,
     optIn: DEFAULT,
     optOut: DEFAULT,

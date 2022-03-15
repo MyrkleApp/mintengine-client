@@ -32,6 +32,10 @@ export const Root = styled.div`
         justify-content: space-evenly;
         align-items: center;
 
+        @media(max-width: 800px) {
+            height: 47px;
+        }
+
         & > input {
             width: 27%;
             height: 70%;
@@ -40,6 +44,10 @@ export const Root = styled.div`
             padding: 0 5px;
             text-align: center;
             font-size: 16px;
+
+            @media(max-width: 800px) {
+                border-radius: 12px;
+            }
 
             &:focus {
                 outline: none;

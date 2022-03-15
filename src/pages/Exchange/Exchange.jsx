@@ -63,7 +63,7 @@ function ExchangeAlgo() {
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
             if (toAsset.id > 0) {
-                const hasAsset =  holdingsData?.assets?.filter(asset => asset.id == toAsset.id)[0]
+                const hasAsset =  holdingsData?.filter(asset => asset.id == toAsset.id)[0]
                 
                 if (hasAsset) {
                     handleSetToAssetWholeValue(hasAsset)
@@ -148,6 +148,10 @@ function ExchangeAlgo() {
         return () => dispatch(resetSwapValueData())
     }, [])
 
+    /**TINY USDC
+     * 21582668
+     */
+    
     return (
         <DashboardWrapper>
             <ChooseNetwork />
@@ -168,6 +172,7 @@ function ExchangeAlgo() {
                                     handleChange={(e) => handleFromAssetSelectChange('amount', e)}
                                     handleItemClick={setFromAssetByClick}
                                     handleFocus={handleFromAssetFocus}
+                                    placeholder="0"
                                 />
                                 <Styles.Info>
                                     Balance: <strong>{activeWalletData?.balance}</strong>
@@ -187,6 +192,7 @@ function ExchangeAlgo() {
                                     handleItemClick={setToAssetByClick}
                                     handleChange={e => handleToAssetSelectChange('amount', e)}
                                     handleFocus={handleToAssetFocus}
+                                    placeholder="0"
                                 />
 
                                 <FormControl 
@@ -196,22 +202,8 @@ function ExchangeAlgo() {
                                     exchange
                                     value={toAsset.id}
                                     handleChange={e => handleToAssetSelectChange('id', e)}
+                                    placeholder="Asset ID"
                                 />
-                                
-                                {/* <label className="asset-id">Asset ID</label>
-                                <input 
-                                    className="asset-id" 
-                                    value={toAsset.id}
-                                    onChange={e => handleToAssetSelectChange('id', e)}
-                                /> */}
-
-                                {/* <label className="asset-amount">Amount</label>
-                                <input 
-                                    className="asset-amount" 
-                                    value={toAsset.amount}
-                                    onChange={e => handleToAssetSelectChange('amount', e)}
-                                    onFocus={handleToAssetFocus}
-                                /> */}
                                 <p>{checkValidAssetData?.message}</p>
                                 <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p>
                                 { ((getSwapValueStatus === HTTP_STATUS.PENDING) ||  (checkValidAssetStatus === HTTP_STATUS.PENDING)) && (

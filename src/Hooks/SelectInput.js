@@ -2,10 +2,10 @@ import { useState } from 'react'
 import algorandLogo from '../assets/icons/algorandLogo.png'
 
 function useSelectInput() {
-    const [value, setValue] = useState({ id: 0, amount: 0, image: algorandLogo })
+    const [value, setValue] = useState({ id: 0, amount: "", image: algorandLogo, unit: 'ALGO' })
 
     const setValueByClick = data => {
-        setValue({ ...data, amount: 0 })
+        setValue({ ...data, amount: "" })
     }
 
     const handleSelectChange = (fieldToChange, e) => {
@@ -17,7 +17,7 @@ function useSelectInput() {
     }
 
     const handleSetAssetValue = data => {
-        setValue({ ...data, amount: 0 })
+        setValue({ ...data, amount: "" })
     }
 
     return {

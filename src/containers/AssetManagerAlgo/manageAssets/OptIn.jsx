@@ -41,6 +41,7 @@ function OptIn({ handleModalClose, handleResponse }) {
                 value={assetIdValue}
                 handleChange={handleAssetIdChange}
                 asset={assetIsValidData}
+                placeholder="Asset ID"
             />
             <p>{assetIsValidData?.message}</p>
 

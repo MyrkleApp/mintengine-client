@@ -21,6 +21,9 @@ export const Table = styled.table`
         padding: 8px;
         text-align: left;
         min-width: 150px;
+        @media(max-width: 800px) {
+            padding: 3px;
+        }
     }
 
     & td {
