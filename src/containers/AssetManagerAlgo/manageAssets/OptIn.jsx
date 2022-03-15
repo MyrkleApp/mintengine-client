@@ -34,7 +34,7 @@ function OptIn({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>ADD-TOKEN</ModalTitle>
-            <p>Add token with a given asset ID to receive an Algorand asset to your account.</p>
+            <p>Enable asset access to account.</p>
 
             <SelectWithoutDropdown
                 label="Asset ID"

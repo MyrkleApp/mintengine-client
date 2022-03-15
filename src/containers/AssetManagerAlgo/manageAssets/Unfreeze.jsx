@@ -33,7 +33,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>UNFREEZE</ModalTitle>
-            <p>Upon creation of an asset, you can specify an unfreeze address.</p>
+            <p>Enables the specified target address from transacting with the asset, only the freeze address of this asset can carry out this action. Asset must have been previously frozen for the target address.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

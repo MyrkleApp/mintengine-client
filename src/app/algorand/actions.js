@@ -126,7 +126,8 @@ export const getAlgorandHoldingsPending = (state) => {
 export const getAlgorandHoldingsFulfilled = (state, { payload }) => {
     state.holdings.status = HTTP_STATUS.FULFILLED
     const defaultHoldings = state.holdings.data
-    state.holdings.data = [...defaultHoldings, ...payload.assets]
+    const myHoldings = payload.assets || []
+    state.holdings.data = [...defaultHoldings, ...myHoldings]
 }
 
 export const getAlgorandHoldingsRejected = (state, { payload }) => {

@@ -31,7 +31,7 @@ function Destroy({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>DELETE TOKEN</ModalTitle>
-            <p>All of the assets must be owned by the creator of the asset before the asset can be deleted.</p>
+            <p>Completely delete an asset from the network. All assets must be held by the creator address before the manager address can execute this action.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

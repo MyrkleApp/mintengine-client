@@ -37,7 +37,7 @@ function Dashboard() {
         if ((holdingsData.length === 1) && (holdingsStatus !== HTTP_STATUS.PENDING)) {
             dispatch(getAlgorandHoldings())
         }
-    }, [holdingsData])
+    }, [])
 
     return (
         <DashboardWrapper>

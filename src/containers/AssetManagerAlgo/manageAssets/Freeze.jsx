@@ -37,7 +37,7 @@ function Freeze({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
-            <p>Upon creation of an asset, you can specify a freeze address.</p>
+            <p>Disables the specified target address from transacting with the asset, only the freeze address of this asset can carry out this action.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

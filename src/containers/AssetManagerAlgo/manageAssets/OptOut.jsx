@@ -36,7 +36,7 @@ function OptOut({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>REMOVE-TOKEN</ModalTitle>
-            <p>Remove token with a given Asset ID to remove an Algorand asset holding from your account.</p>
+            <p>Disable asset access to your account.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

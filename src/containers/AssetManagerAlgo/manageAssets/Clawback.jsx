@@ -37,7 +37,7 @@ function Unfreeze({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>CLAWBACK</ModalTitle>
-            <p>The clawback address represents an account that is allowed to transfer assets from and to any asset holder.</p>
+            <p>Retrieve the asset from the target address and send it to the receiving address. Only the clawback address of this asset can carryout this action.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

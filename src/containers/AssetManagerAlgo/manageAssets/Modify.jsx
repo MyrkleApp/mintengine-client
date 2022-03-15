@@ -41,7 +41,7 @@ function Modify({ handleModalClose, handleResponse }) {
     return (
         <Fragment>
             <ModalTitle>MODIFY</ModalTitle>
-            <p>After an asset has been created only the manager, reserve, freeze and clawback accounts can be changed.</p>
+            <p>Modify the principal addresses of the specified asset. Only the manager address of this asset can carryout this action.</p>
             <SelectInput
                 label="Asset"
                 value={assetValue.id}

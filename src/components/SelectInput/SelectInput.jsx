@@ -76,7 +76,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                                 />
                             </Styles.LoaderContainer>
                         ) : (
-                            (data?.length > 0)
+                            (data?.length > 1)
                                 ?
                                 data?.map(asset => (
                                     <DropdownItem
