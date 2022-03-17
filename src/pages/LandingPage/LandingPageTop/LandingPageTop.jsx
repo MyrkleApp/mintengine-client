@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../../../components/UI/Button/button'
 import * as Styles from './landingPageTop'
-
+// TO push
 function LandingPageTop() {
     return (
         <Styles.LandingTopRoot>
