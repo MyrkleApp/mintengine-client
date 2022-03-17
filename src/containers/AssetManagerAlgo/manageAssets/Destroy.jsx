@@ -9,9 +9,19 @@ import { destroyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import useSelectInput from '../../../Hooks/SelectInput'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import useSearchAssetWithDropdown from '../../../Hooks/SearchAssetWithDropdown'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { LoaderContainer } from '../assetManagerAlgo'
+import { ThreeDots } from 'react-loader-spinner'
+
 
 function Destroy({ handleModalClose, handleResponse }) {
-    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
+    const { 
+        value: assetValue, 
+        setValueByClick: setAssetValueByClick, 
+        handleSelectChange: handleAssetSelectChange,
+        handleSetAssetValue: handleSetAssetValue
+    } = useSelectInput('emptyId')
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetValue.id)
     const passphrase = useSelector(state => state.algorand.passphrase)
@@ -28,6 +38,8 @@ function Destroy({ handleModalClose, handleResponse }) {
         handleSubmit(destroyAlgorand(destroyData), handleResponse, handleResponse)
     }
 
+    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetValue.id, handleSetAssetValue)
+
     return (
         <Fragment>
             <ModalTitle>DELETE TOKEN</ModalTitle>
@@ -39,6 +51,10 @@ function Destroy({ handleModalClose, handleResponse }) {
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
             />
+            <p>{checkValidAssetError}</p>
+            { checkValidAssetStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             <FormControl 
                 label="Note"
                 textArea
@@ -46,7 +62,13 @@ function Destroy({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid} onClick={handleDestroy}>delete</Button>
+                <Button 
+                    fullWidth 
+                    disabled={!formIsValid || checkValidAssetError || (checkValidAssetStatus === HTTP_STATUS.PENDING)} 
+                    onClick={handleDestroy}
+                >
+                    delete
+                </Button>
             </ButtonContainer>
         </Fragment>
     )

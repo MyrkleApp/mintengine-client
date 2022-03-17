@@ -9,13 +9,23 @@ import { freezeAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import useSelectInput from '../../../Hooks/SelectInput'
 import SelectInput from '../../../components/SelectInput/SelectInput'
+import useSearchAssetWithDropdown from '../../../Hooks/SearchAssetWithDropdown'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { LoaderContainer } from '../assetManagerAlgo'
+import { ThreeDots } from 'react-loader-spinner'
+
 
 //target address for testing
 // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
 
 
 function Freeze({ handleModalClose, handleResponse }) {
-    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
+    const { 
+        value: assetValue, 
+        setValueByClick: setAssetValueByClick, 
+        handleSelectChange: handleAssetSelectChange,
+        handleSetAssetValue: handleSetAssetValue
+    } = useSelectInput('emptyId')
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
     const { formIsValid } = useFormValidity(assetValue.id, targetAddressValue)
@@ -34,6 +44,8 @@ function Freeze({ handleModalClose, handleResponse }) {
         handleSubmit(freezeAlgorand(freezeData), handleResponse, handleResponse)
     }
 
+    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetValue.id, handleSetAssetValue)
+
     return (
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
@@ -45,6 +57,10 @@ function Freeze({ handleModalClose, handleResponse }) {
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
             />
+            <p>{checkValidAssetError}</p>
+            { checkValidAssetStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             <FormControl 
                 type="text"
                 label="Target Address"
@@ -58,7 +74,13 @@ function Freeze({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid} onClick={handleFreeze}>freeze</Button>
+                <Button 
+                    fullWidth 
+                    disabled={!formIsValid || checkValidAssetError || (checkValidAssetStatus === HTTP_STATUS.PENDING)} 
+                    onClick={handleFreeze}
+                >
+                    freeze
+                </Button>
             </ButtonContainer>
         </Fragment>
     )

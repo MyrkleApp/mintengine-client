@@ -9,9 +9,19 @@ import { modifyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 import useSelectInput from '../../../Hooks/SelectInput'
+import useSearchAssetWithDropdown from '../../../Hooks/SearchAssetWithDropdown'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { LoaderContainer } from '../assetManagerAlgo'
+import { ThreeDots } from 'react-loader-spinner'
+
 
 function Modify({ handleModalClose, handleResponse }) {
-    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAssetSelectChange } = useSelectInput()
+    const { 
+        value: assetValue, 
+        setValueByClick: setAssetValueByClick, 
+        handleSelectChange: handleAssetSelectChange,
+        handleSetAssetValue: handleSetAssetValue
+    } = useSelectInput('emptyId')
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
@@ -38,6 +48,8 @@ function Modify({ handleModalClose, handleResponse }) {
         handleSubmit(modifyAlgorand(modifyData), handleResponse, handleResponse)
     }
 
+    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetValue.id, handleSetAssetValue)
+
     return (
         <Fragment>
             <ModalTitle>MODIFY</ModalTitle>
@@ -49,6 +61,10 @@ function Modify({ handleModalClose, handleResponse }) {
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
             />
+            <p>{checkValidAssetError}</p>
+            { checkValidAssetStatus === HTTP_STATUS.PENDING && (
+                <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
+            )}
             <FormControl 
                 type="text"
                 label="Manager's Address"
@@ -80,7 +96,13 @@ function Modify({ handleModalClose, handleResponse }) {
                 handleChange={handleNoteChange}
             />
             <ButtonContainer>
-                <Button fullWidth disabled={!formIsValid} onClick={handleModify}>modify</Button>
+                <Button 
+                    fullWidth 
+                    disabled={!formIsValid || checkValidAssetError || (checkValidAssetStatus === HTTP_STATUS.PENDING)} 
+                    onClick={handleModify}
+                >
+                    modify
+                </Button>
             </ButtonContainer>
         </Fragment>
     )
