@@ -56,6 +56,7 @@ function Freeze({ handleModalClose, handleResponse }) {
                 asset={assetValue}
                 handleChange={(e) => handleAssetSelectChange('id', e)}
                 handleItemClick={setAssetValueByClick}
+                placeholder="Asset ID"
             />
             <p>{checkValidAssetError}</p>
             { checkValidAssetStatus === HTTP_STATUS.PENDING && (
