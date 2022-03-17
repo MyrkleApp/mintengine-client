@@ -1,8 +1,8 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '../../../components/UI/Button/button'
-import * as Styles from './landingPageTop'
+import { Grid } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../../../components/UI/Button/button";
+import * as Styles from "./landingPageTop";
 
 function LandingPageTop() {
     return (
@@ -43,6 +43,7 @@ function LandingPageTop() {
             </Styles.Container>
         </Styles.LandingTopRoot>
     )
+
 }
 
-export default LandingPageTop
+export default LandingPageTop;
