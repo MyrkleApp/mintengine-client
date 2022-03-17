@@ -33,12 +33,12 @@ function LandingPageTop() {
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    {/* <Link to='/signup'> */}
+                    <a href="https://app.mintengine.org" target="_blank">
                         <Button style={{marginRight: '20px'}}>get started</Button>
-                    {/* </Link> */}
-                    {/* <Link to='/login'> */}
+                    </a>
+                    <a href="https://app.mintengine.org" target="_blank">
                         <Button outlined>login</Button>
-                    {/* </Link> */}
+                    </a>
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>
