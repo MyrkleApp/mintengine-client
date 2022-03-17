@@ -38,6 +38,7 @@ function ExchangeAlgo() {
         handleSelectChange: handleToAssetSelectChange,
         handleSetAssetValue: handleSetToAssetWholeValue
     } = useSelectInput()
+    console.log(toAsset)
 
     const network = useSelector(state => state.network.network)
     const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
@@ -45,7 +46,7 @@ function ExchangeAlgo() {
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { data: holdingsData } = useSelector(state => state.algorand.holdings)
 
-    const [swapIds, setSwapIds] = useState({ from: '', to: '' })
+    const [swapIds, setSwapIds] = useState({ from: fromAsset.id, to: toAsset.id })
 
     const { formIsValid } = useFormValidity(fromAsset.amount, toAsset.amount)
     const { modalState, handleModalOpen, handleModalClose } = useModal()
@@ -54,7 +55,7 @@ function ExchangeAlgo() {
 
     const [checkValidAssetStatus, setCheckValidAssetStatus] = useState(null)
     const [checkValidAssetData, setCheckValidAssetData] = useState(null)
-    
+    // console.log(checkValidAssetStatus)
 
     /**
      * get the asset you are swapping to
@@ -62,27 +63,25 @@ function ExchangeAlgo() {
 
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
-            if (toAsset.id > 0) {
-                const hasAsset =  holdingsData?.filter(asset => asset.id == toAsset.id)[0]
-                
-                if (hasAsset) {
-                    handleSetToAssetWholeValue(hasAsset)
-                } else {
-                    setCheckValidAssetStatus(HTTP_STATUS.PENDING)
+            const hasAsset =  holdingsData?.filter(asset => asset.id === toAsset.id)[0]
+            
+            if (hasAsset) {
+                handleSetToAssetWholeValue(hasAsset)
+            } else {
+                setCheckValidAssetStatus(HTTP_STATUS.PENDING)
 
-                    dispatch(checkAlgorandAssetIsValid({ asset_id: parseInt(toAsset.id) }))
-                    .unwrap()
-                    .then(res => {
-                        console.log(res)
-                        handleSetToAssetWholeValue(res)
-                        setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
-                        setCheckValidAssetData(res)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        setCheckValidAssetStatus(HTTP_STATUS.REJECTED)
-                    })
-                }
+                dispatch(checkAlgorandAssetIsValid({ asset_id: parseInt(toAsset.id) }))
+                .unwrap()
+                .then(res => {
+                    console.log(res)
+                    handleSetToAssetWholeValue(res)
+                    setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
+                    setCheckValidAssetData(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                    setCheckValidAssetStatus(HTTP_STATUS.REJECTED)
+                })
             }
         }, 1000);
 
@@ -96,12 +95,14 @@ function ExchangeAlgo() {
         asset_amount: fromAsset.id === swapIds.from ? parseInt(fromAsset.amount) : parseInt(toAsset.amount),
         phrase: passphrase
     }
-    console.log(swapData)
+    // console.log(swapData)
 
-
+    /**
+     * get equivelent value of other asset to swap to/from and set the value 
+     */
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
-            if (swapData.asset_amount > 0) {
+            if ((swapData.asset_amount > 0) && (fromAsset.id !== toAsset.id)) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
                 .then(swapAmount => {
@@ -116,8 +117,15 @@ function ExchangeAlgo() {
         }, 1000)
 
         return () => clearTimeout(inputRateTimer)
-    }, [swapData.asset_amount])
+    }, [swapData.asset_amount, swapData.to_asset])
 
+    useEffect(() => {
+        setSwapIds({ ...swapIds, from: fromAsset.id })
+    }, [fromAsset.id])
+
+    useEffect(() => {
+        setSwapIds({ ...swapIds, to: toAsset.id })
+    }, [toAsset.id])
 
 
     const handleSwap = () => {

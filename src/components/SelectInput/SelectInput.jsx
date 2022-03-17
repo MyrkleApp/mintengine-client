@@ -19,7 +19,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
     const network = useSelector(state => state.network.network)
 
     useEffect(() => {
-        if (open && !data) {
+        if (open && (status === null)) {
             dispatch(getAlgorandHoldings())
         }
     }, [open])

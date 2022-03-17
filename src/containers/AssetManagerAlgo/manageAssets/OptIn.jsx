@@ -8,7 +8,7 @@ import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import { useSelector } from 'react-redux'
 import SelectWithoutDropdown from '../../../components/SelectInput/SelectWithoutDropdown'
-import useUserInputDispatch from '../../../Hooks/UserInputDispatch'
+import useSearchAssetById from '../../../Hooks/SearchAssetById'
 import { ThreeDots } from 'react-loader-spinner'
 import { LoaderContainer } from '../assetManagerAlgo'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
@@ -29,7 +29,7 @@ function OptIn({ handleModalClose, handleResponse }) {
     }
 
     //send check request on input change
-    const { status: assetIsValidStatus, data: assetIsValidData } = useUserInputDispatch(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
+    const { status: assetIsValidStatus, data: assetIsValidData } = useSearchAssetById(assetIdValue, { asset_id: assetIdValue }, checkAlgorandAssetIsValid)
 
     return (
         <Fragment>

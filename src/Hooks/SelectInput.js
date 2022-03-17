@@ -2,7 +2,7 @@ import { useState } from 'react'
 import algorandLogo from '../assets/icons/algorandLogo.png'
 
 function useSelectInput() {
-    const [value, setValue] = useState({ id: 0, amount: "", image: algorandLogo, unit: 'ALGO' })
+    const [value, setValue] = useState({ id: 0, name: 'Algorand', amount: "", image: algorandLogo, unit: 'ALGO' })
 
     const setValueByClick = data => {
         setValue({ ...data, amount: "" })
