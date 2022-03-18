@@ -15,11 +15,11 @@ function ChooseNetwork() {
     const currentNetwork = useSelector(state => state.network.network)
 
     const toggleOpen = () => {
-        setOpen(prevState => !prevState)
+        // setOpen(prevState => !prevState)
     }
 
     const handleChangeNetwork = () => {
-        dispatch(toggleNetwork())
+        // dispatch(toggleNetwork())
     }
 
     const handleClickAway = () => {

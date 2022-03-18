@@ -46,12 +46,12 @@ function Sidebar({ mobile }) {
                 <span>ASSET MANAGER</span>
             </Styles.NavItem>
         </Link>
-        <Link to="/exchange" style={{ textDecoration: 'none' }}>
+        {/* <Link to="/exchange" style={{ textDecoration: 'none' }}>
             <Styles.NavItem mobile={mobile} active={activeLink('/exchange')}>
                 <CompareArrowsOutlinedIcon />
                 <span>EXCHANGE</span>
             </Styles.NavItem>
-        </Link>
+        </Link> */}
         <Link to="/settings" style={{ textDecoration: 'none' }}>
             <Styles.NavItem mobile={mobile} active={activeLink('/settings')}>
                 <SettingsOutlinedIcon />

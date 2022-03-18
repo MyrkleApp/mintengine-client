@@ -59,14 +59,14 @@ function WalletSetup() {
                             image={algorandLogo}
                         />
                     </Link>
-                    <Link to={`/create-wallet?wallet=${XRP}`} style={{ textDecoration: 'none' }}>
+                    {/* <Link to={`/create-wallet?wallet=${XRP}`} style={{ textDecoration: 'none' }}>
                         <WalletCard
                             walletSetup
                             title="ripple wallet"
                             text="Ripple's native cryptocurrency is called XRP."
                             image={rippleLogo}
                         />
-                    </Link>
+                    </Link> */}
                 </>
             }
             { 

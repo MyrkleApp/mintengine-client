@@ -60,15 +60,15 @@ function App() {
                       <PrivateRoute exact path="/verify-wallet/algo">
                         <VerifyAlgoWallet />
                       </PrivateRoute>
-                      <PrivateRoute exact path="/verify-wallet/xrp">
+                      {/* <PrivateRoute exact path="/verify-wallet/xrp">
                         <VerifyRippleWallet />
-                      </PrivateRoute>
+                      </PrivateRoute> */}
                       <PrivateRoute exact path="/import-wallet/algo">
                         <ImportAlgoWallet />
                       </PrivateRoute>
-                      <PrivateRoute exact path="/import-wallet/xrp">
+                      {/* <PrivateRoute exact path="/import-wallet/xrp">
                         <ImportRippleWallet />
-                      </PrivateRoute>
+                      </PrivateRoute> */}
                       <PrivateRoute exact path="/wallet">
                         <Wallet />
                       </PrivateRoute>
@@ -81,9 +81,9 @@ function App() {
                       <PrivateRoute exact path="/new-assets">
                         <NewAssets />
                       </PrivateRoute>
-                      <PrivateRoute exact path="/exchange">
+                      {/* <PrivateRoute exact path="/exchange">
                         <Exchange />
-                      </PrivateRoute>
+                      </PrivateRoute> */}
                       <PrivateRoute exact path="/settings">
                         <Settings />
                       </PrivateRoute>

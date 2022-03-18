@@ -16,7 +16,7 @@ import { ThreeDots } from 'react-loader-spinner'
 import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
 import ChangePassword from './tabs/ChangePassword'
 
-const tabs = [ALGORAND_ADDRESS, RIPPLE_ADDRESS]
+const tabs = [ALGORAND_ADDRESS]
 
 function Settings() {
     const history = useHistory()
