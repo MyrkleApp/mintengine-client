@@ -23,7 +23,8 @@ function Sidebar({ mobile }) {
     }
 
     const handleLogout = () => {
-        history.push('/')
+        // history.push('/')
+        window.location.replace('https://mintengine.org')
         dispatch(logout())
     }
 

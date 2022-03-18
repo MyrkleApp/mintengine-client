@@ -59,40 +59,40 @@ function NormalTxn() {
     
 
     const addTxn = () => {
-        if (numOfTxns === 1) {
-            setAddedTxns({ two: true, three: false, four: false, five: false })
-            setNumOfTxns(2)
-        } else if (numOfTxns === 2) {
-            setAddedTxns({ two: true, three: true, four: false, five: false })
-            setNumOfTxns(3)
-        } else if (numOfTxns === 3) {
-            setAddedTxns({ two: true, three: true, four: true, five: false })
-            setNumOfTxns(4)
-        } else if (numOfTxns === 4) {
-            setAddedTxns({ two: true, three: true, four: true, five: true })
-            setNumOfTxns(5)
-        } else {
-            return
-        }
+        // if (numOfTxns === 1) {
+        //     setAddedTxns({ two: true, three: false, four: false, five: false })
+        //     setNumOfTxns(2)
+        // } else if (numOfTxns === 2) {
+        //     setAddedTxns({ two: true, three: true, four: false, five: false })
+        //     setNumOfTxns(3)
+        // } else if (numOfTxns === 3) {
+        //     setAddedTxns({ two: true, three: true, four: true, five: false })
+        //     setNumOfTxns(4)
+        // } else if (numOfTxns === 4) {
+        //     setAddedTxns({ two: true, three: true, four: true, five: true })
+        //     setNumOfTxns(5)
+        // } else {
+        //     return
+        // }
 
     }
 
     const removeTxn = () => {
-        if (numOfTxns === 5) {
-            setAddedTxns({ two: true, three: true, four: true, five: false })
-            setNumOfTxns(4)
-        } else if (numOfTxns === 4) {
-            setAddedTxns({ two: true, three: true, four: false, five: false })
-            setNumOfTxns(3)
-        } else if (numOfTxns === 3) {
-            setAddedTxns({ two: true, three: false, four: false, five: false })
-            setNumOfTxns(2)
-        } else if (numOfTxns === 2) {
-            setAddedTxns({ two: false, three: false, four: false, five: false })
-            setNumOfTxns(1)
-        } else {
-            return
-        }
+        // if (numOfTxns === 5) {
+        //     setAddedTxns({ two: true, three: true, four: true, five: false })
+        //     setNumOfTxns(4)
+        // } else if (numOfTxns === 4) {
+        //     setAddedTxns({ two: true, three: true, four: false, five: false })
+        //     setNumOfTxns(3)
+        // } else if (numOfTxns === 3) {
+        //     setAddedTxns({ two: true, three: false, four: false, five: false })
+        //     setNumOfTxns(2)
+        // } else if (numOfTxns === 2) {
+        //     setAddedTxns({ two: false, three: false, four: false, five: false })
+        //     setNumOfTxns(1)
+        // } else {
+        //     return
+        // }
     }
 
     const [addressToSetByScan, setAddressToSetByScan] = useState(null)

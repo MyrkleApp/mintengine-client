@@ -78,16 +78,16 @@ function Security() {
                                 handleChange={handleAssetNameChange}
                                 maxLength="32"
                             />
-                            <SharedStyles.UploadImageBox>
-                                    <img src={imageFrame} alt="" />
-                                    <HiddenInput
-                                        name="image"
-                                        handleChange={handleImageChange}
-                                        hiddenInputRef={hiddenInputRef}
-                                    />
-                                    <UploadImageButton onClick={handleUploadImage}>Upload Image</UploadImageButton>
-                                    <span>{imageName}</span>
-                                </SharedStyles.UploadImageBox>
+                            {/* <SharedStyles.UploadImageBox>
+                                <img src={imageFrame} alt="" />
+                                <HiddenInput
+                                    name="image"
+                                    handleChange={handleImageChange}
+                                    hiddenInputRef={hiddenInputRef}
+                                />
+                                <UploadImageButton onClick={handleUploadImage}>Upload Image</UploadImageButton>
+                                <span>{imageName}</span>
+                            </SharedStyles.UploadImageBox> */}
                             <FormControl 
                                 label="Unit"
                                 type="text"

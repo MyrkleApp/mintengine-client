@@ -21,7 +21,8 @@ function Header() {
 
     const getUserErrorCallback = () => {
         dispatch(logout())
-        history.push('/')
+        // history.push('/')
+        window.location.replace('https://mintengine.org')
     }
  
     useEffect(() => {
@@ -36,10 +37,10 @@ function Header() {
             <Styles.Root>
                 <div className="container">
                     <div className="left">
-                        <Link to="/">
+                        <a href="https://mintengine.org">
                             <img src={logo} alt="" />
                             <span>Mint Engine</span>
-                        </Link>
+                        </a>
                     </div>
                     <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>
                         {

@@ -83,7 +83,7 @@ function CreateToken() {
                                 handleChange={handleAssetNameChange}
                                 maxLength="32"
                             />
-                            <SharedStyles.UploadImageBox>
+                            {/* <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
                                 <HiddenInput
                                     name="image"
@@ -92,7 +92,7 @@ function CreateToken() {
                                 />
                                 <UploadImageButton onClick={handleUploadImage}>Upload Image</UploadImageButton>
                                 <span>{imageName}</span>
-                            </SharedStyles.UploadImageBox>
+                            </SharedStyles.UploadImageBox> */}
                             <FormControl 
                                 type="text"
                                 label="Unit"

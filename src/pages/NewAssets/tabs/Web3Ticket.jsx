@@ -72,7 +72,7 @@ function Web3Ticket() {
                                 handleChange={handleAssetNameChange}
                                 maxLength="32"
                             />
-                            <SharedStyles.UploadImageBox>
+                            {/* <SharedStyles.UploadImageBox>
                                 <img src={imageFrame} alt="" />
                                 <HiddenInput
                                     name="image"
@@ -81,7 +81,7 @@ function Web3Ticket() {
                                 />
                                 <UploadImageButton onClick={handleUploadImage}>Upload Image</UploadImageButton>
                                 <span>{imageName}</span>
-                            </SharedStyles.UploadImageBox>
+                            </SharedStyles.UploadImageBox> */}
                             <FormControl 
                                 label="Asset URL"
                                 type="text"
