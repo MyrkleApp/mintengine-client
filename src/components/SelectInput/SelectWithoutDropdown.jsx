@@ -25,7 +25,8 @@ function SelectWithoutDropdown({ half, name, label, value, handleChange, passedD
                             !passedDown ? (
                             <>
                                 <img 
-                                    src={ !asset?.id ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
+                                    src={ !asset?.id ? availableNetworks[network].image : noAssetImage }
+                                    // src={ !asset?.id ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
                                     alt="" 
                                 />
                                 <span>{ !asset?.id ? availableNetworks[network].unit : asset.unit }</span>

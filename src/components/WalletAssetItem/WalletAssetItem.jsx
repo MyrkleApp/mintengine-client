@@ -15,7 +15,7 @@ function WalletAsset({ asset, clawback }) {
     return (
         <Grid item container columns={16} xs={16} alignItems="center">
             <Grid item xs={4} className="imageContainer">
-                <Styles.Image src={ tinyManAssetImage || asset?.image || noAssetImage } alt="" />
+                <Styles.Image src={ noAssetImage } alt="" />
             </Grid>
             <Grid item xs={4}>
                 <Styles.AssetName>{ asset.unit }</Styles.AssetName><br />

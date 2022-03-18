@@ -45,7 +45,8 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
                                 <img 
-                                    src={(asset?.id === 0 ? availableNetworks[network].image : asset?.image) || noAssetImage} 
+                                    src={(!asset?.id || asset?.id == 0) ? availableNetworks[network].image : noAssetImage}
+                                    // src={(asset?.id === 0 ? availableNetworks[network].image : asset?.image) || noAssetImage} 
                                     alt="" 
                                 />
                                 <span>{asset?.id === 0 ? availableNetworks[network].unit : asset?.unit}</span>
