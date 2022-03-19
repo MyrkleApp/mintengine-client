@@ -5,7 +5,7 @@ import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import { useDispatch, useSelector } from 'react-redux'
-import { confirmAlgorandPassphrase, incorrectPassphraseError } from '../../app/algorand/algorandSlice'
+import { confirmAlgorandPassphrase, getActiveAlgorandWallet, incorrectPassphraseError } from '../../app/algorand/algorandSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
 import useDisclaimer from '../../Hooks/Disclaimer'
@@ -98,6 +98,7 @@ function VerifyWallet() {
 
     const navigateToDashboard = () => {
         handleModalToDefault()
+        dispatch(getActiveAlgorandWallet())
         history.push('/wallet')
     }
     

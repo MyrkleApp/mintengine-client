@@ -9,21 +9,22 @@ import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import Modal from '../../../components/UI/Modal/Modal'
 import useModal from '../../../Hooks/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CreateToken() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick, handleSetValue: handleSetDecimalValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
@@ -39,6 +40,26 @@ function CreateToken() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetTotalSupplyValue('')
+        handleSetDecimalValue('')
+        handleSetAssetUrlValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleCreateToken = () => {
         const formData = new FormData()
         formData.append('asset_type', 'token')
@@ -51,7 +72,7 @@ function CreateToken() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
 
 
         // for (let pair of formData.entries()) {
@@ -95,7 +116,7 @@ function CreateToken() {
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
                                 type="text"
-                                label="Unit"
+                                label="Symbol"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
                                 maxLength="8"

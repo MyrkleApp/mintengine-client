@@ -34,7 +34,7 @@ function Dashboard() {
     const { status: holdingsStatus, data: holdingsData } = useSelector(state => state.algorand.holdings)
 
     useEffect(() => {
-        if ((holdingsData.length === 1) && (holdingsStatus !== HTTP_STATUS.PENDING)) {
+        if ((holdingsData?.length === 1) && (holdingsStatus !== HTTP_STATUS.PENDING)) {
             dispatch(getAlgorandHoldings())
         }
     }, [])

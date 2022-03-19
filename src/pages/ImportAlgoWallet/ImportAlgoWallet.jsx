@@ -5,7 +5,7 @@ import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
 import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
 import * as Styles from '../../components/UI/WalletShared/walletShared'
 import NoteOutlinedIcon from '@mui/icons-material/NoteOutlined';
-import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
+import { createAlgorandWallet, getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
 import Modal from '../../components/UI/Modal/Modal'
 import useDisclaimer from '../../Hooks/Disclaimer'
 import { DisclaimerDefault, DisclaimerError, DisclaimerSuccess } from '../../components/Disclaimer/Disclaimer'
@@ -17,9 +17,11 @@ import useSubmit from '../../Hooks/Submit'
 import useFormValidity from '../../Hooks/FormValidity'
 import DB from '../../app/db'
 import useEncrypt from '../../Hooks/Encrypt'
+import { useDispatch } from 'react-redux'
 
 
 function ImportWallet() {
+    const dispatch = useDispatch()
     const history = useHistory()
     const [missingWords, setMissingWords] = useState(Array(25).fill(''))
     const { formIsValid } = useFormValidity(...missingWords)
@@ -83,6 +85,7 @@ function ImportWallet() {
 
     const navigateToDashboard = () => {
         handleModalToDefault()
+        dispatch(getActiveAlgorandWallet())
         history.push('/wallet')
     }
 

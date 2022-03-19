@@ -1,6 +1,9 @@
 import { HTTP_STATUS } from "../../constants/httpStatus"
+import algorandLogo from '../../assets/icons/algorandLogo.png'
+
 
 const DEFAULT = { status: null, data: null, error: null }
+const DEFAULT_HOLDINGS = { ...DEFAULT, data: [{ id: 0, name: 'Algorand', unit: 'Algo', image: algorandLogo }] }
 
 export const createAlgorandWalletPending = (state) => {
     state.createWallet.status = HTTP_STATUS.PENDING
@@ -255,7 +258,7 @@ export const getAlgorandTransactionsPending = (state) => {
 
 export const getAlgorandTransactionsFulfilled = (state, { payload }) => {
     state.transactions.status = HTTP_STATUS.FULFILLED
-    state.transactions.data = payload.reverse()
+    state.transactions.data = payload
 }
 
 export const getAlgorandTransactionsRejected = (state, { payload }) => {
@@ -327,9 +330,7 @@ export const createAlgorandAssetFulfilled = (state, { payload }) => {
     state.createAsset.status = HTTP_STATUS.FULFILLED
     state.createAsset.data = payload
 
-    const oldAssets = state.holdings.data
-    state.holdings.data = [...oldAssets, payload]
-
+    state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
 }
 
@@ -359,7 +360,7 @@ export const updateActiveWalletPending = (state) => {
 export const updateActiveWalletFulfilled = (state, { payload }) => {
     state.updateActiveWallet.status = HTTP_STATUS.FULFILLED
     state.updateActiveWallet.data = payload
-    state.holdings = DEFAULT
+    state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
 }
@@ -376,7 +377,7 @@ export const removeWalletPending = (state) => {
 export const removeWalletFulfilled = (state, { payload }) => {
     state.removeWallet.status = HTTP_STATUS.FULFILLED
     state.removeWallet.data = 'removed wallet'
-    state.holdings = DEFAULT
+    state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
 }

@@ -10,18 +10,19 @@ import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import useModal from '../../../Hooks/Modal'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
-import { useSelector } from 'react-redux'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 
 function CommonNft() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
         assetNameValue, unitValue, totalSupplyValue, assetUrlValue
@@ -37,6 +38,25 @@ function CommonNft() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetTotalSupplyValue('')
+        handleSetAssetUrlValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleCommonNft = () => {
         const formData = new FormData()
         formData.append('asset_type', 'common_nft')
@@ -48,7 +68,7 @@ function CommonNft() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
 
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)
@@ -85,7 +105,7 @@ function CommonNft() {
                                 <span>{imageName}</span>
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
-                                label="Unit"
+                                label="Symbol"
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}

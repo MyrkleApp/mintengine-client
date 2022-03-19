@@ -9,9 +9,9 @@ import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
 import useModal from '../../../Hooks/Modal'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
@@ -21,18 +21,19 @@ import useFormControlRadio from '../../../Hooks/FormControlRadio'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function CustomNft() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
-    const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
-    const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick, handleSetValue: handleSetDecimalValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: metadataHashValue, handleChange: handleMetadataHashChange, handleSetValue: handleSetMetadataHashValue } = useFormControl()
+    const { value: managerAddressValue, handleChange: handleManagerAddressChange, handleSetValue: handleSetManagerAddressValue } = useFormControl()
+    const { value: freezeAddressValue, handleChange: handleFreezeAddressChange, handleSetValue: handleSetFreezeAddressValue } = useFormControl()
     const { value: defaultFrozenValue, handleClick: handleRadioClick } = useFormControlRadio("No")
-    const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
-    const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const { value: reserveAddressValue, handleChange: handleReserveAddressChange, handleSetValue: handleSetReserveAddressValue } = useFormControl()
+    const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange, handleSetValue: handleSetClawbackAddressValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
         assetNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue, managerAddressValue, freezeAddressValue, defaultFrozenValue, reserveAddressValue, clawbackAddressValue
@@ -48,6 +49,31 @@ function CustomNft() {
     }
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
+
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetDecimalValue('')
+        handleSetTotalSupplyValue('')
+        handleSetAssetUrlValue('')
+        handleSetMetadataHashValue('')
+        handleSetManagerAddressValue('')
+        handleSetFreezeAddressValue('')
+        handleSetReserveAddressValue('')
+        handleSetClawbackAddressValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
 
     const handleCustomNft = () => {
         const formData = new FormData()
@@ -67,7 +93,7 @@ function CustomNft() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
 
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)
@@ -105,7 +131,7 @@ function CustomNft() {
                                 <span>{imageName}</span>
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
-                                label="Unit"
+                                label="Symbol"
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}

@@ -12,19 +12,20 @@ import useModal from '../../../Hooks/Modal'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 
 function Security() {
-    const { value: assetName, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: metadataHashValue, handleChange: handleMetadataHashChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetName, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick, handleSetValue: handleSetDecimalValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: metadataHashValue, handleChange: handleMetadataHashChange, handleSetValue: handleSetMetadataHashValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
@@ -40,6 +41,27 @@ function Security() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetTotalSupplyValue('')
+        handleSetDecimalValue('')
+        handleSetAssetUrlValue('')
+        handleSetMetadataHashValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleSecurityToken = () => {
         const formData = new FormData()
         formData.append('asset_type', 'security')
@@ -52,7 +74,7 @@ function Security() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)
@@ -89,7 +111,7 @@ function Security() {
                                 <span>{imageName}</span>
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
-                                label="Unit"
+                                label="Symbol"
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}

@@ -9,19 +9,20 @@ import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import useModal from '../../../Hooks/Modal'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { Fragment } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function UniqueNft() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
         assetNameValue, unitValue, assetUrlValue
@@ -37,16 +38,35 @@ function UniqueNft() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetAssetUrlValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleUniqueNf = () => {
         const formData = new FormData()
         formData.append('asset_type', 'unique_nft')
         formData.append('asset_name', assetNameValue)
         formData.append('image', imageValue)
+        formData.append('unit', unitValue)
         formData.append('asset_url', assetUrlValue)
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
 
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)
@@ -83,7 +103,7 @@ function UniqueNft() {
                                 <span>{imageName}</span>
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
-                                label="Unit"
+                                label="Symbol"
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}

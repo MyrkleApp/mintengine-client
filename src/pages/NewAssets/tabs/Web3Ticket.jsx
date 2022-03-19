@@ -7,8 +7,8 @@ import imageFrame from '../../../assets/icons/imageFrame.png'
 import useFormControl from '../../../Hooks/FormControl'
 import useImageHandle from '../../../Hooks/ImageHandle'
 import useFormValidity from '../../../Hooks/FormValidity'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
-import { useSelector } from 'react-redux'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import useModal from '../../../Hooks/Modal'
 import useSubmit from '../../../Hooks/Submit'
@@ -17,10 +17,11 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 
 function Web3Ticket() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
         assetNameValue, assetUrlValue, totalSupplyValue
@@ -36,6 +37,24 @@ function Web3Ticket() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetAssetUrlValue('')
+        handleSetTotalSupplyValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleWeb3Ticket = () => {
         const formData = new FormData()
         formData.append('asset_type', 'web3ticket')
@@ -46,7 +65,7 @@ function Web3Ticket() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)

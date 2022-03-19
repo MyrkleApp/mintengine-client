@@ -6,24 +6,25 @@ import * as SharedStyles from '../../../components/UI/DashboardShared/dashboardS
 import imageFrame from '../../../assets/icons/imageFrame.png'
 import useFormControl from '../../../Hooks/FormControl'
 import useImageHandle from '../../../Hooks/ImageHandle'
-import { createAlgorandAsset } from '../../../app/algorand/algorandSlice'
+import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import useSubmit from '../../../Hooks/Submit'
 import useFormValidity from '../../../Hooks/FormValidity'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import useModal from '../../../Hooks/Modal'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 
 function FractionalNft() {
-    const { value: assetNameValue, handleChange: handleAssetNameChange } = useFormControl()
-    const { value: unitValue, handleChange: handleUnitChange } = useFormControl()
-    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange } = useFormControl('number')
-    const { value: decimalValue, handleSetValue: setDecimalValueByClick } = useFormControl()
-    const { value: assetUrlValue, handleChange: handleAssetUrlChange } = useFormControl()
-    const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+    const dispatch = useDispatch()
+    const { value: assetNameValue, handleChange: handleAssetNameChange, handleSetValue: handleSetAssetNameValue } = useFormControl()
+    const { value: unitValue, handleChange: handleUnitChange, handleSetValue: handleSetUnitValue } = useFormControl()
+    const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
+    const { value: decimalValue, handleSetValue: setDecimalValueByClick, handleSetValue: handleSetDecimalValue } = useFormControl()
+    const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
+    const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const { formIsValid } = useFormValidity(
         assetNameValue, unitValue, totalSupplyValue, decimalValue, assetUrlValue
@@ -39,6 +40,26 @@ function FractionalNft() {
 
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
+    const resetEnteredValues = () => {
+        handleSetAssetNameValue('')
+        handleSetUnitValue('')
+        handleSetTotalSupplyValue('')
+        handleSetDecimalValue('')
+        handleSetAssetUrlValue('')
+        handleSetNoteValue('')
+    }
+
+    const createAssetSuccessCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+        dispatch(getActiveAlgorandWallet())
+    }
+
+    const createAssetErrorCallback = () => {
+        handleModalOpen()
+        resetEnteredValues()
+    }
+
     const handleFractionalNft = () => {
         const formData = new FormData()
         formData.append('asset_type', 'fractional_nft')
@@ -51,7 +72,7 @@ function FractionalNft() {
         formData.append('note', noteValue)
         formData.append('phrase', passphrase)
         
-        handleSubmit(createAlgorandAsset(formData), handleModalOpen, handleModalOpen)
+        handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
     const { status } = useSelector(state => state.algorand.createAsset)
@@ -88,7 +109,7 @@ function FractionalNft() {
                                 <span>{imageName}</span>
                             </SharedStyles.UploadImageBox> */}
                             <FormControl 
-                                label="Unit"
+                                label="Symbol"
                                 type="text"
                                 value={unitValue}
                                 handleChange={handleUnitChange}
