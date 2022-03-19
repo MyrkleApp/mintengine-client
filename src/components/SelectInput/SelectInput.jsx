@@ -17,6 +17,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
     const [open, setOpen] = useState(false)
     const { status, data } = useSelector(state => state.algorand.holdings)
     const network = useSelector(state => state.network.network)
+    const { tinyManAssetImage } = useCheckImageExists(asset)
 
     useEffect(() => {
         if (open && (status === null)) {
@@ -45,7 +46,8 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
                         <div className="select" onClick={toggleSelect}>
                             <div className="left">
                                 <img 
-                                    src={(!asset?.id || asset?.id == 0) ? availableNetworks[network].image : noAssetImage}
+                                    src={ tinyManAssetImage }
+                                    // src={(!asset?.id || asset?.id == 0) ? availableNetworks[network].image : noAssetImage}
                                     // src={(asset?.id === 0 ? availableNetworks[network].image : asset?.image) || noAssetImage} 
                                     alt="" 
                                 />
@@ -100,7 +102,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
 }
 
 function DropdownItem({ asset, handleItemClick, setOpen }) {
-    const { tinyManAssetImage } = useCheckImageExists(asset.id)
+    const { tinyManAssetImage } = useCheckImageExists(asset)
 
     const handleClick = () => {
         handleItemClick(asset)
@@ -111,7 +113,7 @@ function DropdownItem({ asset, handleItemClick, setOpen }) {
         <Styles.DropdownItem onClick={handleClick}>
             <div className="left">
                 <div className="leftTop">
-                    <img src={ tinyManAssetImage || (asset.image || noAssetImage) } alt="" />
+                    <img src={ tinyManAssetImage } alt="" />
                     <span>{asset.name}</span>
                 </div>
                 <div className="leftBottom">

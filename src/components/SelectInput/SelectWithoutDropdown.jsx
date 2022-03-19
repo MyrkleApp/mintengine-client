@@ -12,7 +12,7 @@ export const availableNetworks = {
 
 function SelectWithoutDropdown({ half, name, label, value, handleChange, passedDown, asset, placeholder }) {
     const network = useSelector(state => state.network.network)
-    const { tinyManAssetImage } = useCheckImageExists(asset?.id)
+    const { tinyManAssetImage } = useCheckImageExists(asset)
 
     return (
         <Grid item xs={half ? 6 : 12}>
@@ -25,7 +25,8 @@ function SelectWithoutDropdown({ half, name, label, value, handleChange, passedD
                             !passedDown ? (
                             <>
                                 <img 
-                                    src={ !asset?.id ? availableNetworks[network].image : noAssetImage }
+                                    src={ tinyManAssetImage }
+                                    // src={ !asset?.id ? availableNetworks[network].image : noAssetImage }
                                     // src={ !asset?.id ? availableNetworks[network].image : (tinyManAssetImage || asset.image || noAssetImage) } 
                                     alt="" 
                                 />

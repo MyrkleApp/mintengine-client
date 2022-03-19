@@ -10,12 +10,12 @@ import useCheckImageExists from '../../Hooks/checkImageExists'
 
 function WalletAsset({ asset, clawback }) {
     const network = useSelector(state => state.network.network)
-    const { tinyManAssetImage } = useCheckImageExists(asset?.id)
+    const { tinyManAssetImage } = useCheckImageExists(asset)
 
     return (
         <Grid item container columns={16} xs={16} alignItems="center">
             <Grid item xs={4} className="imageContainer">
-                <Styles.Image src={ noAssetImage } alt="" />
+                <Styles.Image src={ tinyManAssetImage } alt="" />
             </Grid>
             <Grid item xs={4}>
                 <Styles.AssetName>{ asset.unit }</Styles.AssetName><br />
