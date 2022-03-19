@@ -5,6 +5,7 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import mediumIcon from '../../assets/icons/medium.png'
 import footerLogo from '../../assets/icons/footerLogo.png'
+import algorandFooterLogo from '../../assets/icons/algorandFooterLogo.png'
 
 function Footer() {
 
@@ -43,7 +44,10 @@ function Footer() {
                         </a>
                     </div>
                 </div>
-                <p>Powered by 0xEngine Labs</p>
+                <div className="powered-by">
+                    <span>Powered by</span> 
+                    <img src={algorandFooterLogo} />
+                </div>
             </div>
         </Styles.Root>
     )
