@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import FormControl from '../../../components/FormControl/FormControl'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 import scannerIcon from '../../../assets/icons/scanner.svg'
-import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage } from '../wallet'
+import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
 import useFormControl from '../../../Hooks/FormControl'
@@ -55,6 +55,13 @@ function NormalTxn() {
     
     const passphrase = useSelector(state => state.algorand.passphrase)
     const [displayScanner, setDisplayScanner] = useState(false)
+
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
+    const { 
+        modalState: confirmModalState, 
+        handleModalOpen: handleConfirmModalOpen, 
+        handleModalClose: handleConfirmModalClose 
+    } = useModal()
 
     
 
@@ -142,8 +149,6 @@ function NormalTxn() {
     const addressData = [data, dataTwo, dataThree, dataFour, dataFive]
     const allAddressesAreValid = addressData.slice(0, numOfTxns).every(address => address === true)
 
-    const { modalState, handleModalOpen, handleModalClose } = useModal()
-
     const [sendCurrencyStatus, setSendCurrencyStatus] = useState('')
 
     const submitSuccessCallback = (res) => {
@@ -160,6 +165,7 @@ function NormalTxn() {
     }
 
     const sendCurrency = () => {
+        handleConfirmModalClose()
 
         const formData = new FormData()
         formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
@@ -315,7 +321,12 @@ function NormalTxn() {
             </TransactionFee>
 
             <ButtonContainer>
-                <Button fullWidth onClick={sendCurrency} disabled={!formIsValid || !allAddressesAreValid}>send asset</Button>
+                <Button 
+                    fullWidth 
+                    onClick={() => handleConfirmModalOpen()} 
+                    disabled={!formIsValid || !allAddressesAreValid}>
+                        send asset
+                </Button>
             </ButtonContainer>
 
             {
@@ -329,6 +340,14 @@ function NormalTxn() {
                     />
                 )
             }
+
+            {/* confirm transaction modal */}
+            <Modal open={confirmModalState} handleClose={handleConfirmModalClose}>
+                <Title center>Confirm Transaction</Title>
+                <SubTitle center>You are about to send { `${assetValue.amount} ${assetValue.name}` } to</SubTitle>
+                <SubTitle center>{`${recipientAddressValue.substring(0, 12)}...`}</SubTitle>
+                <Button fullWidth onClick={sendCurrency}>Send asset</Button>
+            </Modal>
 
             {/* response modal */}
             <Modal open={modalState} handleClose={handleModalClose}>

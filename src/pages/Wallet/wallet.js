@@ -6,6 +6,7 @@ export const Title = styled.h2`
     font-weight: 600;
     font-size: 20px;
     margin: 35px auto 20px 0; 
+    text-align: ${props => !props.center ? 'left' : 'center'};
 `
 
 export const Box = styled.div`
@@ -53,6 +54,7 @@ export const SubTitle = styled.h3`
     font-weight: 500;
     font-size: 19px;
     margin: 0 auto 30px 0;
+    text-align: ${props => !props.center ? 'left' : 'center'};
 `
 
 export const Label = styled.p`

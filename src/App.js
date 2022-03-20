@@ -81,9 +81,9 @@ function App() {
                       <PrivateRoute exact path="/new-assets">
                         <NewAssets />
                       </PrivateRoute>
-                      {/* <PrivateRoute exact path="/exchange">
+                      <PrivateRoute exact path="/exchange">
                         <Exchange />
-                      </PrivateRoute> */}
+                      </PrivateRoute>
                       <PrivateRoute exact path="/settings">
                         <Settings />
                       </PrivateRoute>

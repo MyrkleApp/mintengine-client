@@ -18,7 +18,9 @@ import useSubmit from '../../Hooks/Submit'
 import { ThreeDots } from 'react-loader-spinner'
 import FormControl from '../../components/FormControl/FormControl'
 import { networkDataToReturn } from '../../constants/network'
-
+import useSearchAssetWithDropdown from '../../Hooks/SearchAssetWithDropdown'
+import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
+import axios from '../../app/axios'
 
 function ExchangeAlgo() {
     const dispatch = useDispatch()
@@ -37,14 +39,12 @@ function ExchangeAlgo() {
         handleSetValue: handleSetToAssetValue, 
         handleSelectChange: handleToAssetSelectChange,
         handleSetAssetValue: handleSetToAssetWholeValue
-    } = useSelectInput()
-    console.log(toAsset)
+    } = useSelectInput('emptyId')
 
     const network = useSelector(state => state.network.network)
     const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
 
     const passphrase = useSelector(state => state.algorand.passphrase)
-    const { data: holdingsData } = useSelector(state => state.algorand.holdings)
 
     const [swapIds, setSwapIds] = useState({ from: fromAsset.id, to: toAsset.id })
 
@@ -52,42 +52,15 @@ function ExchangeAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { handleSubmit } = useSubmit()
     const { status: getSwapValueStatus } = useSelector(state => state.algorand.swapValue)
-
-    const [checkValidAssetStatus, setCheckValidAssetStatus] = useState(null)
-    const [checkValidAssetData, setCheckValidAssetData] = useState(null)
     // console.log(checkValidAssetStatus)
 
     /**
      * get the asset you are swapping to
      */
-
-    useEffect(() => {
-        const inputRateTimer = setTimeout(() => {
-            const hasAsset =  holdingsData?.filter(asset => asset.id === toAsset.id)[0]
-            
-            if (hasAsset) {
-                handleSetToAssetWholeValue(hasAsset)
-            } else {
-                setCheckValidAssetStatus(HTTP_STATUS.PENDING)
-
-                dispatch(checkAlgorandAssetIsValid({ asset_id: parseInt(toAsset.id) }))
-                .unwrap()
-                .then(res => {
-                    console.log(res)
-                    handleSetToAssetWholeValue(res)
-                    setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
-                    setCheckValidAssetData(res)
-                })
-                .catch(err => {
-                    console.log(err)
-                    setCheckValidAssetStatus(HTTP_STATUS.REJECTED)
-                })
-            }
-        }, 1000);
-
-        return () => clearTimeout(inputRateTimer)
-    }, [toAsset.id])
-
+    const { 
+        checkValidAssetStatus: checkToAssetValidStatus, 
+        checkValidAssetError: checkToAssetValidError 
+    } = useSearchAssetWithDropdown(toAsset.id, handleSetToAssetWholeValue)
 
     const swapData = {
         from_asset: fromAsset.id === swapIds.from ? fromAsset.id : toAsset.id, 
@@ -102,7 +75,7 @@ function ExchangeAlgo() {
      */
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
-            if ((swapData.asset_amount > 0) && (fromAsset.id !== toAsset.id)) {
+            if ((swapData.asset_amount > 0) && (fromAsset.id != toAsset.id)) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
                 .then(swapAmount => {
@@ -117,7 +90,7 @@ function ExchangeAlgo() {
         }, 1000)
 
         return () => clearTimeout(inputRateTimer)
-    }, [swapData.asset_amount, swapData.to_asset])
+    }, [swapData.asset_amount])
 
     useEffect(() => {
         setSwapIds({ ...swapIds, from: fromAsset.id })
@@ -159,6 +132,13 @@ function ExchangeAlgo() {
     /**TINY USDC
      * 21582668
      */
+
+    // useEffect(() => {
+    //     axios.get(`/algorand/v1/checks/get_swap_value/0/10458941/400/`)
+    //     .then(res => console.log(res.data))
+    //     .catch(err => console.log(err))
+    // })
+
     
     return (
         <DashboardWrapper>
@@ -212,16 +192,21 @@ function ExchangeAlgo() {
                                     handleChange={e => handleToAssetSelectChange('id', e)}
                                     placeholder="Asset ID"
                                 />
-                                <p>{checkValidAssetData?.message}</p>
                                 <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p>
-                                { ((getSwapValueStatus === HTTP_STATUS.PENDING) ||  (checkValidAssetStatus === HTTP_STATUS.PENDING)) && (
-                                    <Styles.LoaderContainer><ThreeDots height="80" width="80" color='gray' /></Styles.LoaderContainer> 
+                                <p>{checkToAssetValidError}</p>
+                                { ((checkToAssetValidStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.PENDING)) && (
+                                    <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
                                 )}
                             </div>
                             
                         </Styles.Container>
                         <Styles.ButtonContainer>
-                            <Button fullWidth disabled={!formIsValid} onClick={handleSwap}>swap</Button>
+                            <Button 
+                                fullWidth 
+                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING)} 
+                                onClick={handleSwap}>
+                                    swap
+                            </Button>
                         </Styles.ButtonContainer>
                     </Styles.Root>
                 </Grid>
