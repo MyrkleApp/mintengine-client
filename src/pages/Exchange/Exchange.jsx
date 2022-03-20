@@ -78,7 +78,7 @@ function ExchangeAlgo() {
             if (
                 (swapData.asset_amount > 0) && 
                 (fromAsset.id != toAsset.id) && 
-                ((checkToAssetValidStatus === HTTP_STATUS.FULFILLED) || (checkToAssetValidStatus === null))
+                (checkToAssetValidStatus === HTTP_STATUS.FULFILLED)
             ) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()

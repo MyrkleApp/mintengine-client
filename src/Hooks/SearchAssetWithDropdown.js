@@ -18,6 +18,7 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
                 
                 if (hasAsset) {
                     handleSetAssetValue(hasAsset)
+                    setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
                     setCheckValidAssetError('')
                 } else {
                     setCheckValidAssetStatus(HTTP_STATUS.PENDING)
