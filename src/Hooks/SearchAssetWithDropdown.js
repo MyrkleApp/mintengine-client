@@ -33,7 +33,7 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
                             setCheckValidAssetError('')
                         } else {
                             setCheckValidAssetError(res.message)
-                            setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
+                            setCheckValidAssetStatus(HTTP_STATUS.REJECTED)
                         }
                         
                     })

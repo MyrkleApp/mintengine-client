@@ -75,7 +75,11 @@ function ExchangeAlgo() {
      */
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
-            if ((swapData.asset_amount > 0) && (fromAsset.id != toAsset.id)) {
+            if (
+                (swapData.asset_amount > 0) && 
+                (fromAsset.id != toAsset.id) && 
+                ((checkToAssetValidStatus === HTTP_STATUS.FULFILLED) || (checkToAssetValidStatus === null))
+            ) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
                 .then(swapAmount => {
@@ -90,15 +94,7 @@ function ExchangeAlgo() {
         }, 1000)
 
         return () => clearTimeout(inputRateTimer)
-    }, [swapData.asset_amount])
-
-    useEffect(() => {
-        setSwapIds({ ...swapIds, from: fromAsset.id })
-    }, [fromAsset.id])
-
-    useEffect(() => {
-        setSwapIds({ ...swapIds, to: toAsset.id })
-    }, [toAsset.id])
+    }, [swapData.asset_amount, fromAsset.id, toAsset.id, checkToAssetValidStatus])
 
 
     const handleSwap = () => {
@@ -132,13 +128,6 @@ function ExchangeAlgo() {
     /**TINY USDC
      * 21582668
      */
-
-    // useEffect(() => {
-    //     axios.get(`/algorand/v1/checks/get_swap_value/0/10458941/400/`)
-    //     .then(res => console.log(res.data))
-    //     .catch(err => console.log(err))
-    // })
-
     
     return (
         <DashboardWrapper>
@@ -203,7 +192,7 @@ function ExchangeAlgo() {
                         <Styles.ButtonContainer>
                             <Button 
                                 fullWidth 
-                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING)} 
+                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (checkToAssetValidStatus === HTTP_STATUS.REJECTED)} 
                                 onClick={handleSwap}>
                                     swap
                             </Button>

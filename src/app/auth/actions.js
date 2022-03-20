@@ -63,3 +63,17 @@ export const changePasswordRejected = (state, { payload }) => {
     state.changePassword.status = HTTP_STATUS.REJECTED
     state.changePassword.error = payload
 }
+
+export const resetPasswordPending = (state) => {
+    state.resetPassword.status = HTTP_STATUS.PENDING
+}
+
+export const resetPasswordFulfilled = (state, { payload }) => {
+    state.resetPassword.status = HTTP_STATUS.FULFILLED
+    state.resetPassword.data = payload
+}
+
+export const resetPasswordRejected = (state, { payload }) => {
+    state.resetPassword.status = HTTP_STATUS.REJECTED
+    state.resetPassword.error = payload
+}

@@ -49,6 +49,15 @@ export const changePassword = createAsyncThunk(`${namespace}/changePassword`, as
   }
 })
 
+export const resetPassword = createAsyncThunk(`${namespace}/resetPassword`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/accounts/reset_password/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const authSlice = createSlice({
@@ -60,6 +69,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
     verifyPassword: DEFAULT,
     changePassword: DEFAULT,
+    resetPassword: DEFAULT,
   },
   reducers: {
     logout(state) {
@@ -86,6 +96,10 @@ const authSlice = createSlice({
     [changePassword.pending]: actions.changePasswordPending,
     [changePassword.fulfilled]: actions.changePasswordFulfilled,
     [changePassword.rejected]: actions.changePasswordRejected,
+
+    [resetPassword.pending]: actions.resetPasswordPending,
+    [resetPassword.fulfilled]: actions.resetPasswordFulfilled,
+    [resetPassword.rejected]: actions.resetPasswordRejected,
   }
 })
 
