@@ -165,7 +165,7 @@ function CreateToken() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created a new asset' : 'something went wrong, the asset could not be created'
+                        success ? 'Successfully created a new asset' : 'Something went wrong, the asset could not be created'
                     }
                 />
             </Modal>

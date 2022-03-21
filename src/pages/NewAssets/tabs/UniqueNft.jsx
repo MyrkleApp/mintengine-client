@@ -136,7 +136,7 @@ function UniqueNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created your unique nft' : 'an error occurred while creating your nft'
+                        success ? 'Successfully created your nft' : 'An error occurred while creating your nft'
                     }
                 />
             </Modal>

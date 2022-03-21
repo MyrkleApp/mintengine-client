@@ -217,7 +217,7 @@ function CustomNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created your custom nft' : 'An error occurred while creating your asset'
+                        success ? 'Successfully created your custom asset' : 'An error occurred while creating your asset'
                     }
                 />
             </Modal>

@@ -134,7 +134,7 @@ function Web3Ticket() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created your web3 ticket' : 'something went wrong, the web3 ticket was not created'
+                        success ? 'Successfully created your web3 ticket' : 'Something went wrong, the web3 ticket was not created'
                     }
                 />
             </Modal>

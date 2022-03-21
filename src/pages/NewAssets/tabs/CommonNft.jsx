@@ -144,7 +144,7 @@ function CommonNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created your common nft' : 'an error occurred while creating your nft'
+                        success ? 'Successfully created your nft collection' : 'An error occurred while creating your nft collection'
                     }
                 />
             </Modal>

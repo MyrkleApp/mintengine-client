@@ -135,7 +135,7 @@ function Security() {
                             </Grid>
                             <SharedStyles.CalcResult>{`Total Supply = ${(totalSupplyValue/Math.pow(10, decimalValue)).toFixed(decimalValue)}`}</SharedStyles.CalcResult>
                             <FormControl 
-                                label="NFT URL"
+                                label="Asset URL"
                                 type="text"
                                 value={assetUrlValue}
                                 handleChange={handleAssetUrlChange}
@@ -167,7 +167,7 @@ function Security() {
                 success={success}
                 title={success ? 'success' : 'error'}
                 description={
-                    success ? 'successfully created your security token' : 'something went wrong, the token was not created'
+                    success ? 'Successfully created your security token' : 'Something went wrong, the token was not created'
                 }
             />
         </Modal>

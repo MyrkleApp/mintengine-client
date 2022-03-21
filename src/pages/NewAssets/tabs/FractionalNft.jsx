@@ -159,7 +159,7 @@ function FractionalNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully created your fractional nft' : 'something went wrong, the nft was not created'
+                        success ? 'Successfully created your fractional nft' : 'Something went wrong, the nft was not created'
                     }
                 />
             </Modal>
