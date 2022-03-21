@@ -39,7 +39,7 @@ function ExchangeAlgo() {
         handleSetValue: handleSetToAssetValue, 
         handleSelectChange: handleToAssetSelectChange,
         handleSetAssetValue: handleSetToAssetWholeValue
-    } = useSelectInput('emptyId')
+    } = useSelectInput()
 
     const [toAssetIsValid, setToAssetIsValid] = useState(false)
 
@@ -162,7 +162,7 @@ function ExchangeAlgo() {
                                     Balance:&nbsp; 
                                     { fromAsset.id === 0 ? 
                                         <strong>{activeWalletData?.balance}</strong> : 
-                                        <strong>{holdingsData?.filter(asset => asset.id === fromAsset.id)[0].amount}</strong> 
+                                        <strong>{holdingsData?.filter(asset => asset.id === fromAsset.id)[0]?.amount}</strong> 
                                     }
                                 </Styles.Info>
                             </div>
