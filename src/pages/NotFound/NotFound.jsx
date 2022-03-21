@@ -16,8 +16,8 @@ function NotFound() {
                     The page you are looking for might have been removed or had its name changed or is temporarily unavailable.
                 </div>
                 <div>
-                    <Link to ="/" style={{textDecoration: 'none'}}>
-                        <buttton className="notFound__btn">GO BACK TO HOME PAGE</buttton>
+                    <Link to ="/login" style={{textDecoration: 'none'}}>
+                        <buttton className="notFound__btn">GO BACK TO LOGIN PAGE</buttton>
                     </Link>
                 </div>
             </div>

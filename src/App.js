@@ -48,7 +48,7 @@ function App() {
                     key={location.key}
                   >
                     <Switch location={location}>
-                      <Route exact path="/" component={LandingPage} />
+                      {/* <Route exact path="/" component={LandingPage} /> */}
                       <Route exact path={['/signup', '/login']} component={Auth} />
                       
                       <PrivateRoute exact path={["/wallet-setup", "/create-wallet"]}>

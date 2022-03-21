@@ -145,7 +145,7 @@ function Auth() {
             <Modal open={modalState} handleClose={handleModalClose}>
                 <Styles.ModalTitle>Reset Password</Styles.ModalTitle>
                 <Styles.Text>
-                    This action will remove this account from our records. Are you sure you want to proceed?
+                    This option will remove this account and all wallet associated with it from this device.
                 </Styles.Text>
                 <Button fullWidth onClick={handleForgotPassword}>Remove Account</Button>
             </Modal>

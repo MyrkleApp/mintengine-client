@@ -73,6 +73,9 @@ export const createAlgorandClawbackPending = (state) => {
 export const createAlgorandClawbackFulfilled = (state, { payload }) => {
     state.clawback.status = HTTP_STATUS.FULFILLED
     state.clawback.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const createAlgorandClawbackRejected = (state, { payload }) => {
@@ -87,6 +90,9 @@ export const createAlgorandCommonNftPending = (state) => {
 export const createAlgorandCommonNftFulfilled = (state, { payload }) => {
     state.commonNft.status = HTTP_STATUS.FULFILLED
     state.commonNft.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const createAlgorandCommonNftRejected = (state, { payload }) => {
@@ -101,6 +107,9 @@ export const destroyAlgorandPending = (state) => {
 export const destroyAlgorandFulfilled = (state, { payload }) => {
     state.destroy.status = HTTP_STATUS.FULFILLED
     state.destroy.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const destroyAlgorandRejected = (state, { payload }) => {
@@ -115,6 +124,9 @@ export const freezeAlgorandPending = (state) => {
 export const freezeAlgorandFulfilled = (state, { payload }) => {
     state.freeze.status = HTTP_STATUS.FULFILLED
     state.freeze.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const freezeAlgorandRejected = (state, { payload }) => {
@@ -145,6 +157,9 @@ export const modifyAlgorandPending = (state) => {
 export const modifyAlgorandFulfilled = (state, { payload }) => {
     state.modify.status = HTTP_STATUS.FULFILLED
     state.modify.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const modifyAlgorandRejected = (state, { payload }) => {
@@ -159,6 +174,9 @@ export const algorandOptInPending = (state) => {
 export const algorandOptInFulfilled = (state, { payload }) => {
     state.optIn.status = HTTP_STATUS.FULFILLED
     state.optIn.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const algorandOptInRejected = (state, { payload }) => {
@@ -173,6 +191,9 @@ export const algorandOptOutPending = (state) => {
 export const algorandOptOutFulfilled = (state, { payload }) => {
     state.optOut.status = HTTP_STATUS.FULFILLED
     state.optOut.data = payload
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const algorandOptOutRejected = (state, { payload }) => {
@@ -202,6 +223,8 @@ export const sendAlgorandFulfilled = (state, { payload }) => {
     state.send.status = HTTP_STATUS.FULFILLED
     state.send.data = payload
 
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
     state.transactions = DEFAULT
 }
 
@@ -231,6 +254,10 @@ export const swapAlgorandPending = (state) => {
 export const swapAlgorandFulfilled = (state, { payload }) => {
     state.swap.status = HTTP_STATUS.FULFILLED
     state.swap.data = payload
+
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const swapAlgorandRejected = (state, { payload }) => {
@@ -245,6 +272,10 @@ export const unfreezeAlgorandPending = (state) => {
 export const unfreezeAlgorandFulfilled = (state, { payload }) => {
     state.unfreeze.status = HTTP_STATUS.FULFILLED
     state.unfreeze.data = payload
+
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
 }
 
 export const unfreezeAlgorandRejected = (state, { payload }) => {

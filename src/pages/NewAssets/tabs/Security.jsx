@@ -142,7 +142,7 @@ function Security() {
                                 maxLength="96"
                             />
                             <FormControl 
-                                label="Metadata Hash"
+                                label="Metadata"
                                 type="text"
                                 value={metadataHashValue}
                                 handleChange={handleMetadataHashChange}

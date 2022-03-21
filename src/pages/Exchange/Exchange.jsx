@@ -20,7 +20,7 @@ import FormControl from '../../components/FormControl/FormControl'
 import { networkDataToReturn } from '../../constants/network'
 import useSearchAssetWithDropdown from '../../Hooks/SearchAssetWithDropdown'
 import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
-import axios from '../../app/axios'
+
 
 function ExchangeAlgo() {
     const dispatch = useDispatch()
@@ -41,6 +41,13 @@ function ExchangeAlgo() {
         handleSetAssetValue: handleSetToAssetWholeValue
     } = useSelectInput('emptyId')
 
+    const [toAssetIsValid, setToAssetIsValid] = useState(false)
+
+    const handleToAssetClick = (data) => {
+        setToAssetByClick(data)
+        setToAssetIsValid(true)
+    }
+
     const network = useSelector(state => state.network.network)
     const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
 
@@ -52,7 +59,7 @@ function ExchangeAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
     const { handleSubmit } = useSubmit()
     const { status: getSwapValueStatus } = useSelector(state => state.algorand.swapValue)
-    // console.log(checkValidAssetStatus)
+    const { data: holdingsData } = useSelector(state => state.algorand.holdings)
 
     /**
      * get the asset you are swapping to
@@ -78,7 +85,7 @@ function ExchangeAlgo() {
             if (
                 (swapData.asset_amount > 0) && 
                 (fromAsset.id != toAsset.id) && 
-                (checkToAssetValidStatus === HTTP_STATUS.FULFILLED)
+                ((checkToAssetValidStatus === HTTP_STATUS.FULFILLED) || toAssetIsValid)
             ) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
@@ -94,7 +101,7 @@ function ExchangeAlgo() {
         }, 1000)
 
         return () => clearTimeout(inputRateTimer)
-    }, [swapData.asset_amount, fromAsset.id, toAsset.id, checkToAssetValidStatus])
+    }, [swapData.asset_amount, fromAsset.id, toAsset.id, checkToAssetValidStatus, toAssetIsValid])
 
 
     const handleSwap = () => {
@@ -136,7 +143,7 @@ function ExchangeAlgo() {
                 <Grid item xs={12} md={8}>
                     <Styles.Root>
                         <Styles.Title>Swap</Styles.Title>
-                        <Styles.Text>Swap your tokens.</Styles.Text>
+                        <Styles.Text>Token should be added to your wallet before swapping.</Styles.Text>
                         <Styles.Line />
                         <Styles.Container>
                             <div className="innerContainer">
@@ -152,7 +159,11 @@ function ExchangeAlgo() {
                                     placeholder="0"
                                 />
                                 <Styles.Info>
-                                    Balance: <strong>{activeWalletData?.balance}</strong>
+                                    Balance:&nbsp; 
+                                    { fromAsset.id === 0 ? 
+                                        <strong>{activeWalletData?.balance}</strong> : 
+                                        <strong>{holdingsData?.filter(asset => asset.id === fromAsset.id)[0].amount}</strong> 
+                                    }
                                 </Styles.Info>
                             </div>
                             <img src={exchangeLogo} alt="" />
@@ -166,7 +177,7 @@ function ExchangeAlgo() {
                                     label="To"
                                     asset={toAsset}
                                     value={toAsset.amount}
-                                    handleItemClick={setToAssetByClick}
+                                    handleItemClick={handleToAssetClick}
                                     handleChange={e => handleToAssetSelectChange('amount', e)}
                                     handleFocus={handleToAssetFocus}
                                     placeholder="0"

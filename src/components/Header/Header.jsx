@@ -21,8 +21,8 @@ function Header() {
 
     const getUserErrorCallback = () => {
         dispatch(logout())
-        // history.push('/')
-        window.location.replace('https://mintengine.org')
+        history.push('/login')
+        // window.location.replace('https://mintengine.org')
     }
  
     useEffect(() => {

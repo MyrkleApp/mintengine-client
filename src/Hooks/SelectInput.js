@@ -13,7 +13,7 @@ function useSelectInput(emptyId) {
     }
 
     const handleSetValue = (fieldToChange, data) => {
-        setValue({ ...value, [fieldToChange]: data})
+        setValue({ ...value, [fieldToChange]: data })
     }
 
     const handleSetAssetValue = data => {

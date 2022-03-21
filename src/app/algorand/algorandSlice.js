@@ -134,6 +134,15 @@ export const getAlgorandSwapValue = createAsyncThunk(`${namespace}/getAlgorandSw
   }
 })
 
+export const getAlgorandAssetBalance = createAsyncThunk(`${namespace}/getAlgorandAssetBalance`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get(`/algorand/v1/checks/get_asset_balance/${objData}/`)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 export const swapAlgorand = createAsyncThunk(`${namespace}/swapAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post('/algorand/v1/swap/', objData)

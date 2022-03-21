@@ -23,9 +23,9 @@ function Sidebar({ mobile }) {
     }
 
     const handleLogout = () => {
-        // history.push('/')
-        window.location.replace('https://mintengine.org')
         dispatch(logout())
+        history.push('/login')
+        // window.location.replace('https://mintengine.org')
     }
 
     const mainContent = <>
