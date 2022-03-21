@@ -12,7 +12,7 @@ import useSubmit from '../../Hooks/Submit'
 import useModal from '../../Hooks/Modal'
 import Modal from '../../components/UI/Modal/Modal'
 import ModalResponse from '../../components/ModalResponse/ModalResponse'
-
+import DB from '../../app/db'
 
 function Auth() {
     const { pathname } = useLocation()
@@ -78,11 +78,17 @@ function Auth() {
         }
     }
 
+    const forgotPasswordSuccessCallback = () => {
+        const db = new DB()
+        db.clearData()
+        window.location.replace('https://mintengine.org')
+    }
+
     const handleForgotPassword = () => {
         handleModalClose()
         handleSubmit(
             resetPassword({ deviceID: deviceFingerprint }), 
-            () => window.location.replace('https://mintengine.org'),
+            forgotPasswordSuccessCallback,
             () => handleModalResponseOpen()
         )
     }

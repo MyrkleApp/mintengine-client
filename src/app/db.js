@@ -13,9 +13,15 @@ function DB() {
         return res
     }
 
+    const clearData = async () => {
+        const res = await db.destroy()
+        return res
+    }
+
     return {
         getPassphrase,
-        addPassphrase
+        addPassphrase,
+        clearData
     }
 }
 
