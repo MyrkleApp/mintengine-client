@@ -69,6 +69,14 @@ function ExchangeAlgo() {
         checkValidAssetError: checkToAssetValidError 
     } = useSearchAssetWithDropdown(toAsset.id, handleSetToAssetWholeValue)
 
+    useEffect(() => {
+        if (checkToAssetValidStatus === HTTP_STATUS.FULFILLED) {
+            setToAssetIsValid(true)
+        } else {
+            setToAssetIsValid(false)
+        }
+    }, [checkToAssetValidStatus])
+
     const swapData = {
         from_asset: fromAsset.id === swapIds.from ? fromAsset.id : toAsset.id, 
         to_asset: fromAsset.id !== swapIds.from ? fromAsset.id : toAsset.id,
@@ -84,8 +92,8 @@ function ExchangeAlgo() {
         const inputRateTimer = setTimeout(() => {
             if (
                 (swapData.asset_amount > 0) && 
-                (fromAsset.id != toAsset.id) && 
-                ((checkToAssetValidStatus === HTTP_STATUS.FULFILLED) || toAssetIsValid)
+                (fromAsset.id != toAsset.id) && toAssetIsValid
+                // ((checkToAssetValidStatus === HTTP_STATUS.FULFILLED) || toAssetIsValid)
             ) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
@@ -203,7 +211,7 @@ function ExchangeAlgo() {
                         <Styles.ButtonContainer>
                             <Button 
                                 fullWidth 
-                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (checkToAssetValidStatus === HTTP_STATUS.REJECTED)} 
+                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || !toAssetIsValid} 
                                 onClick={handleSwap}>
                                     swap
                             </Button>

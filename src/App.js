@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import Header from './components/Header/Header';
 import Auth from './pages/Auth/Auth';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -48,7 +48,9 @@ function App() {
                     key={location.key}
                   >
                     <Switch location={location}>
-                      {/* <Route exact path="/" component={LandingPage} /> */}
+                      <Route exact path="/">
+                        <Redirect to="/login" />
+                      </Route>
                       <Route exact path={['/signup', '/login']} component={Auth} />
                       
                       <PrivateRoute exact path={["/wallet-setup", "/create-wallet"]}>
