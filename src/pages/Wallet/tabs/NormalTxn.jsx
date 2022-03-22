@@ -30,11 +30,17 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
  * 
  * !!! MAKE SURE TO REWRITE THIS COMPONENT CODE!!!
  */
+const defaultAlgoSelect = { id: 0, name: 'Algorand', amount: "", image: algorandLogo, unit: 'ALGO' }
 
 function NormalTxn() {
     const dispatch = useDispatch()
 
-    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
+    const { 
+        value: assetValue, 
+        setValueByClick: setAssetValueByClick, 
+        handleSelectChange: handleAmountSelectChange,
+        handleSetAssetValue: handleSetAssetValue 
+    } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
 
     const { value: assetTwoValue, handleSelectChange: handleAmountTwoSelectChange } = useSelectInput()
@@ -155,6 +161,9 @@ function NormalTxn() {
         setSendCurrencyStatus(HTTP_STATUS.FULFILLED)
         handleModalOpen()
         dispatch(getActiveAlgorandWallet())
+        handleSetAssetValue(defaultAlgoSelect)
+        handleSetRecipientAddressValue('')
+        
         console.log(res)
     }
 
@@ -344,7 +353,7 @@ function NormalTxn() {
             {/* confirm transaction modal */}
             <Modal open={confirmModalState} handleClose={handleConfirmModalClose}>
                 <Title center>Confirm Transaction</Title>
-                <SubTitle center>You are about to send { `${assetValue.amount} ${assetValue.name}` } to</SubTitle>
+                <SubTitle center>You are about to send { `${assetValue.amount} ${assetValue.id === 0 ? 'Algo' : assetValue.name}` } to</SubTitle>
                 <SubTitle center>{`${recipientAddressValue.substring(0, 12)}...`}</SubTitle>
                 <Button fullWidth onClick={sendCurrency}>Send asset</Button>
             </Modal>

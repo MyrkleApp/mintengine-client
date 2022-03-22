@@ -23,7 +23,7 @@ function SelectInput({ half, exchange, name, label, value, handleChange, handleI
         if (open && (status === null)) {
             dispatch(getAlgorandHoldings())
         }
-    }, [open])
+    }, [open, status])
 
     const toggleSelect = () => {
         setOpen(prevState => !prevState)

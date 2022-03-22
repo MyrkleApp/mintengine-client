@@ -9,7 +9,7 @@ import { Button } from '../../components/UI/Button/button'
 import useSelectInput from '../../Hooks/SelectInput'
 import useFormValidity from '../../Hooks/FormValidity'
 import { useDispatch, useSelector } from 'react-redux'
-import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand } from '../../app/algorand/algorandSlice'
+import { getAlgorandSwapValue, resetSwapValueData, swapAlgorand } from '../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import Modal from '../../components/UI/Modal/Modal'
 import ModalResponse from '../../components/ModalResponse/ModalResponse'
@@ -20,6 +20,7 @@ import FormControl from '../../components/FormControl/FormControl'
 import { networkDataToReturn } from '../../constants/network'
 import useSearchAssetWithDropdown from '../../Hooks/SearchAssetWithDropdown'
 import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
+import algorandLogo from '../../assets/icons/algorandLogo.png'
 
 
 function ExchangeAlgo() {
@@ -41,7 +42,8 @@ function ExchangeAlgo() {
         handleSetAssetValue: handleSetToAssetWholeValue
     } = useSelectInput()
 
-    const [toAssetIsValid, setToAssetIsValid] = useState(false)
+    const [toAssetIsValid, setToAssetIsValid] = useState(true)
+    console.log(toAssetIsValid)
 
     const handleToAssetClick = (data) => {
         setToAssetByClick(data)
@@ -65,7 +67,7 @@ function ExchangeAlgo() {
      * get the asset you are swapping to
      */
     const { 
-        checkValidAssetStatus: checkToAssetValidStatus, 
+        checkValidAssetExchangeStatus: checkToAssetValidStatus, 
         checkValidAssetError: checkToAssetValidError 
     } = useSearchAssetWithDropdown(toAsset.id, handleSetToAssetWholeValue)
 
@@ -75,12 +77,12 @@ function ExchangeAlgo() {
         } else {
             setToAssetIsValid(false)
         }
-    }, [checkToAssetValidStatus])
+    }, [checkToAssetValidStatus])   
 
     const swapData = {
         from_asset: fromAsset.id === swapIds.from ? fromAsset.id : toAsset.id, 
         to_asset: fromAsset.id !== swapIds.from ? fromAsset.id : toAsset.id,
-        asset_amount: fromAsset.id === swapIds.from ? parseInt(fromAsset.amount) : parseInt(toAsset.amount),
+        asset_amount: fromAsset.id === swapIds.from ? parseFloat(fromAsset.amount) : parseFloat(toAsset.amount),
         phrase: passphrase
     }
     // console.log(swapData)
@@ -111,6 +113,16 @@ function ExchangeAlgo() {
         return () => clearTimeout(inputRateTimer)
     }, [swapData.asset_amount, fromAsset.id, toAsset.id, checkToAssetValidStatus, toAssetIsValid])
 
+    const resetValues = () => {
+        const defaultSwapValue = { id: 0, name: 'Algorand', amount: "", image: algorandLogo, unit: 'ALGO' }
+        handleSetFromAssetWholeValue(defaultSwapValue)
+        handleSetToAssetWholeValue(defaultSwapValue)
+    }
+
+    const swapResponseCallback = () => {
+        resetValues()
+        handleModalOpen()
+    }
 
     const handleSwap = () => {
         const data = {
@@ -120,7 +132,7 @@ function ExchangeAlgo() {
             phrase: passphrase
         }
                 
-        handleSubmit(swapAlgorand(data), handleModalOpen, handleModalOpen)
+        handleSubmit(swapAlgorand(data), swapResponseCallback, swapResponseCallback)
     }
 
     const { status } = useSelector(state => state.algorand.swap)

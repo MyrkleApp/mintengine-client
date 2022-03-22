@@ -12,10 +12,10 @@ function CreatedAssetsAlgo() {
     const { status, data } = useSelector(state => state.algorand.createdAssets)
 
     useEffect(() => {
-        if (data === null) {
+        if (status === null) {
             dispatch(getCreatedAssets())
         }
-    }, [data])
+    }, [status])
 
     const rows = data?.asset_created?.map((item, i) => (
         <tr key={item.id}>

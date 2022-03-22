@@ -50,6 +50,7 @@ function Settings() {
 
     const changeActiveWalletSuccessCallback = () => {
         dispatch(getActiveAlgorandWallet())
+        history.push('/wallet')
     }
 
     const changeActiveWallet = (walletId) => {

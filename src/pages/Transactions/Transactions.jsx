@@ -18,10 +18,10 @@ function Transactions() {
     const { status, data } = useSelector(state => state.algorand.transactions)
 
     useEffect(() => {
-        if (data === null) {
+        if (status === null) {
             dispatch(getAlgorandTransactions())
         }
-    }, [data])
+    }, [status])
 
     const filter = {
         "All Transactions": data,

@@ -16,6 +16,11 @@ export const createAlgorandWalletFulfilled = (state, { payload }) => {
     state.passphrase = payload.passphrase
     state.user = payload.user
     state.createWallet.error = null
+
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const createAlgorandWalletRejected = (state, { payload }) => {
@@ -76,6 +81,7 @@ export const createAlgorandClawbackFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const createAlgorandClawbackRejected = (state, { payload }) => {
@@ -93,6 +99,7 @@ export const createAlgorandCommonNftFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const createAlgorandCommonNftRejected = (state, { payload }) => {
@@ -110,6 +117,7 @@ export const destroyAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const destroyAlgorandRejected = (state, { payload }) => {
@@ -127,6 +135,7 @@ export const freezeAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const freezeAlgorandRejected = (state, { payload }) => {
@@ -160,6 +169,7 @@ export const modifyAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const modifyAlgorandRejected = (state, { payload }) => {
@@ -177,6 +187,7 @@ export const algorandOptInFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const algorandOptInRejected = (state, { payload }) => {
@@ -194,6 +205,7 @@ export const algorandOptOutFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const algorandOptOutRejected = (state, { payload }) => {
@@ -226,6 +238,7 @@ export const sendAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const sendAlgorandRejected = (state, { payload }) => {
@@ -258,6 +271,7 @@ export const swapAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const swapAlgorandRejected = (state, { payload }) => {
@@ -276,6 +290,7 @@ export const unfreezeAlgorandFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const unfreezeAlgorandRejected = (state, { payload }) => {
@@ -363,6 +378,8 @@ export const createAlgorandAssetFulfilled = (state, { payload }) => {
 
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const createAlgorandAssetRejected = (state, { payload }) => {
@@ -394,6 +411,7 @@ export const updateActiveWalletFulfilled = (state, { payload }) => {
     state.holdings = DEFAULT_HOLDINGS
     state.createdAssets = DEFAULT
     state.transactions = DEFAULT
+    state.allWallets = DEFAULT
 }
 
 export const updateActiveWalletRejected = (state, { payload }) => {

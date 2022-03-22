@@ -9,6 +9,8 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
     const [checkValidAssetStatus, setCheckValidAssetStatus] = useState(null)
     // const [checkValidAssetData, setCheckValidAssetData] = useState(null)
     const [checkValidAssetError, setCheckValidAssetError] = useState('')
+
+    const [checkValidAssetExchangeStatus, setCheckValidAssetExchangeStatus] = useState(HTTP_STATUS.FULFILLED) //for exchange/swap algo
   
     useEffect(() => {
         const inputRateTimer = setTimeout(() => {
@@ -20,8 +22,12 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
                     handleSetAssetValue(hasAsset)
                     setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
                     setCheckValidAssetError('')
+
+                    setCheckValidAssetExchangeStatus(HTTP_STATUS.FULFILLED)
                 } else {
                     setCheckValidAssetStatus(HTTP_STATUS.PENDING)
+
+                    setCheckValidAssetExchangeStatus(HTTP_STATUS.PENDING)
 
                     dispatch(checkAlgorandAssetIsValid({ asset_id: parseInt(assetId) }))
                     .unwrap()
@@ -32,9 +38,13 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
                             setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)
                             // setCheckValidAssetData(res)
                             setCheckValidAssetError('')
+
+                            setCheckValidAssetExchangeStatus(HTTP_STATUS.FULFILLED)
                         } else {
                             setCheckValidAssetError(res.message)
                             setCheckValidAssetStatus(HTTP_STATUS.REJECTED)
+
+                            setCheckValidAssetExchangeStatus(HTTP_STATUS.REJECTED)
                         }
                         
                     })
@@ -53,7 +63,10 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
     return {
         checkValidAssetStatus,
         // checkValidAssetData,
-        checkValidAssetError
+        checkValidAssetError,
+
+        checkValidAssetExchangeStatus
+
     }
 
 }
