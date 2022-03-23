@@ -128,7 +128,7 @@ function ExchangeAlgo() {
         const data = {
             from_asset: fromAsset.id, 
             to_asset: toAsset.id,
-            asset_amount: parseInt(fromAsset.amount),
+            asset_amount: parseFloat(fromAsset.amount),
             phrase: passphrase
         }
                 

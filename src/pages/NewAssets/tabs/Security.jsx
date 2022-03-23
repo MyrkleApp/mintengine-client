@@ -24,12 +24,12 @@ function Security() {
     const { value: totalSupplyValue, handleChange: handleTotalSupplyChange, handleSetValue: handleSetTotalSupplyValue } = useFormControl('number')
     const { value: decimalValue, handleSetValue: setDecimalValueByClick, handleSetValue: handleSetDecimalValue } = useFormControl()
     const { value: assetUrlValue, handleChange: handleAssetUrlChange, handleSetValue: handleSetAssetUrlValue } = useFormControl()
-    const { value: metadataHashValue, handleChange: handleMetadataHashChange, handleSetValue: handleSetMetadataHashValue } = useFormControl()
+    // const { value: metadataHashValue, handleChange: handleMetadataHashChange, handleSetValue: handleSetMetadataHashValue } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange, handleSetValue: handleSetNoteValue } = useFormControl()
     const { imageValue, handleImageChange, imageName } = useImageHandle()
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { formIsValid } = useFormValidity(
-        assetName, unitValue, totalSupplyValue, decimalValue, assetUrlValue, metadataHashValue
+        assetName, unitValue, totalSupplyValue, decimalValue, assetUrlValue
     )
     const { handleSubmit } = useSubmit()
 
@@ -47,7 +47,7 @@ function Security() {
         handleSetTotalSupplyValue('')
         handleSetDecimalValue('')
         handleSetAssetUrlValue('')
-        handleSetMetadataHashValue('')
+        // handleSetMetadataHashValue('')
         handleSetNoteValue('')
     }
 
@@ -141,12 +141,12 @@ function Security() {
                                 handleChange={handleAssetUrlChange}
                                 maxLength="96"
                             />
-                            <FormControl 
+                            {/* <FormControl 
                                 label="Metadata"
                                 type="text"
                                 value={metadataHashValue}
                                 handleChange={handleMetadataHashChange}
-                            />
+                            /> */}
                             <FormControl 
                                 textArea
                                 label="Note"

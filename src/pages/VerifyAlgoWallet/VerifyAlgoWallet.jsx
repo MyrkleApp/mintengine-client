@@ -72,14 +72,14 @@ function VerifyWallet() {
     const handleVerifyPassphrase = () => {
         handleModalToDefault()
 
-        const completedPassphrase = passphraseArray
+        const completedPassphrase = [...passphraseArray]
         completedPassphrase[2] = num3.trim()
         completedPassphrase[4] = num5.trim()
         completedPassphrase[11] = num12.trim()
         completedPassphrase[14] = num15.trim()
         completedPassphrase[23] = num24.trim()
 
-        if ((completedPassphrase !== passphraseArray) || (passphraseArray.length < 25)) {
+        if ((completedPassphrase.join(" ") !== passphraseArray.join(" ")) || (passphraseArray.length < 25)) {
             dispatch(incorrectPassphraseError({
                 status: CREATE,
                 error: 'The entered passphrase does not match'
