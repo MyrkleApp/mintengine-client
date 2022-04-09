@@ -21,6 +21,13 @@ export const Container = styled.div`
     width: calc(100% - 30px);
     margin: auto;
     display: flex;
+
+    & > button {
+        @media(min-width: 800px) {
+            margin: auto;
+            width: 80%;
+        }
+    }
 `
 
 export const Icon = styled.div`

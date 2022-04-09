@@ -18,13 +18,15 @@ function WalletCard({ icon, walletSetup, buttonText, title, text, image, link, h
                 <div>
                     <Styles.Title>{ title }</Styles.Title>
                     <Styles.Text>{ text }</Styles.Text>
-                    {
-                        !walletSetup &&
-                        // <Link to={link} style={{ textDecoration: 'none' }}>
-                            <Button wide onClick={handleClick}>{ buttonText }</Button>
-                        // {/* </Link> */}
-                    }
                 </div>
+            </Styles.Container>
+
+            <Styles.Container>
+                {
+                    !walletSetup && (
+                        <Button fullWidth onClick={handleClick}>{ buttonText }</Button>
+                    )
+                }
             </Styles.Container>
         </Styles.Root>
     )

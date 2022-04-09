@@ -57,7 +57,7 @@ export const CustomInput = styled.input`
     /* margin: 10px 0px 20px 0px; */
     border: ${props => !props.exchange ? '2px solid #043923' : 'none'};
     border-radius: 16px;
-    background-color: ${props => !props.exchange ? 'transparent' : 'white'};
+    background-color: ${props => (!props.exchange && !props.whiteBackground) ? 'transparent' : 'white'};
     font-size: 18px;
     text-align: ${props => props.center ? 'center' : 'left'};
 

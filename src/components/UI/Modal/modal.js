@@ -32,6 +32,8 @@ export const ModalContent = styled.div`
         width: ${props => props.fullScreen && 'calc(100% - 40px)'};
         padding: ${props => props.fullScreen && '40px 25px 40px 15px'};
         max-height: ${props => props.fullScreen && 'calc(100% - 60px)'};
+
+        padding-top: ${props => !props.fullScreen && '30px'}
     }
 `
 

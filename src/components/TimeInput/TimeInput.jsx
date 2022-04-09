@@ -3,29 +3,32 @@ import React from 'react'
 import * as Styles from './timeInput'
 
 
-function TimeInput({ half, label, value, handleClick }) {
+function TimeInput({ half, label, value, handleHourClick, handleMinuteClick, handleSecondClick }) {
 
     return (
         <Grid item xs={ half ? 6 : 12 }>
             <Styles.Root>
                 <label>{label}</label>
-                <div className="container" onClick={handleClick}>
+                <div className="container">
                     <input 
                         type="number" 
                         placeholder="hh" 
                         value={value.getHours()}
+                        onClick={handleHourClick}
                         readOnly 
                     />  
                     <input 
                         type="number" 
                         placeholder="mm" 
                         value={value.getMinutes()}
+                        onClick={handleMinuteClick}
                         readOnly
                     />
                     <input  
                         type="number" 
                         placeholder="ss" 
-                        value="00"
+                        value={value.getSeconds()}
+                        onClick={handleSecondClick}
                         readOnly 
                     />
                 </div>

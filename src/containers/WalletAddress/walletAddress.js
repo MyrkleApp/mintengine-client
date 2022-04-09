@@ -172,6 +172,15 @@ export const QrCodeMainImgLoaderContainer = styled.div`
     display: ${props => props.show ? 'flex' : 'none'};
     justify-content: center;
     align-items: center;
+
+    @media(max-width: 600px) {
+        width: 300px;
+        margin-left: 0px;
+    }
+
+    @media(max-width: 400px) {
+        width: 250px;
+    }
 `
 
 export const QrCodeMainImg = styled.img`

@@ -41,6 +41,7 @@ const Input = React.forwardRef((props, ref) => {
                         maxLength={otherProps.maxLength}
                         exchange={otherProps.exchange}
                         onFocus={otherProps.handleFocus}
+                        whiteBackground={otherProps.whiteBackground}
                     /> :
                     <Styles.TextArea
                         icon={icon}

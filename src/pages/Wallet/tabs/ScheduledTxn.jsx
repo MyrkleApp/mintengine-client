@@ -1,43 +1,50 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import FormControl from '../../../components/FormControl/FormControl'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 import scannerIcon from '../../../assets/icons/scanner.svg'
 import calenderIcon from '../../../assets/icons/calendar.svg'
 import TimeInput from '../../../components/TimeInput/TimeInput'
-import { Label, TransactionFee } from '../wallet'
+import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
-import { ButtonContainer } from '../wallet'
 import useFormControl from '../../../Hooks/FormControl'
 import TextField from '@mui/material/TextField';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import MobileDatePicker from '@mui/lab/MobileDatePicker';
-import MobileTimePicker from '@mui/lab/MobileTimePicker';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../../../components/MyTabs/MyTabs'
-import './scheduledTxn.css'
 import useSelectInput from '../../../Hooks/SelectInput'
 import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
 import { formattedTime, getTimeZone } from '../constants'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
-import { sendAlgorand } from '../../../app/algorand/algorandSlice'
+import { getActiveAlgorandWallet, sendAlgorand } from '../../../app/algorand/algorandSlice'
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import TimePicker from '@mui/lab/TimePicker';
+import { Grid } from '@mui/material'
+import useAddressIsValid from '../../../Hooks/AddressIsValid'
+import { HTTP_STATUS } from '../../../constants/httpStatus'
+import { ThreeDots } from 'react-loader-spinner'
+import useFormValidity from '../../../Hooks/FormValidity'
+import useModal from '../../../Hooks/Modal'
+import Modal from '../../../components/UI/Modal/Modal'
+import ModalResponse from '../../../components/ModalResponse/ModalResponse'
+
+const muiHiddenInputStyles = { position: 'absolute', top: '80px', left: '30px', height: '10px', transform: 'scale(0.2)', zIndex: '-1' }
+
+const defaultAlgoSelect = { id: 0, name: 'Algorand', amount: "", image: algorandLogo, unit: 'ALGO' }
 
 function ScheduledTxn() {
-    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange } = useSelectInput()
+    const dispatch = useDispatch()
+    const { value: assetValue, setValueByClick: setAssetValueByClick, handleSelectChange: handleAmountSelectChange, handleSetAssetValue: handleSetAssetValue } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
     const [timeValue, setTimeValue] = useState(new Date());
+    const [timePickerView, setTimePickerView] = useState("hours")
+    const { formIsValid } = useFormValidity(assetValue.amount, recipientAddressValue, timeValue)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
     const [displayScanner, setDisplayScanner] = useState(false)
-
-    const dateRef = useRef()
-    const timeRef = useRef()
-
-    const handleDateClick = () => dateRef.current.click()
-    const handleTimeClick = () => timeRef.current.click() 
 
     const closeScanner = () => setDisplayScanner(false)
 
@@ -46,7 +53,58 @@ function ScheduledTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
+    /**
+     * emulates click event on hidden mui date/time input fields
+     */
+    const handleHiddenMuiElementClick = (i) => {
+        const nodes = document.querySelectorAll('.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root')
+        nodes[i].click()
+    }
+
+    const handleHourClick = () => {
+        handleHiddenMuiElementClick(1)
+        setTimePickerView('hours')
+    }
+
+    const handleMinuteClick = () => {
+        handleHiddenMuiElementClick(1)
+        setTimePickerView('minutes')
+    }
+
+    const handleSecondClick = () => {
+        handleHiddenMuiElementClick(1)
+        setTimePickerView('seconds')
+    }
+
+    const { status: recipientAddressStatus, data: addressIsValid } = useAddressIsValid(recipientAddressValue)
+
+    const { modalState, handleModalOpen, handleModalClose } = useModal()
+    const { 
+        modalState: confirmModalState, 
+        handleModalOpen: handleConfirmModalOpen, 
+        handleModalClose: handleConfirmModalClose 
+    } = useModal()
+
+    const [sendCurrencyStatus, setSendCurrencyStatus] = useState('')
+
+    const submitSuccessCallback = (res) => {
+        setSendCurrencyStatus(HTTP_STATUS.FULFILLED)
+        handleModalOpen()
+        dispatch(getActiveAlgorandWallet())
+        handleSetAssetValue(defaultAlgoSelect)
+        handleSetRecipientAddressValue('')
+        
+        console.log(res)
+    }
+
+    const submitErrorCallback = (err) => {
+        setSendCurrencyStatus(HTTP_STATUS.REJECTED)
+        handleModalOpen()
+        console.log(err)
+    }
+
     const sendAsset = () => {
+        handleConfirmModalClose()
 
         // console.log(timeValue.toLocaleDateString(undefined, {day:'2-digit',timeZoneName: 'short' }))
 
@@ -57,40 +115,34 @@ function ScheduledTxn() {
         formData.append('receiver_addr', recipientAddressValue)
         formData.append('amount', assetValue.amount)
         formData.append('phrase', passphrase)
-        formData.append('timezone', getTimeZone(timeValue))
+        // formData.append('timezone', getTimeZone(timeValue))
 
         //if currency is an asset
         if (assetValue.id) formData.append('asset_id', assetValue.id)
 
-        // handleSubmit(sendAlgorand(formData))
+        const timezone = getTimeZone(timeValue)
+        const operator = timezone[3]
+        const hourVariant = timezone.slice(4, timezone.length)
+        const modifiedTime = new Date(timeValue)
+        
+        if (operator === '+') {
+            modifiedTime.setHours(modifiedTime.getHours() - Number(hourVariant.slice(0, 2)))
+        } else {
+            modifiedTime.setHours(modifiedTime.getHours() + Number(hourVariant.slice(0, 2)))
+        }
+
+        formData.append('set_time', formattedTime(modifiedTime))
+
+        handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
 
         // target address for testing
         // WBJY32EU6GP3UKAAM5FLUUPHU7K74CZDDH4ULHOKKUQN3PZLZUHVRXN5IY 
     }
 
+    const success = sendCurrencyStatus === HTTP_STATUS.FULFILLED
+
     return (
         <Fragment>
-            <ThemeProvider theme={theme}>
-                <div style={{ display: 'none' }}>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <MobileDatePicker
-                            // label="Date desktop"
-                            inputFormat="dd/MM/yyyy"
-                            value={timeValue}
-                            onChange={(newValue) => setTimeValue(newValue)}
-                            renderInput={(params) => <TextField {...params} />}
-                            inputRef={dateRef}
-                        />
-                        <MobileTimePicker
-                            // label="For mobile"
-                            value={timeValue}
-                            onChange={(newValue) => setTimeValue(newValue)}
-                            renderInput={(params) => <TextField {...params} />}
-                            inputRef={timeRef}
-                        />
-                    </LocalizationProvider>
-                </div>
-            </ThemeProvider>
             <SelectInput
                 label="Amount"
                 value={assetValue.amount}
@@ -107,28 +159,71 @@ function ScheduledTxn() {
                 center
                 handleIconClick={() => setDisplayScanner(true)}
             />
-            <FormControl
-                label="Date"
-                value={timeValue.toDateString()}
-                readOnly
-                icon={calenderIcon}
-                type="text"
-                center
-                handleClick={handleDateClick}
-                handleIconClick={handleDateClick}
-            />
-            <TimeInput 
-                label="Time (24 hour)"
-                value={timeValue}
-                handleClick={handleTimeClick}
-            />
+            { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+            { addressIsValid === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+
+            <Grid item container xs={12} style={{ position: 'relative' }}>
+                <ThemeProvider theme={theme}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DesktopDatePicker
+                            label="Date desktop"
+                            inputFormat="MM/dd/yyyy"
+                            value={timeValue}
+                            onChange={(newValue) => setTimeValue(newValue)}
+                            renderInput={(params) => <TextField {...params} style={muiHiddenInputStyles} />}
+                        />
+                    </LocalizationProvider>
+                </ThemeProvider>
+            
+                <FormControl
+                    label="Date"
+                    whiteBackground
+                    value={timeValue.toDateString()}
+                    readOnly
+                    icon={calenderIcon}
+                    type="text"
+                    center
+                    handleClick={() => handleHiddenMuiElementClick(0)}
+                    handleIconClick={() => handleHiddenMuiElementClick(0)}
+                />
+            </Grid>
+            <Grid item container xs={12} style={{ position: 'relative' }}>
+                <ThemeProvider theme={theme}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <TimePicker
+                            ampm={false}
+                            openTo={timePickerView}
+                            views={['hours', 'minutes', 'seconds']}
+                            inputFormat="HH:mm:ss"
+                            mask="__:__:__"
+                            label="With seconds"
+                            value={timeValue}
+                            onChange={(newValue) => setTimeValue(newValue)}
+                            renderInput={(params) => <TextField {...params} style={muiHiddenInputStyles}  />}
+                        />
+                    </LocalizationProvider>
+                </ThemeProvider>
+
+                <TimeInput 
+                    label="Time (24 hour)"
+                    value={timeValue}
+                    handleHourClick={handleHourClick}
+                    handleMinuteClick={handleMinuteClick}
+                    handleSecondClick={handleSecondClick}
+                />
+            </Grid>
             <Label>Transaction Fee</Label>
             <TransactionFee>
                 <img src={algorandLogo} alt="" />
                 <p>0.001</p>
             </TransactionFee>
             <ButtonContainer>
-                <Button fullWidth onClick={sendAsset} disabled>send asset</Button>
+                <Button 
+                    fullWidth 
+                    onClick={() => handleConfirmModalOpen()} 
+                    disabled={!formIsValid || !addressIsValid}>
+                        send asset
+                </Button>
             </ButtonContainer>
 
 
@@ -143,6 +238,28 @@ function ScheduledTxn() {
                     />
                 )
             }
+
+            {/* confirm transaction modal */}
+            <Modal open={confirmModalState} handleClose={handleConfirmModalClose}>
+                <Title center>Confirm Transaction</Title>
+                <SubTitle center>{ `${assetValue.amount} ${assetValue.id === 0 ? 'Algo' : assetValue.name}` } will be sent to</SubTitle>
+                <SubTitle center>{`${recipientAddressValue.substring(0, 12)}...`}</SubTitle>
+                <SubTitle center>by the time:</SubTitle>
+                <SubTitle center>{timeValue.toLocaleString()}</SubTitle>
+                <Button fullWidth onClick={sendAsset}>Send asset</Button>
+            </Modal>
+
+            {/* response modal */}
+            <Modal open={modalState} handleClose={handleModalClose}>
+                <ModalResponse
+                    success={success}
+                    title={success ? 'success' : 'error'}
+                    description={
+                        success ? 'Sent successfully' : 'Sorry, unable to complete your transfer at the moment'
+                    }
+                />
+            </Modal>
+
         </Fragment>
     )
 }
