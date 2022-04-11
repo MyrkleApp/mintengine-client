@@ -41,6 +41,8 @@ function ScheduledTxn() {
     const [timeValue, setTimeValue] = useState(new Date());
     const [timePickerView, setTimePickerView] = useState("hours")
     const { formIsValid } = useFormValidity(assetValue.amount, recipientAddressValue, timeValue)
+    const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
+    const [timePickerIsOpen, setTimePickerIsOpen] = useState(false)
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
 
@@ -53,26 +55,18 @@ function ScheduledTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
-    /**
-     * emulates click event on hidden mui date/time input fields
-     */
-    const handleHiddenMuiElementClick = (i) => {
-        const nodes = document.querySelectorAll('.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root')
-        nodes[i].click()
-    }
-
     const handleHourClick = () => {
-        handleHiddenMuiElementClick(1)
+        setTimePickerIsOpen(true)
         setTimePickerView('hours')
     }
 
     const handleMinuteClick = () => {
-        handleHiddenMuiElementClick(1)
+        setTimePickerIsOpen(true)
         setTimePickerView('minutes')
     }
 
     const handleSecondClick = () => {
-        handleHiddenMuiElementClick(1)
+        setTimePickerIsOpen(true)
         setTimePickerView('seconds')
     }
 
@@ -166,6 +160,8 @@ function ScheduledTxn() {
                 <ThemeProvider theme={theme}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DesktopDatePicker
+                            open={datePickerIsOpen}
+                            onClose={() => setDatePickerIsOpen(false)}
                             label="Date desktop"
                             inputFormat="MM/dd/yyyy"
                             value={timeValue}
@@ -183,14 +179,16 @@ function ScheduledTxn() {
                     icon={calenderIcon}
                     type="text"
                     center
-                    handleClick={() => handleHiddenMuiElementClick(0)}
-                    handleIconClick={() => handleHiddenMuiElementClick(0)}
+                    handleClick={() => setDatePickerIsOpen(true)}
+                    handleIconClick={() => setDatePickerIsOpen(true)}
                 />
             </Grid>
             <Grid item container xs={12} style={{ position: 'relative' }}>
                 <ThemeProvider theme={theme}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <TimePicker
+                            open={timePickerIsOpen}
+                            onClose={() => setTimePickerIsOpen(false)}
                             ampm={false}
                             openTo={timePickerView}
                             views={['hours', 'minutes', 'seconds']}
@@ -221,8 +219,9 @@ function ScheduledTxn() {
                 <Button 
                     fullWidth 
                     onClick={() => handleConfirmModalOpen()} 
-                    disabled={!formIsValid || !addressIsValid}>
-                        send asset
+                    disabled={!formIsValid || !addressIsValid}
+                >
+                    send asset
                 </Button>
             </ButtonContainer>
 

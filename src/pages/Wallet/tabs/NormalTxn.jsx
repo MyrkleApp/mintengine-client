@@ -120,20 +120,12 @@ function NormalTxn() {
         setAddressToSetByScan(null)
     }
 
-    const setAddedTxnAddressByScan = (scannedData) => {
-        const txns = [...addedTxns]
-        txns[addressToSetByScan].address = scannedData
-        setAddedTxns(txns)
-    }
-
     const scanSuccessCallback = (decodedText) => {
         if (addressToSetByScan === 'main') handleSetRecipientAddressValue(decodedText)
         else if (addressToSetByScan === 'two') handleSetRecipientTwoAddressValue(decodedText)
         else if (addressToSetByScan === 'three') handleSetRecipientThreeAddressValue(decodedText)
         else if (addressToSetByScan === 'four') handleSetRecipientFourAddressValue(decodedText)
         else if (addressToSetByScan === 'five') handleSetRecipientFiveAddressValue(decodedText)
-
-        // addressToSetByScan === 'main' ? handleSetRecipientAddressValue(decodedText) : setAddedTxnAddressByScan(decodedText)
 
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
@@ -148,7 +140,9 @@ function NormalTxn() {
     const { handleSubmit } = useSubmit()
 
     const addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
-    const amountsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
+    const amountsAsStringsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
+    
+    const amountsArray = amountsAsStringsArray.map(item => Number(item))
 
     const { formIsValid } = useFormValidity(...addressesArray.slice(0, numOfTxns), ...amountsArray.slice(0, numOfTxns));
 
@@ -333,8 +327,9 @@ function NormalTxn() {
                 <Button 
                     fullWidth 
                     onClick={() => handleConfirmModalOpen()} 
-                    disabled={!formIsValid || !allAddressesAreValid}>
-                        send asset
+                    disabled={!formIsValid || !allAddressesAreValid}
+                >
+                    send asset
                 </Button>
             </ButtonContainer>
 
