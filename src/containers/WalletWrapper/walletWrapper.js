@@ -1,5 +1,16 @@
 import styled from 'styled-components'
 
+export const Root = styled.div`
+    & > .container {
+        width: 80%;
+        margin: 0 auto;
+
+        @media(max-width: 800px) {
+            width: 90%;
+        }
+    }
+`
+
 export const Title = styled.h1`
     color: #043923;
     text-transform: uppercase;

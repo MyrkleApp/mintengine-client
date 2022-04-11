@@ -9,42 +9,46 @@ export const Root = styled.div`
     height: auto;
     margin: 60px auto 120px auto;
 
-    & .container {
+    & > .container {
         width: 85%;
         min-height: calc(100vh - 150px);
         display: flex;
-        background-color: yellow
-    }
-
-    & .left {
-        background-color: #097246;
-        width: 35%;
-        min-height: 700px;
-
-        @media(max-width: 800px) {
-            display: none;
-        }
-    }
-
-    & .left > p {
-        color: white;
-        width: 80%;
-        margin: 50px auto auto auto;
-        line-height: 25px;
-        font-size: 22px;
-        font-weight: bold;
-    }
-
-    & .right {
-        background-color: #F5FEFA;
-        width: 75%;
-        /* height: 90%;
-        min-height: 90%; */
 
         @media(max-width: 800px) {
             width: 100%;
         }
+
+        & > .left {
+            background-color: #097246;
+            width: 35%;
+            min-height: 700px;
+
+            @media(max-width: 800px) {
+                display: none;
+            }
+
+            & > p {
+                color: white;
+                width: 80%;
+                margin: 50px auto auto auto;
+                line-height: 25px;
+                font-size: 22px;
+                font-weight: bold;
+            }
+        }
+
+        & > .right {
+            background-color: #F5FEFA;
+            width: 65%;
+            /* height: 90%;
+            min-height: 90%; */
+
+            @media(max-width: 800px) {
+                width: 100%;
+            }
+        }
     }
+
 `
 
 

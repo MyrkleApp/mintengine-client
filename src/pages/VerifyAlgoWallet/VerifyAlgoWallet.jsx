@@ -172,7 +172,7 @@ function VerifyWallet() {
 
                 </Styles.Container>
 
-                <Modal open={modalState} handleClose={handleModalToDefault}>
+                <Modal open={modalState} handleClose={handleModalToDefault} fullScreenForMobile>
                     <Styles.ModalContent>
                     {
                         modalContentStatus === DEFAULT && (

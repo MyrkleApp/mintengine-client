@@ -35,7 +35,14 @@ function ImportWallet() {
 
         navigator.clipboard.readText().then(text => {
             const copiedTextToArray = text.trim().split(" ")
-            setMissingWords(copiedTextToArray)
+            
+            if (copiedTextToArray.length >= 25) {
+                setMissingWords(copiedTextToArray)
+            } else {
+                const concatArray = copiedTextToArray.concat(Array(25 - copiedTextToArray.length).fill(''))
+                setMissingWords(concatArray)
+            }
+            
         })
     }
 
@@ -100,7 +107,7 @@ function ImportWallet() {
                     <Styles.WordsBox import>
                     {
                         missingWords.map((_, i) => (
-                            <Styles.WordInput key={i}>
+                            <Styles.WordInput key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
                                 <span>{i+1}.</span>
                                 <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
                             </Styles.WordInput>
@@ -109,15 +116,20 @@ function ImportWallet() {
                     </Styles.WordsBox>
                 
                     <Styles.ButtonsContainer>
-                        <CopyButton outlined onClick={handlePastePassphrase}>
-                            paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
-                        </CopyButton>     
+                        {
+                            navigator.clipboard.readText && (
+                                <CopyButton outlined onClick={handlePastePassphrase}>
+                                    paste <NoteOutlinedIcon fontSize="small" sx={{ ml: '7px', transform: 'rotate(90deg)' }} />
+                                </CopyButton> 
+                            )
+                        }
+                            
                         <Button fullWidth disabled={!formIsValid} onClick={showDisclaimerModal}>verify my backup</Button>
                     </Styles.ButtonsContainer>
 
                 </Styles.Container>
 
-                <Modal open={modalState} handleOpen={handleModalOpen} handleClose={handleModalToDefault}>
+                <Modal open={modalState} handleOpen={handleModalOpen} handleClose={handleModalToDefault} fullScreenForMobile>
                     <Styles.ModalContent>
                     {
                         modalContentStatus === DEFAULT && (

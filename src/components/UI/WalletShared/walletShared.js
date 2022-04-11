@@ -95,6 +95,12 @@ export const ModalContent = styled.div`
     & > div.disclaimer {
         display: flex;
         align-items: flex-start;
+
+        & > input[type="checkbox"]:not(:checked), input[type="checkbox"]:checked {
+            width: 30px;
+            height: 30px;
+        }
+
         & > p {
             margin: 0 0 25px 12px;
             font-size: 14px;
