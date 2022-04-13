@@ -38,55 +38,16 @@ export const Container = styled.div`
     margin: auto auto 16px auto;
     padding: 20px 0 5px 0;
     position: relative;
+
     @media (max-width: 800px) {
         width: calc(100% - 10px);
     }
+
     & > .innerContainer {
         width: calc(100% - 40px);
         margin: auto;
 
         position: relative;
-
-        /* & > input.asset-id {
-            position: absolute;
-            left: 47%;
-            top: 30px;
-            height: 60px;
-            width: 23%;
-            border: none;
-            background-color: white;
-            color: gray;
-            font-size: 24px;
-            text-align: right;
-            &:focus {
-                outline: none;
-            }
-
-        }
-
-        & > label.asset-id {
-            position: absolute;
-            left: 47%;
-            top: 0px;
-            font-weight: 500;
-        }
-
-        & > input.asset-amount {
-            position: absolute;
-            right: 0;
-            top: 30px;
-            height: 60px;
-            width: 23%;
-            border: none;
-            background-color: white;
-            border-radius: 0 10px 10px 0;
-            color: gray;
-            font-size: 24px;
-            text-align: right;
-            &:focus {
-                outline: none;
-            }
-        }*/
 
         & > label.asset-amount {
             position: absolute;
@@ -126,4 +87,16 @@ export const LoaderContainer = styled.div`
     & svg {
         margin: -30px 0 -10px 0;
     }
+`
+
+export const PasteID = styled.button`
+    background-color: white;
+    padding: 10px 15px;
+    margin: 20px 5px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: gray;
+    border-radius: 12px;
+    cursor: pointer;
 `

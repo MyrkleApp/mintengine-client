@@ -21,7 +21,15 @@ import { networkDataToReturn } from '../../constants/network'
 import useSearchAssetWithDropdown from '../../Hooks/SearchAssetWithDropdown'
 import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerAlgo'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
+import { CustomDropdownContainer, CustomSelectBox, CustomSelectInput } from '../../components/CustomSelect/CustomSelect'
+import useCustomSelect from '../../Hooks/CustomSelect'
+import useFormControl from '../../Hooks/FormControl'
 
+const mockHoldings = [ 
+    { id: 12345, name: 'TinyUSDC', amount: 500, unit: 'tiny' }, 
+    { id: 17789, name: 'Algorand', amount: 1, unit: 'algo' }, 
+    { id: 24567, name: 'Ripple', amount: 20, unit: 'xrp' } 
+]
 
 function ExchangeAlgo() {
     const dispatch = useDispatch()
@@ -43,7 +51,7 @@ function ExchangeAlgo() {
     } = useSelectInput()
 
     const [toAssetIsValid, setToAssetIsValid] = useState(true)
-    console.log(toAssetIsValid)
+    // console.log(toAssetIsValid)
 
     const handleToAssetClick = (data) => {
         setToAssetByClick(data)
@@ -155,6 +163,25 @@ function ExchangeAlgo() {
     /**TINY USDC
      * 21582668
      */
+
+    const {
+        selectedItem: fromSelectedItem,
+        setSelectedItem: setFromSelectedItem,
+        dropdownIsOpen: fromDropdownIsOpen,
+        setDropdownIsOpen: setFromDropdownIsOpen,
+        toggleDropdownIsOpen: toggleFromDropdownIsOpen,
+    } = useCustomSelect('initializeAsFilled')
+
+    const {
+        selectedItem: toSelectedItem,
+        setSelectedItem: setToSelectedItem,
+        dropdownIsOpen: toDropdownIsOpen,
+        setDropdownIsOpen: setToDropdownIsOpen,
+        toggleDropdownIsOpen: toggleToDropdownIsOpen,
+    } = useCustomSelect('initializeAsEmpty')
+
+    const { value: fromInputValue, handleChange: handleFromInputChange, handleSetValue: handleSetFromValue } = useFormControl()
+    const { value: toInputValue, handleChange: handleToInputChange, handleSetValue: handleSetToValue } = useFormControl()
     
     return (
         <DashboardWrapper>
@@ -167,7 +194,28 @@ function ExchangeAlgo() {
                         <Styles.Line />
                         <Styles.Container>
                             <div className="innerContainer">
-                                <label className="asset-amount">Amount</label>
+
+                                <CustomSelectBox { ...fromSelectedItem } handleClick={toggleFromDropdownIsOpen} />
+
+                                <CustomDropdownContainer 
+                                    dropdownItems={mockHoldings} 
+                                    dropdownIsOpen={fromDropdownIsOpen}
+                                    setDropdownIsOpen={setFromDropdownIsOpen}
+                                    handleDropdownItemClick={setFromSelectedItem}
+                                    handleSetInputValue={handleSetFromValue}
+                                />
+
+                                <CustomSelectInput 
+                                    placeholder="0.00" 
+                                    value={fromInputValue}
+                                    onChange={handleFromInputChange}
+                                />
+
+                                
+
+
+
+                                {/* <label className="asset-amount">Amount</label>
                                 <SelectInput
                                     exchange
                                     label="From"
@@ -177,7 +225,7 @@ function ExchangeAlgo() {
                                     handleItemClick={setFromAssetByClick}
                                     handleFocus={handleFromAssetFocus}
                                     placeholder="0"
-                                />
+                                /> */}
                                 <Styles.Info>
                                     Balance:&nbsp; 
                                     { fromAsset.id === 0 ? 
@@ -189,8 +237,34 @@ function ExchangeAlgo() {
                             <img src={exchangeLogo} alt="" />
                         </Styles.Container>
                         <Styles.Container>
-                            <div className="innerContainer">
-                                <label className="asset-amount">Amount</label>
+                            <div className="innerContainer" style={{ paddingTop: '20px' }}>
+
+                            
+                                {  toSelectedItem ? <CustomSelectBox { ...toSelectedItem } handleClick={toggleToDropdownIsOpen} /> : null }
+
+                                <CustomDropdownContainer 
+                                    lower
+                                    dropdownItems={
+                                        !toSelectedItem ? mockHoldings.filter(item => item.id.toString().includes(toInputValue.trim())) : mockHoldings
+                                    } 
+                                    dropdownIsOpen={toDropdownIsOpen}
+                                    setDropdownIsOpen={setToDropdownIsOpen}
+                                    handleDropdownItemClick={setToSelectedItem}
+                                    handleSetInputValue={handleSetToValue}
+                                />
+
+                                <CustomSelectInput 
+                                    smallerPlaceholderSize={!toSelectedItem}
+                                    placeholder={!toSelectedItem ? "Select a token, or paste the ID" : "0.00"} 
+                                    onClick={() => !toSelectedItem && setToDropdownIsOpen(true)}
+                                    value={toInputValue}
+                                    onChange={handleToInputChange}
+                                />
+                                { toSelectedItem && <Styles.PasteID onClick={() => setToSelectedItem("")}>Paste Asset ID</Styles.PasteID> }
+
+
+
+                                {/* <label className="asset-amount">Amount</label>
                                 <SelectInput
                                     exchange
                                     hideInput
@@ -211,7 +285,7 @@ function ExchangeAlgo() {
                                     value={toAsset.id}
                                     handleChange={e => handleToAssetSelectChange('id', e)}
                                     placeholder="Asset ID"
-                                />
+                                /> */}
                                 <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p>
                                 <p>{checkToAssetValidError}</p>
                                 { ((checkToAssetValidStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.PENDING)) && (
