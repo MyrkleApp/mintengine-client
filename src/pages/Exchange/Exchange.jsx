@@ -183,6 +183,7 @@ function ExchangeAlgo() {
     const { value: fromInputValue, handleChange: handleFromInputChange, handleSetValue: handleSetFromValue } = useFormControl()
     const { value: toInputValue, handleChange: handleToInputChange, handleSetValue: handleSetToValue } = useFormControl()
     
+
     return (
         <DashboardWrapper>
             <ChooseNetwork />
@@ -198,7 +199,7 @@ function ExchangeAlgo() {
                                 <CustomSelectBox { ...fromSelectedItem } handleClick={toggleFromDropdownIsOpen} />
 
                                 <CustomDropdownContainer 
-                                    dropdownItems={mockHoldings} 
+                                    dropdownItems={holdingsData} 
                                     dropdownIsOpen={fromDropdownIsOpen}
                                     setDropdownIsOpen={setFromDropdownIsOpen}
                                     handleDropdownItemClick={setFromSelectedItem}
@@ -245,7 +246,7 @@ function ExchangeAlgo() {
                                 <CustomDropdownContainer 
                                     lower
                                     dropdownItems={
-                                        !toSelectedItem ? mockHoldings.filter(item => item.id.toString().includes(toInputValue.trim())) : mockHoldings
+                                        !toSelectedItem ? holdingsData.filter(item => item.id.toString().includes(toInputValue.trim())) : holdingsData
                                     } 
                                     dropdownIsOpen={toDropdownIsOpen}
                                     setDropdownIsOpen={setToDropdownIsOpen}

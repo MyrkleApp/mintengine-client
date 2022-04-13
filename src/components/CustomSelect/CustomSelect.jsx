@@ -1,7 +1,12 @@
-import React, { Fragment, useState } from 'react'
+import React, { useEffect } from 'react'
 import * as Styles from './customSelect'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import ClickAwayListener from 'react-click-away-listener';
+import { HTTP_STATUS } from '../../constants/httpStatus';
+import { ThreeDots } from 'react-loader-spinner';
+import { LoaderContainer } from '../../pages/Exchange/exchange';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 
 
 export function CustomSelectBox({ id, name, amount, unit, handleClick, isDropdownItem }) {
@@ -18,6 +23,9 @@ export function CustomSelectBox({ id, name, amount, unit, handleClick, isDropdow
 }
 
 export function CustomDropdownContainer({ dropdownIsOpen, dropdownItems, setDropdownIsOpen, handleDropdownItemClick, handleSetInputValue, ...otherProps }) {
+    
+    const dispatch = useDispatch()
+    const { status: holdingsStatus } = useSelector(state => state.algorand.holdings)
 
     const handleItemClick = (dropdownItem) => {
         handleDropdownItemClick(dropdownItem)
@@ -25,10 +33,16 @@ export function CustomDropdownContainer({ dropdownIsOpen, dropdownItems, setDrop
         setDropdownIsOpen(false)
     }
 
+    useEffect(() => {
+        if (dropdownIsOpen && (holdingsStatus === null)) {
+            dispatch(getAlgorandHoldings())
+        }
+    }, [dropdownIsOpen])
+
     return (
         <ClickAwayListener onClickAway={() => dropdownIsOpen && setDropdownIsOpen(false)}>
             <Styles.DropdownContainer open={dropdownIsOpen} { ...otherProps }>
-                { dropdownItems.map(({ id, ...dropdownItemDetails }) => (
+                { dropdownItems.length > 0 ? dropdownItems.map(({ id, ...dropdownItemDetails }) => (
                     <CustomSelectBox 
                         key={id} 
                         id={id}
@@ -36,7 +50,22 @@ export function CustomDropdownContainer({ dropdownIsOpen, dropdownItems, setDrop
                         handleClick={() => handleItemClick({ id, ...dropdownItemDetails })}
                         { ...dropdownItemDetails } 
                     />
-                ))}
+                )) : (
+                    <LoaderContainer>
+                        <span>No assets found</span>
+                    </LoaderContainer>
+                )}
+
+                { holdingsStatus === HTTP_STATUS.PENDING ? (
+                    <LoaderContainer>
+                        <ThreeDots
+                            height="30"
+                            width="150"
+                            color='gray'
+                            ariaLabel='loading'
+                        />
+                    </LoaderContainer>
+                ) : null }
             </Styles.DropdownContainer>
         </ClickAwayListener>
     )
