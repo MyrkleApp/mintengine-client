@@ -181,8 +181,8 @@ function NormalTxn() {
         } 
 
         if (numOfTxns > 1) {
-            formData.append('address_array', addressesArray.slice(0, numOfTxns))
-            formData.append('amount_array', amountsArray.slice(0, numOfTxns))
+            formData.append('address_list', addressesArray.slice(0, numOfTxns).join(','))
+            formData.append('amount_list', amountsArray.slice(0, numOfTxns).join(','))
         }
         
         formData.append('phrase', passphrase)
