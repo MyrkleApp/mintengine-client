@@ -49,7 +49,7 @@ export default useSearchAssetById
 
 
 
-export function useSearchAssetByIdForExchange(inputValue, dataToDispatch, action) {
+export function useSearchAssetByIdCompare(inputValue, dataToDispatch, action, compareType) {
     const dispatch = useDispatch()
     const { data: holdings } = useSelector(state => state.algorand.holdings)
     const [status, setStatus] = useState(null)
@@ -60,7 +60,9 @@ export function useSearchAssetByIdForExchange(inputValue, dataToDispatch, action
         const inputRateTimer = setTimeout(() => {
             if (inputValue.length > 0) {
 
-                const hasAsset = holdings.find(asset => asset.id.toString().includes(inputValue))
+                const hasAsset = compareType === 'includes' 
+                    ? holdings.find(asset => asset.id.toString().includes(inputValue))
+                    : holdings.find(asset => asset.id.toString() === inputValue)
 
                 if (hasAsset) {
                     setData(hasAsset)
@@ -77,34 +79,12 @@ export function useSearchAssetByIdForExchange(inputValue, dataToDispatch, action
                         setError(err)
                         setStatus(HTTP_STATUS.REJECTED)
                     })
-                }
-
-                // holdings.find(item => {
-                //     if (item.id.toString().includes(inputValue)) {
-                //         setData(item)
-                //         setStatus(HTTP_STATUS.FULFILLED)
-                //     } else {
-                //         setStatus(HTTP_STATUS.PENDING)
-                //         dispatch(action(dataToDispatch))
-                //         .unwrap()
-                //         .then((res) => {
-                //             setData(res)
-                //             setStatus(HTTP_STATUS.FULFILLED)
-                //         })
-                //         .catch((err) => {
-                //             setError(err)
-                //             setStatus(HTTP_STATUS.REJECTED)
-                //         })
-                //     }
-                // })
-
-                
+                }                
             }
         }, 1000)
 
         return(() => {
             clearTimeout(inputRateTimer)
-            // dispatch(action(dataToDispatch)).abort()
         })
     }, [inputValue])
 

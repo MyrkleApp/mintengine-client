@@ -7,9 +7,11 @@ import { LoaderContainer } from '../../pages/Exchange/exchange';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
 import useCheckImageExists from '../../Hooks/checkImageExists';
+import { Grid } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
-export function CustomSelectBox({ id, name, amount, unit, handleClick, isDropdownItem }) {
+export function CustomSelectBox({ id, name, unit, handleClick, isDropdownItem }) {
     const { tinyManAssetImage } = useCheckImageExists({ id })
 
     return (
@@ -23,14 +25,15 @@ export function CustomSelectBox({ id, name, amount, unit, handleClick, isDropdow
     )
 }
 
-export function CustomDropdownContainer({ dropdownIsOpen, dropdownItems, setDropdownIsOpen, handleDropdownItemClick, handleSetInputValue, searchStatus, ...otherProps }) {
+export function CustomDropdownContainer(props) {
+    const { dropdownIsOpen, dropdownItems, setDropdownIsOpen, handleDropdownItemClick, handleSetInputValue, inputValueToSet, searchStatus, ...otherProps } = props
     
     const dispatch = useDispatch()
     const { status: holdingsStatus } = useSelector(state => state.algorand.holdings)
 
     const handleItemClick = (dropdownItem) => {
         handleDropdownItemClick(dropdownItem)
-        handleSetInputValue('')
+        handleSetInputValue && handleSetInputValue(inputValueToSet ? dropdownItem[inputValueToSet] : '')
         setDropdownIsOpen(false)
     }
 
@@ -79,5 +82,46 @@ export function CustomSelectInput({ ...props }) {
         <Styles.Input
             { ...props }
         />
+    )
+}
+
+
+const selectBoxStyle = {
+    height: '65px',
+    border: '2px solid #043923',
+    borderRadius: '16px',
+    fontSize: '18px',
+    width: '100%',
+    marginBottom: '18px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    position: 'relative',
+}
+
+export function SelectBox({ id, name, amount, unit, handleClick, hideArrowIcon, label, ...inputBoxProps }) {
+    const { tinyManAssetImage } = useCheckImageExists({ id })
+
+    return (
+        <>
+            <Styles.Label>{label}</Styles.Label>
+
+            <Grid item xs={12} sx={selectBoxStyle}>
+                <Styles.SelectBoxLeft onClick={handleClick}>
+                    <div className="left">
+                        <img src={tinyManAssetImage} alt="" />
+                        <span>{unit}</span>
+                    </div>
+
+                    { !hideArrowIcon && <KeyboardArrowDownIcon /> }
+                </Styles.SelectBoxLeft>
+
+                <Styles.SelectBoxRight>
+                    <input { ...inputBoxProps } />
+                </Styles.SelectBoxRight>
+            </Grid>
+        </>
     )
 }

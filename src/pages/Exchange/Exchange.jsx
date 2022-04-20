@@ -19,7 +19,7 @@ import { LoaderContainer } from '../../containers/AssetManagerAlgo/assetManagerA
 import { CustomDropdownContainer, CustomSelectBox, CustomSelectInput } from '../../components/CustomSelect/CustomSelect'
 import useCustomSelect from '../../Hooks/CustomSelect'
 import useFormControl from '../../Hooks/FormControl'
-import { useSearchAssetByIdForExchange } from '../../Hooks/SearchAssetById'
+import { useSearchAssetByIdCompare } from '../../Hooks/SearchAssetById'
 
 
 function ExchangeAlgo() {
@@ -94,7 +94,7 @@ function ExchangeAlgo() {
     /**
      * send check request on to asset ID input change
      */
-    const { status: toAssetIsValidStatus, data: toAssetIsValidData } = useSearchAssetByIdForExchange(toInputValue, { asset_id: toInputValue }, checkAlgorandAssetIsValid)
+    const { status: toAssetIsValidStatus, data: toAssetIsValidData } = useSearchAssetByIdCompare(toInputValue, { asset_id: toInputValue }, checkAlgorandAssetIsValid, 'includes')
     
     const [searchedAssets, setSearchedAssets] = useState([])
     const concatAssetArray = holdingsData.concat(searchedAssets)

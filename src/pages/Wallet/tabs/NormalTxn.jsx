@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import FormControl from '../../../components/FormControl/FormControl'
 import SelectInput from '../../../components/SelectInput/SelectInput'
 import scannerIcon from '../../../assets/icons/scanner.svg'
-import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle } from '../wallet'
+import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle, ConfirmTransferItem } from '../wallet'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
 import { Button } from '../../../components/UI/Button/button'
 import useFormControl from '../../../Hooks/FormControl'
@@ -24,6 +24,8 @@ import useFormValidity from '../../../Hooks/FormValidity'
 import Modal from '../../../components/UI/Modal/Modal'
 import useModal from '../../../Hooks/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
+import { CustomDropdownContainer, SelectBox } from '../../../components/CustomSelect/CustomSelect'
+import useCustomSelect from '../../../Hooks/CustomSelect'
 
 
 /**
@@ -43,16 +45,36 @@ function NormalTxn() {
     } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
 
-    const { value: assetTwoValue, handleSelectChange: handleAmountTwoSelectChange } = useSelectInput()
+    const { 
+        value: assetTwoValue, 
+        handleSelectChange: handleAmountTwoSelectChange, 
+        setValueByClick: setAssetTwoValueByClick, 
+        handleSetAssetValue: handleSetAssetTwoValue 
+    } = useSelectInput()
     const { value: recipientTwoAddressValue, handleChange: handleRecipientTwoAddressChange, handleSetValue: handleSetRecipientTwoAddressValue } = useFormControl()
 
-    const { value: assetThreeValue, handleSelectChange: handleAmountThreeSelectChange } = useSelectInput()
+    const { 
+        value: assetThreeValue, 
+        handleSelectChange: handleAmountThreeSelectChange,
+        setValueByClick: setAssetThreeValueByClick, 
+        handleSetAssetValue: handleSetAssetThreeValue 
+    } = useSelectInput()
     const { value: recipientThreeAddressValue, handleChange: handleRecipientThreeAddressChange, handleSetValue: handleSetRecipientThreeAddressValue } = useFormControl()
 
-    const { value: assetFourValue, handleSelectChange: handleAmountFourSelectChange } = useSelectInput()
+    const { 
+        value: assetFourValue, 
+        handleSelectChange: handleAmountFourSelectChange,
+        setValueByClick: setAssetFourValueByClick, 
+        handleSetAssetValue: handleSetAssetFourValue 
+    } = useSelectInput()
     const { value: recipientFourAddressValue, handleChange: handleRecipientFourAddressChange, handleSetValue: handleSetRecipientFourAddressValue } = useFormControl()
     
-    const { value: assetFiveValue, handleSelectChange: handleAmountFiveSelectChange } = useSelectInput()
+    const { 
+        value: assetFiveValue, 
+        handleSelectChange: handleAmountFiveSelectChange,
+        setValueByClick: setAssetFiveValueByClick, 
+        handleSetAssetValue: handleSetAssetFiveValue 
+    } = useSelectInput()
     const { value: recipientFiveAddressValue, handleChange: handleRecipientFiveAddressChange, handleSetValue: handleSetRecipientFiveAddressValue } = useFormControl()
     
     const [addedTxns, setAddedTxns] = useState({ two: false, three: false, four: false, five: false })
@@ -69,7 +91,14 @@ function NormalTxn() {
         handleModalClose: handleConfirmModalClose 
     } = useModal()
 
-    
+    // const transferContainer = document.getElementsByClassName("normal-transfer-container");
+    // console.log(transferContainer[0])
+
+    // const item2 = document.getElementsByClassName("item-2");
+
+    // useEffect(() => {
+    //     item2.scrollIntoView();
+    // }, [numOfTxns])  
 
     const addTxn = () => {
         if (numOfTxns === 1) {
@@ -87,7 +116,6 @@ function NormalTxn() {
         } else {
             return
         }
-
     }
 
     const removeTxn = () => {
@@ -139,10 +167,9 @@ function NormalTxn() {
 
     const { handleSubmit } = useSubmit()
 
+    const assetsArray = [assetValue.id, assetTwoValue.id, assetThreeValue.id, assetFourValue.id, assetFiveValue.id]
     const addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
-    const amountsAsStringsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
-    
-    const amountsArray = amountsAsStringsArray.map(item => Number(item))
+    const amountsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
 
     const { formIsValid } = useFormValidity(...addressesArray.slice(0, numOfTxns), ...amountsArray.slice(0, numOfTxns));
 
@@ -151,19 +178,37 @@ function NormalTxn() {
 
     const [sendCurrencyStatus, setSendCurrencyStatus] = useState('')
 
+    const resetValues = () => {
+        handleSetAssetValue(defaultAlgoSelect)
+        handleSetRecipientAddressValue('')
+
+        handleSetAssetTwoValue(defaultAlgoSelect)
+        handleSetRecipientTwoAddressValue('')
+
+        handleSetAssetThreeValue(defaultAlgoSelect)
+        handleSetRecipientThreeAddressValue('')
+
+        handleSetAssetFourValue(defaultAlgoSelect)
+        handleSetRecipientFourAddressValue('')
+
+        handleSetAssetFiveValue(defaultAlgoSelect)
+        handleSetRecipientFiveAddressValue('')
+
+        setNumOfTxns(1)
+    }
+
     const submitSuccessCallback = (res) => {
         setSendCurrencyStatus(HTTP_STATUS.FULFILLED)
         handleModalOpen()
         dispatch(getActiveAlgorandWallet())
-        handleSetAssetValue(defaultAlgoSelect)
-        handleSetRecipientAddressValue('')
-        
+        resetValues()
         console.log(res)
     }
 
     const submitErrorCallback = (err) => {
         setSendCurrencyStatus(HTTP_STATUS.REJECTED)
         handleModalOpen()
+        resetValues()
         console.log(err)
     }
 
@@ -172,141 +217,178 @@ function NormalTxn() {
 
         const formData = new FormData()
         formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
-        formData.append('currency_type', assetValue?.id === 0 ? 'algo' : 'asset')
-        if (assetValue?.id !== 0) formData.append('asset_id', assetValue.id) //if currency is an asset
-
+        
         if (numOfTxns === 1) {
+            if (assetValue?.id !== 0) formData.append('asset_id', assetValue.id) //if currency is an asset
+            formData.append('currency_type', assetValue?.id === 0 ? 'algo' : 'asset')
             formData.append('receiver_addr', recipientAddressValue)
             formData.append('amount', assetValue.amount)
         } 
 
         if (numOfTxns > 1) {
+            formData.append('asset_list', assetsArray.slice(0, numOfTxns).join(','))
             formData.append('address_list', addressesArray.slice(0, numOfTxns).join(','))
             formData.append('amount_list', amountsArray.slice(0, numOfTxns).join(','))
         }
         
         formData.append('phrase', passphrase)
 
-        // for (let pair of formData.entries()) {
-        //     console.log(pair[0]+ ', ' + pair[1]); 
-        // }
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+        }
 
-        handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
+        // handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
     }
 
+    const transactionFee = (0.001 + (numOfTxns - 1) * 0.1).toFixed(3)
     
     const success = sendCurrencyStatus === HTTP_STATUS.FULFILLED
 
+    const {
+        selectedItem: fromSelectedItem,
+        setSelectedItem: setFromSelectedItem,
+        dropdownIsOpen: fromDropdownIsOpen,
+        setDropdownIsOpen: setFromDropdownIsOpen,
+        toggleDropdownIsOpen: toggleFromDropdownIsOpen,
+    } = useCustomSelect('initializeAsFilled')
+
+    const { data: holdingsData } = useSelector(state => state.algorand.holdings)
+    const { value: fromInputValue, handleChange: handleFromInputChange, handleSetValue: handleSetFromInputValue } = useFormControl()
+
     return (
         <Fragment>
-            <SelectInput
-                label="Amount"
-                value={assetValue.amount}
-                asset={assetValue}
-                handleChange={(e) => handleAmountSelectChange('amount', e)}
-                handleItemClick={setAssetValueByClick}
-                placeholder="0"
-            />
-            <FormControl
-                label="Recipient Address"
-                value={recipientAddressValue}
-                handleChange={handleRecipientAddressChange}
-                icon={scannerIcon}
-                type="text"
-                center
-                handleIconClick={() => openScanner('main')}
-            />
-            { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-            { data === false && <ErrorMessage>Address is invalid</ErrorMessage> }
-            
-            <Grid item container style={{ display: addedTxns.two ? 'block' : 'none' }}>
-                <SelectWithoutDropdown 
+            {/* <Grid item container xs={12} className="normal-transfer-container" style={{ border: '1px solid red', overflowY: 'scroll' }}> */}
+                
+                
+                <Grid item container xs={12} style={{ position: 'relative' }}>
+                    <SelectBox 
+                        { ...fromSelectedItem } 
+                        handleClick={toggleFromDropdownIsOpen} 
+                        value={fromInputValue}
+                        onChange={handleFromInputChange}
+                        placeholder="0"
+                    />
+
+                    <CustomDropdownContainer 
+                        dropdownItems={holdingsData} 
+                        dropdownIsOpen={fromDropdownIsOpen}
+                        setDropdownIsOpen={setFromDropdownIsOpen}
+                        handleDropdownItemClick={setFromSelectedItem}
+                        handleSetInputValue={handleSetFromInputValue}
+                    />
+                </Grid>
+
+
+                <SelectInput
                     label="Amount"
-                    value={assetTwoValue.amount}
+                    value={assetValue.amount}
                     asset={assetValue}
-                    handleChange={(e) => handleAmountTwoSelectChange('amount', e)}
+                    handleChange={(e) => handleAmountSelectChange('amount', e)}
+                    handleItemClick={setAssetValueByClick}
                     placeholder="0"
-                    passedDown
                 />
                 <FormControl
                     label="Recipient Address"
-                    value={recipientTwoAddressValue}
-                    handleChange={handleRecipientTwoAddressChange}
+                    value={recipientAddressValue}
+                    handleChange={handleRecipientAddressChange}
                     icon={scannerIcon}
                     type="text"
                     center
-                    handleIconClick={() => openScanner('two')}
+                    handleIconClick={() => openScanner('main')}
                 />
-                { recipientTwoAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { dataTwo === false && <ErrorMessage>Address is invalid</ErrorMessage> }
-            </Grid>
+                { recipientAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                { data === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+                
+                <Grid item container style={{ display: addedTxns.two ? 'block' : 'none' }} className="item-2">
+                    <SelectInput
+                        label="Amount"
+                        value={assetTwoValue.amount}
+                        asset={assetTwoValue}
+                        handleChange={(e) => handleAmountTwoSelectChange('amount', e)}
+                        handleItemClick={setAssetTwoValueByClick}
+                        placeholder="0"
+                    />
+                    <FormControl
+                        label="Recipient Address"
+                        value={recipientTwoAddressValue}
+                        handleChange={handleRecipientTwoAddressChange}
+                        icon={scannerIcon}
+                        type="text"
+                        center
+                        handleIconClick={() => openScanner('two')}
+                    />
+                    { recipientTwoAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                    { dataTwo === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+                </Grid>
 
-            <Grid item container style={{ display: addedTxns.three ? 'block' : 'none' }}>
-                <SelectWithoutDropdown 
-                    label="Amount"
-                    value={assetThreeValue.amount}
-                    asset={assetValue}
-                    handleChange={(e) => handleAmountThreeSelectChange('amount', e)}
-                    placeholder="0"
-                    passedDown
-                />
-                <FormControl
-                    label="Recipient Address"
-                    value={recipientThreeAddressValue}
-                    handleChange={handleRecipientThreeAddressChange}
-                    icon={scannerIcon}
-                    type="text"
-                    center
-                    handleIconClick={() => openScanner('three')}
-                />
-                { recipientThreeAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { dataThree === false && <ErrorMessage>Address is invalid</ErrorMessage> }
-            </Grid>
+                <Grid item container style={{ display: addedTxns.three ? 'block' : 'none' }}>
+                    <SelectInput 
+                        label="Amount"
+                        value={assetThreeValue.amount}
+                        asset={assetThreeValue}
+                        handleChange={(e) => handleAmountThreeSelectChange('amount', e)}
+                        handleItemClick={setAssetThreeValueByClick}
+                        placeholder="0"
+                    />
+                    <FormControl
+                        label="Recipient Address"
+                        value={recipientThreeAddressValue}
+                        handleChange={handleRecipientThreeAddressChange}
+                        icon={scannerIcon}
+                        type="text"
+                        center
+                        handleIconClick={() => openScanner('three')}
+                    />
+                    { recipientThreeAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                    { dataThree === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+                </Grid>
 
-            <Grid item container style={{ display: addedTxns.four ? 'block' : 'none' }}>
-                <SelectWithoutDropdown 
-                    label="Amount"
-                    value={assetFourValue.amount}
-                    asset={assetValue}
-                    handleChange={(e) => handleAmountFourSelectChange('amount', e)}
-                    placeholder="0"
-                    passedDown
-                />
-                <FormControl
-                    label="Recipient Address"
-                    value={recipientFourAddressValue}
-                    handleChange={handleRecipientFourAddressChange}
-                    icon={scannerIcon}
-                    type="text"
-                    center
-                    handleIconClick={() => openScanner('four')}
-                />
-                { recipientFourAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { dataFour === false && <ErrorMessage>Address is invalid</ErrorMessage> }
-            </Grid>
+                <Grid item container style={{ display: addedTxns.four ? 'block' : 'none' }}>
+                    <SelectInput 
+                        label="Amount"
+                        value={assetFourValue.amount}
+                        asset={assetFourValue}
+                        handleChange={(e) => handleAmountFourSelectChange('amount', e)}
+                        handleItemClick={setAssetFourValueByClick}
+                        placeholder="0"
+                        passedDown
+                    />
+                    <FormControl
+                        label="Recipient Address"
+                        value={recipientFourAddressValue}
+                        handleChange={handleRecipientFourAddressChange}
+                        icon={scannerIcon}
+                        type="text"
+                        center
+                        handleIconClick={() => openScanner('four')}
+                    />
+                    { recipientFourAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                    { dataFour === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+                </Grid>
 
-            <Grid item container style={{ display: addedTxns.five ? 'block' : 'none' }}>
-                <SelectWithoutDropdown 
-                    label="Amount"
-                    value={assetFiveValue.amount}
-                    asset={assetValue}
-                    handleChange={(e) => handleAmountFiveSelectChange('amount', e)}
-                    placeholder="0"
-                    passedDown
-                />
-                <FormControl
-                    label="Recipient Address"
-                    value={recipientFiveAddressValue}
-                    handleChange={handleRecipientFiveAddressChange}
-                    icon={scannerIcon}
-                    type="text"
-                    center
-                    handleIconClick={() => openScanner('five')}
-                />
-                { recipientFiveAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
-                { dataFive === false && <ErrorMessage>Address is invalid</ErrorMessage> }
-            </Grid>
-
+                <Grid item container style={{ display: addedTxns.five ? 'block' : 'none' }}>
+                    <SelectInput 
+                        label="Amount"
+                        value={assetFiveValue.amount}
+                        asset={assetFiveValue}
+                        handleChange={(e) => handleAmountFiveSelectChange('amount', e)}
+                        handleItemClick={setAssetFiveValueByClick}
+                        placeholder="0"
+                        passedDown
+                    />
+                    <FormControl
+                        label="Recipient Address"
+                        value={recipientFiveAddressValue}
+                        handleChange={handleRecipientFiveAddressChange}
+                        icon={scannerIcon}
+                        type="text"
+                        center
+                        handleIconClick={() => openScanner('five')}
+                    />
+                    { recipientFiveAddressStatus === HTTP_STATUS.PENDING && <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer> }
+                    { dataFive === false && <ErrorMessage>Address is invalid</ErrorMessage> }
+                </Grid>
+            {/* </Grid> */}
 
 
             <IconButton onClick={addTxn} style={{ display: numOfTxns === 5 && 'none' }}>
@@ -320,7 +402,7 @@ function NormalTxn() {
 
             <TransactionFee>
                 <img src={algorandLogo} alt="" />
-                <p>0.001</p>
+                <p>{ transactionFee }</p>
             </TransactionFee>
 
             <ButtonContainer>
@@ -332,6 +414,7 @@ function NormalTxn() {
                     send asset
                 </Button>
             </ButtonContainer>
+            
 
             {
                 displayScanner && (
@@ -346,20 +429,27 @@ function NormalTxn() {
             }
 
             {/* confirm transaction modal */}
-            <Modal open={confirmModalState} handleClose={handleConfirmModalClose}>
+            <Modal open={confirmModalState} handleClose={handleConfirmModalClose} fullScreenForMobile>
                 <Title center>Confirm Transaction</Title>
-                {
-                    numOfTxns === 1  ? (
-                        <>
-                            <SubTitle center>You are about to send { `${assetValue.amount} ${assetValue.id === 0 ? 'Algo' : assetValue.name}` } to</SubTitle>
-                            <SubTitle center>{`${recipientAddressValue.substring(0, 12)}...`}</SubTitle>
-                        </>
-                    ) : (
-                        <SubTitle center>You are performing multiple transactions to {numOfTxns} different addresses, proceed with the transaction?</SubTitle>
-                    )
-                }
+                <ConfirmTransferItem>
+                    <span>Asset</span>
+                    <span>Algo</span>
+                </ConfirmTransferItem>
+                <ConfirmTransferItem>
+                    <span>Amount</span>
+                    <span>100</span>
+                </ConfirmTransferItem>
+                <ConfirmTransferItem>
+                    <span>To</span>
+                    <span>TL5BSUBQ5RROY4BWUUE4DN3QAHER635JDZUAJD7PSBJCQW4TQD42GOE2HU</span>
+                </ConfirmTransferItem>
+                <ConfirmTransferItem>
+                    <span>Fee</span>
+                    <span>{transactionFee}</span>
+                </ConfirmTransferItem>
                 
-                <Button fullWidth onClick={sendCurrency}>Send asset</Button>
+                <Button fullWidth onClick={sendCurrency}>confirm</Button>
+                <Title center onClick={() => handleConfirmModalClose()} style={{ cursor: 'pointer' }}>CANCEL</Title>
             </Modal>
 
             {/* response modal */}

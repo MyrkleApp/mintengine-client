@@ -32,7 +32,7 @@ function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {
                     dispatch(checkAlgorandAssetIsValid({ asset_id: parseInt(assetId) }))
                     .unwrap()
                     .then(res => {
-                        console.log(res)
+                        // console.log(res)
                         if (res.id) {
                             handleSetAssetValue(res)
                             setCheckValidAssetStatus(HTTP_STATUS.FULFILLED)

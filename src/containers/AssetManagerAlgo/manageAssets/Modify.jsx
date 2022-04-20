@@ -7,28 +7,29 @@ import useFormValidity from '../../../Hooks/FormValidity'
 import useSubmit from '../../../Hooks/Submit'
 import { modifyAlgorand } from '../../../app/algorand/algorandSlice'
 import { useSelector } from 'react-redux'
-import SelectInput from '../../../components/SelectInput/SelectInput'
-import useSelectInput from '../../../Hooks/SelectInput'
 import useSearchAssetWithDropdown from '../../../Hooks/SearchAssetWithDropdown'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { LoaderContainer } from '../assetManagerAlgo'
 import { ThreeDots } from 'react-loader-spinner'
+import { Grid } from '@mui/material'
+import { CustomDropdownContainer, SelectBox } from '../../../components/CustomSelect/CustomSelect'
+import useCustomSelect from '../../../Hooks/CustomSelect'
 
 
 function Modify({ handleModalClose, handleResponse }) {
-    const { 
-        value: assetValue, 
-        setValueByClick: setAssetValueByClick, 
-        handleSelectChange: handleAssetSelectChange,
-        handleSetAssetValue: handleSetAssetValue
-    } = useSelectInput('emptyId')
+
+    const { selectedItem, setSelectedItem, dropdownIsOpen, setDropdownIsOpen, toggleDropdownIsOpen } = useCustomSelect('initializeAsFilled')
+    const { value: assetIDValue, handleChange: handleAssetIDChange, handleSetValue: handleSetAssetIDValue } = useFormControl()
     const { value: managerAddressValue, handleChange: handleManagerAddressChange } = useFormControl()
     const { value: reserveAddressValue, handleChange: handleReserveAddressChange } = useFormControl()
     const { value: freezeAddressValue, handleChange: handleFreezeAddressChange } = useFormControl()
     const { value: clawbackAddressValue, handleChange: handleClawbackAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
+
+    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetIDValue, setSelectedItem)
+    const { data: holdingsData } = useSelector(state => state.algorand.holdings)
     const { formIsValid } = useFormValidity(
-        assetValue.id, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
+        assetIDValue, managerAddressValue, reserveAddressValue, freezeAddressValue, clawbackAddressValue
     )
     const passphrase = useSelector(state => state.algorand.passphrase)
     const { handleSubmit } = useSubmit()
@@ -37,7 +38,7 @@ function Modify({ handleModalClose, handleResponse }) {
         handleModalClose()
 
         const modifyData = { 
-            asset_id: assetValue.id, 
+            asset_id: assetIDValue, 
             manager_addr: managerAddressValue, 
             reserve_addr: reserveAddressValue,
             freeze_addr: freezeAddressValue,
@@ -48,20 +49,29 @@ function Modify({ handleModalClose, handleResponse }) {
         handleSubmit(modifyAlgorand(modifyData), handleResponse, handleResponse)
     }
 
-    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetValue.id, handleSetAssetValue)
 
     return (
         <Fragment>
             <ModalTitle>MODIFY</ModalTitle>
             <p>Modify the principal addresses of the specified asset. Only the manager address of this asset can carryout this action.</p>
-            <SelectInput
-                label="Asset"
-                value={assetValue.id}
-                asset={assetValue}
-                handleChange={(e) => handleAssetSelectChange('id', e)}
-                handleItemClick={setAssetValueByClick}
-                placeholder="Asset ID"
-            />
+            <Grid item container xs={12} style={{ position: 'relative' }}>
+                <SelectBox 
+                    { ...selectedItem } 
+                    label="Asset"
+                    handleClick={(e) => toggleDropdownIsOpen(e)} 
+                    value={assetIDValue}
+                    onChange={handleAssetIDChange}
+                    placeholder="Asset ID"
+                />
+                <CustomDropdownContainer 
+                    dropdownItems={holdingsData} 
+                    dropdownIsOpen={dropdownIsOpen}
+                    setDropdownIsOpen={setDropdownIsOpen}
+                    handleDropdownItemClick={setSelectedItem}
+                    handleSetInputValue={handleSetAssetIDValue}
+                    inputValueToSet="id"
+                />
+            </Grid>
             <p>{checkValidAssetError}</p>
             { checkValidAssetStatus === HTTP_STATUS.PENDING && (
                 <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>

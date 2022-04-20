@@ -126,3 +126,27 @@ export const ErrorMessage = styled.p`
     margin-top: 0; 
     color: red;
 `
+
+export const ConfirmTransferItem = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #E7FDF3;
+
+    &:last-of-type {
+        margin-bottom: 30px;
+    }
+
+    & > span {
+        color: #043923;
+        font-size: 18px;
+        width: calc(50% - 5px);
+        overflow-wrap: break-word;
+        
+        &:last-of-type {
+            text-align: right;
+        }
+    }
+`
+

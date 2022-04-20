@@ -13,6 +13,9 @@ import useSearchAssetWithDropdown from '../../../Hooks/SearchAssetWithDropdown'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { LoaderContainer } from '../assetManagerAlgo'
 import { ThreeDots } from 'react-loader-spinner'
+import { Grid } from '@mui/material'
+import { CustomDropdownContainer, SelectBox } from '../../../components/CustomSelect/CustomSelect'
+import useCustomSelect from '../../../Hooks/CustomSelect'
 
 
 //target address for testing
@@ -20,23 +23,25 @@ import { ThreeDots } from 'react-loader-spinner'
 
 
 function Freeze({ handleModalClose, handleResponse }) {
-    const { 
-        value: assetValue, 
-        setValueByClick: setAssetValueByClick, 
-        handleSelectChange: handleAssetSelectChange,
-        handleSetAssetValue: handleSetAssetValue
-    } = useSelectInput('emptyId')
+    const { selectedItem, setSelectedItem, dropdownIsOpen, setDropdownIsOpen, toggleDropdownIsOpen } = useCustomSelect('initializeAsFilled')
+    const { value: assetIDValue, handleChange: handleAssetIDChange, handleSetValue: handleSetAssetIDValue } = useFormControl()
+    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetIDValue, setSelectedItem)
+    
     const { value: targetAddressValue, handleChange: handleTargetAddressChange } = useFormControl()
     const { value: noteValue, handleChange: handleNoteChange } = useFormControl()
-    const { formIsValid } = useFormValidity(assetValue.id, targetAddressValue)
+
+    const { formIsValid } = useFormValidity(assetIDValue, targetAddressValue)
+
+    const { data: holdingsData } = useSelector(state => state.algorand.holdings)
     const passphrase = useSelector(state => state.algorand.passphrase)
+
     const { handleSubmit } = useSubmit()
 
     const handleFreeze = () => {
         handleModalClose()
 
         const freezeData = { 
-            asset_id: assetValue.id, 
+            asset_id: assetIDValue, 
             target_addr: targetAddressValue, 
             note: noteValue, 
             phrase: passphrase
@@ -44,20 +49,30 @@ function Freeze({ handleModalClose, handleResponse }) {
         handleSubmit(freezeAlgorand(freezeData), handleResponse, handleResponse)
     }
 
-    const { checkValidAssetStatus, checkValidAssetError } = useSearchAssetWithDropdown(assetValue.id, handleSetAssetValue)
 
     return (
         <Fragment>
             <ModalTitle>FREEZE</ModalTitle>
             <p>Disables the specified target address from transacting with the asset, only the freeze address of this asset can carry out this action.</p>
-            <SelectInput
-                label="Asset"
-                value={assetValue.id}
-                asset={assetValue}
-                handleChange={(e) => handleAssetSelectChange('id', e)}
-                handleItemClick={setAssetValueByClick}
-                placeholder="Asset ID"
-            />
+            <Grid item container xs={12} style={{ position: 'relative' }}>
+                <SelectBox 
+                    { ...selectedItem } 
+                    label="Asset"
+                    handleClick={(e) => toggleDropdownIsOpen(e)} 
+                    value={assetIDValue}
+                    onChange={handleAssetIDChange}
+                    placeholder="Asset ID"
+                />
+
+                <CustomDropdownContainer 
+                    dropdownItems={holdingsData} 
+                    dropdownIsOpen={dropdownIsOpen}
+                    setDropdownIsOpen={setDropdownIsOpen}
+                    handleDropdownItemClick={setSelectedItem}
+                    handleSetInputValue={handleSetAssetIDValue}
+                    inputValueToSet="id"
+                />
+            </Grid>
             <p>{checkValidAssetError}</p>
             { checkValidAssetStatus === HTTP_STATUS.PENDING && (
                 <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
