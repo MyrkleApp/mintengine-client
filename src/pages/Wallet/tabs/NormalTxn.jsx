@@ -44,7 +44,7 @@ function NormalTxn() {
         handleSetAssetValue: handleSetAssetValue 
     } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
-
+console.log(assetValue)
     const { 
         value: assetTwoValue, 
         handleSelectChange: handleAmountTwoSelectChange, 
@@ -170,6 +170,13 @@ function NormalTxn() {
     const assetsArray = [assetValue.id, assetTwoValue.id, assetThreeValue.id, assetFourValue.id, assetFiveValue.id]
     const addressesArray = [recipientAddressValue, recipientTwoAddressValue, recipientThreeAddressValue, recipientFourAddressValue, recipientFiveAddressValue]
     const amountsArray = [assetValue.amount, assetTwoValue.amount, assetThreeValue.amount, assetFourValue.amount, assetFiveValue.amount]
+    const totalArray = [
+        { asset: assetValue.unit, amount: amountsArray[0], address: addressesArray[0]}, 
+        { asset: assetTwoValue.unit, amount: amountsArray[1], address: addressesArray[1]}, 
+        { asset: assetThreeValue.unit, amount: amountsArray[2], address: addressesArray[2]}, 
+        { asset: assetFourValue.unit, amount: amountsArray[3], address: addressesArray[3]}, 
+        { asset: assetFiveValue.unit, amount: amountsArray[4], address: addressesArray[4]}
+    ]
 
     const { formIsValid } = useFormValidity(...addressesArray.slice(0, numOfTxns), ...amountsArray.slice(0, numOfTxns));
 
@@ -260,13 +267,14 @@ function NormalTxn() {
             {/* <Grid item container xs={12} className="normal-transfer-container" style={{ border: '1px solid red', overflowY: 'scroll' }}> */}
                 
                 
-                <Grid item container xs={12} style={{ position: 'relative' }}>
+                {/* <Grid item container xs={12} style={{ position: 'relative' }}>
                     <SelectBox 
                         { ...fromSelectedItem } 
                         handleClick={toggleFromDropdownIsOpen} 
                         value={fromInputValue}
                         onChange={handleFromInputChange}
                         placeholder="0"
+                        label="Amount"
                     />
 
                     <CustomDropdownContainer 
@@ -276,7 +284,7 @@ function NormalTxn() {
                         handleDropdownItemClick={setFromSelectedItem}
                         handleSetInputValue={handleSetFromInputValue}
                     />
-                </Grid>
+                </Grid> */}
 
 
                 <SelectInput
@@ -431,18 +439,22 @@ function NormalTxn() {
             {/* confirm transaction modal */}
             <Modal open={confirmModalState} handleClose={handleConfirmModalClose} fullScreenForMobile>
                 <Title center>Confirm Transaction</Title>
-                <ConfirmTransferItem>
-                    <span>Asset</span>
-                    <span>Algo</span>
-                </ConfirmTransferItem>
-                <ConfirmTransferItem>
-                    <span>Amount</span>
-                    <span>100</span>
-                </ConfirmTransferItem>
-                <ConfirmTransferItem>
-                    <span>To</span>
-                    <span>TL5BSUBQ5RROY4BWUUE4DN3QAHER635JDZUAJD7PSBJCQW4TQD42GOE2HU</span>
-                </ConfirmTransferItem>
+                { totalArray.slice(0, numOfTxns).map(item => (
+                    <>
+                        <ConfirmTransferItem>
+                            <span>Asset</span>
+                            <span>{item.asset}</span>
+                        </ConfirmTransferItem>
+                        <ConfirmTransferItem>
+                            <span>Amount</span>
+                            <span>{item.amount}</span>
+                        </ConfirmTransferItem>
+                        <ConfirmTransferItem>
+                            <span>To</span>
+                            <span>{item.address}</span>
+                        </ConfirmTransferItem>
+                    </>
+                ))}
                 <ConfirmTransferItem>
                     <span>Fee</span>
                     <span>{transactionFee}</span>

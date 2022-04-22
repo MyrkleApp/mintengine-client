@@ -7,7 +7,7 @@ import exchangeLogo from '../../assets/icons/exchange.png'
 import { Button } from '../../components/UI/Button/button'
 import useFormValidity from '../../Hooks/FormValidity'
 import { useDispatch, useSelector } from 'react-redux'
-import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand } from '../../app/algorand/algorandSlice'
+import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand, algorandLiquidity } from '../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import Modal from '../../components/UI/Modal/Modal'
 import ModalResponse from '../../components/ModalResponse/ModalResponse'
@@ -20,9 +20,16 @@ import { CustomDropdownContainer, CustomSelectBox, CustomSelectInput } from '../
 import useCustomSelect from '../../Hooks/CustomSelect'
 import useFormControl from '../../Hooks/FormControl'
 import { useSearchAssetByIdCompare } from '../../Hooks/SearchAssetById'
+import useTabs from '../../Hooks/Tabs'
+import MyTabs from '../../components/MyTabs/MyTabs'
 
+const SWAP = "Swap"
+const LIQUIDITY = "Liquidity"
+
+const tabs = [SWAP, LIQUIDITY]
 
 function ExchangeAlgo() {
+    const { tabValue, handleTabChange } = useTabs(tabs[0])
     const dispatch = useDispatch()
     const network = useSelector(state => state.network.network)
     const { data: activeWalletData } = useSelector(networkDataToReturn[network.toLowerCase()]);
@@ -56,7 +63,7 @@ function ExchangeAlgo() {
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
     const resetValues = () => {
-        setFromSelectedItem("")
+        setFromSelectedItem({ id: 0, name: 'Algorand', amount: 0, unit: 'Algo' })
         setToSelectedItem("")
         handleSetFromInputValue("")
         handleSetToInputValue("")
@@ -74,11 +81,17 @@ function ExchangeAlgo() {
             asset_amount: parseFloat(fromInputValue),
             phrase: passphrase
         }
-                
-        handleSubmit(swapAlgorand(data), swapResponseCallback, swapResponseCallback)
-    }
 
-    const { status } = useSelector(state => state.algorand.swap)
+        const dispatchAlgoAction = tabValue === SWAP ? swapAlgorand : algorandLiquidity
+                
+        handleSubmit(dispatchAlgoAction(data), swapResponseCallback, swapResponseCallback)
+    }
+    const selectSwap = state => state.algorand.swap
+    const selectLiquidity = state => state.algorand.liquidity
+
+    const selectStatusOption = tabValue === SWAP ? selectSwap : selectLiquidity
+
+    const { status } = useSelector(selectStatusOption)
     const success = status === HTTP_STATUS.FULFILLED
 
 
@@ -120,7 +133,7 @@ function ExchangeAlgo() {
      useEffect(() => {
         const inputRateTimer = setTimeout(() => {
 
-            if ((swapData.asset_amount > 0) && (fromSelectedItem.id !== toSelectedItem.id)) {
+            if ((swapData.asset_amount > 0) && (fromSelectedItem.id !== toSelectedItem.id) && (tabValue === SWAP)) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
                 .then(swapAmount => {
@@ -138,11 +151,11 @@ function ExchangeAlgo() {
     }, [swapData.asset_amount, fromSelectedItem.id, toSelectedItem.id])
 
     useEffect(() => {
-        handleSetToInputValue("")
+        if (tabValue === SWAP) handleSetToInputValue("")
     }, [fromSelectedItem.id])
 
     useEffect(() => {
-        handleSetFromInputValue("")
+        if (tabValue === SWAP) handleSetFromInputValue("")
     }, [toSelectedItem.id])
 
     const resetToSelectedValues = () => {
@@ -157,7 +170,7 @@ function ExchangeAlgo() {
 
     const handleToInputFocus = () => {
         setSwapIds({ from: toSelectedItem.id, to: fromSelectedItem.id })
-        handleSetFromInputValue("")
+        if (tabValue === SWAP) handleSetFromInputValue("")
     }
 
 
@@ -167,7 +180,15 @@ function ExchangeAlgo() {
             <Grid container>
                 <Grid item xs={12} md={8}>
                     <Styles.Root>
-                        <Styles.Title>Swap</Styles.Title>
+                        {/* <Styles.Title>Swap</Styles.Title> */}
+                        <div style={{ margin: '0 0 30px 20px'  }}>
+                            <MyTabs
+                                tabs={tabs}
+                                tabValue={tabValue}
+                                handleTabChange={handleTabChange}
+                                // center
+                            />
+                        </div>
                         <Styles.Text>Token should be added to your wallet before swapping.</Styles.Text>
                         <Styles.Line />
                         <Styles.Container>
@@ -227,10 +248,11 @@ function ExchangeAlgo() {
                                     value={toInputValue}
                                     onChange={handleToInputChange}
                                     onFocus={handleToInputFocus}
+                                    style={{ display: (tabValue === LIQUIDITY && toSelectedItem) ? 'none' : 'block' }}
                                 />
                                 { toSelectedItem && <Styles.PasteID onClick={resetToSelectedValues}>Paste Asset ID</Styles.PasteID> }
 
-                                { toSelectedItem && <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p> }
+                                { (toSelectedItem && tabValue === SWAP) && <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p> }
 
                                 { getSwapValueStatus === HTTP_STATUS.PENDING && (
                                     <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
@@ -242,9 +264,13 @@ function ExchangeAlgo() {
                         <Styles.ButtonContainer>
                             <Button 
                                 fullWidth 
-                                disabled={!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED)} 
+                                disabled={
+                                    tabValue === SWAP 
+                                    ? (!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED))
+                                    : (!fromInputValue || !toSelectedItem || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED))
+                                } 
                                 onClick={handleSwap}>
-                                    swap
+                                    { tabValue === SWAP ? "swap" : "Add Liquidity" }
                             </Button>
                         </Styles.ButtonContainer>
                     </Styles.Root>
@@ -257,7 +283,9 @@ function ExchangeAlgo() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'successfully swapped asset' : 'something went wrong!'
+                        success 
+                        ? (tabValue === SWAP ? 'successfully swapped asset' : 'successfully added liquidity') 
+                        : 'something went wrong!'
                     }
                 />
             </Modal>

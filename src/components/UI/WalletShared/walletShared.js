@@ -14,10 +14,20 @@ export const WordsBox = styled.div`
     display: flex;
     flex-flow: column wrap;
     width: 100%;
-    height: ${props => props.import ? '350px' : '320px'};
+    height: 320px;
 
     @media(max-width: 600px) {
         height: 530px;
+    }
+`
+
+export const WordsBoxImport = styled(WordsBox)`
+    height: 350px;
+    display: ${p => !p.hideOnMobile ? 'none' : 'flex'};
+
+    @media(max-width: 600px) {
+        height: 550px;
+        display: ${p => p.hideOnMobile ? 'none' : 'flex'};
     }
 `
 
@@ -56,6 +66,14 @@ export const WordInput = styled.div`
         &:focus {
             outline: none;
         }
+    }
+`
+
+export const WordInputImport = styled(WordInput)`
+    width: 50%;
+    
+    @media(min-width: 600px) {
+        display: none;
     }
 `
 

@@ -15,6 +15,7 @@ import useSubmit from '../../../Hooks/Submit'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import HiddenInput from '../../../components/UI/HiddenInput/HiddenInput'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function Web3Ticket() {
     const dispatch = useDispatch()
@@ -120,6 +121,11 @@ function Web3Ticket() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleWeb3Ticket} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

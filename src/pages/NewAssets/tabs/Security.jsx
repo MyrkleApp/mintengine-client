@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
 import { createAlgorandAsset, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function Security() {
     const dispatch = useDispatch()
@@ -153,6 +154,11 @@ function Security() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleSecurityToken} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

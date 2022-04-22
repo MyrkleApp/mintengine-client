@@ -104,7 +104,7 @@ function ImportWallet() {
                 link={`/create-wallet?wallet=${ALGO}`}
             >
                 <Styles.Container>
-                    <Styles.WordsBox import>
+                    <Styles.WordsBoxImport hideOnMobile>
                     {
                         missingWords.map((_, i) => (
                             <Styles.WordInput key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
@@ -113,7 +113,18 @@ function ImportWallet() {
                             </Styles.WordInput>
                         ))
                     }
-                    </Styles.WordsBox>
+                    </Styles.WordsBoxImport>
+
+                    <Styles.WordsBoxImport>
+                    {
+                        missingWords.map((_, i) => (
+                            <Styles.WordInputImport key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
+                                <span>{i+1}.</span>
+                                <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
+                            </Styles.WordInputImport>
+                        ))
+                    }
+                    </Styles.WordsBoxImport>
                 
                     <Styles.ButtonsContainer>
                         {

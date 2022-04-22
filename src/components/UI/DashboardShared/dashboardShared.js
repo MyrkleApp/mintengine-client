@@ -90,3 +90,30 @@ export const LoaderContainer = styled.div`
         margin: 0px auto 0 auto;
     }
 `
+
+export const Label = styled.p`
+    font-size: 18px;
+    font-weight: 500;
+    color: #043923;
+    width: 100%;
+    padding-bottom: 0px;
+`
+
+export const TransactionFee = styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    & > img {
+        margin-right: 15px;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+    }
+
+    & > p {
+        font-size: 18px;
+        font-weight: 500;
+        color: #3E554B;
+        margin: 0;
+    }
+`

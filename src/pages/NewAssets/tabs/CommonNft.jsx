@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import Modal from '../../../components/UI/Modal/Modal'
 import ModalResponse from '../../../components/ModalResponse/ModalResponse'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function CommonNft() {
     const dispatch = useDispatch()
@@ -130,6 +131,11 @@ function CommonNft() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleCommonNft} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

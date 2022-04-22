@@ -152,6 +152,15 @@ export const swapAlgorand = createAsyncThunk(`${namespace}/swapAlgorand`, async 
   }
 })
 
+export const algorandLiquidity = createAsyncThunk(`${namespace}/swapAlgorand`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/liquidity/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 export const unfreezeAlgorand = createAsyncThunk(`${namespace}/unfreezeAlgorand`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post('/algorand/v1/unfreeze/', objData)
@@ -266,6 +275,7 @@ const algorandSlice = createSlice({
     send: DEFAULT,
     swapValue: DEFAULT,
     swap: DEFAULT,
+    liquidity: DEFAULT,
     unfreeze: DEFAULT,
     transactions: DEFAULT,
     assetIsValid: DEFAULT,
@@ -353,6 +363,10 @@ const algorandSlice = createSlice({
     [swapAlgorand.pending]: actions.swapAlgorandPending,
     [swapAlgorand.fulfilled]: actions.swapAlgorandFulfilled,
     [swapAlgorand.rejected]: actions.swapAlgorandRejected,
+
+    [algorandLiquidity.pending]: actions.algorandLiquidityPending,
+    [algorandLiquidity.fulfilled]: actions.algorandLiquidityFulfilled,
+    [algorandLiquidity.rejected]: actions.algorandLiquidityRejected,
 
     [unfreezeAlgorand.pending]: actions.unfreezeAlgorandPending,
     [unfreezeAlgorand.fulfilled]: actions.unfreezeAlgorandFulfilled,

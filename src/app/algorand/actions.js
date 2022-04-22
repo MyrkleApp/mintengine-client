@@ -279,6 +279,25 @@ export const swapAlgorandRejected = (state, { payload }) => {
     state.swap.error = payload
 }
 
+export const algorandLiquidityPending = (state) => {
+    state.liquidity.status = HTTP_STATUS.PENDING
+}
+
+export const algorandLiquidityFulfilled = (state, { payload }) => {
+    state.liquidity.status = HTTP_STATUS.FULFILLED
+    state.liquidity.data = payload
+
+    state.holdings = DEFAULT_HOLDINGS
+    state.createdAssets = DEFAULT
+    state.transactions = DEFAULT
+    state.allWallets = DEFAULT
+}
+
+export const algorandLiquidityRejected = (state, { payload }) => {
+    state.liquidity.status = HTTP_STATUS.REJECTED
+    state.liquidity.error = payload
+}
+
 export const unfreezeAlgorandPending = (state) => {
     state.unfreeze.status = HTTP_STATUS.PENDING
 }

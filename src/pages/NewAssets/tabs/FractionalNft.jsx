@@ -16,6 +16,7 @@ import useModal from '../../../Hooks/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function FractionalNft() {
     const dispatch = useDispatch()
@@ -145,6 +146,11 @@ function FractionalNft() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleFractionalNft} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

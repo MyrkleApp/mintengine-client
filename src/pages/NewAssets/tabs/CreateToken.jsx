@@ -16,6 +16,7 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 import { useDispatch, useSelector } from 'react-redux'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function CreateToken() {
     const dispatch = useDispatch()
@@ -151,6 +152,11 @@ function CreateToken() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleCreateToken} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

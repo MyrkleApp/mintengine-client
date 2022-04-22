@@ -19,6 +19,7 @@ import { Fragment } from 'react'
 import FormControlRadio from '../../../components/FormControl/FormControlRadio'
 import useFormControlRadio from '../../../Hooks/FormControlRadio'
 import DecimalDropdown from '../../../components/DecimalDropdown/DecimalDropdown'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function CustomNft() {
     const dispatch = useDispatch()
@@ -203,6 +204,11 @@ function CustomNft() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleCustomNft} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>

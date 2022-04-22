@@ -16,6 +16,7 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 function UniqueNft() {
     const dispatch = useDispatch()
@@ -122,6 +123,11 @@ function UniqueNft() {
                                 value={noteValue}
                                 handleChange={handleNoteChange}
                             />
+                            <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
+                            <SharedStyles.TransactionFee>
+                                <img src={algorandLogo} alt="" />
+                                <p>0.001</p>
+                            </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleUniqueNf} style={{ marginTop: '20px' }}>
                                 create asset
                             </Button>
