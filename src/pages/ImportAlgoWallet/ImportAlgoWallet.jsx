@@ -18,6 +18,7 @@ import useFormValidity from '../../Hooks/FormValidity'
 import DB from '../../app/db'
 import useEncrypt from '../../Hooks/Encrypt'
 import { useDispatch } from 'react-redux'
+import { Grid } from '@mui/material'
 
 
 function ImportWallet() {
@@ -117,12 +118,28 @@ function ImportWallet() {
 
                     <Styles.WordsBoxImport>
                     {
-                        missingWords.map((_, i) => (
-                            <Styles.WordInputImport key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
-                                <span>{i+1}.</span>
-                                <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
-                            </Styles.WordInputImport>
-                        ))
+                        <Grid container>
+                            <Grid item container xs={6}>
+                                <Grid item xs={12} >
+                                    { missingWords.slice(0, 15).map((_, i) => (
+                                        <Styles.WordInputImport key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
+                                            <span>{i+1}.</span>
+                                            <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
+                                        </Styles.WordInputImport>
+                                    ))}
+                                </Grid>
+                            </Grid>
+                            <Grid item container xs={6}>
+                                <Grid item xs={12}>
+                                    { missingWords.slice(15, missingWords.length).map((_, i) => (
+                                        <Styles.WordInputImport key={i} style={{ display: i > 9 ? 'none' : 'block' }}>
+                                            <span>{i+16}.</span>
+                                            <input value={missingWords[i+15]} onChange={e => handleChange(e, i+15)} />
+                                        </Styles.WordInputImport>
+                                    ))}
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     }
                     </Styles.WordsBoxImport>
                 

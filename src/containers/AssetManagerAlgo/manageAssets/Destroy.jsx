@@ -14,6 +14,8 @@ import { ThreeDots } from 'react-loader-spinner'
 import useCustomSelect from '../../../Hooks/CustomSelect'
 import { CustomDropdownContainer, SelectBox } from '../../../components/CustomSelect/CustomSelect'
 import { Grid } from '@mui/material'
+import { Label, TransactionFee } from '../../../components/UI/DashboardShared/dashboardShared'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 
 function Destroy({ handleModalClose, handleResponse }) {
@@ -74,6 +76,11 @@ function Destroy({ handleModalClose, handleResponse }) {
                 value={noteValue}
                 handleChange={handleNoteChange}
             />
+            <Label>Transaction Fee</Label>
+            <TransactionFee>
+                <img src={algorandLogo} alt="" />
+                <p>1.00</p>
+            </TransactionFee>
             <ButtonContainer>
                 <Button 
                     fullWidth 

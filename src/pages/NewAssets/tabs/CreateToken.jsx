@@ -155,7 +155,7 @@ function CreateToken() {
                             <SharedStyles.Label>Transaction Fee</SharedStyles.Label>
                             <SharedStyles.TransactionFee>
                                 <img src={algorandLogo} alt="" />
-                                <p>0.001</p>
+                                <p>1.00</p>
                             </SharedStyles.TransactionFee>
                             <Button fullWidth disabled={!formIsValid} onClick={handleCreateToken} style={{ marginTop: '20px' }}>
                                 create asset

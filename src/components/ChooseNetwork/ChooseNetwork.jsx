@@ -31,6 +31,8 @@ function ChooseNetwork() {
         const netData = currentNetworkType === ALGORAND_TEST_NET ? "mainnet" : "testnet"
         
         handleSubmit(setNet({ net: netData }), () => dispatch(toggleNetworkType()))
+
+        toggleOpen()
     }
 
     const handleClickAway = () => {

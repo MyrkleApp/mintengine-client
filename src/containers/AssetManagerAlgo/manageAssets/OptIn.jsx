@@ -33,7 +33,7 @@ function OptIn({ handleModalClose, handleResponse }) {
 
     return (
         <Fragment>
-            <ModalTitle>ADD-TOKEN</ModalTitle>
+            <ModalTitle>ADD-ASSET</ModalTitle>
             <p>Enable asset access to account.</p>
 
             <SelectWithoutDropdown

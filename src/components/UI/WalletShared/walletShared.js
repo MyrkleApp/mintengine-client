@@ -70,7 +70,7 @@ export const WordInput = styled.div`
 `
 
 export const WordInputImport = styled(WordInput)`
-    width: 50%;
+    width: 100%;
     
     @media(min-width: 600px) {
         display: none;

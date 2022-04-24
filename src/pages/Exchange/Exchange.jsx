@@ -189,7 +189,12 @@ function ExchangeAlgo() {
                                 // center
                             />
                         </div>
-                        <Styles.Text>Token should be added to your wallet before swapping.</Styles.Text>
+                        <Styles.Text>
+                            { tabValue === SWAP 
+                                ? "Token should be added to your wallet before swapping." 
+                                : "Add liquidity to an already existing pool." 
+                            }
+                        </Styles.Text>
                         <Styles.Line />
                         <Styles.Container>
                             <div className="innerContainer">

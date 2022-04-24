@@ -46,7 +46,7 @@ function OptOut({ handleModalClose, handleResponse }) {
 
     return (
         <Fragment>
-            <ModalTitle>REMOVE-TOKEN</ModalTitle>
+            <ModalTitle>REMOVE-ASSET</ModalTitle>
             <p>Disable asset access to your account.</p>
 
             <Grid item container xs={12} style={{ position: 'relative' }}>

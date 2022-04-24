@@ -14,6 +14,8 @@ import { ThreeDots } from 'react-loader-spinner'
 import { CustomDropdownContainer, SelectBox } from '../../../components/CustomSelect/CustomSelect'
 import { Grid } from '@mui/material'
 import useCustomSelect from '../../../Hooks/CustomSelect'
+import { Label, TransactionFee } from '../../../components/UI/DashboardShared/dashboardShared'
+import algorandLogo from '../../../assets/icons/algorandLogo.png'
 
 
 function Unfreeze({ handleModalClose, handleResponse }) {
@@ -81,6 +83,11 @@ function Unfreeze({ handleModalClose, handleResponse }) {
                 value={noteValue}
                 handleChange={handleNoteChange}
             />
+            <Label>Transaction Fee</Label>
+            <TransactionFee>
+                <img src={algorandLogo} alt="" />
+                <p>1.00</p>
+            </TransactionFee>
             <ButtonContainer>
                 <Button 
                     fullWidth 
