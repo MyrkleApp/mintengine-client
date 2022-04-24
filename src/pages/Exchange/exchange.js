@@ -101,3 +101,18 @@ export const PasteID = styled.button`
     border-radius: 12px;
     cursor: pointer;
 `
+
+export const Tinyman = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: gray;
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 500;
+
+    & > img {
+        height: 35px;
+    }
+`

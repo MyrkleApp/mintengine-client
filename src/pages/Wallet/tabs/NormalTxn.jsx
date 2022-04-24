@@ -44,7 +44,7 @@ function NormalTxn() {
         handleSetAssetValue: handleSetAssetValue 
     } = useSelectInput()
     const { value: recipientAddressValue, handleChange: handleRecipientAddressChange, handleSetValue: handleSetRecipientAddressValue } = useFormControl()
-console.log(assetValue)
+
     const { 
         value: assetTwoValue, 
         handleSelectChange: handleAmountTwoSelectChange, 
@@ -209,14 +209,14 @@ console.log(assetValue)
         handleModalOpen()
         dispatch(getActiveAlgorandWallet())
         resetValues()
-        console.log(res)
+        // console.log(res)
     }
 
     const submitErrorCallback = (err) => {
         setSendCurrencyStatus(HTTP_STATUS.REJECTED)
         handleModalOpen()
         resetValues()
-        console.log(err)
+        // console.log(err)
     }
 
     const sendCurrency = () => {
@@ -240,11 +240,11 @@ console.log(assetValue)
         
         formData.append('phrase', passphrase)
 
-        for (let pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-        }
+        // for (let pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]);
+        // }
 
-        // handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
+        handleSubmit(sendAlgorand(formData), submitSuccessCallback, submitErrorCallback)
     }
 
     const transactionFee = (0.001 + (numOfTxns - 1) * 0.1).toFixed(3)

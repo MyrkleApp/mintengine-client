@@ -22,6 +22,7 @@ import useFormControl from '../../Hooks/FormControl'
 import { useSearchAssetByIdCompare } from '../../Hooks/SearchAssetById'
 import useTabs from '../../Hooks/Tabs'
 import MyTabs from '../../components/MyTabs/MyTabs'
+import tinymanLogo from '../../assets/icons/tinyman.svg'
 
 const SWAP = "Swap"
 const LIQUIDITY = "Liquidity"
@@ -186,7 +187,7 @@ function ExchangeAlgo() {
                                 tabs={tabs}
                                 tabValue={tabValue}
                                 handleTabChange={handleTabChange}
-                                // center
+                                center
                             />
                         </div>
                         <Styles.Text>
@@ -263,6 +264,10 @@ function ExchangeAlgo() {
                                     <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
                                 )}
                                 
+                                <Styles.Tinyman>
+                                    <span>POWERED BY TINYMAN</span>
+                                    <img src={tinymanLogo} alt="" />
+                                </Styles.Tinyman>
                             </div>
                             
                         </Styles.Container>

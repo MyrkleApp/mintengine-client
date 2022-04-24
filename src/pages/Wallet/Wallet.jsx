@@ -17,7 +17,7 @@ import { getActiveAlgorandWallet, getAlgorandHoldings } from '../../app/algorand
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import { ThreeDots } from 'react-loader-spinner'
 
-const tabs = [NORMAL_TXN, SCHEDULED_TXN]
+const tabs = [NORMAL_TXN]
 
 function Dashboard() {
     const dispatch = useDispatch()

@@ -26,8 +26,8 @@ export const WordsBoxImport = styled(WordsBox)`
     display: ${p => !p.hideOnMobile ? 'none' : 'flex'};
 
     @media(max-width: 600px) {
-        height: 550px;
-        display: ${p => p.hideOnMobile ? 'none' : 'flex'};
+        height: 650px;
+        display: ${p => p.hideOnMobile ? 'none' : 'block'};
     }
 `
 
@@ -70,7 +70,7 @@ export const WordInput = styled.div`
 `
 
 export const WordInputImport = styled(WordInput)`
-    width: 100%;
+    width: calc(100% - 12px);
     
     @media(min-width: 600px) {
         display: none;

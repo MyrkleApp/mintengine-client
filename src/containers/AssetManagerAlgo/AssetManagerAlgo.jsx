@@ -162,7 +162,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={optInIcon} alt="" />
                     </div>
-                    <span>Add Token</span>
+                    <span>Add Asset</span>
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
@@ -170,7 +170,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={optOutIcon} alt="" />
                     </div>
-                    <span>Remove Token</span>
+                    <span>Remove Asset</span>
                 </AssetItem>
             </Grid>
             <Grid item xs={6} md={4} lg={2}>
