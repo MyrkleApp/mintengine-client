@@ -6,6 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import mediumIcon from '../../assets/icons/medium.png'
 import footerLogo from '../../assets/icons/footerLogo.png'
 import algorandFooterLogo from '../../assets/icons/algorandFooterLogo.png'
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 function Footer() {
 
@@ -30,10 +31,10 @@ function Footer() {
                                 <TelegramIcon />
                             </Styles.SocialLink>
                         </a>
-                        <a href="https://www.instagram.com/mint_engine/" target="_blank" style={{ textDecoration: 'none' }}>
+                        <a href="https://docs.mintengine.org/" target="_blank" style={{ textDecoration: 'none' }}>
                             <Styles.SocialLink>
-                                <span>Instagram</span>
-                                <InstagramIcon />
+                                <span>Docs</span>
+                                <MenuBookIcon />
                             </Styles.SocialLink>
                         </a>
                         <a href="https://mintengine.medium.com/" target="_blank" style={{ textDecoration: 'none' }}>
