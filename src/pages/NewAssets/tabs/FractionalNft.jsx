@@ -76,7 +76,8 @@ function FractionalNft() {
         handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
-    const { status } = useSelector(state => state.algorand.createAsset)
+    const { status, error: errorData } = useSelector(state => state.algorand.createAsset)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -165,7 +166,9 @@ function FractionalNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created your fractional nft' : 'Something went wrong, the nft was not created'
+                        success 
+                        ? 'Successfully created your fractional nft' 
+                        : (error || 'Something went wrong, the nft was not created')
                     }
                 />
             </Modal>

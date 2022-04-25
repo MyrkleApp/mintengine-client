@@ -4,8 +4,8 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function UnfreezeRes() {
-    const { status } = useSelector(state => state.algorand.unfreeze)
-
+    const { status, error: errorData } = useSelector(state => state.algorand.unfreeze)
+    const error = errorData.error
     const success = status === HTTP_STATUS.FULFILLED 
 
     return (

@@ -69,7 +69,8 @@ function Web3Ticket() {
         handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
-    const { status } = useSelector(state => state.algorand.createAsset)
+    const { status, error: errorData} = useSelector(state => state.algorand.createAsset)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -140,7 +141,9 @@ function Web3Ticket() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created your web3 ticket' : 'Something went wrong, the web3 ticket was not created'
+                        success 
+                        ? 'Successfully created your web3 ticket' 
+                        : (error || 'Something went wrong, the web3 ticket was not created')
                     }
                 />
             </Modal>

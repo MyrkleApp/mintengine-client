@@ -7,7 +7,7 @@ import exchangeLogo from '../../assets/icons/exchange.png'
 import { Button } from '../../components/UI/Button/button'
 import useFormValidity from '../../Hooks/FormValidity'
 import { useDispatch, useSelector } from 'react-redux'
-import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand, algorandLiquidity } from '../../app/algorand/algorandSlice'
+import { checkAlgorandAssetIsValid, getAlgorandSwapValue, resetSwapValueData, swapAlgorand, algorandLiquidity, getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
 import { HTTP_STATUS } from '../../constants/httpStatus'
 import Modal from '../../components/UI/Modal/Modal'
 import ModalResponse from '../../components/ModalResponse/ModalResponse'
@@ -73,6 +73,7 @@ function ExchangeAlgo() {
     const swapResponseCallback = () => {
         resetValues()
         handleModalOpen()
+        dispatch(getActiveAlgorandWallet())
     }
 
     const handleSwap = () => {
@@ -92,7 +93,8 @@ function ExchangeAlgo() {
 
     const selectStatusOption = tabValue === SWAP ? selectSwap : selectLiquidity
 
-    const { status } = useSelector(selectStatusOption)
+    const { status, error: errorData } = useSelector(selectStatusOption)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
 
 
@@ -238,7 +240,7 @@ function ExchangeAlgo() {
                                 <CustomDropdownContainer 
                                     lower
                                     dropdownItems={
-                                        !toSelectedItem ? concatAssetArray.filter(item => item.id.toString().includes(toInputValue.trim())) : concatAssetArray
+                                        !toSelectedItem ? concatAssetArray.filter(item => item.id.toString().includes(toInputValue.toString().trim())) : concatAssetArray
                                     } 
                                     dropdownIsOpen={toDropdownIsOpen}
                                     setDropdownIsOpen={setToDropdownIsOpen}
@@ -295,7 +297,7 @@ function ExchangeAlgo() {
                     description={
                         success 
                         ? (tabValue === SWAP ? 'successfully swapped asset' : 'successfully added liquidity') 
-                        : 'something went wrong!'
+                        : (error || 'something went wrong!')
                     }
                 />
             </Modal>

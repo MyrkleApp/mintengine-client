@@ -152,7 +152,7 @@ export const swapAlgorand = createAsyncThunk(`${namespace}/swapAlgorand`, async 
   }
 })
 
-export const algorandLiquidity = createAsyncThunk(`${namespace}/swapAlgorand`, async (objData, { rejectWithValue }) => {
+export const algorandLiquidity = createAsyncThunk(`${namespace}/algorandLiquidity`, async (objData, { rejectWithValue }) => {
   try {
     const { data } = await axios.post('/algorand/v1/liquidity/', objData)
     return data;
@@ -311,6 +311,9 @@ const algorandSlice = createSlice({
     },
     resetSwapValueData(state) {
       state.swapValue = DEFAULT
+    },
+    clearError(state, { payload }) {
+      state[payload].error = null
     }
   },
   extraReducers: { 
@@ -424,6 +427,6 @@ const algorandSlice = createSlice({
   }
 })
 
-export const { incorrectPassphraseError, setAlgorandPassphrase, resetSwapValueData } = algorandSlice.actions
+export const { incorrectPassphraseError, setAlgorandPassphrase, resetSwapValueData, clearError } = algorandSlice.actions
 
 export default algorandSlice.reducer

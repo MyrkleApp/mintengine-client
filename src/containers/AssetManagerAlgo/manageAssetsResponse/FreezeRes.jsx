@@ -4,8 +4,8 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function FreezeRes() {
-    const { status } = useSelector(state => state.algorand.freeze)
-
+    const { status, error: errorData } = useSelector(state => state.algorand.freeze)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED 
 
     return (
@@ -13,7 +13,9 @@ function FreezeRes() {
             success={success}
             title={success ? 'success' : 'error'}
             description={
-                success ? 'successfully froze asset' : 'something went wrong while trying to freeze asset'
+                success 
+                ? 'successfully froze asset' 
+                : (error || 'something went wrong while trying to freeze asset')
             }
         />
     )

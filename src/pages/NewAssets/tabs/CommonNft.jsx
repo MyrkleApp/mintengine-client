@@ -72,7 +72,8 @@ function CommonNft() {
         handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
-    const { status } = useSelector(state => state.algorand.createAsset)
+    const { status, error: errorData } = useSelector(state => state.algorand.createAsset)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -150,7 +151,9 @@ function CommonNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created your nft collection' : 'An error occurred while creating your nft collection'
+                        success 
+                        ? 'Successfully created your nft collection' 
+                        : (error || 'An error occurred while creating your nft collection')
                     }
                 />
             </Modal>

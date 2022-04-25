@@ -251,6 +251,9 @@ function NormalTxn() {
     
     const success = sendCurrencyStatus === HTTP_STATUS.FULFILLED
 
+    const { error: errorData } = useSelector(state => state.algorand.send)
+    const error = errorData?.error
+
     const {
         selectedItem: fromSelectedItem,
         setSelectedItem: setFromSelectedItem,
@@ -470,7 +473,9 @@ function NormalTxn() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Sent successfully' : 'Sorry, unable to complete your transfer at the moment'
+                        success 
+                        ? 'Sent successfully' 
+                        : (error || 'Sorry, unable to complete your transfer at the moment')
                     }
                 />
             </Modal>

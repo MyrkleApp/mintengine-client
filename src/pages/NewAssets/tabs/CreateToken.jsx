@@ -81,9 +81,9 @@ function CreateToken() {
         // }
     }
 
-    const { status } = useSelector(state => state.algorand.createAsset)
+    const { status, error: errorData } = useSelector(state => state.algorand.createAsset)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
-
 
     return (
         <Fragment>
@@ -171,7 +171,9 @@ function CreateToken() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created a new asset' : 'Something went wrong, the asset could not be created'
+                        success 
+                        ? 'Successfully created a new asset' 
+                        : (error || 'Something went wrong, the asset could not be created')
                     }
                 />
             </Modal>

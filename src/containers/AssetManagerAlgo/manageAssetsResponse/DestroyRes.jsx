@@ -4,8 +4,8 @@ import ModalResponse from '../../../components/ModalResponse/ModalResponse'
 import { HTTP_STATUS } from '../../../constants/httpStatus'
 
 function DestroyRes() {
-    const { status } = useSelector(state => state.algorand.destroy)
-
+    const { status, error: errorData } = useSelector(state => state.algorand.destroy)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED 
 
     return (
@@ -13,7 +13,9 @@ function DestroyRes() {
             success={success}
             title={success ? 'success' : 'error'}
             description={
-                success ? 'successfully destroyed asset' : 'something went wrong while trying to destroy asset'
+                success 
+                ? 'successfully destroyed asset' 
+                : (error || 'something went wrong while trying to destroy asset')
             }
         />
     )

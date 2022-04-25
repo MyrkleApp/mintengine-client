@@ -21,7 +21,7 @@ function CreatedAssetsAlgo() {
         <tr key={item.id}>
             <td><a href={`https://testnet.algoexplorer.io/asset/${item.id}`} target="_blank">{item.id}</a></td>
             <td>{item.name}</td>
-            <td className="hide-on-mobile">{item.unit_name}</td>
+            <td className="hide-on-mobile">{item.unit}</td>
             <td className="hide-on-mobile">{item.url}</td>
             <td className="hide-on-mobile">{item.date}</td>
         </tr>
@@ -36,7 +36,7 @@ function CreatedAssetsAlgo() {
                     </SharedStyles.LoaderContainer>
                 ) : (
                     <Table
-                        columnTitles={['asset id', 'asset name', 'unit', 'url', 'date']}
+                        columnTitles={['asset id', 'asset name', 'symbol', 'url', 'date']}
                         columnsToHideOnMobile={[2, 3, 4]}
                         rows={rows}
                         noDataTitle="NO ASSET MANAGEMENT ACTIVITY YET"

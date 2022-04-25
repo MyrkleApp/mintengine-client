@@ -97,7 +97,8 @@ function CustomNft() {
         handleSubmit(createAlgorandAsset(formData), createAssetSuccessCallback, createAssetErrorCallback)
     }
 
-    const { status } = useSelector(state => state.algorand.createAsset)
+    const { status, error: errorData } = useSelector(state => state.algorand.createAsset)
+    const error = errorData?.error
     const success = status === HTTP_STATUS.FULFILLED
 
     return (
@@ -223,7 +224,9 @@ function CustomNft() {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully created your custom asset' : 'An error occurred while creating your asset'
+                        success 
+                        ? 'Successfully created your custom asset' 
+                        : (error || 'An error occurred while creating your asset')
                     }
                 />
             </Modal>
