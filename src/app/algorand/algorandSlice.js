@@ -251,6 +251,15 @@ export const removeWallet = createAsyncThunk(`${namespace}/removeWallet`, async 
   }
 })
 
+export const setAlgorandNet = createAsyncThunk(`${namespace}/setNet`, async (objData, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post('/algorand/v1/set_net/', objData)
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response.data)
+  }
+})
+
 const DEFAULT = { status: null, data: null, error: null }
 
 const algorandSlice = createSlice({
@@ -286,6 +295,7 @@ const algorandSlice = createSlice({
     createdAssets: DEFAULT,
     updateActiveWallet: DEFAULT,
     removeWallet: DEFAULT,
+    setNet: DEFAULT,
   },
   reducers: {
     incorrectPassphraseError(state, action) {
@@ -407,6 +417,10 @@ const algorandSlice = createSlice({
     [removeWallet.pending]: actions.removeWalletPending,
     [removeWallet.fulfilled]: actions.removeWalletFulfilled,
     [removeWallet.rejected]: actions.removeWalletRejected,
+
+    [setAlgorandNet.pending]: actions.setAlgorandNetPending,
+    [setAlgorandNet.fulfilled]: actions.setAlgorandNetFulfilled,
+    [setAlgorandNet.rejected]: actions.setAlgorandNetRejected
   }
 })
 

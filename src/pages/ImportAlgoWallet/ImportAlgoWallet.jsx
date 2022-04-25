@@ -122,20 +122,20 @@ function ImportWallet() {
                             <Grid item container xs={6}>
                                 <Grid item xs={12} >
                                     { missingWords.slice(0, 15).map((_, i) => (
-                                        <Styles.WordInputImport key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
-                                            <span>{i+1}.</span>
-                                            <input value={missingWords[i]} onChange={e => handleChange(e, i)} />
-                                        </Styles.WordInputImport>
+                                        <Styles.NumberedInput key={i} style={{ display: i > 24 ? 'none' : 'block' }}>
+                                            {i+1}.
+                                            <Styles.Input value={missingWords[i]} onChange={e => handleChange(e, i)} />
+                                        </Styles.NumberedInput>
                                     ))}
                                 </Grid>
                             </Grid>
                             <Grid item container xs={6}>
                                 <Grid item xs={12}>
                                     { missingWords.slice(15, missingWords.length).map((_, i) => (
-                                        <Styles.WordInputImport key={i} style={{ display: i > 9 ? 'none' : 'block' }}>
-                                            <span>{i+16}.</span>
-                                            <input value={missingWords[i+15]} onChange={e => handleChange(e, i+15)} />
-                                        </Styles.WordInputImport>
+                                        <Styles.NumberedInput key={i} style={{ display: i > 9 ? 'none' : 'block' }}>
+                                            {i+16}.
+                                            <Styles.Input value={missingWords[i+15]} onChange={e => handleChange(e, i+15)} />
+                                        </Styles.NumberedInput>
                                     ))}
                                 </Grid>
                             </Grid>

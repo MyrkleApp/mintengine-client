@@ -159,3 +159,25 @@ export const ModalContent = styled.div`
         margin-bottom: 70px;
     }
 `
+
+export const Input = styled.input`
+    width: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 1px dashed #043923;
+    color: #043923;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+    }
+`
+
+export const NumberedInput = styled.div`
+    margin-bottom: 15px;
+
+    & > ${Input} {
+        width: calc(100% - 25px);
+    }
+
+`

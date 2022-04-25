@@ -3,20 +3,20 @@ import * as Styles from './chooseNetwork'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useDispatch, useSelector } from 'react-redux';
-import { ALGORAND, ALGORAND_MAIN_NET, ALGORAND_TEST_NET, RIPPLE } from '../../constants/network';
-import { toggleNetwork, toggleNetworkType } from '../../app/network/networkSlice';
+import { useSelector } from 'react-redux';
+import { ALGORAND } from '../../constants/network';
 import ClickAwayListener from 'react-click-away-listener';
 import useSubmit from '../../Hooks/Submit'
-import { setNet } from '../../app/network/networkSlice'
+import { setAlgorandNet } from '../../app/algorand/algorandSlice';
 
 
 function ChooseNetwork() {
     const [open, setOpen] = useState(false)
-    const dispatch = useDispatch()
     const currentNetwork = useSelector(state => state.network.network)
 
-    const currentNetworkType = useSelector(state => state.network.networkType)
+    const currentNet = useSelector(state => state.algorand.activeWallet.data?.current_net)
+
+    // const currentNetworkType = useSelector(state => state.network.networkType)
 
     const { handleSubmit } = useSubmit()
 
@@ -28,9 +28,9 @@ function ChooseNetwork() {
 
         // dispatch(toggleNetwork())
 
-        const netData = currentNetworkType === ALGORAND_TEST_NET ? "mainnet" : "testnet"
+        const netToSet = currentNet === "testnet" ? "mainnet" : "testnet"
         
-        handleSubmit(setNet({ net: netData }), () => dispatch(toggleNetworkType()))
+        handleSubmit(setAlgorandNet({ net: netToSet }), () => window.location.reload(false))
 
         toggleOpen()
     }
@@ -53,7 +53,7 @@ function ChooseNetwork() {
                         </div>
                         <div className="rightBottom">
                             {/* <span>{`${currentNetwork === ALGORAND ? ALGORAND : RIPPLE} NETWORK`}</span> */}
-                            <span>{`${currentNetworkType === ALGORAND_TEST_NET ? "ALGORAND TESTNET" : "ALGORAND MAINNET"}`}</span>
+                            <span>{`${currentNet === "testnet" ? "ALGORAND TESTNET" : "ALGORAND MAINNET"}`}</span>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ function ChooseNetwork() {
                     <span>{`${currentNetwork === ALGORAND ? RIPPLE : ALGORAND} NETWORK`}</span> */}
 
                     <img src={algorandLogo} alt="" />
-                    <span>{`${currentNetworkType === ALGORAND_TEST_NET ? "Algorand mainnet" : "Algorand testnet"}`}</span>
+                    <span>{`${currentNet === "testnet" ? "Algorand mainnet" : "Algorand testnet"}`}</span>
                 </Styles.Hidden>
             </Styles.Root>
         </ClickAwayListener>

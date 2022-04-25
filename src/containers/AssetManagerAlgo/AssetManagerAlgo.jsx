@@ -210,7 +210,7 @@ function AssetManagerAlgo() {
                     <div className="container">
                         <img src={destroyIcon} alt="" />
                     </div>
-                    <span>Delete Token</span>
+                    <span>Delete Asset</span>
                 </AssetItem>
             </Grid>
         </Fragment>

@@ -454,3 +454,17 @@ export const removeWalletRejected = (state, { payload }) => {
     state.removeWallet.status = HTTP_STATUS.REJECTED
     state.removeWallet.error = payload
 }
+
+export const setAlgorandNetPending = (state) => {
+    state.setNet.status = HTTP_STATUS.PENDING
+}
+
+export const setAlgorandNetFulfilled = (state, { payload }) => {
+    state.setNet.status = HTTP_STATUS.FULFILLED
+    state.setNet.data = payload
+    if (state.activeWallet.data.current_net) state.activeWallet.data.current_net = payload
+}
+
+export const setAlgorandNetRejected = (state) => {
+    state.setNet.status = HTTP_STATUS.REJECTED
+}

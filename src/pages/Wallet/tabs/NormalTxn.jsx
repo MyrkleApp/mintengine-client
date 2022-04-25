@@ -439,8 +439,8 @@ function NormalTxn() {
             {/* confirm transaction modal */}
             <Modal open={confirmModalState} handleClose={handleConfirmModalClose} fullScreenForMobile>
                 <Title center>Confirm Transaction</Title>
-                { totalArray.slice(0, numOfTxns).map(item => (
-                    <>
+                { totalArray.slice(0, numOfTxns).map((item, i) => (
+                    <Fragment key={i}>
                         <ConfirmTransferItem>
                             <span>Asset</span>
                             <span>{item.asset}</span>
@@ -453,7 +453,7 @@ function NormalTxn() {
                             <span>To</span>
                             <span>{item.address}</span>
                         </ConfirmTransferItem>
-                    </>
+                    </Fragment>
                 ))}
                 <ConfirmTransferItem>
                     <span>Fee</span>
