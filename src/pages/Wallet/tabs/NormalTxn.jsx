@@ -223,7 +223,8 @@ function NormalTxn() {
         handleConfirmModalClose()
 
         const formData = new FormData()
-        formData.append('transaction_type', numOfTxns === 1 ? 'direct' : 'multiple')
+        const txnType = numOfTxns > 1 ? "multiple" : "direct"
+        formData.append('transaction_type', txnType)
         
         if (numOfTxns === 1) {
             if (assetValue?.id !== 0) formData.append('asset_id', assetValue.id) //if currency is an asset
