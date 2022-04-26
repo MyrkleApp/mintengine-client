@@ -59,7 +59,8 @@ function ExchangeAlgo() {
 
     const { formIsValid } = useFormValidity(fromInputValue, toInputValue)
     const { handleSubmit } = useSubmit()
-    const { status: getSwapValueStatus } = useSelector(state => state.algorand.swapValue)
+    const { status: getSwapValueStatus, error: errorMessage } = useSelector(state => state.algorand.swapValue)
+    const swapValueError = errorMessage?.error
     const { data: holdingsData } = useSelector(state => state.algorand.holdings)
     const { modalState, handleModalOpen, handleModalClose } = useModal()
 
@@ -136,7 +137,7 @@ function ExchangeAlgo() {
      useEffect(() => {
         const inputRateTimer = setTimeout(() => {
 
-            if ((swapData.asset_amount > 0) && (fromSelectedItem.id !== toSelectedItem.id) && (tabValue === SWAP)) {
+            if ((swapData.asset_amount > 0) && (fromSelectedItem.id !== toSelectedItem.id)) {
                 dispatch(getAlgorandSwapValue(swapData))
                 .unwrap()
                 .then(swapAmount => {
@@ -252,15 +253,14 @@ function ExchangeAlgo() {
                                 <CustomSelectInput 
                                     smallerPlaceholderSize={!toSelectedItem}
                                     placeholder={!toSelectedItem ? "Select a token, or paste the ID" : "0.00"} 
-                                    onClick={() => !toSelectedItem && setToDropdownIsOpen(true)}
+                                    onClick={() => !toSelectedItem && setToDropdownIsOpen(prevState => !prevState)}
                                     value={toInputValue}
                                     onChange={handleToInputChange}
                                     onFocus={handleToInputFocus}
-                                    style={{ display: (tabValue === LIQUIDITY && toSelectedItem) ? 'none' : 'block' }}
                                 />
                                 { toSelectedItem && <Styles.PasteID onClick={resetToSelectedValues}>Paste Asset ID</Styles.PasteID> }
 
-                                { (toSelectedItem && tabValue === SWAP) && <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? 'Could not get equivelent value' : ''}</p> }
+                                { toSelectedItem && <p>{getSwapValueStatus === HTTP_STATUS.REJECTED ? (swapValueError || 'Could not get equivelent value') : ''}</p> }
 
                                 { getSwapValueStatus === HTTP_STATUS.PENDING && (
                                     <LoaderContainer><ThreeDots height="80" width="80" color='gray' /></LoaderContainer>
@@ -276,11 +276,7 @@ function ExchangeAlgo() {
                         <Styles.ButtonContainer>
                             <Button 
                                 fullWidth 
-                                disabled={
-                                    tabValue === SWAP 
-                                    ? (!formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED))
-                                    : (!fromInputValue || !toSelectedItem || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED))
-                                } 
+                                disabled={ !formIsValid || (getSwapValueStatus === HTTP_STATUS.PENDING) || (getSwapValueStatus === HTTP_STATUS.REJECTED) } 
                                 onClick={handleSwap}>
                                     { tabValue === SWAP ? "swap" : "Add Liquidity" }
                             </Button>

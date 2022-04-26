@@ -44,7 +44,7 @@ export function CustomDropdownContainer(props) {
     }, [dropdownIsOpen])
 
     return (
-        <ClickAwayListener onClickAway={() => dropdownIsOpen && setDropdownIsOpen(false)}>
+        // <ClickAwayListener onClickAway={() => dropdownIsOpen && setDropdownIsOpen(false)}>
             <Styles.DropdownContainer open={dropdownIsOpen} { ...otherProps }>
                 { dropdownItems.length > 0 ? dropdownItems.map(({ id, ...dropdownItemDetails }) => (
                     <CustomSelectBox 
@@ -72,7 +72,7 @@ export function CustomDropdownContainer(props) {
                     </LoaderContainer>
                 ) : null }
             </Styles.DropdownContainer>
-        </ClickAwayListener>
+        // </ClickAwayListener>
     )
 }
 
