@@ -6,6 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import mediumIcon from '../../assets/icons/medium.png'
 import footerLogo from '../../assets/icons/footerLogo.png'
 import algorandFooterLogo from '../../assets/icons/algorandFooterLogo.png'
+import algorandBlack from '../../assets/images/landingPage/algorandBlack.png'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 function Footer() {
@@ -46,8 +47,8 @@ function Footer() {
                     </div>
                 </div>
                 <div className="powered-by">
-                    <span>Powered by</span> 
-                    <img src={algorandFooterLogo} />
+                    {/* <span>Powered by</span>  */}
+                    <img src={algorandBlack} alt="" />
                 </div>
             </div>
         </Styles.Root>
