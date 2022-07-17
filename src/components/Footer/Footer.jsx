@@ -20,25 +20,25 @@ function Footer() {
                         <span>Mint Engine</span>
                     </div>
                     <div className="right">
-                        <a href="https://twitter.com/MintEngine?s=09" target="_blank" style={{ textDecoration: 'none' }}>
+                        <a href="https://twitter.com/MintEngine?s=09" target="_blank" rel="noopener noreferrer"style={{ textDecoration: 'none' }}>
                             <Styles.SocialLink>
                                 <span>Twitter</span>
                                 <TwitterIcon />
                             </Styles.SocialLink>
                         </a>
-                        <a href="https://t.me/mintengine" target="_blank" style={{ textDecoration: 'none' }}>
+                        <a href="https://t.me/mintengine" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                             <Styles.SocialLink>
                                 <span>Telegram</span>
                                 <TelegramIcon />
                             </Styles.SocialLink>
                         </a>
-                        <a href="https://docs.mintengine.org/" target="_blank" style={{ textDecoration: 'none' }}>
+                        <a href="https://docs.mintengine.org/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                             <Styles.SocialLink>
                                 <span>Docs</span>
                                 <MenuBookIcon />
                             </Styles.SocialLink>
                         </a>
-                        <a href="https://mintengine.medium.com/" target="_blank" style={{ textDecoration: 'none' }}>
+                        <a href="https://mintengine.medium.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                             <Styles.SocialLink>
                                 <span>Medium</span>
                                 <img src={mediumIcon} alt="" />

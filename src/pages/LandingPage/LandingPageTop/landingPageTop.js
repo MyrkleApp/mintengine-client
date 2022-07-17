@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 
 export const LandingTopRoot = styled.section`
-    min-height: calc(100vh - 100px);
+    /* min-height: calc(100vh - 100px); */
     display: flex;
     justify-content: center;
     text-align: center;
@@ -39,9 +39,10 @@ export const Container = styled.div`
         font-size: 35px;
         width: 400px;
         margin: 0 auto 30px auto;
+        /* text-align: center; */
 
         @media(max-width: 475px) {
-            width: 350px;
+            width: 100%;
             font-size: 30px;
         }
 
