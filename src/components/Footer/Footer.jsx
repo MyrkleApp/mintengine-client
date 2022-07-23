@@ -47,8 +47,8 @@ function Footer() {
                     </div>
                 </div>
                 <div className="powered-by">
-                    {/* <span>Powered by</span>  */}
-                    <img src={algorandBlack} alt="" />
+                    <span>Powered by</span> 
+                    <img src={algorandFooterLogo} alt="" />
                 </div>
             </div>
         </Styles.Root>
