@@ -9,7 +9,7 @@ function Parteners() {
     
     return (
         <Styles.Root>
-            <Styles.Title>Our Parteners</Styles.Title>
+            {/* <Styles.Title>Our Parteners</Styles.Title>
 
             <Grid container spacing={6}>                
                 <Grid item xs={12} md={6} style={{ display: 'flex', alignItems: 'center' }}>
@@ -20,7 +20,7 @@ function Parteners() {
                     <Styles.Image src={algorandFoundation} alt="Algorand Foundation" />
                 </Grid>
 
-            </Grid>
+            </Grid> */}
             
         </Styles.Root>
     )
