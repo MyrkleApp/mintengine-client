@@ -17,16 +17,16 @@ function WhatYouGet() {
                     <Grid item container xs={12} md={4} rowSpacing={2}>
                         <Grid item xs={12}>
                             <HomeCard
-                                title="CREATE/IMPORT WALLET"
-                                text="You can create new Algorand/XRPL Wallet with ease. You can also recover Algorand/XRPL wallet with a passphrase."
+                                title="CREATE/MANAGE ACCOUNTS"
+                                text="You  can  create  accounts  on multiple  distributed  ledgers  with ease,  you  can  also  import  your wallet  with  a  passphrase  or  seed string."
                             >
                                 <AccountBalanceWalletOutlinedIcon fontSize="large" />
                             </HomeCard>
                         </Grid>
                         <Grid item xs={12} style={{ alignSelf: 'flex-end' }} >
                             <HomeCard
-                                title="ASSETS MANAGEMENT"
-                                text="Hold, transact, and manage your assets all in one place. You can easily send and receive ALGOs/XRPs and review transaction histories."
+                                title="CREATE/MANAGE DIGITAL ASSETS"
+                                text="Create  and  manage  digital  assets, either  fungible,  non  fungible  or ledger  objects  on  layer-1  within  few minutes  with  no  code  required."
                             >
                                 <MonetizationOnOutlinedIcon fontSize="large" />
                             </HomeCard>
@@ -42,16 +42,16 @@ function WhatYouGet() {
                     <Grid item container xs={12} md={4} rowSpacing={2}>
                         <Grid item xs={12}>
                             <HomeCard
-                                title="CREATE STANDARD ASSETS"
-                                text="Create new tokens, either fungible or non-fungible, on layer-1 within few minutes. There is no contract code required."
+                                title="ASSET MANAGEMENT"
+                                text="Hold,  send  and  receive  your  assets all  in  one  place.  You  can  easily transact  coins,  tokens,  NFTs  and ledger  objects  and  review transaction  histories."
                             >
                                 <CreateNewFolderOutlinedIcon fontSize="large" />
                             </HomeCard>
                         </Grid>
                         <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
                             <HomeCard
-                                title="MANAGE STANDARD ASSETS"
-                                text="Tokenize real-world assets and contribute to the digital revolution. Even a complete novice can benefit from this."
+                                title="DEFI SUITE"
+                                text="The  DEFI  suite  offers  DEXs  for  any ledger,  LP  management  support, trading  of  LP  shares;  borrowing, lending  and  staking,  etc."
                             >
                                 <MenuOutlinedIcon fontSize="large" />
                             </HomeCard>
