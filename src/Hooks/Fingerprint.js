@@ -3,12 +3,16 @@ import { useDispatch } from 'react-redux'
 import { setDeviceFingerprint } from '../app/deviceFingerprint/deviceFingerprintSlice'
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
 
+//chrome fingerprint => "cMZVq60xH2DpZHJTtf6y"
+// firefox fingerprint:""ZIa2nwrOQRTiRWBQFpBy""
 
 function useFingerprint() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const savedDeviceFingerprint = JSON.parse(localStorage.getItem('fingerprint'))
+        const savedDeviceFingerprint = localStorage.getItem('fingerprint')
+            ? JSON.parse(localStorage.getItem('fingerprint'))
+            : ""
 
         if (savedDeviceFingerprint) {
             dispatch(setDeviceFingerprint(savedDeviceFingerprint))

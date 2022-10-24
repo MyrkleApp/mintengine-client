@@ -24,8 +24,12 @@ function ActiveWalletPassphrase() {
             if (walletAddress) {
                 const allPassphrases = await db.getPassphrase()
                 const activePassphrase = await allPassphrases.filter(obj => obj.doc[walletAddress])[0]
-                const decryptedPassphrase = decryptString(activePassphrase.doc[walletAddress])
-                dispatch(setAlgorandPassphrase(decryptedPassphrase || ''))
+                const decryptedPassphrase = activePassphrase
+                    ? decryptString(activePassphrase.doc[walletAddress])
+                    : ""
+                if (decryptedPassphrase) {
+                    dispatch(setAlgorandPassphrase(decryptedPassphrase || ''))
+                }
             }
         }
         getActiveWalletPassphrase()
