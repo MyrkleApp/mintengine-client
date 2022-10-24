@@ -135,7 +135,7 @@ function Auth() {
                                     type="submit"
                                     disabled={(pathname === '/signup' && !passwordsAreValid) || (pathname === '/login' && passwordValue.trim().length < 8) || !deviceFingerprint}
                                 >
-                                    { !deviceFingerprint ? 'loading ID' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') }
+                                    { !deviceFingerprint ? 'loading ID...' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') }
                                 </Button>
                                 <Styles.ForgotPassword onClick={() => handleModalOpen()}>
                                     Forgot Password?
