@@ -11,7 +11,6 @@ function useAddressIsValid(inputValue) {
 
             if ((inputValue.trim().length > 0) && (inputValue.trim().length !== 58)) {
                 setData(false)
-                // return
             } 
 
             if (inputValue.trim().length === 58) {
@@ -20,7 +19,6 @@ function useAddressIsValid(inputValue) {
                 .then((res) => {
                     setData(res.data)
                     setStatus(HTTP_STATUS.FULFILLED)
-                    // console.log(res.data)
                 })
                 .catch((err) => {
                     setStatus(HTTP_STATUS.REJECTED)
