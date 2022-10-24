@@ -31,8 +31,8 @@ function Auth() {
         value: passwordValue,
         handleChange: handlePasswordChange,
         toggleVisibile: togglePasswordVisibile,
-        typeForPasswordInput: typeForPasswordInput,
-        handlePasswordBlur: handlePasswordBlur,
+        typeForPasswordInput,
+        handlePasswordBlur,
         errorText: passwordErrortext
     } = useFormControl()
 
