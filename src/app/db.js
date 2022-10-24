@@ -13,6 +13,16 @@ function DB() {
         return res
     }
 
+    const getFingerprint = async () => {
+        const docs = await db.allDocs({ include_docs: true })
+        return docs.rows.find(item => item.doc.type === 'fingerprint')
+    }
+
+    const saveFingerprint = async (data) => {
+        const res = await db.post(data) 
+        return res
+    }
+
     const clearData = async () => {
         const res = await db.destroy()
         return res
@@ -21,6 +31,8 @@ function DB() {
     return {
         getPassphrase,
         addPassphrase,
+        getFingerprint,
+        saveFingerprint,
         clearData
     }
 }
