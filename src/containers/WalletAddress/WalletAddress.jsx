@@ -17,6 +17,13 @@ import useSubmit from '../../Hooks/Submit'
 import { verifyPassword } from '../../app/auth/authSlice'
 import { getCoinPrice } from '../../app/price/priceSlice';
 import ModalResponse from '../../components/ModalResponse/ModalResponse';
+import { getListOfNames } from './functions';
+
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import RedditIcon from '@mui/icons-material/Reddit';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import GitHubIcon from '@mui/icons-material/GitHub';    
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
@@ -32,6 +39,9 @@ function WalletAddress() {
     const balanceInDollars = (coinPrice * activeWalletData?.balance || 0).toFixed(3)
     const [qrCodeIsLoading, setQrCodeIsLoading] = useState(true)
     const { handleSubmit } = useSubmit()
+    const [ansData, setAnsData] = useState(null)
+
+    const isMainnet = useSelector(state => state.algorand.activeWallet.data?.current_net === 'mainnet')
 
     const showPassphrase = () => {
         setOpen(true)
@@ -63,6 +73,12 @@ function WalletAddress() {
         handleModalClose: handleWrongPasswordModalClose, 
     } = useModal()
 
+    const { 
+        modalState: ansNamesModalState, 
+        handleModalOpen: handleAnsNamesModalModalOpen, 
+        handleModalClose: handleAnsNamesModalClose, 
+    } = useModal()
+
     const {
         value: passwordValue,
         handleChange: handlePasswordChange,
@@ -83,6 +99,13 @@ function WalletAddress() {
     const handleVerifyPassword = () => {
         handlePasswordModalClose()
         handleSubmit(verifyPassword({ password: passwordValue }), verifyPasswordSuccessCallback, verifyPasswordErrorCallback)
+    }
+
+    const getAnsNames = async () => {
+        handleAnsNamesModalModalOpen()
+        if (ansData) return
+        const names = await getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
+        setAnsData(names)
     }
 
     return (
@@ -132,10 +155,19 @@ function WalletAddress() {
                                         />
                                     )
                                 }
-                                <CopyButtonWithTooltip 
-                                    textToCopy={activeWalletAddress} 
-                                    onlyIcon
-                                />
+                                
+                                <div>
+                                    <CopyButtonWithTooltip 
+                                        textToCopy={activeWalletAddress} 
+                                        onlyIcon
+                                    />
+
+                                    {(network === ALGORAND && isMainnet) && (
+                                        <WalletAddressButton onClick={getAnsNames} disabled={!activeWalletAddress}>
+                                            Socials
+                                        </WalletAddressButton>
+                                    )}
+                                </div>
                             </Grid>
 
                             <Grid item xs={12} md={3} className="center">
@@ -183,6 +215,13 @@ function WalletAddress() {
                     title="Wrong password"
                     description="The password you entered is incorrect."
                 />            
+            </Modal>
+
+            <Modal open={ansNamesModalState} handleClose={handleAnsNamesModalClose}>
+                <h3 style={{ color: '#043923' }}>ANS names associated with this address:</h3>   
+                {ansData?.info?.map(ansItem => (
+                    <p>{ansItem.AlgoName}</p>
+                ))} 
             </Modal>
         </Fragment>
     )

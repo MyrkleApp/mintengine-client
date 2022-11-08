@@ -1,9 +1,8 @@
 import axios from '../app/axios'
 import { useState, useEffect } from 'react'
 import { HTTP_STATUS } from '../constants/httpStatus'
-import { ANS } from '@algonameservice/sdk'
-import algosdk from "algosdk"
 import { useSelector } from 'react-redux'
+import algoSdk from '../app/algoSdk'
 
 
 function useAddressIsValid(inputValue) {
@@ -38,14 +37,6 @@ function useAddressIsValid(inputValue) {
     return { data, status }
 }
 
-const main_client_url = 'https://mainnet-algorand.api.purestake.io/ps2';
-const main_index_url = 'https://mainnet-algorand.api.purestake.io/idx2';
-
-const client = new algosdk.Algodv2({'X-API-KEY': process.env.REACT_APP_ANS_CLIENT}, `${main_client_url}`, '');
-
-const indexer = new algosdk.Indexer({'X-API-KEY': process.env.REACT_APP_ANS_CLIENT}, `${main_index_url}`, '');
-
-const sdk = new ANS(client, indexer)
 
 export function useAddressFromANSIsValid(inputValue, setInputValue) {
     const [data, setData] = useState(null)
@@ -55,7 +46,7 @@ export function useAddressFromANSIsValid(inputValue, setInputValue) {
     const getANSName = async(algo_name) => {
         let nameOwner;
         try { 
-            nameOwner = await sdk.name(algo_name).getOwner()
+            nameOwner = await algoSdk.name(algo_name).getOwner()
         } catch(e) {
             nameOwner = `Could not Resolve Address for ${algo_name}`
         }
