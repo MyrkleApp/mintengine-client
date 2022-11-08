@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import useSubmit from '../../../Hooks/Submit'
 import { sendAlgorand, getActiveAlgorandWallet } from '../../../app/algorand/algorandSlice'
 import { Grid } from '@mui/material'
-import useAddressIsValid from '../../../Hooks/AddressIsValid'
+import useAddressIsValid, { useAddressFromANSIsValid } from '../../../Hooks/AddressIsValid'
 import useFormValidity from '../../../Hooks/FormValidity'
 
 import Modal from '../../../components/UI/Modal/Modal'
@@ -158,11 +158,11 @@ function NormalTxn() {
         setTimeout(() => closeScanner(), 1000) // one second delay just so you can see the green flash on scanner
     }
 
-    const { status: recipientAddressStatus, data } = useAddressIsValid(recipientAddressValue)
-    const { status: recipientTwoAddressStatus, data: dataTwo } = useAddressIsValid(recipientTwoAddressValue)
-    const { status: recipientThreeAddressStatus, data: dataThree } = useAddressIsValid(recipientThreeAddressValue)
-    const { status: recipientFourAddressStatus, data: dataFour } = useAddressIsValid(recipientFourAddressValue)
-    const { status: recipientFiveAddressStatus, data: dataFive } = useAddressIsValid(recipientFiveAddressValue)
+    const { status: recipientAddressStatus, data } = useAddressFromANSIsValid(recipientAddressValue, handleSetRecipientAddressValue)
+    const { status: recipientTwoAddressStatus, data: dataTwo } = useAddressFromANSIsValid(recipientTwoAddressValue, handleSetRecipientTwoAddressValue)
+    const { status: recipientThreeAddressStatus, data: dataThree } = useAddressFromANSIsValid(recipientThreeAddressValue, handleSetRecipientThreeAddressValue)
+    const { status: recipientFourAddressStatus, data: dataFour } = useAddressFromANSIsValid(recipientFourAddressValue, handleSetRecipientFourAddressValue)
+    const { status: recipientFiveAddressStatus, data: dataFive } = useAddressFromANSIsValid(recipientFiveAddressValue, handleSetRecipientFiveAddressValue)
 
 
     const { handleSubmit } = useSubmit()
