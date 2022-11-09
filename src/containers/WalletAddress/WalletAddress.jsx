@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
+import { Grid, IconButton } from '@mui/material'
 import * as Styles from './walletAddress'
 import qrCode from '../../assets/icons/qrCode.svg'
 import { Button, WalletAddressButton } from '../../components/UI/Button/button';
@@ -18,12 +18,16 @@ import { verifyPassword } from '../../app/auth/authSlice'
 import { getCoinPrice } from '../../app/price/priceSlice';
 import ModalResponse from '../../components/ModalResponse/ModalResponse';
 import { getListOfNames } from './functions';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import RedditIcon from '@mui/icons-material/Reddit';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import GitHubIcon from '@mui/icons-material/GitHub';    
+import discordLogo from '../../assets/icons/discord-logo.png';
+
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 function WalletAddress() {
     const [open, setOpen] = useState(false)
@@ -40,6 +44,7 @@ function WalletAddress() {
     const [qrCodeIsLoading, setQrCodeIsLoading] = useState(true)
     const { handleSubmit } = useSubmit()
     const [ansData, setAnsData] = useState(null)
+    console.log(ansData)
 
     const isMainnet = useSelector(state => state.algorand.activeWallet.data?.current_net === 'mainnet')
 
@@ -101,11 +106,17 @@ function WalletAddress() {
         handleSubmit(verifyPassword({ password: passwordValue }), verifyPasswordSuccessCallback, verifyPasswordErrorCallback)
     }
 
-    const getAnsNames = async () => {
+    const getAnsNames = () => {
         handleAnsNamesModalModalOpen()
-        if (ansData) return
-        const names = await getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
-        setAnsData(names)
+        // if (ansData) return
+        // const names = await getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
+        // setAnsData(names)
+
+        getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
+            .then(names => {
+                setAnsData(names)
+                console.log(names)
+            })
     }
 
     return (
@@ -163,9 +174,9 @@ function WalletAddress() {
                                     />
 
                                     {(network === ALGORAND && isMainnet) && (
-                                        <WalletAddressButton onClick={getAnsNames} disabled={!activeWalletAddress}>
-                                            Socials
-                                        </WalletAddressButton>
+                                        <IconButton className="more-icon" onClick={getAnsNames} disabled={!activeWalletAddress}>
+                                            <MoreHorizIcon />
+                                        </IconButton>
                                     )}
                                 </div>
                             </Grid>
@@ -219,8 +230,68 @@ function WalletAddress() {
 
             <Modal open={ansNamesModalState} handleClose={handleAnsNamesModalClose}>
                 <h3 style={{ color: '#043923' }}>ANS names associated with this address:</h3>   
-                {ansData?.info?.map(ansItem => (
-                    <p>{ansItem.AlgoName}</p>
+
+                { !ansData && (
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}>
+                        <CircularProgress style={{ color: '#419c76' }} />
+                    </div>
+                )}
+                {ansData?.info?.map((ansItem, i) => (
+                    <Styles.AnsNamesContainer key={i} style={{ borderBottom: '1px solid #cecece'}}>
+                        <p>{ansItem.AlgoName}</p>
+                        <Grid container>
+                            {ansItem.youtube && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.youtube} target="_blank" rel="noopener noreferrer">
+                                        <YouTubeIcon />
+                                    </a>
+                                </Grid>
+                            )}
+                            {ansItem.reddit && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.reddit} target="_blank" rel="noopener noreferrer">
+                                        <RedditIcon />
+                                    </a>
+                                </Grid>
+                            )}
+                            {ansItem.discord && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.discord} target="_blank" rel="noopener noreferrer">
+                                        <img 
+                                            src={discordLogo} 
+                                            alt="" 
+                                            height={22}
+                                            width={22}
+                                            style={{ margin: '2px 0' }}
+                                        />
+                                    </a>
+                                </Grid>
+                            )}
+                            {ansItem.twitter && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.twitter} target="_blank" rel="noopener noreferrer">
+                                        <TwitterIcon />
+                                    </a>
+                                </Grid>
+                            )}
+                            {ansItem.telegram && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.telegram} target="_blank" rel="noopener noreferrer">
+                                        <TelegramIcon />
+                                    </a>
+                                </Grid>
+                            )}
+                            {ansItem.github && (
+                                <Grid item xs={2}>
+                                    <a href={ansItem.github} target="_blank" rel="noopener noreferrer">
+                                        <GitHubIcon />
+                                    </a>
+                                </Grid>
+                            )}
+
+                        
+                        </Grid>
+                    </Styles.AnsNamesContainer>
                 ))} 
             </Modal>
         </Fragment>

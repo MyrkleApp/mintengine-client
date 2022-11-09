@@ -112,6 +112,18 @@ export const WalletAddress = styled.div`
                 bottom: -40px;
             }
         }
+
+        & .more-icon {
+            position: absolute;
+            left: 50px;
+            bottom: -20px;
+            font-size: 28px;
+            color: #097246;
+
+            @media(max-width: 900px) {
+                bottom: -40px;
+            }
+        }
     }
 
     & .center {
@@ -195,5 +207,15 @@ export const QrCodeMainImg = styled.img`
 
     @media(max-width: 400px) {
         width: 250px;
+    }
+`
+
+export const AnsNamesContainer = styled.div`
+    p {
+        color: #043923;
+        font-weight: 500;
+    }
+    svg {
+        color: black;
     }
 `
