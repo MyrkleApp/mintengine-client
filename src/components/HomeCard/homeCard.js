@@ -6,6 +6,7 @@ export const Root = styled.div`
     background-color: ${props => !props.showImage ? '#3A5A4D': '#097246'};
     display: flex;
     border-radius: 8px;
+    cursor: pointer;
     /* margin: auto; */
 
     @media(max-width: 1200px) {
@@ -41,7 +42,6 @@ export const Root = styled.div`
     & h1 {
         color: white;
         font-size: 20px;
-        cursor: pointer;
     }
 
     & p {

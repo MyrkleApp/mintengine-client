@@ -13,7 +13,7 @@ const MyCarousel = React.lazy(() => import('../../../components/Carousel/Carouse
 function WhatYouGet() {
     const [selectedItem, setSelectedItem] = useState(0);
 
-    const handleTitleClick = i => {
+    const handleClick = i => {
         setSelectedItem(i)
         const carousel = document.getElementById('my-carousel')
         carousel.scrollIntoView()
@@ -30,7 +30,7 @@ function WhatYouGet() {
                                 <HomeCard
                                     title="CREATE/IMPORT WALLET"
                                     text="You can create new Algorand/XRPL Wallet with ease. You can also recover Algorand/XRPL wallet with a passphrase."
-                                    handleTitleClick={() => handleTitleClick(0)}
+                                    handleClick={() => handleClick(0)}
                                 >
                                     <AccountBalanceWalletOutlinedIcon fontSize="large" />
                                 </HomeCard>
@@ -39,7 +39,7 @@ function WhatYouGet() {
                                 <HomeCard
                                     title="ASSETS MANAGEMENT"
                                     text="Hold, transact, and manage your assets all in one place. You can easily send and receive ALGOs/XRPs and review transaction histories."
-                                    handleTitleClick={() => handleTitleClick(2)}
+                                    handleClick={() => handleClick(1)}
                                 >
                                     <MonetizationOnOutlinedIcon fontSize="large" />
                                 </HomeCard>
@@ -57,7 +57,7 @@ function WhatYouGet() {
                                 <HomeCard
                                     title="CREATE STANDARD ASSETS"
                                     text="Create new tokens, either fungible or non-fungible, on layer-1 within few minutes. There is no contract code required."
-                                    handleTitleClick={() => handleTitleClick(5)}
+                                    handleClick={() => handleClick(4)}
                                 >
                                     <CreateNewFolderOutlinedIcon fontSize="large" />
                                 </HomeCard>
@@ -66,7 +66,7 @@ function WhatYouGet() {
                                 <HomeCard
                                     title="MANAGE STANDARD ASSETS"
                                     text="Tokenize real-world assets and contribute to the digital revolution. Even a complete novice can benefit from this."
-                                    handleTitleClick={() => handleTitleClick(3)}
+                                    handleClick={() => handleClick(3)}
                                 >
                                     <MenuOutlinedIcon fontSize="large" />
                                 </HomeCard>
