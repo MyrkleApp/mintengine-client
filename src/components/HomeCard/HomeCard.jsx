@@ -3,7 +3,7 @@ import * as Styles from './homeCard'
 import fishImage from '../../assets/images/landingPage/fish.png'
 
 
-function HomeCard({ children, title, text, showImage }) {
+function HomeCard({ children, title, text, showImage, handleTitleClick }) {
 
     return (
         <Styles.Root showImage={showImage}>
@@ -14,7 +14,7 @@ function HomeCard({ children, title, text, showImage }) {
                         { children }
                     </div>
                 }
-                <h1>{ title }</h1>
+                <h1 onClick={handleTitleClick}>{ title }</h1>
                 <p>{ text }</p>
                 {
                     showImage &&

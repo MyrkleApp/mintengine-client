@@ -11,7 +11,7 @@ function LandingPage() {
         <Fragment>
             <LandingPageTop />
             <WhatYouGet />
-            <Parteners />
+            {/* <Parteners /> */}
             {/* <HomeAnimations /> */}
             <Footer />
         </Fragment>

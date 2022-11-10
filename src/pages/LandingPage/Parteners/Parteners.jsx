@@ -1,14 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import * as Styles from './parteners'
 import { Grid } from '@mui/material'
 import algorandBlack from '../../../assets/images/landingPage/algorandBlack.png'
 import algorandFoundation from '../../../assets/images/landingPage/algorandFoundation.svg'
+import MyCarousel from '../../../components/Carousel/Carousel'
+
+import walletImage from '../../../assets/images/landingPage/wallet.png'
+import exchangeImage from '../../../assets/images/landingPage/exchange.png'
+import manageAssetsImage from '../../../assets/images/landingPage/manage-assets.png'
+import newAssetsImage from '../../../assets/images/landingPage/new-assets.png'
+import sendAlgoImage from '../../../assets/images/landingPage/send-algo.png'
+import walletSetupImage from '../../../assets/images/landingPage/wallet-setup.png'
 
 
 function Parteners() {
+    const [item, setItem] = useState(0);
+
+    const handleSelectItem = i => {
+        setItem(i);
+    }
     
     return (
         <Styles.Root>
+            <button onClick={() => handleSelectItem(0)}>0</button>
+            <button onClick={() => handleSelectItem(1)}>1</button>
+            <button onClick={() => handleSelectItem(2)}>2</button>
+            <button onClick={() => handleSelectItem(3)}>3</button>
+            <button onClick={() => handleSelectItem(5)}>5</button>
+
+            <MyCarousel selectedItem={item} />
+
             {/* <Styles.Title>Our Parteners</Styles.Title>
 
             <Grid container spacing={6}>                
