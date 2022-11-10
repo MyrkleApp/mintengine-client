@@ -44,7 +44,6 @@ function WalletAddress() {
     const [qrCodeIsLoading, setQrCodeIsLoading] = useState(true)
     const { handleSubmit } = useSubmit()
     const [ansData, setAnsData] = useState(null)
-    console.log(ansData)
 
     const isMainnet = useSelector(state => state.algorand.activeWallet.data?.current_net === 'mainnet')
 
@@ -112,10 +111,10 @@ function WalletAddress() {
         // const names = await getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
         // setAnsData(names)
 
-        getListOfNames('PD2CGHFAZZQNYBRPZH7HNTA275K3FKZPENRSUXWZHBIVNPHVDFHLNIUSXU')
+        getListOfNames(activeWalletAddress)
             .then(names => {
                 setAnsData(names)
-                console.log(names)
+                // console.log(names)
             })
     }
 
@@ -231,11 +230,16 @@ function WalletAddress() {
             <Modal open={ansNamesModalState} handleClose={handleAnsNamesModalClose}>
                 <h3 style={{ color: '#043923' }}>ANS names associated with this address:</h3>   
 
-                { !ansData && (
+                {!ansData && (
                     <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0' }}>
                         <CircularProgress style={{ color: '#419c76' }} />
                     </div>
                 )}
+
+                {ansData?.info?.length === 0 && (
+                    <p>Nothing to display here</p>
+                )}
+
                 {ansData?.info?.map((ansItem, i) => (
                     <Styles.AnsNamesContainer key={i} style={{ borderBottom: '1px solid #cecece'}}>
                         <p>{ansItem.AlgoName}</p>
