@@ -5,7 +5,7 @@ import walletImage from '../../assets/images/landingPage/wallet.png'
 import exchangeImage from '../../assets/images/landingPage/exchange.png'
 import manageAssetsImage from '../../assets/images/landingPage/manage-assets.png'
 import newAssetsImage from '../../assets/images/landingPage/new-assets.png'
-import sendAlgoImage from '../../assets/images/landingPage/send-algo.png'
+import sendAlgoImage from '../../assets/images/landingPage/send-algo.jpg'
 import walletSetupImage from '../../assets/images/landingPage/wallet-setup.png'
 
 const images = [
@@ -23,6 +23,7 @@ function MyCarousel({ selectedItem }) {
       <Carousel 
         autoPlay
         infiniteLoop
+        showThumbs={false}
         selectedItem={selectedItem}
       >
         { images.map((image, i) => (
