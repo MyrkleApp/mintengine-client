@@ -32,7 +32,7 @@ export const CarouselRoot = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: scroll hidden;
+    /* overflow: scroll hidden; */
 
     @media(max-width: 600px) {
         width: 95%;
