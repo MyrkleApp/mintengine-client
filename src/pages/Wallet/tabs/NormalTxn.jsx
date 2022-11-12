@@ -300,7 +300,7 @@ function NormalTxn() {
                     placeholder="0"
                 />
                 <FormControl
-                    label="Recipient Address"
+                    label="Recipient Address or ANS name"
                     value={recipientAddressValue}
                     handleChange={handleRecipientAddressChange}
                     icon={scannerIcon}
@@ -321,7 +321,7 @@ function NormalTxn() {
                         placeholder="0"
                     />
                     <FormControl
-                        label="Recipient Address"
+                        label="Recipient Address or ANS name"
                         value={recipientTwoAddressValue}
                         handleChange={handleRecipientTwoAddressChange}
                         icon={scannerIcon}
@@ -343,7 +343,7 @@ function NormalTxn() {
                         placeholder="0"
                     />
                     <FormControl
-                        label="Recipient Address"
+                        label="Recipient Address or ANS name"
                         value={recipientThreeAddressValue}
                         handleChange={handleRecipientThreeAddressChange}
                         icon={scannerIcon}
@@ -366,7 +366,7 @@ function NormalTxn() {
                         passedDown
                     />
                     <FormControl
-                        label="Recipient Address"
+                        label="Recipient Address or ANS name"
                         value={recipientFourAddressValue}
                         handleChange={handleRecipientFourAddressChange}
                         icon={scannerIcon}
@@ -389,7 +389,7 @@ function NormalTxn() {
                         passedDown
                     />
                     <FormControl
-                        label="Recipient Address"
+                        label="Recipient Address or ANS name"
                         value={recipientFiveAddressValue}
                         handleChange={handleRecipientFiveAddressChange}
                         icon={scannerIcon}
