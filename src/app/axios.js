@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseUrl = "https://mintengine.onrender.com/"
+export const baseUrl = "https://mintapi.algorandengine.com/"
 
 const API = axios.create({ baseURL: baseUrl })
 
