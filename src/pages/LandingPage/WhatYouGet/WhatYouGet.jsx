@@ -25,7 +25,7 @@ function WhatYouGet() {
                 <div className="container">
                     <h2>What You Get From Mint Engine</h2>
                     <Grid container columnSpacing={2} className="gridContainer">
-                        <Grid item container xs={12} md={4} rowSpacing={2}>
+                        <Grid item container xs={12} md={6} rowSpacing={2}>
                             <Grid item xs={12}>
                                 <HomeCard
                                     title="CREATE/IMPORT WALLET"
@@ -37,22 +37,22 @@ function WhatYouGet() {
                             </Grid>
                             <Grid item xs={12} style={{ alignSelf: 'flex-end' }} >
                                 <HomeCard
-                                    title="ASSETS MANAGEMENT"
-                                    text="Hold, transact, and manage your assets all in one place. You can easily send and receive ALGOs/XRPs and review transaction histories."
+                                    title="EASY TO USE"
+                                    text="Myrkle's intuitive interface makes it easy for both beginners and experts to use."
                                     handleClick={() => handleClick(1)}
                                 >
                                     <MonetizationOnOutlinedIcon fontSize="large" />
                                 </HomeCard>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12} md={4}>
+                        {/* <Grid item xs={12} md={4}>
                             <HomeCard
                                 title="NFT MARKETPLACE"
                                 text="Connect your wallet, trade rare and unique NFTs Mint Engine NFT Market place. You can also create your collection of NFTs."
                                 showImage
                             />
-                        </Grid>
-                        <Grid item container xs={12} md={4} rowSpacing={2}>
+                        </Grid> */}
+                        <Grid item container xs={12} md={6} rowSpacing={2}>
                             <Grid item xs={12}>
                                 <HomeCard
                                     title="CREATE STANDARD ASSETS"
@@ -65,7 +65,7 @@ function WhatYouGet() {
                             <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
                                 <HomeCard
                                     title="MANAGE STANDARD ASSETS"
-                                    text="Tokenize real-world assets and contribute to the digital revolution. Even a complete novice can benefit from this."
+                                    text="Hold, transact, and manage your assets all in one place. You can easily send and receive asset and review transaction histories."
                                     handleClick={() => handleClick(3)}
                                 >
                                     <MenuOutlinedIcon fontSize="large" />
