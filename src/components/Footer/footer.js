@@ -12,9 +12,6 @@ export const Root = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        & > p > a {
-            color: white;
-        }
     }
 
     & .topContent {
@@ -47,9 +44,17 @@ export const Root = styled.div`
         }
     }
 
-    & p {
+    & .powered-by {
         color: white;
         margin-top: 40px;
+        display: flex;
+        align-items: center;
+
+        & > img {
+            height: 25px;
+            width: auto;
+            margin-left: 7px;
+        }
     }
 `
 

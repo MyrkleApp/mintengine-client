@@ -2,18 +2,19 @@ import styled from 'styled-components'
 
 export const Root = styled.div`
     width: 100%;
-    height: ${props => !props.showImage ? '280px' : '100%'};
+    height: ${props => !props.showImage ? '300px' : '100%'};
     background-color: ${props => !props.showImage ? '#3A5A4D': '#097246'};
     display: flex;
     border-radius: 8px;
+    cursor: pointer;
     /* margin: auto; */
 
     @media(max-width: 1200px) {
-        height: ${props => !props.showImage ? '300px' : '100%'};
+        height: ${props => !props.showImage ? '320px' : '100%'};
     }
 
     @media(max-width: 1120px) {
-        height: ${props => !props.showImage ? '330px' : '100%'};
+        height: ${props => !props.showImage ? '350px' : '100%'};
     }
 
     @media(max-width: 889px) {

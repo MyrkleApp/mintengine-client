@@ -16,6 +16,7 @@ import useFingerprint from './Hooks/Fingerprint';
 import PrivateRoute from './privateRoute'
 import ActiveWalletPassphrase from './Hooks/ActiveWalletPassphrase';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import LandingPage from './pages/LandingPage/LandingPage';
 
 const Wallet = React.lazy(() => import("./pages/Wallet/Wallet"));
 const Transactions = React.lazy(() => import('./pages/Transactions/Transactions'));
@@ -52,9 +53,7 @@ function App() {
                   >
                     <Suspense fallback={<Backdrop isOpen />}>
                       <Switch location={location}>
-                        <Route exact path="/">
-                          <Redirect to="/login" />
-                        </Route>
+                        <Route exact path="/" component={LandingPage} />
                         <Route exact path={['/signup', '/login']} component={Auth} />
                         
                         <PrivateRoute exact path={["/wallet-setup", "/create-wallet"]}>

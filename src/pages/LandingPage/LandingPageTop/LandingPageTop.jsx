@@ -1,18 +1,15 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Button } from '../../../components/UI/Button/button'
-import * as Styles from './landingPageTop'
+import { Grid } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "../../../components/UI/Button/button";
+import * as Styles from "./landingPageTop";
 
 function LandingPageTop() {
-    const { isLoggedIn } = useSelector(state => state.auth)
-    
     return (
         <Styles.LandingTopRoot>
             <Styles.Container>
                 <h1>Mint Engine</h1>
-                <h2>Seamless Connection & Interaction with Multiple Distributed Ledgers</h2>
+                <h2>A comprehensive suite of web3 instruments spread across an ecosystem of distributed ledgers.</h2>
                 <Grid container className="gridContainer" alignItems="center">
                     <Grid item xs={12} md={6}>
                         <p>A gateway that connects next generation distributed ledgers.</p>
@@ -36,18 +33,17 @@ function LandingPageTop() {
                     </Grid>
                 </Grid>
                 <div className="buttonsContainer">
-                    <Link to={ !isLoggedIn ? '/signup' : '/wallet'}>
-                        <Button>{!isLoggedIn ? 'get started' : 'my wallet'}</Button>
+                    <Link to="/signup">
+                        <Button style={{marginRight: '20px'}}>get started</Button>
                     </Link>
-                    { !isLoggedIn && (
-                        <Link to='/login'>
-                            <Button outlined>login</Button>
-                        </Link>
-                    )}
+                    <Link to="/login">
+                        <Button outlined>login</Button>
+                    </Link>
                 </div>
             </Styles.Container>
         </Styles.LandingTopRoot>
     )
+
 }
 
-export default LandingPageTop
+export default LandingPageTop;
