@@ -9,11 +9,11 @@ export function DisclaimerDefault({ checkbox, toggleCheckbox, handleContinue, ha
     return (
         <Fragment>
             <h2 className="disclaimerTitle">DISCLAIMER</h2>
-            <p>Due to security concerns, Mint Engine does not keep any record of our users' passphrase/seed. Thus, we will not be able to recover your passphrase/seed for you. </p>
+            <p>Due to security concerns, Myrkle does not keep any record of our users' passphrase/seed. Thus, we will not be able to recover your passphrase/seed for you. </p>
             <p>So, if you did not back up the seed properly or if you lost the seed, we will not be able to recover wallet data for you.</p>
             <div className="disclaimer">
                 <input type="checkbox" value={checkbox} onChange={toggleCheckbox} checked={checkbox} />
-                <p>I understand that Mint Engine is not responsible for the wallet backup process.</p>
+                <p>I understand that Myrkle is not responsible for the wallet backup process.</p>
             </div>
             <Button fullWidth disabled={!checkbox} onClick={handleContinue}>continue</Button>
             <h3 onClick={handleCloseModal}>CANCEL</h3>

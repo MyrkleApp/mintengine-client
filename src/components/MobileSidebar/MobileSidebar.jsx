@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import * as Styles from './mobileSidebar'
 import Sidebar from '../Sidebar/Sidebar'
-// import logo from '../../assets/icons/logo.svg'
+// import logo from '../../assets/icons/myrkle-logo-green.png'
 
 export default function TemporaryDrawer({ pathname }) {
   const [state, setState] = React.useState({

@@ -48,7 +48,7 @@ function ChooseNetwork() {
                     </div>
                     <div className="right">
                         <div className="rightTop">
-                            <span>Use Mint Engine on</span>
+                            <span>Use Myrkle on</span>
                             <KeyboardArrowDownIcon style={{ cursor: 'pointer' }} onClick={toggleOpen} />
                         </div>
                         <div className="rightBottom">

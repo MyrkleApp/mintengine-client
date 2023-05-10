@@ -90,7 +90,7 @@ function Security() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Security</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Create and manage algorithmically backed digital representations of tradable financial instruments on the Algorand blockchain with Mint Engine. 
+                                Create and manage algorithmically backed digital representations of tradable financial instruments on the Algorand blockchain with Myrkle. 
                             </SharedStyles.Description>
                         </Grid>
 

@@ -82,7 +82,7 @@ function UniqueNft() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Nft</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Create and manage unique non-fungible tokens that represent real-world or Digital assets and collectibles on the Algorand blockchain with Mint Engine.
+                                Create and manage unique non-fungible tokens that represent real-world or Digital assets and collectibles on the Algorand blockchain with Myrkle.
                             </SharedStyles.Description>
                         </Grid>
 

@@ -23,7 +23,7 @@ function WhatYouGet() {
         <>
             <Styles.Root>
                 <div className="container">
-                    <h2>What You Get From Mint Engine</h2>
+                    <h2>What You Get From Myrkle</h2>
                     <Grid container columnSpacing={2} className="gridContainer">
                         <Grid item container xs={12} md={6} rowSpacing={2}>
                             <Grid item xs={12}>
@@ -48,7 +48,7 @@ function WhatYouGet() {
                         {/* <Grid item xs={12} md={4}>
                             <HomeCard
                                 title="NFT MARKETPLACE"
-                                text="Connect your wallet, trade rare and unique NFTs Mint Engine NFT Market place. You can also create your collection of NFTs."
+                                text="Connect your wallet, trade rare and unique NFTs Myrkle NFT Market place. You can also create your collection of NFTs."
                                 showImage
                             />
                         </Grid> */}

@@ -28,6 +28,10 @@ export const Root = styled.div`
         margin-bottom: 40px;
         display: flex;
         align-items: center;
+        & > img {
+            height: 100px;
+        }
+
         & > span {
             font-weight: bold;
             margin-left: 20px;

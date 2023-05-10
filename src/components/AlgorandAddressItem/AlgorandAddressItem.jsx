@@ -116,7 +116,7 @@ function RemoveWallet({ walletId }) {
                     success={success}
                     title={success ? 'success' : 'error'}
                     description={
-                        success ? 'Successfully removed your wallet from Mint Engine' : 'Something went wrong while trying to remove your wallet'
+                        success ? 'Successfully removed your wallet from Myrkle' : 'Something went wrong while trying to remove your wallet'
                     }
                 />
             </Modal>

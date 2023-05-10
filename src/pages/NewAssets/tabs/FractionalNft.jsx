@@ -88,7 +88,7 @@ function FractionalNft() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Fractional Nft</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Create digital representations of fractions of real-world assets or digital collectibles on the Algorand blockchain with Mint Engine.
+                                Create digital representations of fractions of real-world assets or digital collectibles on the Algorand blockchain with Myrkle.
                             </SharedStyles.Description>
                         </Grid>
 

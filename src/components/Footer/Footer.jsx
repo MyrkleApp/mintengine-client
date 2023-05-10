@@ -4,7 +4,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import mediumIcon from '../../assets/icons/medium.png'
-import footerLogo from '../../assets/icons/footerLogo.png'
+import footerLogo from '../../assets/icons/myrkle-logo-white.png'
 import algorandFooterLogo from '../../assets/icons/algorandFooterLogo.png'
 import algorandBlack from '../../assets/images/landingPage/algorandBlack.png'
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -17,7 +17,7 @@ function Footer() {
                 <div className="topContent">
                     <div className="left">
                         <img src={footerLogo} alt="" />
-                        <span>Mint Engine</span>
+                        {/* <span>Myrkle</span> */}
                     </div>
                     <div className="right">
                         <a href="https://twitter.com/MintEngine?s=09" target="_blank" rel="noopener noreferrer"style={{ textDecoration: 'none' }}>

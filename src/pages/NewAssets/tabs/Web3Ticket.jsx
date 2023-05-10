@@ -81,7 +81,7 @@ function Web3Ticket() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Web3 Ticket</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Create counterfeit-proof digital representation of real-world tickets on the Algorand blockchain with Mint Engine.
+                                Create counterfeit-proof digital representation of real-world tickets on the Algorand blockchain with Myrkle.
                             </SharedStyles.Description>
                         </Grid>
 

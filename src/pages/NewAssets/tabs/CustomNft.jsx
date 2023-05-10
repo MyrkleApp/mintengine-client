@@ -110,7 +110,7 @@ function CustomNft() {
                         <Grid item xs={12} md={5}>
                             <SharedStyles.Title>Custom Asset</SharedStyles.Title>
                             <SharedStyles.Description>
-                                Mint Engine gives you the option to fully interact with the ASA creation layer and explores all the features provided by the smart contract.
+                                Myrkle gives you the option to fully interact with the ASA creation layer and explores all the features provided by the smart contract.
                             </SharedStyles.Description>
                         </Grid>
 

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
-import logo from '../../assets/icons/logo.svg'
+import logo from '../../assets/icons/myrkle-logo-white.png'
 import MobileSidebar from '../MobileSidebar/MobileSidebar'
 import * as Styles from './header'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,7 +39,7 @@ function Header() {
                     <div className="left">
                         <a href="https://mintengine.org">
                             <img src={logo} alt="" />
-                            <span>Mint Engine</span>
+                            {/* <span>Myrkle</span> */}
                         </a>
                     </div>
                     <div className={ `right ${pathname === '/' ? 'hideRight' : ''}` }>

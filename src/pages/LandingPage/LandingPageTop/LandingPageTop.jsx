@@ -8,7 +8,7 @@ function LandingPageTop() {
     return (
         <Styles.LandingTopRoot>
             <Styles.Container>
-                <h1>Mint Engine</h1>
+                <h1>Myrkle</h1>
                 <h2>A comprehensive suite of web3 instruments spread across an ecosystem of distributed ledgers.</h2>
                 <Grid container className="gridContainer" alignItems="center">
                     <Grid item xs={12} md={6}>

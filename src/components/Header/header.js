@@ -22,7 +22,8 @@ export const Root = styled.header`
     display: flex;
     align-items: center;
     & > img {
-      margin-right: 10px;
+      height: 150px;
+      /* margin-right: 10px; */
     }
   }
 
