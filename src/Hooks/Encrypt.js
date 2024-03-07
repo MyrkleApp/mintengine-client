@@ -2,7 +2,9 @@ import CryptoJS from 'crypto-js';
 import { useSelector } from 'react-redux';
 
 function useEncrypt() {
-    const key = useSelector(state => state.deviceFingerprint.deviceFingerprint)
+    // encryption key
+    const key = process.env.REACT_APP_ENCRYPTION_KEY
+    // const key = useSelector(state => state.deviceFingerprint.deviceFingerprint)
 
     const encryptString = (text) => {
         const encryptedText = CryptoJS.AES.encrypt(text, key).toString();

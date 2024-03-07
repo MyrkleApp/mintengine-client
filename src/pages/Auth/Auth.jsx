@@ -26,6 +26,11 @@ function Auth() {
         handleModalOpen: handleModalResponseOpen, 
         handleModalClose: handleModalResponseClose, 
     } = useModal()
+
+    const {
+        value: usernameValue,
+        handleChange: handleUsernameChange
+    } = useFormControl()
     
     const {
         value: passwordValue,
@@ -55,6 +60,7 @@ function Auth() {
     }
 
     const authErrorCallback = (err) => {
+        if (!err?.error) return;
         setPasswordError(err?.error[0])
     }
 
@@ -65,14 +71,16 @@ function Auth() {
             const registerUserData = {
                 password1: passwordValue,
                 password2: confirmPasswordValue,
-                deviceID: deviceFingerprint
+                deviceID: usernameValue
+                // deviceID: deviceFingerprint
             }
             handleSubmit(registerUser(registerUserData), registerUserSuccessCallback, authErrorCallback)
             
         } else if (pathname === '/login') {
             const loginUserData = {
                 password: passwordValue,
-                deviceID: deviceFingerprint
+                deviceID: usernameValue
+                // deviceID: deviceFingerprint
             }
             handleSubmit(loginUser(loginUserData), loginUserSuccessCallback, authErrorCallback)
         }
@@ -87,7 +95,7 @@ function Auth() {
     const handleForgotPassword = () => {
         handleModalClose()
         handleSubmit(
-            resetPassword({ deviceID: deviceFingerprint }), 
+            resetPassword({ deviceID: usernameValue }), 
             forgotPasswordSuccessCallback,
             () => handleModalResponseOpen()
         )
@@ -105,6 +113,13 @@ function Auth() {
                             <Grid item xs={12}>
                                 <Styles.Title>{pathname === '/signup' ? 'sign up' : 'login'}</Styles.Title>
                             </Grid>
+
+                            <FormControl
+                                label="Username"
+                                value={usernameValue}
+                                handleChange={(e) => handleUsernameChange(e, usernameValue)}
+                            />
+
                             <FormControl
                                 icon
                                 label="Password"
@@ -128,14 +143,18 @@ function Auth() {
                                     toggleShowPassword={toggleConfirmPasswordVisibile}
                                     errorText={confirmPasswordErrorText}
                                 />
+                                
+                                
                             )}
                             <Grid item xs={12}>
                                 <Button
                                     fullWidth
                                     type="submit"
-                                    disabled={(pathname === '/signup' && !passwordsAreValid) || (pathname === '/login' && passwordValue.trim().length < 8) || !deviceFingerprint}
+                                    disabled={(pathname === '/signup' && !passwordsAreValid) || (pathname === '/login' && passwordValue.trim().length < 8)}
+                                    // disabled={(pathname === '/signup' && !passwordsAreValid) || (pathname === '/login' && passwordValue.trim().length < 8) || !deviceFingerprint}
                                 >
-                                    { !deviceFingerprint ? 'loading ID...' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') }
+                                    { pathname === '/signup' ? 'Create my wallet' : 'Access my wallet' }
+                                    {/* { !deviceFingerprint ? 'loading ID...' : (pathname === '/signup' ? 'Create my wallet' : 'Access my wallet') } */}
                                 </Button>
                                 <Styles.ForgotPassword onClick={() => handleModalOpen()}>
                                     Forgot Password?
