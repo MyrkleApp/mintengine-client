@@ -29,7 +29,7 @@ function WhatYouGet() {
                             <Grid item xs={12}>
                                 <HomeCard
                                     title="CREATE/IMPORT WALLET"
-                                    text="You can create new Algorand/XRPL Wallet with ease. You can also recover Algorand/XRPL wallet with a passphrase."
+                                    text="You can create new Algorand Wallet with ease. You can also recover Algorand wallet with a passphrase."
                                     handleClick={() => handleClick(0)}
                                 >
                                     <AccountBalanceWalletOutlinedIcon fontSize="large" />
