@@ -10,6 +10,7 @@ import useCheckImageExists from '../../Hooks/checkImageExists'
 
 function WalletAsset({ asset, clawback }) {
     const network = useSelector(state => state.network.network)
+    const currentNet = useSelector(state => state.algorand.activeWallet.data?.current_net)
     const { tinyManAssetImage } = useCheckImageExists(asset)
 
     return (
@@ -23,7 +24,7 @@ function WalletAsset({ asset, clawback }) {
             </Grid>
             <Grid item xs={network === ALGORAND ? 6 : 8}>
                 <Styles.AssetNumber>
-                    <a href={`https://testnet.algoexplorer.io/asset/${asset.id}`} style={{ color: '#3E554B' }} target="_blank">{asset.id}</a>
+                    <a href={currentNet === "testnet" ? `https://testnet.explorer.perawallet.app/asset/${asset.id}` : `https://explorer.perawallet.app/asset/${asset.id}`} style={{ color: '#3E554B' }} target="_blank">{asset.id}</a>
                 </Styles.AssetNumber>
             </Grid>
             { network === ALGORAND && (

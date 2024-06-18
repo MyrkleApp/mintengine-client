@@ -17,6 +17,8 @@ function Transactions() {
     const { tabValue, handleTabChange } = useTabs(tabs[0])
     const { status, data } = useSelector(state => state.algorand.transactions)
 
+    const currentNet = useSelector(state => state.algorand.activeWallet.data?.current_net)
+
     useEffect(() => {
         if (status === null) {
             dispatch(getAlgorandTransactions())
@@ -33,7 +35,7 @@ function Transactions() {
 
     const rows = filter[tabValue]?.map((item, i) => (
         <tr key={item.txid}>
-            <td><a href={`https://testnet.algoexplorer.io/tx/${item.txid}`} target="_blank">{item.txid}</a></td>
+            <td><a href={currentNet === "testnet" ? `https://testnet.explorer.perawallet.app/tx/${item.txid}` : `https://explorer.perawallet.app/tx/${item.txid}`} target="_blank">{item.txid}</a></td>
             <td>{item.asset_name}</td>
             <td>{`${item.tx_type === 'sent' ? '-' : '+'} ${item.amount}`}</td>
             <td className="hide-on-mobile">{item.tx_type}</td>
