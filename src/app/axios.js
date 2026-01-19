@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseUrl = "https://mintengine-server.onrender.com"
+export const baseUrl = "https://algorand-backend.myrkle.app"
 
 
 const API = axios.create({ baseURL: baseUrl })
