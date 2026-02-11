@@ -1,12 +1,12 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router'
-import { Button } from '../../components/UI/Button/button'
-import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
-import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
-import * as Styles from '../../components/UI/WalletShared/walletShared'
+import { Button } from '../../components/UI/Button/button.js'
+import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper.jsx'
+import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper.jsx'
+import * as Styles from '../../components/UI/WalletShared/walletShared.js'
 import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
 import { useSelector } from 'react-redux'
-import { ALGO, XRP } from '../../constants/network'
+import { ALGO, XRP } from '../../constants/network.js'
 
 
 function CreateNewWallet() {

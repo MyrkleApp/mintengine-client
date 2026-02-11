@@ -7,8 +7,8 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import * as Styles from './mobileSidebar'
-import Sidebar from '../Sidebar/Sidebar'
+import * as Styles from './mobileSidebar.js'
+import Sidebar from '../Sidebar/Sidebar.jsx'
 // import logo from '../../assets/icons/myrkle-logo-green.png'
 
 export default function TemporaryDrawer({ pathname }) {

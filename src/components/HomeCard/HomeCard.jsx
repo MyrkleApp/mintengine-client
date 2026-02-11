@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './homeCard'
+import * as Styles from './homeCard.js'
 import fishImage from '../../assets/images/landingPage/fish.png'
 
 

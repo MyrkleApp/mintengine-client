@@ -3,10 +3,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import algoIcon from '../../assets/icons/algorandLogo.png'
 import clawbackIcon from '../../assets/icons/clawback.png'
-import { ALGORAND } from '../../constants/network'
-import * as Styles from './walletAssetItem'
+import { ALGORAND } from '../../constants/network.js'
+import * as Styles from './walletAssetItem.js'
 import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
-import useCheckImageExists from '../../Hooks/checkImageExists'
+import useCheckImageExists from '../../Hooks/checkImageExists.js'
 
 function WalletAsset({ asset, clawback }) {
     const network = useSelector(state => state.network.network)

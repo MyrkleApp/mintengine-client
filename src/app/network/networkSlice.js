@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { ALGORAND, ALGORAND_MAIN_NET, ALGORAND_TEST_NET, RIPPLE } from '../../constants/network'
+import { ALGORAND, ALGORAND_MAIN_NET, ALGORAND_TEST_NET, RIPPLE } from '../../constants/network.js'
 
 const namespace = "network"
 

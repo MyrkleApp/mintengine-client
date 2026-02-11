@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './sidebar'
+import * as Styles from './sidebar.js'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import WebAssetOutlinedIcon from '@mui/icons-material/WebAssetOutlined';
@@ -8,7 +8,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../app/auth/authSlice'
+import { logout } from '../../app/auth/authSlice.js'
 
 function Sidebar({ mobile }) {
     const { pathname } = useLocation()

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import * as Styles from './customSelect'
+import * as Styles from './customSelect.js'
 import ClickAwayListener from 'react-click-away-listener';
-import { HTTP_STATUS } from '../../constants/httpStatus';
+import { HTTP_STATUS } from '../../constants/httpStatus.js';
 import { ThreeDots } from 'react-loader-spinner';
-import { LoaderContainer } from '../../pages/Exchange/exchange';
+import { LoaderContainer } from '../../pages/Exchange/exchange.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
-import useCheckImageExists from '../../Hooks/checkImageExists';
+import { getAlgorandHoldings } from '../../app/algorand/algorandSlice.js';
+import useCheckImageExists from '../../Hooks/checkImageExists.js';
 import { Grid } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 

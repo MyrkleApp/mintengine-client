@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import * as Styles from './algorandAddressItem'
+import * as Styles from './algorandAddressItem.js'
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
+import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip.jsx'
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import useSubmit from '../../Hooks/Submit'
-import { getAllAlgorandWallets, removeWallet } from '../../app/algorand/algorandSlice';
-import { HTTP_STATUS } from '../../constants/httpStatus';
-import Modal from '../UI/Modal/Modal';
-import ModalResponse from '../ModalResponse/ModalResponse';
-import useModal from '../../Hooks/Modal';
+import useSubmit from '../../Hooks/Submit.js'
+import { getAllAlgorandWallets, removeWallet } from '../../app/algorand/algorandSlice.js';
+import { HTTP_STATUS } from '../../constants/httpStatus.js';
+import Modal from '../UI/Modal/Modal.jsx';
+import ModalResponse from '../ModalResponse/ModalResponse.jsx';
+import useModal from '../../Hooks/Modal.js';
 
 
 function AlgorandAddressItem({ walletAddress, walletId, handleClick }) {

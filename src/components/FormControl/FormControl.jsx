@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef } from 'react'
 import { Grid } from '@mui/material'
-import * as Styles from'./formControl'
+import * as Styles from './formControl.js'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 

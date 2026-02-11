@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import logo from '../../assets/icons/myrkle-logo-white.png'
-import MobileSidebar from '../MobileSidebar/MobileSidebar'
-import * as Styles from './header'
+import MobileSidebar from '../MobileSidebar/MobileSidebar.jsx'
+import * as Styles from './header.js'
 import { useDispatch, useSelector } from 'react-redux'
-import useSubmit from '../../Hooks/Submit'
-import { getUser, logout } from '../../app/auth/authSlice'
-import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice'
+import useSubmit from '../../Hooks/Submit.js'
+import { getUser, logout } from '../../app/auth/authSlice.js'
+import { getActiveAlgorandWallet } from '../../app/algorand/algorandSlice.js'
 
 function Header() {
     const { pathname } = useLocation() 

@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './footer'
+import * as Styles from './footer.js'
 import TwitterIcon from '@mui/icons-material/Twitter';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import InstagramIcon from '@mui/icons-material/Instagram';

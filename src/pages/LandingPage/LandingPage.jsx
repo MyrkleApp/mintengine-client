@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import Footer from '../../components/Footer/Footer'
-import LandingPageTop from './LandingPageTop/LandingPageTop'
-import WhatYouGet from './WhatYouGet/WhatYouGet'
+import Footer from '../../components/Footer/Footer.jsx'
+import LandingPageTop from './LandingPageTop/LandingPageTop.jsx'
+import WhatYouGet from './WhatYouGet/WhatYouGet.jsx'
 
 function LandingPage() {
 

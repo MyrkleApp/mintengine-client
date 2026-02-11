@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from "../../constants/httpStatus"
+import { HTTP_STATUS } from "../../constants/httpStatus.js"
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 
 

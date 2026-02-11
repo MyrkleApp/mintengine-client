@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect } from 'react'
 import { ThreeDots } from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCreatedAssets } from '../../app/algorand/algorandSlice'
-import Table from '../../components/Table/Table'
-import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
-import { HTTP_STATUS } from '../../constants/httpStatus'
+import { getCreatedAssets } from '../../app/algorand/algorandSlice.js'
+import Table from '../../components/Table/Table.jsx'
+import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared.js'
+import { HTTP_STATUS } from '../../constants/httpStatus.js'
 
 
 function CreatedAssetsAlgo() {

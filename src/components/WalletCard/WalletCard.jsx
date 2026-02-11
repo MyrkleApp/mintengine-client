@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './walletCard'
+import * as Styles from './walletCard.js'
 import { Button } from '../UI/Button/button'
 import { Link } from 'react-router-dom'
 

@@ -1,22 +1,22 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Grid, IconButton } from '@mui/material'
-import * as Styles from './walletAddress'
+import * as Styles from './walletAddress.js'
 import qrCode from '../../assets/icons/qrCode.svg'
-import { Button, WalletAddressButton } from '../../components/UI/Button/button';
-import { Word } from '../../components/UI/WalletShared/walletShared';
-import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip'
+import { Button, WalletAddressButton } from '../../components/UI/Button/button.js';
+import { Word } from '../../components/UI/WalletShared/walletShared.js';
+import CopyButtonWithTooltip from '../../components/UI/MyTooltip/MyTooltip.jsx'
 import { useDispatch, useSelector } from 'react-redux';
-import { ALGORAND, coinToReturn, networkDataToReturn, RIPPLE } from '../../constants/network';
+import { ALGORAND, coinToReturn, networkDataToReturn, RIPPLE } from '../../constants/network.js';
 import { ThreeDots } from 'react-loader-spinner';
-import { HTTP_STATUS } from '../../constants/httpStatus';
-import useModal from '../../Hooks/Modal';
-import Modal from '../../components/UI/Modal/Modal';
-import useFormControl from '../../Hooks/FormControl';
-import FormControl from '../../components/FormControl/FormControl'
-import useSubmit from '../../Hooks/Submit'
-import { verifyPassword } from '../../app/auth/authSlice'
-import { getCoinPrice } from '../../app/price/priceSlice';
-import ModalResponse from '../../components/ModalResponse/ModalResponse';
+import { HTTP_STATUS } from '../../constants/httpStatus.js';
+import useModal from '../../Hooks/Modal.js';
+import Modal from '../../components/UI/Modal/Modal.jsx';
+import useFormControl from '../../Hooks/FormControl.js';
+import FormControl from '../../components/FormControl/FormControl.jsx'
+import useSubmit from '../../Hooks/Submit.js'
+import { verifyPassword } from '../../app/auth/authSlice.js'
+import { getCoinPrice } from '../../app/price/priceSlice.js';
+import ModalResponse from '../../components/ModalResponse/ModalResponse.jsx';
 import { getListOfNames } from './functions';
 import CircularProgress from '@mui/material/CircularProgress';
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { HTTP_STATUS } from '../constants/httpStatus'
+import { HTTP_STATUS } from '../constants/httpStatus.js'
 
 function useSearchAssetById(inputValue, dataToDispatch, action) {
     const dispatch = useDispatch()
