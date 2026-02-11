@@ -1,6 +1,6 @@
 import React from 'react';
 import { Html5QrcodeScanner } from "html5-qrcode";
-import * as Styles from './qrCodeScanner'
+import * as Styles from './qrCodeScanner.js'
 import ClickAwayListener from 'react-click-away-listener';
 
 

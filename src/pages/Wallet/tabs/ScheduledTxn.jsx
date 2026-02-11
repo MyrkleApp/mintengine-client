@@ -1,34 +1,30 @@
 import React, { Fragment, useState } from 'react'
-import FormControl from '../../../components/FormControl/FormControl'
-import SelectInput from '../../../components/SelectInput/SelectInput'
+import FormControl from '../../../components/FormControl/FormControl.jsx'
+import SelectInput from '../../../components/SelectInput/SelectInput.jsx'
 import scannerIcon from '../../../assets/icons/scanner.svg'
 import calenderIcon from '../../../assets/icons/calendar.svg'
-import TimeInput from '../../../components/TimeInput/TimeInput'
-import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle } from '../wallet'
+import TimeInput from '../../../components/TimeInput/TimeInput.jsx'
+import { Label, TransactionFee, ButtonContainer, LoaderContainer, ErrorMessage, Title, SubTitle } from '../wallet.js'
 import algorandLogo from '../../../assets/icons/algorandLogo.png'
-import { Button } from '../../../components/UI/Button/button'
-import useFormControl from '../../../Hooks/FormControl'
+import { Button } from '../../../components/UI/Button/button.js'
+import useFormControl from '../../../Hooks/FormControl.js'
 import TextField from '@mui/material/TextField';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { LocalizationProvider, DesktopDatePicker, TimePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { ThemeProvider } from '@mui/material';
-import { theme } from '../../../components/MyTabs/MyTabs'
-import useSelectInput from '../../../Hooks/SelectInput'
-import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner'
-import { formattedTime, getTimeZone } from '../constants'
+import useSelectInput from '../../../Hooks/SelectInput.js'
+import QrCodeScanner from '../../../components/QrCodeScanner/QrCodeScanner.jsx'
+import { formattedTime, getTimeZone } from '../constants.js'
 import { useDispatch, useSelector } from 'react-redux'
-import useSubmit from '../../../Hooks/Submit'
-import { getActiveAlgorandWallet, sendAlgorand } from '../../../app/algorand/algorandSlice'
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import TimePicker from '@mui/lab/TimePicker';
+import useSubmit from '../../../Hooks/Submit.js'
+import { getActiveAlgorandWallet, sendAlgorand } from '../../../app/algorand/algorandSlice.js'
 import { Grid } from '@mui/material'
-import useAddressIsValid from '../../../Hooks/AddressIsValid'
-import { HTTP_STATUS } from '../../../constants/httpStatus'
+import useAddressIsValid from '../../../Hooks/AddressIsValid.js'
+import { HTTP_STATUS } from '../../../constants/httpStatus.js'
 import { ThreeDots } from 'react-loader-spinner'
-import useFormValidity from '../../../Hooks/FormValidity'
-import useModal from '../../../Hooks/Modal'
-import Modal from '../../../components/UI/Modal/Modal'
-import ModalResponse from '../../../components/ModalResponse/ModalResponse'
+import useFormValidity from '../../../Hooks/FormValidity.js'
+import useModal from '../../../Hooks/Modal.js'
+import Modal from '../../../components/UI/Modal/Modal.jsx'
+import ModalResponse from '../../../components/ModalResponse/ModalResponse.jsx'
 
 const muiHiddenInputStyles = { position: 'absolute', top: '80px', left: '30px', height: '10px', transform: 'scale(0.2)', zIndex: '-1' }
 
@@ -157,7 +153,6 @@ function ScheduledTxn() {
             { addressIsValid === false && <ErrorMessage>Address is invalid</ErrorMessage> }
 
             <Grid item container xs={12} style={{ position: 'relative' }}>
-                <ThemeProvider theme={theme}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DesktopDatePicker
                             open={datePickerIsOpen}
@@ -169,7 +164,6 @@ function ScheduledTxn() {
                             renderInput={(params) => <TextField {...params} style={muiHiddenInputStyles} />}
                         />
                     </LocalizationProvider>
-                </ThemeProvider>
             
                 <FormControl
                     label="Date"
@@ -184,7 +178,6 @@ function ScheduledTxn() {
                 />
             </Grid>
             <Grid item container xs={12} style={{ position: 'relative' }}>
-                <ThemeProvider theme={theme}>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <TimePicker
                             open={timePickerIsOpen}
@@ -200,7 +193,6 @@ function ScheduledTxn() {
                             renderInput={(params) => <TextField {...params} style={muiHiddenInputStyles}  />}
                         />
                     </LocalizationProvider>
-                </ThemeProvider>
 
                 <TimeInput 
                     label="Time (24 hour)"

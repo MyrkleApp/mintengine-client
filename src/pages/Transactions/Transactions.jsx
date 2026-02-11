@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
-import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared'
-import MyTabs from '../../components/MyTabs/MyTabs'
-import Table from '../../components/Table/Table'
-import useTabs from '../../Hooks/Tabs'
-import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper.jsx'
+import * as SharedStyles from '../../components/UI/DashboardShared/dashboardShared.js'
+import MyTabs from '../../components/MyTabs/MyTabs.jsx'
+import Table from '../../components/Table/Table.jsx'
+import useTabs from '../../Hooks/Tabs.js'
+import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlgorandTransactions } from '../../app/algorand/algorandSlice'
+import { getAlgorandTransactions } from '../../app/algorand/algorandSlice.js'
 import { ThreeDots } from 'react-loader-spinner'
-import { HTTP_STATUS } from '../../constants/httpStatus'
+import { HTTP_STATUS } from '../../constants/httpStatus.js'
 
 const tabs = ["All Transactions", "Algo TXNs", "Asa TXNs", "Scheduled TXNs"]
 

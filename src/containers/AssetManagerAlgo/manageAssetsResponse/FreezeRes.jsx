@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import ModalResponse from '../../../components/ModalResponse/ModalResponse'
-import { HTTP_STATUS } from '../../../constants/httpStatus'
+import ModalResponse from '../../../components/ModalResponse/ModalResponse.jsx'
+import { HTTP_STATUS } from '../../../constants/httpStatus.js'
 
 function FreezeRes() {
     const { status, error: errorData } = useSelector(state => state.algorand.freeze)

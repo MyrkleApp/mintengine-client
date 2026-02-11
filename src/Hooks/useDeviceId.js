@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setDeviceFingerprint } from '../app/deviceFingerprint/deviceFingerprintSlice'
+import { setDeviceFingerprint } from '../app/deviceFingerprint/deviceFingerprintSlice.js'
 import FingerprintJS from '@fingerprintjs/fingerprintjs-pro'
-import DB from '../app/db'
+import DB from '../app/db.js'
 
 //chrome fingerprint => "cMZVq60xH2DpZHJTtf6y"
 // firefox fingerprint:""ZIa2nwrOQRTiRWBQFpBy""
@@ -34,7 +34,7 @@ function useFingerprint() {
                     document.head.appendChild(script);
                 })
                 .then(() => FingerprintJS.load({
-                    token: process.env.REACT_APP_FINGERPRINT
+                    token: import.meta.env.VITE_FINGERPRINT
                 }));
 
                 // Get the visitor identifier when you need it.

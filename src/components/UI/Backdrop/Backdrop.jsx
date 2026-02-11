@@ -7,12 +7,12 @@ import { CirclesWithBar } from  'react-loader-spinner'
 
 
 export default function SimpleBackdrop({ isOpen }) {
-  const open = useSelector(state => state.backdrop.open)
+  const open = useSelector(state => state.backdrop?.open)
 
   return (
     <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={open || isOpen}
+      open={Boolean(open || isOpen)}
       // onClick={handleClose}
     >
       {/* <CircularProgress color="inherit" /> */}

@@ -1,23 +1,12 @@
 import * as React from 'react';
-import Tabs, { tabsClasses } from '@mui/material/Tabs';
+import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import './myTabs.css'
-import { createTheme, ThemeProvider } from '@mui/material';
+import './myTabs.css';
 
-export const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0EB56F',
-      },
-    },
-});
-  
 export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChange, center }) {
-
   return (
-    <ThemeProvider theme={theme}>
-        <Box sx={{ width: '100%', }}>
+    <Box sx={{ width: '100%' }}>
         <Tabs
             value={tabValue}
             onChange={handleTabChange}
@@ -47,7 +36,6 @@ export default function ScrollableTabsButtonAuto({ tabs, tabValue, handleTabChan
                 ))
             }
         </Tabs>
-        </Box>
-    </ThemeProvider>
+    </Box>
   );
 }

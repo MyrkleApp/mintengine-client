@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from "../../constants/httpStatus"
+import { HTTP_STATUS } from "../../constants/httpStatus.js"
 
 export const getCoinPricePending = (state) => {
     state.price.status = HTTP_STATUS.PENDING

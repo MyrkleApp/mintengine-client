@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import * as Styles from './chooseNetwork'
+import * as Styles from './chooseNetwork.js'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import rippleLogo from '../../assets/icons/rippleLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSelector } from 'react-redux';
-import { ALGORAND } from '../../constants/network';
+import { ALGORAND } from '../../constants/network.js';
 import ClickAwayListener from 'react-click-away-listener';
-import useSubmit from '../../Hooks/Submit'
-import { setAlgorandNet } from '../../app/algorand/algorandSlice';
+import useSubmit from '../../Hooks/Submit.js'
+import { setAlgorandNet } from '../../app/algorand/algorandSlice.js';
 
 
 function ChooseNetwork() {

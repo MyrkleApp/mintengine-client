@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './authWrapper'
+import * as Styles from './authWrapper.js'
 
 function AuthWrapper({ children }) {
 

@@ -1,17 +1,15 @@
 import React from 'react'
-import WalletCard from '../../components/WalletCard/WalletCard'
-import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper'
-import * as Styles from './walletSetup'
+import WalletCard from '../../components/WalletCard/WalletCard.jsx'
+import AuthWrapper from '../../containers/AuthWrapper/AuthWrapper.jsx'
 import AddIcon from '@mui/icons-material/Add';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import algorandLogo from '../../assets/icons/algorandLogo.png'
-import rippleLogo from '../../assets/icons/rippleLogo.png'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper'
-import { createAlgorandWallet } from '../../app/algorand/algorandSlice'
-import { CREATE } from '../../constants/walletStatus';
-import { ALGO, XRP } from '../../constants/network';
-import useSubmit from '../../Hooks/Submit';
+import WalletWrapper from '../../containers/WalletWrapper/WalletWrapper.jsx'
+import { createAlgorandWallet } from '../../app/algorand/algorandSlice.js'
+import { CREATE } from '../../constants/walletStatus.js';
+import { ALGO, XRP } from '../../constants/network.js';
+import useSubmit from '../../Hooks/Submit.js';
 import { useSelector } from 'react-redux';
 
 

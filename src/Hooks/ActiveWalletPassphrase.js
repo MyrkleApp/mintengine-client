@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import DB from '../app/db';
-import { setAlgorandPassphrase } from '../app/algorand/algorandSlice';
+import DB from '../app/db.js';
+import { setAlgorandPassphrase } from '../app/algorand/algorandSlice.js';
 import useEncrypt from './Encrypt';
-import { networkDataToReturn } from '../constants/network'
+import { networkDataToReturn } from '../constants/network.js'
 
 function ActiveWalletPassphrase() {
     const dispatch = useDispatch()

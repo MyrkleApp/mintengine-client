@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material'
-import * as Styles from './selectInput'
+import * as Styles from './selectInput.js'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
 import { useSelector } from 'react-redux'
-import useCheckImageExists from '../../Hooks/checkImageExists'
+import useCheckImageExists from '../../Hooks/checkImageExists.js'
 
 export const availableNetworks = {
     ALGORAND: { unit: 'ALGO', image: algorandLogo },

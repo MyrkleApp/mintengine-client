@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import * as Styles from './table'
+import * as Styles from './table.js'
 
 function Table({ columnTitles, rows, noDataTitle, noDataText, columnsToHideOnMobile }) {
 

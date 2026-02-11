@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
-import FormControl from '../../../components/FormControl/FormControl'
-import SelectInput from '../../../components/SelectInput/SelectInput'
+import FormControl from '../../../components/FormControl/FormControl.jsx'
+import SelectInput from '../../../components/SelectInput/SelectInput.jsx'
 import scannerIcon from '../../../assets/icons/scanner.svg'
 
 function Ripple() {

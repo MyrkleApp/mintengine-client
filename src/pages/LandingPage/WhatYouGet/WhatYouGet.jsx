@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import React, { useState, Suspense } from 'react'
-import HomeCard from '../../../components/HomeCard/HomeCard'
-import * as Styles from './whatYouGet' 
+import HomeCard from '../../../components/HomeCard/HomeCard.jsx'
+import * as Styles from './whatYouGet.js' 
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
 import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';

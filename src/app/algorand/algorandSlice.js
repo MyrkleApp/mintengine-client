@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { CREATE, IMPORT } from '../../constants/walletStatus';
-import axios from '../axios'
+import { CREATE, IMPORT } from '../../constants/walletStatus.js';
+import axios from '../axios.js'
 import * as actions from './actions';
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 

@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import * as Styles from './timeInput'
+import * as Styles from './timeInput.js'
 
 
 function TimeInput({ half, label, value, handleHourClick, handleMinuteClick, handleSecondClick }) {

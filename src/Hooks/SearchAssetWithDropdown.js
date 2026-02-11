@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { checkAlgorandAssetIsValid } from '../app/algorand/algorandSlice';
-import { HTTP_STATUS } from '../constants/httpStatus';
+import { checkAlgorandAssetIsValid } from '../app/algorand/algorandSlice.js';
+import { HTTP_STATUS } from '../constants/httpStatus.js';
 import { useState, useEffect } from 'react'
 
 function useSearchAssetWithDropdown(assetId, handleSetAssetValue) {

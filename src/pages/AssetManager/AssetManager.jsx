@@ -1,14 +1,14 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper'
-import * as Styles from './assetManager'
-import Table from '../../components/Table/Table'
+import DashboardWrapper from '../../containers/DashboardWrapper/DashboardWrapper.jsx'
+import * as Styles from './assetManager.js'
+import Table from '../../components/Table/Table.jsx'
 import { useSelector } from 'react-redux'
-import AssetManagerAlgo from '../../containers/AssetManagerAlgo/AssetManagerAlgo'
-import { ALGORAND, RIPPLE } from '../../constants/network'
-import AssetManagerRipple from '../../containers/AssetManagerRipple/AssetManagerRipple'
-import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork'
-import CreatedAssetsAlgo from '../../containers/CreatedAssetsAlgo/CreatedAssetsAlgo'
+import AssetManagerAlgo from '../../containers/AssetManagerAlgo/AssetManagerAlgo.jsx'
+import { ALGORAND, RIPPLE } from '../../constants/network.js'
+import AssetManagerRipple from '../../containers/AssetManagerRipple/AssetManagerRipple.jsx'
+import ChooseNetwork from '../../components/ChooseNetwork/ChooseNetwork.jsx'
+import CreatedAssetsAlgo from '../../containers/CreatedAssetsAlgo/CreatedAssetsAlgo.jsx'
 
 
 function AssetManager() {

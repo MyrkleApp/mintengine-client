@@ -1,4 +1,4 @@
-import { HTTP_STATUS } from '../../constants/httpStatus'
+import { HTTP_STATUS } from '../../constants/httpStatus.js'
 
 export const registerUserPending = (state) => {
     state.register.status = HTTP_STATUS.PENDING

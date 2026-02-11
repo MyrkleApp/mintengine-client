@@ -1,6 +1,6 @@
 import React from 'react'
-import Sidebar from '../../components/Sidebar/Sidebar'
-import * as Styles from './dashboardWrapper'
+import Sidebar from '../../components/Sidebar/Sidebar.jsx'
+import * as Styles from './dashboardWrapper.js'
 
 function DashboardWrapper({ children }) {
     

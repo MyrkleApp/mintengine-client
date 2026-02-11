@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 function useEncrypt() {
     // encryption key
-    const key = process.env.REACT_APP_ENCRYPTION_KEY
+    const key = import.meta.env.VITE_ENCRYPTION_KEY
     // const key = useSelector(state => state.deviceFingerprint.deviceFingerprint)
 
     const encryptString = (text) => {

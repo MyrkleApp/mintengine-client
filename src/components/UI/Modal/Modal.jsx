@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MuiModal from '@mui/material/Modal';
-import { CloseModalBox, ModalBox, ModalContent } from './modal';
+import { CloseModalBox, ModalBox, ModalContent } from './modal.js';
 import CloseIcon from '@mui/icons-material/Close';
 
 
@@ -26,3 +26,5 @@ export default function Modal({ children, open, handleClose, fullScreenForMobile
     </MuiModal>
   );
 }
+
+export { CloseModalBox, ModalBox, ModalContent };

@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import * as Styles from'./formControl'
+import * as Styles from './formControl.js'
 
 function Input({ half, label, helperText, error, value, options, handleClick }) {
 

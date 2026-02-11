@@ -1,4 +1,4 @@
-import algoSdk from "../../../app/algoSdk"
+import algoSdk from "../../../app/algoSdk.js"
 
 function toDateTime(secs) {
   var t = new Date(1970, 0, 1);

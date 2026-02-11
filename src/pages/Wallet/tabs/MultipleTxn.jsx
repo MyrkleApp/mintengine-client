@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
-import FormControl from '../../../components/FormControl/FormControl'
-import SelectInput from '../../../components/SelectInput/SelectInput'
+import FormControl from '../../../components/FormControl/FormControl.jsx'
+import SelectInput from '../../../components/SelectInput/SelectInput.jsx'
 import scannerIcon from '../../../assets/icons/scanner.svg'
 import addIcon from '../../../assets/icons/add.png'
-import { ButtonContainer } from '../wallet'
-import { Button } from '../../../components/UI/Button/button'
-import useFormControl from '../../../Hooks/FormControl'
+import { ButtonContainer } from '../wallet.js'
+import { Button } from '../../../components/UI/Button/button.js'
+import useFormControl from '../../../Hooks/FormControl.js'
 
 function MultipleTxn() {
     const { value: amountValue, handleChange: handleAmountChange, setValueByClick: setAmountValueByClick } = useFormControl()

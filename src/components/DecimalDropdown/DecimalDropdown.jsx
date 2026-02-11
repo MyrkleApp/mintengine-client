@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import * as Styles from './decimalDropdown'
-import FormControl from '../FormControl/FormControl'
+import * as Styles from './decimalDropdown.styles.js'
+import FormControl from '../FormControl/FormControl.jsx'
 import ClickAwayListener from 'react-click-away-listener';
 
 

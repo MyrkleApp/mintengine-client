@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import * as Styles from './walletWrapper'
+import * as Styles from './walletWrapper.js'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom';
 

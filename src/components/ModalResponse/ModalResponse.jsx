@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styles from './modalResponse'
+import * as Styles from './modalResponse.js'
 import successImg from '../../assets/icons/success.png'
 import errorImg from '../../assets/icons/error.png'
 import { Button } from '../UI/Button/button'

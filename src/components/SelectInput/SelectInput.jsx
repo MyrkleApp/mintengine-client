@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Grid } from '@mui/material'
-import * as Styles from './selectInput'
+import * as Styles from './selectInput.js'
 import algorandLogo from '../../assets/icons/algorandLogo.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ClickAwayListener from 'react-click-away-listener';
-import { HTTP_STATUS } from '../../constants/httpStatus';
+import { HTTP_STATUS } from '../../constants/httpStatus.js';
 import { ThreeDots } from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAlgorandHoldings } from '../../app/algorand/algorandSlice';
+import { getAlgorandHoldings } from '../../app/algorand/algorandSlice.js';
 import noAssetImage from '../../assets/icons/noAssetImage.jpeg'
-import useCheckImageExists from '../../Hooks/checkImageExists';
-import { availableNetworks } from './SelectWithoutDropdown';
+import useCheckImageExists from '../../Hooks/checkImageExists.js';
+import { availableNetworks } from './SelectWithoutDropdown.jsx';
 
 function SelectInput({ half, exchange, name, label, value, handleChange, handleItemClick, asset, readOnly, hideInput, handleFocus, placeholder }) {
     const dispatch = useDispatch()
